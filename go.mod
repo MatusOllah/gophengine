@@ -1,4 +1,4 @@
-module github.com/MatusOllah/hophengine
+module github.com/MatusOllah/gophengine
 
 go 1.18
 
