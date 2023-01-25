@@ -79,12 +79,9 @@ func openSave(path string) (*Save, error) {
 	// decodes raw data
 	// dekoduje surove data
 	log.Info().Msg("deserializing")
-	var _data map[string]interface{}
-	if err := save.decoder.Decode(&_data); err != nil {
+	if err := save.decoder.Decode(&save.data); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-
-	save.data = _data
 
 	return save, nil
 }
