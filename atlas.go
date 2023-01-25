@@ -2,11 +2,8 @@ package main
 
 import (
 	"encoding/xml"
-	"image"
 	"strconv"
 
-	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/yohamta/ganim8/v2"
 	"github.com/ztrue/tracerr"
 )
 
@@ -115,6 +112,7 @@ func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
 	return &ta, nil
 }
 
+/*
 func (ta *TextureAtlas) SetupAnimations(img *ebiten.Image) (map[string]*ganim8.Animation, error) {
 	anims := make(map[string]*ganim8.Animation)
 
@@ -140,3 +138,4 @@ func (ta *TextureAtlas) SetupAnimations(img *ebiten.Image) (map[string]*ganim8.A
 		}
 	}
 }
+*/
