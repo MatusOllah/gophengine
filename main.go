@@ -83,6 +83,7 @@ func main() {
 	log.Info().Msg("ahoj!")
 
 	ebiten.SetFPSMode(ebiten.FPSModeVsyncOffMaximum)
+	ebiten.SetTPS(ebiten.SyncWithFPS)
 
 	log.Info().Msg("creating window")
 	ebiten.SetWindowSize(g.ScreenWidth, g.ScreenHeight)
