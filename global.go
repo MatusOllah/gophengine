@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/MatusOllah/GophEngine/save"
+	"github.com/MatusOllah/gophengine/save"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/ztrue/tracerr"
 )
