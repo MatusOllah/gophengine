@@ -87,7 +87,7 @@ func main() {
 
 	log.Info().Msg("creating window")
 	ebiten.SetWindowSize(g.ScreenWidth, g.ScreenHeight)
-	ebiten.SetWindowTitle("GophEngine")
+	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 
 	game, err := NewGame()
 	if err != nil {
