@@ -101,22 +101,22 @@ func main() {
 	}
 
 	if err := g.ConfigSave.Flush(); err != nil {
-		tracerr.PrintSourceColor(err)
+		tracerr.Print(err)
 		os.Exit(1)
 	}
 
 	if err := g.ProgressSave.Flush(); err != nil {
-		tracerr.PrintSourceColor(err)
+		tracerr.Print(err)
 		os.Exit(1)
 	}
 
 	if err := g.ConfigSave.Close(); err != nil {
-		tracerr.PrintSourceColor(err)
+		tracerr.Print(err)
 		os.Exit(1)
 	}
 
 	if err := g.ProgressSave.Close(); err != nil {
-		tracerr.PrintSourceColor(err)
+		tracerr.Print(err)
 		os.Exit(1)
 	}
 }
