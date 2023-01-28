@@ -24,31 +24,6 @@ type TitleState struct {
 }
 
 func NewTitleState() (*TitleState, error) {
-	/*
-		logoBlImg, _, err := ebitenutil.NewImageFromFile(logoBumpinPngPath)
-		if err != nil {
-			return nil, tracerr.Wrap(err)
-		}
-
-		logoBlAtlasContent, err := os.ReadFile(logoBumpinXmlPath)
-
-		logoBlAtlas, err := ParseAtlas(logoBlAtlasContent)
-		if err != nil {
-			return nil, tracerr.Wrap(err)
-		}
-
-		var logoBlRects []*image.Rectangle
-
-		for _, st := range logoBlAtlas.SubTextures {
-			logoBlRects = append(logoBlRects, &image.Rectangle{
-				Min: image.Pt(st.X, st.Y),
-				Max: image.Pt(st.Width, st.Height),
-			})
-		}
-
-		logoBl := ganim8.New(logoBlImg, logoBlRects, nil, ganim8.Nop)
-	*/
-
 	return &TitleState{
 		Inited: false,
 		//LogoBl:    logoBl,
