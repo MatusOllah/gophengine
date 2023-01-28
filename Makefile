@@ -1,7 +1,7 @@
 GO=go
 RSRC=rsrc
 
-ICON=./icon.ico
+ICON=icon.ico
 BINARY=./bin
 SYSO=./GophEngine$(shell $(GO) env GOEXE).syso
 
