@@ -5,7 +5,7 @@ ICON=icon.ico
 BINARY=./bin
 SYSO=./GophEngine$(shell $(GO) env GOEXE).syso
 
-FLAGS=-v
+FLAGS=
 
 GOOS=windows
 GOARCH=amd64
