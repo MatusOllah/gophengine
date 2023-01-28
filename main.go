@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"image"
 	"os"
 	"runtime"
 	"strconv"
@@ -54,6 +56,22 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return g.ScreenWidth, g.ScreenHeight
 }
 
+func setIcon() error {
+	data, err := os.ReadFile(GetAsset("icon.png"))
+	if err != nil {
+		return tracerr.Wrap(err)
+	}
+
+	img, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return tracerr.Wrap(err)
+	}
+
+	ebiten.SetWindowIcon([]image.Image{img})
+
+	return nil
+}
+
 func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{
 		Out:        os.Stdout,
@@ -88,6 +106,10 @@ func main() {
 	log.Info().Msg("creating window")
 	ebiten.SetWindowSize(g.ScreenWidth, g.ScreenHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
+	if err := setIcon(); err != nil {
+		tracerr.Print(err)
+		os.Exit(1)
+	}
 
 	game, err := NewGame()
 	if err != nil {
