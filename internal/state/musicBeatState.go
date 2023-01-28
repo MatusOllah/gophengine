@@ -1,9 +1,11 @@
-package main
+package state
 
 import (
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
+
+	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 )
 
 type MusicBeatState struct {
@@ -28,7 +30,7 @@ func (s *MusicBeatState) Update(dt float64) error {
 }
 
 func (s *MusicBeatState) Draw(screen *ebiten.Image) {
-
+	return
 }
 
 func (s *MusicBeatState) UpdateBeat() {
@@ -36,19 +38,19 @@ func (s *MusicBeatState) UpdateBeat() {
 }
 
 func (s *MusicBeatState) UpdateCurStep() {
-	lastChange := &BPMChangeEvent{
+	lastChange := &ge.BPMChangeEvent{
 		StepTime: 0,
 		SongTime: 0,
 		Bpm:      0,
 	}
 
-	for i := range conductor.BpmChangeMap {
-		if conductor.SongPosition >= conductor.BpmChangeMap[i].SongTime {
-			lastChange = &conductor.BpmChangeMap[i]
+	for i := range ge.G.Conductor.BPMChangeMap {
+		if ge.G.Conductor.SongPosition >= ge.G.Conductor.BPMChangeMap[i].SongTime {
+			lastChange = &ge.G.Conductor.BPMChangeMap[i]
 		}
 	}
 
-	s.CurStep = lastChange.StepTime + int(math.Floor((conductor.SongPosition-lastChange.SongTime)/conductor.StepCrochet))
+	s.CurStep = lastChange.StepTime + int(math.Floor((ge.G.Conductor.SongPosition-lastChange.SongTime)/ge.G.Conductor.StepCrochet))
 }
 
 func (s *MusicBeatState) StepHit() {

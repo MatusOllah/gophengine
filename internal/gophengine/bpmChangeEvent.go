@@ -1,4 +1,4 @@
-package main
+package gophengine
 
 type BPMChangeEvent struct {
 	StepTime int

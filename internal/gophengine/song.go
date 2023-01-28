@@ -1,4 +1,4 @@
-package main
+package gophengine
 
 import (
 	"encoding/json"
@@ -21,17 +21,17 @@ type Song struct {
 func LoadSongFromJSON(rawJson []byte) (*Song, error) {
 	log.Info().Msg("loading song from JSON")
 
-	var song struct {
-		Song Song `json:"song"`
+	var tmpSong struct {
+		song Song `json:"song"`
 	}
 
-	if err := json.Unmarshal(rawJson, &song); err != nil {
+	if err := json.Unmarshal(rawJson, &tmpSong); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 
-	log.Info().Msgf("loaded song %s", song.Song.Song)
+	log.Info().Msgf("loaded song %s", tmpSong.song.Song)
 
-	song.Song.ValidScore = true
+	tmpSong.song.ValidScore = true
 
-	return &song.Song, nil
+	return &tmpSong.song, nil
 }

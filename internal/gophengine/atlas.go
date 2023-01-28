@@ -1,4 +1,4 @@
-package main
+package gophengine
 
 import (
 	"encoding/xml"
@@ -111,31 +111,3 @@ func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
 
 	return &ta, nil
 }
-
-/*
-func (ta *TextureAtlas) SetupAnimations(img *ebiten.Image) (map[string]*ganim8.Animation, error) {
-	anims := make(map[string]*ganim8.Animation)
-
-	var sizes []*image.Rectangle
-
-	for _, st := range ta.SubTextures {
-
-		name := st.Name[:len(st.Name)-4]
-
-		index, err := strconv.Atoi(st.Name[len(st.Name)-4:])
-		if err != nil {
-			return nil, err
-		}
-
-		rect := &image.Rectangle{
-			Min: image.Pt(st.X, st.Y),
-			Max: image.Pt(st.Width, st.Height),
-		}
-
-		size := &image.Rectangle{
-			Min: image.Pt(st.FrameX, st.FrameY),
-			Max: image.Pt(st.FrameWidth, st.FrameHeight),
-		}
-	}
-}
-*/

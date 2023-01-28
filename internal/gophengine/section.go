@@ -1,4 +1,4 @@
-package main
+package gophengine
 
 type Section struct {
 	SectionNotes   [][]interface{} `json:"sectionNotes"`

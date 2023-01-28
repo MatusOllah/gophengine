@@ -13,6 +13,6 @@ func NewBoyfriend(x, y float64) *Boyfriend {
 	}
 }
 
-func (bf *Boyfriend) Update(dt float64) {
-
+func (bf *Boyfriend) Update(dt float64) error {
+	return nil
 }

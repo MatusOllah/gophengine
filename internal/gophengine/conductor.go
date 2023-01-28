@@ -1,4 +1,4 @@
-package main
+package gophengine
 
 import "github.com/rs/zerolog/log"
 
@@ -7,24 +7,28 @@ type Conductor struct {
 	Crochet        float64
 	StepCrochet    float64
 	SongPosition   float64
-	lastSongPos    float64
+	LastSongPos    float64
 	Offset         float64
 	SafeFrames     int
 	SafeZoneOffset float64
-	BpmChangeMap   []BPMChangeEvent
+	BPMChangeMap   []BPMChangeEvent
 }
 
-var conductor = &Conductor{
-	Bpm: 100,
-	//Crochet: float64((60 / bpm) * 1000),
-	//StepCrochet: crochet / 4,
-	Offset:     0,
-	SafeFrames: 10,
-	//SafeZoneOffset: float64((safeFrames / 60) * 1000),
+func NewConductor(bpm int) *Conductor {
+	c := new(Conductor)
+
+	c.Bpm = bpm
+	c.Crochet = float64((60 / bpm) * 1000)
+	c.StepCrochet = c.Crochet / 4
+	c.Offset = 0
+	c.SafeFrames = 10
+	c.SafeZoneOffset = float64((c.SafeFrames / 60) * 1000)
+
+	return c
 }
 
 func (c *Conductor) MapBPMChanges(song *Song) {
-	c.BpmChangeMap = []BPMChangeEvent{}
+	c.BPMChangeMap = []BPMChangeEvent{}
 
 	var curBPM int = song.Bpm
 	var totalSteps int = 0
@@ -32,7 +36,7 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 	for i := range song.Notes {
 		if song.Notes[i].ChangeBPM && song.Notes[i].Bpm != curBPM {
 			curBPM = song.Notes[i].Bpm
-			c.BpmChangeMap = append(c.BpmChangeMap, BPMChangeEvent{
+			c.BPMChangeMap = append(c.BPMChangeMap, BPMChangeEvent{
 				StepTime: totalSteps,
 				SongTime: totalPos,
 				Bpm:      curBPM,
@@ -44,7 +48,7 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 		totalPos += float64(((60 / curBPM) * 1000 / 4) * deltaSteps)
 	}
 
-	log.Info().Msgf("new BPM map %v", c.BpmChangeMap)
+	log.Info().Msgf("new BPM map %v", c.BPMChangeMap)
 }
 
 func (c *Conductor) ChangeBPM(newBpm int) {

@@ -9,37 +9,38 @@ import (
 	"strconv"
 	"time"
 
+	ge "github.com/MatusOllah/gophengine/internal/gophengine"
+	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-
 	_ "github.com/silbinarywolf/preferdiscretegpu"
 	"github.com/ztrue/tracerr"
 )
 
 type Game struct {
-	Last         time.Time
-	CurrentState State
+	last         time.Time
+	currentState state.State
 }
 
 func NewGame() (*Game, error) {
-	state, err := NewTitleState()
+	state, err := state.NewTitleState()
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 
 	return &Game{
-		Last:         time.Now(),
-		CurrentState: state,
+		last:         time.Now(),
+		currentState: state,
 	}, nil
 }
 
 func (game *Game) Update() error {
-	dt := time.Since(game.Last).Seconds()
-	game.Last = time.Now()
+	dt := time.Since(game.last).Seconds()
+	game.last = time.Now()
 
-	if err := game.CurrentState.Update(dt); err != nil {
+	if err := game.currentState.Update(dt); err != nil {
 		return tracerr.Wrap(err)
 	}
 
@@ -47,17 +48,17 @@ func (game *Game) Update() error {
 }
 
 func (game *Game) Draw(screen *ebiten.Image) {
-	game.CurrentState.Draw(screen)
+	game.currentState.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %v\nTPS: %v", ebiten.ActualFPS(), ebiten.ActualTPS()))
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return g.ScreenWidth, g.ScreenHeight
+	return ge.G.ScreenWidth, ge.G.ScreenHeight
 }
 
 func setIcon() error {
-	data, err := os.ReadFile(GetAsset("icon.png"))
+	data, err := os.ReadFile(ge.GetAsset("icon.png"))
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -90,21 +91,21 @@ func main() {
 		return file + ":" + strconv.Itoa(line)
 	}
 
-	if err := initGlobal(); err != nil {
+	if err := ge.InitGlobal(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
 
-	log.Info().Msgf("GophEngine version %s", g.Version)
+	log.Info().Msgf("GophEngine version %s", ge.G.Version)
 	log.Info().Msgf("Go version %s", runtime.Version())
-	log.Info().Msgf("Friday Night Funkin' version %s", g.FNFVersion)
+	log.Info().Msgf("Friday Night Funkin' version %s", ge.G.FNFVersion)
 	log.Info().Msg("ahoj!")
 
 	ebiten.SetFPSMode(ebiten.FPSModeVsyncOffMaximum)
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
 	log.Info().Msg("creating window")
-	ebiten.SetWindowSize(g.ScreenWidth, g.ScreenHeight)
+	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 	if err := setIcon(); err != nil {
 		tracerr.Print(err)
@@ -122,22 +123,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := g.ConfigSave.Flush(); err != nil {
+	if err := ge.G.ConfigSave.Flush(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
 
-	if err := g.ProgressSave.Flush(); err != nil {
+	if err := ge.G.ProgressSave.Flush(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
 
-	if err := g.ConfigSave.Close(); err != nil {
+	if err := ge.G.ConfigSave.Close(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
 
-	if err := g.ProgressSave.Close(); err != nil {
+	if err := ge.G.ProgressSave.Close(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
