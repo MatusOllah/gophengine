@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
-	"github.com/MatusOllah/gophengine/internal/sprite"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
@@ -19,14 +18,14 @@ import (
 type TitleState struct {
 	*MusicBeatState
 	inited    bool
-	logoBl    *sprite.Sprite
-	gfDance   *sprite.Sprite
+	logoBl    *ge.Sprite
+	gfDance   *ge.Sprite
 	danceLeft bool
 	//TitleText text.Text
 }
 
 func NewTitleState() (*TitleState, error) {
-	logoBl := sprite.NewSprite(-150, -100)
+	logoBl := ge.NewSprite(-150, -100)
 	logoBlImg, _, err := ebitenutil.NewImageFromFile(ge.GetAsset("images/blavacik.png"))
 	if err != nil {
 		return nil, tracerr.Wrap(err)

@@ -1,4 +1,4 @@
-package sprite
+package gophengine
 
 import "github.com/hajimehoshi/ebiten/v2"
 
