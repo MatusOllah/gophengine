@@ -6,7 +6,6 @@ require (
 	github.com/hajimehoshi/ebiten/v2 v2.4.15
 	github.com/rs/zerolog v1.28.0
 	github.com/silbinarywolf/preferdiscretegpu v1.0.0
-	github.com/yohamta/ganim8/v2 v2.1.27
 	github.com/ztrue/tracerr v0.3.0
 )
 
@@ -21,7 +20,6 @@ require (
 	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	golang.org/x/exp v0.0.0-20221126150942-6ab00d035af9 // indirect
 	golang.org/x/exp/shiny v0.0.0-20221126150942-6ab00d035af9 // indirect
 	golang.org/x/image v0.1.0 // indirect
 	golang.org/x/mobile v0.0.0-20220722155234-aaac322e2105 // indirect
