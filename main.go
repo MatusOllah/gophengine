@@ -50,7 +50,11 @@ func (game *Game) Update() error {
 func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %v\nTPS: %v", ebiten.ActualFPS(), ebiten.ActualTPS()))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf(
+		"FPS: %v\nTPS: %v",
+		ebiten.ActualFPS(),
+		ebiten.ActualTPS(),
+	))
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -142,4 +146,7 @@ func main() {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
+
+	runtime.GC()
+	os.Exit(0)
 }
