@@ -76,21 +76,33 @@ func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
 			return nil, tracerr.Wrap(err)
 		}
 
+		if st.FrameX == "" {
+			st.FrameX = "0"
+		}
 		frameX, err := strconv.Atoi(st.FrameX)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
+		if st.FrameY == "" {
+			st.FrameY = "0"
+		}
 		frameY, err := strconv.Atoi(st.FrameY)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
+		if st.FrameWidth == "" {
+			st.FrameWidth = "0"
+		}
 		frameWidth, err := strconv.Atoi(st.FrameWidth)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
+		if st.FrameHeight == "" {
+			st.FrameHeight = "0"
+		}
 		frameHeight, err := strconv.Atoi(st.FrameHeight)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
