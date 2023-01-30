@@ -14,15 +14,15 @@ type TextureAtlas struct {
 }
 
 type SubTexture struct {
-	Name        string `xml:"name,attr"`
-	X           int    `xml:"x,attr"`
-	Y           int    `xml:"y,attr"`
-	Width       int    `xml:"width,attr"`
-	Height      int    `xml:"height,attr"`
-	FrameX      int    `xml:"frameX,attr"`
-	FrameY      int    `xml:"frameY,attr"`
-	FrameWidth  int    `xml:"frameWidth,attr"`
-	FrameHeight int    `xml:"frameHeight,attr"`
+	Name        string  `xml:"name,attr"`
+	X           float64 `xml:"x,attr"`
+	Y           float64 `xml:"y,attr"`
+	Width       float64 `xml:"width,attr"`
+	Height      float64 `xml:"height,attr"`
+	FrameX      int     `xml:"frameX,attr"`
+	FrameY      int     `xml:"frameY,attr"`
+	FrameWidth  int     `xml:"frameWidth,attr"`
+	FrameHeight int     `xml:"frameHeight,attr"`
 }
 
 func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
@@ -56,22 +56,22 @@ func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
 	}
 
 	for _, st := range tempTa.SubTextures {
-		x, err := strconv.Atoi(st.X)
+		x, err := strconv.ParseFloat(st.X, 64)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
-		y, err := strconv.Atoi(st.Y)
+		y, err := strconv.ParseFloat(st.Y, 64)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
-		width, err := strconv.Atoi(st.Width)
+		width, err := strconv.ParseFloat(st.Width, 64)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
-		height, err := strconv.Atoi(st.Height)
+		height, err := strconv.ParseFloat(st.Height, 64)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
