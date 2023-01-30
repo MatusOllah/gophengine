@@ -17,8 +17,8 @@ type SubTexture struct {
 	Name        string  `xml:"name,attr"`
 	X           float64 `xml:"x,attr"`
 	Y           float64 `xml:"y,attr"`
-	Width       float64 `xml:"width,attr"`
-	Height      float64 `xml:"height,attr"`
+	Width       int     `xml:"width,attr"`
+	Height      int     `xml:"height,attr"`
 	FrameX      int     `xml:"frameX,attr"`
 	FrameY      int     `xml:"frameY,attr"`
 	FrameWidth  int     `xml:"frameWidth,attr"`
@@ -66,12 +66,12 @@ func ParseAtlas(rawXML []byte) (*TextureAtlas, error) {
 			return nil, tracerr.Wrap(err)
 		}
 
-		width, err := strconv.ParseFloat(st.Width, 64)
+		width, err := strconv.Atoi(st.Width)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
 
-		height, err := strconv.ParseFloat(st.Height, 64)
+		height, err := strconv.Atoi(st.Height)
 		if err != nil {
 			return nil, tracerr.Wrap(err)
 		}
