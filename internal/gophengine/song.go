@@ -22,16 +22,16 @@ func LoadSongFromJSON(rawJson []byte) (*Song, error) {
 	log.Info().Msg("loading song from JSON")
 
 	var tmpSong struct {
-		song Song `json:"song"`
+		Song Song `json:"song"`
 	}
 
 	if err := json.Unmarshal(rawJson, &tmpSong); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 
-	log.Info().Msgf("loaded song %s", tmpSong.song.Song)
+	log.Info().Msgf("loaded song %s", tmpSong.Song.Song)
 
-	tmpSong.song.ValidScore = true
+	tmpSong.Song.ValidScore = true
 
-	return &tmpSong.song, nil
+	return &tmpSong.Song, nil
 }

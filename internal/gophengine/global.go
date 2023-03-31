@@ -14,7 +14,6 @@ type Global struct {
 	FNFVersion   string
 	ScreenWidth  int
 	ScreenHeight int
-	AssetsDir    string
 	AudioContext *audio.Context
 	ConfigSave   *save.Save
 	ProgressSave *save.Save
@@ -44,7 +43,6 @@ func InitGlobal() error {
 		FNFVersion:   "0.2.7.1",
 		ScreenWidth:  1280,
 		ScreenHeight: 720,
-		AssetsDir:    "assets",
 		AudioContext: audio.NewContext(48000),
 		ConfigSave:   configSave,
 		ProgressSave: progressSave,

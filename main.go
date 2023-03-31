@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	"io/fs"
 	"os"
 	"runtime"
 	"strconv"
 	"time"
 
+	"github.com/MatusOllah/gophengine/assets"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -62,7 +64,7 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func setIcon() error {
-	data, err := os.ReadFile(ge.GetAsset("icon.png"))
+	data, err := fs.ReadFile(assets.FS, "icon.png")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"image/color"
 	_ "image/png"
-	"os"
-	"path/filepath"
+	"io/fs"
 
+	"github.com/MatusOllah/gophengine/assets"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
@@ -26,7 +26,7 @@ type TitleState struct {
 
 func NewTitleState() (*TitleState, error) {
 	logoBl := ge.NewSprite(-150, -100)
-	logoBlImg, _, err := ebitenutil.NewImageFromFile(ge.GetAsset("images/blavacik.png"))
+	logoBlImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/logoBumpin.png")
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -42,12 +42,12 @@ func NewTitleState() (*TitleState, error) {
 
 func (s *TitleState) Update(dt float64) error {
 	if !s.inited {
-		content, err := os.ReadFile(ge.GetAsset(filepath.Join("music", "freakyMenu.ogg")))
+		content, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
 		if err != nil {
 			return tracerr.Wrap(err)
 		}
 
-		stream, err := vorbis.Decode(ge.G.AudioContext, bytes.NewReader(content))
+		stream, err := vorbis.DecodeWithSampleRate(48000, bytes.NewReader(content))
 		if err != nil {
 			return tracerr.Wrap(err)
 		}
@@ -70,6 +70,4 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	if !s.inited {
 		screen.Fill(color.Black)
 	}
-
-	s.logoBl.Draw(screen)
 }
