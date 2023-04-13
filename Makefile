@@ -12,14 +12,8 @@ GOARCH=amd64
 
 all: build
 
-build:
-	@if [ -d $(BINARY) ]; then \
-		rm -rf $(BINARY); \
-		rm $(SYSO); \
-	fi
-
-	mkdir $(BINARY)
-	mkdir $(BINARY)/$(GOOS)-$(GOARCH)
+build: clean
+	mkdir -p $(BINARY)/$(GOOS)-$(GOARCH)
 
 	$(GO) get
 
@@ -27,5 +21,5 @@ build:
 	CGO_ENABLED=1 GO111MODULE=on GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(FLAGS) -o $(BINARY)/$(GOOS)-$(GOARCH)
 
 clean:
-	rm -rf $(BINARY)
+	rm -rf $(BINARY)/$(GOOS)-$(GOARCH)
 	rm $(SYSO)
