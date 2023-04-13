@@ -17,7 +17,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	_ "github.com/silbinarywolf/preferdiscretegpu"
 	"github.com/ztrue/tracerr"
 )
 
