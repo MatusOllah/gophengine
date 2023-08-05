@@ -12,16 +12,21 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/rs/zerolog/log"
+	"github.com/tanema/gween"
+	"github.com/tanema/gween/ease"
 	"github.com/ztrue/tracerr"
 )
 
 type TitleState struct {
 	*MusicBeatState
-	inited    bool
-	logoBl    *ge.Sprite
-	gfDance   *ge.Sprite
-	danceLeft bool
-	//TitleText text.Text
+
+	inited          bool
+	logoBl          *ge.Sprite
+	gfDance         *ge.Sprite
+	freakyMenu      *audio.Player
+	freakyMenuTween *gween.Tween
+	danceLeft       bool
 }
 
 func NewTitleState() (*TitleState, error) {
@@ -33,35 +38,42 @@ func NewTitleState() (*TitleState, error) {
 
 	logoBl.Image = logoBlImg
 
+	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
+	freakyMenuStream, err := vorbis.DecodeWithSampleRate(48000, bytes.NewReader(freakyMenuContent))
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
+	freakyMenu, err := ge.G.AudioContext.NewPlayer(audio.NewInfiniteLoop(freakyMenuStream, freakyMenuStream.Length()))
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
 	return &TitleState{
-		inited:    false,
-		logoBl:    logoBl,
-		danceLeft: false,
+		inited:          false,
+		logoBl:          logoBl,
+		freakyMenu:      freakyMenu,
+		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
+		danceLeft:       false,
 	}, nil
 }
 
 func (s *TitleState) Update(dt float64) error {
 	if !s.inited {
-		content, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
-		if err != nil {
-			return tracerr.Wrap(err)
-		}
-
-		stream, err := vorbis.DecodeWithSampleRate(48000, bytes.NewReader(content))
-		if err != nil {
-			return tracerr.Wrap(err)
-		}
-
-		player, err := ge.G.AudioContext.NewPlayer(audio.NewInfiniteLoop(stream, stream.Length()))
-		if err != nil {
-			return tracerr.Wrap(err)
-		}
-
-		player.Play()
+		s.freakyMenu.Play()
 
 		ge.G.Conductor.ChangeBPM(102)
+
+		s.inited = true
 	}
-	s.inited = true
+
+	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
+	log.Debug().Float32("freakyMenuVolume", freakyMenuVolume).Msg("")
+	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
 
 	return nil
 }
