@@ -79,7 +79,5 @@ func (s *TitleState) Update(dt float64) error {
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
-	if !s.inited {
-		screen.Fill(color.Black)
-	}
+	screen.Fill(color.Black)
 }
