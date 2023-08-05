@@ -1,6 +1,6 @@
 package character
 
-// najlepšia FNF postavička
+// Boyfriend = goat
 type Boyfriend struct {
 	*Character
 	IsStunned bool
