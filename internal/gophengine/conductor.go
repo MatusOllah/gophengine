@@ -18,11 +18,11 @@ func NewConductor(bpm int) *Conductor {
 	c := new(Conductor)
 
 	c.Bpm = bpm
-	c.Crochet = float64((60 / bpm) * 1000)
+	c.Crochet = (60 / float64(bpm)) * 1000
 	c.StepCrochet = c.Crochet / 4
 	c.Offset = 0
 	c.SafeFrames = 10
-	c.SafeZoneOffset = float64((c.SafeFrames / 60) * 1000)
+	c.SafeZoneOffset = (float64(c.SafeFrames) / 60) * 1000
 
 	return c
 }
@@ -33,9 +33,9 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 	var curBPM int = song.Bpm
 	var totalSteps int = 0
 	var totalPos float64 = 0
-	for i := range song.Notes {
-		if song.Notes[i].ChangeBPM && song.Notes[i].Bpm != curBPM {
-			curBPM = song.Notes[i].Bpm
+	for _, note := range song.Notes {
+		if note.ChangeBPM && note.Bpm != curBPM {
+			curBPM = note.Bpm
 			c.BPMChangeMap = append(c.BPMChangeMap, BPMChangeEvent{
 				StepTime: totalSteps,
 				SongTime: totalPos,
@@ -43,9 +43,9 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 			})
 		}
 
-		var deltaSteps int = song.Notes[i].LengthInSteps
+		var deltaSteps int = note.LengthInSteps
 		totalSteps += deltaSteps
-		totalPos += float64(((60 / curBPM) * 1000 / 4) * deltaSteps)
+		totalPos += ((60 / float64(curBPM)) * 1000 / 4) * float64(deltaSteps)
 	}
 
 	log.Info().Msgf("new BPM map %v", c.BPMChangeMap)
