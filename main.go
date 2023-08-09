@@ -52,7 +52,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, fmt.Sprintf(
-		"FPS: %v\nTPS: %v",
+		"FPS: %.2f\nTPS: %.2f",
 		ebiten.ActualFPS(),
 		ebiten.ActualTPS(),
 	))
