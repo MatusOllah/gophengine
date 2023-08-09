@@ -19,8 +19,7 @@ import (
 )
 
 type TitleState struct {
-	*MusicBeatState
-
+	mb              *ge.MusicBeat
 	inited          bool
 	logoBl          *ge.Sprite
 	gfDance         *ge.Sprite
@@ -53,7 +52,11 @@ func NewTitleState() (*TitleState, error) {
 		return nil, tracerr.Wrap(err)
 	}
 
+	mb := ge.NewMusicBeat()
+	mb.BeatHitFunc = titleState_BeatHit
+
 	return &TitleState{
+		mb:              mb,
 		inited:          false,
 		logoBl:          logoBl,
 		freakyMenu:      freakyMenu,
@@ -71,13 +74,20 @@ func (s *TitleState) Update(dt float64) error {
 		s.inited = true
 	}
 
+	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Current().Milliseconds())
+
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
-	log.Debug().Float32("freakyMenuVolume", freakyMenuVolume).Msg("")
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
+
+	s.mb.Update()
 
 	return nil
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
+}
+
+func titleState_BeatHit(beatHit int) {
+	log.Info().Int("beatHit", beatHit).Msg("BeatHit")
 }
