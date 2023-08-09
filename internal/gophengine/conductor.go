@@ -54,6 +54,6 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 func (c *Conductor) ChangeBPM(newBpm int) {
 	c.Bpm = newBpm
 
-	c.Crochet = float64((60 / c.Bpm) * 1000)
+	c.Crochet = (60 / float64(c.Bpm)) * 1000
 	c.StepCrochet = c.Crochet / 4
 }
