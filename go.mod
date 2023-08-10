@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.4.15
+	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.28.0
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/ztrue/tracerr v0.3.0

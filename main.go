@@ -15,6 +15,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/ztrue/tracerr"
@@ -79,6 +80,11 @@ func setIcon() error {
 }
 
 func main() {
+	if _, err := flags.NewParser(&ge.Options, flags.HelpFlag|flags.IgnoreUnknown|flags.PassDoubleDash).Parse(); err != nil {
+		tracerr.Print(err)
+		os.Exit(1)
+	}
+
 	log.Logger = log.Output(zerolog.ConsoleWriter{
 		Out:        os.Stdout,
 		TimeFormat: time.RFC3339,

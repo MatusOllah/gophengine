@@ -37,7 +37,11 @@ func NewTitleState() (*TitleState, error) {
 
 	logoBl.Img = logoBlImg
 
-	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
+	freakyMenuPath := "music/freakyMenu.ogg"
+	if ge.Options.PC4R {
+		freakyMenuPath = "music/freakyMenu_pc4r.ogg"
+	}
+	freakyMenuContent, err := fs.ReadFile(assets.FS, freakyMenuPath)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
