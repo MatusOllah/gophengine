@@ -12,15 +12,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/rs/zerolog/log"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 	"github.com/ztrue/tracerr"
 )
 
+var titleState *TitleState
+
 type TitleState struct {
 	mb              *ge.MusicBeat
 	inited          bool
+	text            []string
 	logoBl          *ge.Sprite
 	gfDance         *ge.Sprite
 	freakyMenu      *audio.Player
@@ -59,14 +61,18 @@ func NewTitleState() (*TitleState, error) {
 	mb := ge.NewMusicBeat()
 	mb.BeatHitFunc = titleState_BeatHit
 
-	return &TitleState{
+	ts := &TitleState{
 		mb:              mb,
 		inited:          false,
 		logoBl:          logoBl,
 		freakyMenu:      freakyMenu,
 		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
 		danceLeft:       false,
-	}, nil
+	}
+
+	titleState = ts
+
+	return ts, nil
 }
 
 func (s *TitleState) Update(dt float64) error {
@@ -94,8 +100,60 @@ func (s *TitleState) Update(dt float64) error {
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
+	s.drawText(screen)
 }
 
-func titleState_BeatHit(beatHit int) {
-	log.Info().Int("beatHit", beatHit).Msg("BeatHit")
+func (ts *TitleState) drawText(img *ebiten.Image) {
+	for i, s := range ts.text {
+		ebitenutil.DebugPrintAt(img, s, img.Bounds().Dx()/2, (i*60)+200)
+	}
+}
+
+func (s *TitleState) createText(text []string) {
+	s.text = append(s.text, text...)
+}
+
+func (s *TitleState) addText(text string) {
+	s.text = append(s.text, text)
+}
+
+func (s *TitleState) deleteText() {
+	s.text = nil
+}
+
+func titleState_BeatHit(curBeat int) {
+	switch curBeat {
+	case 1:
+		titleState.createText([]string{
+			"ninjamuffin99",
+			"phantomArcade",
+			"kawaisprite",
+			"evilsk8er",
+		})
+	case 3:
+		titleState.addText("present")
+	case 4:
+		titleState.deleteText()
+	case 5:
+		titleState.createText([]string{"In association", "with"})
+	case 7:
+		titleState.addText("newgrounds")
+	case 8:
+		titleState.deleteText()
+	case 9:
+		titleState.createText([]string{"horalky"})
+	case 11:
+		titleState.addText("sedita")
+	case 12:
+		titleState.deleteText()
+	case 13:
+		titleState.addText("Friday")
+	case 14:
+		titleState.addText("Night")
+	case 15:
+		titleState.addText("Funkin")
+	case 16:
+		titleState.deleteText()
+		//TODO: skip intro
+	}
 }
