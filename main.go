@@ -138,15 +138,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := ge.G.ConfigSave.Close(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
-	}
-
-	if err := ge.G.ProgressSave.Close(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
-	}
+	ge.G.ConfigSave.Close()
+	ge.G.ProgressSave.Close()
 
 	runtime.GC()
 	os.Exit(0)
