@@ -73,7 +73,11 @@ func (s *TitleState) Update(dt float64) error {
 	if !s.inited {
 		s.freakyMenu.Play()
 
-		ge.G.Conductor.ChangeBPM(102)
+		if ge.Options.PC4R {
+			ge.G.Conductor.ChangeBPM(132)
+		} else {
+			ge.G.Conductor.ChangeBPM(102)
+		}
 
 		s.inited = true
 	}
