@@ -10,10 +10,10 @@
     "#1": {
       "0409": {
         "identity": {
-          "name": "GophEngine",
+          "name": "",
           "version": ""
         },
-        "description": "Go implementation of Friday Night Funkin",
+        "description": "",
         "minimum-os": "win7",
         "execution-level": "as invoker",
         "ui-access": false,
@@ -42,14 +42,28 @@
           "0409": {
             "Comments": "",
             "CompanyName": "",
-            "FileDescription": "",
+            "FileDescription": "Go implementation of Friday Night Funkin",
             "FileVersion": "",
             "InternalName": "",
             "LegalCopyright": "",
             "LegalTrademarks": "",
             "OriginalFilename": "",
             "PrivateBuild": "",
-            "ProductName": "",
+            "ProductName": "GophEngine",
+            "ProductVersion": "",
+            "SpecialBuild": ""
+          },
+          "041B": {
+            "Comments": "",
+            "CompanyName": "",
+            "FileDescription": "Go implementácia hry Friday Night Funkin",
+            "FileVersion": "",
+            "InternalName": "",
+            "LegalCopyright": "",
+            "LegalTrademarks": "",
+            "OriginalFilename": "",
+            "PrivateBuild": "",
+            "ProductName": "GophEngine",
             "ProductVersion": "",
             "SpecialBuild": ""
           }
