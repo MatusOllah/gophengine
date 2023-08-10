@@ -35,7 +35,7 @@ func NewTitleState() (*TitleState, error) {
 		return nil, tracerr.Wrap(err)
 	}
 
-	logoBl.Image = logoBlImg
+	logoBl.Img = logoBlImg
 
 	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
 	if err != nil {
