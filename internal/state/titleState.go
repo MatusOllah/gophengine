@@ -13,6 +13,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/rs/zerolog/log"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 	"github.com/ztrue/tracerr"
@@ -45,7 +46,10 @@ func getRandIntroText() ([]string, error) {
 		return nil, tracerr.Wrap(err)
 	}
 
-	return records[ge.G.Rand.Intn(len(records))], nil
+	introText := records[ge.G.Rand.Intn(len(records))]
+	log.Info().Strs("introText", introText).Msg("got intro text")
+
+	return introText, nil
 }
 
 func NewTitleState() (*TitleState, error) {
