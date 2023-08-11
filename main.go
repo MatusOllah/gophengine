@@ -112,6 +112,16 @@ func main() {
 	log.Info().Msgf("Friday Night Funkin' version %s", ge.G.FNFVersion)
 	log.Info().Msg("ahoj!")
 
+	if ge.Options.ExtractAssets {
+		err := ge.ExtractAssets()
+		if err != nil {
+			tracerr.Print(err)
+			os.Exit(1)
+		}
+
+		os.Exit(0)
+	}
+
 	ebiten.SetFPSMode(ebiten.FPSModeVsyncOffMaximum)
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
