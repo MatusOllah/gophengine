@@ -18,4 +18,4 @@
 - [ganim8](https://github.com/yohamta/ganim8) - animácie
 - [zerolog](https://github.com/rs/zerolog) - záznam a zápis údajov
 - [tracerr](https://github.com/ztrue/tracerr) - spracovanie chýb
-- [rsrc](https://github.com/akavel/rsrc) - vkladanie .ico súborov
+- [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov

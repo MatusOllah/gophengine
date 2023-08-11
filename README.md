@@ -20,4 +20,4 @@
 - [ganim8](https://github.com/yohamta/ganim8) - animations
 - [zerolog](https://github.com/rs/zerolog) - logging
 - [tracerr](https://github.com/ztrue/tracerr) - error handling
-- [rsrc](https://github.com/akavel/rsrc) - embedding .ico files
+- [go-winres](https://github.com/tc-hib/go-winres) - embedding .ico files
