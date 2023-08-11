@@ -2,6 +2,7 @@ package state
 
 import (
 	"bytes"
+	"encoding/csv"
 	"image/color"
 	_ "image/png"
 	"io/fs"
@@ -25,6 +26,7 @@ type TitleState struct {
 	mb              *ge.MusicBeat
 	inited          bool
 	text            []string
+	introText       []string
 	logoBl          *ge.Sprite
 	gfDance         *ge.Sprite
 	freakyMenu      *audio.Player
@@ -32,7 +34,26 @@ type TitleState struct {
 	danceLeft       bool
 }
 
+func getRandIntroText() ([]string, error) {
+	f, err := assets.FS.Open("data/introText.csv")
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
+	records, err := csv.NewReader(f).ReadAll()
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
+	return records[ge.G.Rand.Intn(len(records))], nil
+}
+
 func NewTitleState() (*TitleState, error) {
+	it, err := getRandIntroText()
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+
 	ng := ge.NewSprite((float64(ge.G.ScreenWidth)/2)-150, float64(ge.G.ScreenHeight)*0.52)
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
 	if err != nil {
@@ -71,6 +92,7 @@ func NewTitleState() (*TitleState, error) {
 	mb.BeatHitFunc = titleState_BeatHit
 
 	ts := &TitleState{
+		introText:       it,
 		ng:              ng,
 		drawNg:          false,
 		mb:              mb,
@@ -155,9 +177,9 @@ func titleState_BeatHit(curBeat int) {
 		titleState.drawNg = false
 		titleState.deleteText()
 	case 9:
-		titleState.createText([]string{"horalky"})
+		titleState.createText([]string{titleState.introText[0]})
 	case 11:
-		titleState.addText("sedita")
+		titleState.addText(titleState.introText[1])
 	case 12:
 		titleState.deleteText()
 	case 13:

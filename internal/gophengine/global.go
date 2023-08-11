@@ -1,15 +1,19 @@
 package gophengine
 
 import (
+	"math/rand"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/MatusOllah/gophengine/internal/save"
 	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/vpxyz/xorshift/xorshift1024star"
 	"github.com/ztrue/tracerr"
 )
 
 type Global struct {
+	Rand         *rand.Rand
 	Version      string
 	FNFVersion   string
 	ScreenWidth  int
@@ -38,7 +42,10 @@ func InitGlobal() error {
 		return tracerr.Wrap(err)
 	}
 
+	rand := rand.New(xorshift1024star.NewSource(time.Now().UTC().UnixNano()))
+
 	G = &Global{
+		Rand:         rand,
 		Version:      "1.0",
 		FNFVersion:   "0.2.7.1",
 		ScreenWidth:  1280,
