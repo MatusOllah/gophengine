@@ -7,13 +7,14 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/ztrue/tracerr"
 )
 
 func GetImagesByPrefixFromFS(prefix string, fsys fs.FS, path string) ([]*ebiten.Image, error) {
 	var finalFiles []string
 	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return err
+			return tracerr.Wrap(err)
 		}
 
 		if !d.IsDir() {
