@@ -20,6 +20,8 @@ import (
 var titleState *TitleState
 
 type TitleState struct {
+	ng              *ge.Sprite
+	drawNg          bool
 	mb              *ge.MusicBeat
 	inited          bool
 	text            []string
@@ -31,6 +33,13 @@ type TitleState struct {
 }
 
 func NewTitleState() (*TitleState, error) {
+	ng := ge.NewSprite((float64(ge.G.ScreenWidth)/2)-150, float64(ge.G.ScreenHeight)*0.52)
+	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+	ng.Img = ngImg
+
 	logoBl := ge.NewSprite(-150, -100)
 	logoBlImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/logoBumpin.png")
 	if err != nil {
@@ -62,6 +71,8 @@ func NewTitleState() (*TitleState, error) {
 	mb.BeatHitFunc = titleState_BeatHit
 
 	ts := &TitleState{
+		ng:              ng,
+		drawNg:          false,
 		mb:              mb,
 		inited:          false,
 		logoBl:          logoBl,
@@ -96,7 +107,12 @@ func (s *TitleState) Update(dt float64) error {
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
+
 	s.drawText(screen)
+
+	if s.drawNg {
+		s.ng.Draw(screen)
+	}
 }
 
 func (ts *TitleState) drawText(img *ebiten.Image) {
@@ -134,7 +150,9 @@ func titleState_BeatHit(curBeat int) {
 		titleState.createText([]string{"In association", "with"})
 	case 7:
 		titleState.addText("newgrounds")
+		titleState.drawNg = true
 	case 8:
+		titleState.drawNg = false
 		titleState.deleteText()
 	case 9:
 		titleState.createText([]string{"horalky"})
