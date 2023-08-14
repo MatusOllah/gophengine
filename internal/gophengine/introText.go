@@ -1,7 +1,7 @@
 package gophengine
 
 var IntroText [][]string = [][]string{
-	[]string{"ultimate rhythmgaming", "probably"},
+	[]string{"ultimate rhythm gaming", "probably"},
 	[]string{"dope ass game", "playstation magazine"},
 	[]string{"dancin", "forever"},
 	[]string{"funkin", "forever"},
