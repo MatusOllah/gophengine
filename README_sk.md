@@ -2,6 +2,8 @@
 
 ---
 
+![bf-gopher](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher.png)
+
 **GophEngine** je Go implementácia hry **Friday Night Funkin'** s vylepšeniami.
 
 **POZOR**: Toto je mód. Toto není originálna verzia a mal by byť považovaný za modifikáciu.
