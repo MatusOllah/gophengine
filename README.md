@@ -4,6 +4,8 @@
 
 ---
 
+![bf-gopher](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher.png)
+
 **GophEngine** is a Go implementation of **Friday Night Funkin'** with improvments.
 
 **NOTE**: This is a mod. This is not the vanilla game and should be treated as a modification.
