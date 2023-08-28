@@ -5,13 +5,16 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/rs/zerolog/log"
 	"github.com/ztrue/tracerr"
 )
 
 type Save struct {
-	data    map[string]interface{}
+	dataLock sync.RWMutex
+	data     map[string]interface{}
+
 	file    *os.File
 	encoder *gob.Encoder
 	decoder *gob.Decoder
@@ -79,6 +82,9 @@ func openSave(path string) (*Save, error) {
 	// decodes raw data
 	// dekoduje surove data
 	log.Info().Msg("deserializing")
+	save.dataLock.RLock()
+	defer save.dataLock.RUnlock()
+
 	if err := save.decoder.Decode(&save.data); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -86,23 +92,49 @@ func openSave(path string) (*Save, error) {
 	return save, nil
 }
 
-func (s *Save) Read(key string) interface{} {
-	log.Info().Msgf("reading from key %s", key)
-	return s.data[key]
+func (s *Save) Get(key string) (interface{}, error) {
+	log.Info().Str("key", key).Msg("reading")
+	s.dataLock.RLock()
+	defer s.dataLock.RUnlock()
+
+	value, ok := s.data[key]
+	if !ok {
+		return nil, tracerr.New("key not found")
+	}
+
+	return value, nil
 }
 
-func (s *Save) Write(key string, value interface{}) {
-	log.Info().Msgf("writing value %v to key %s", value, key)
+func (s *Save) MustGet(key string) interface{} {
+	value, err := s.Get(key)
+	if err != nil {
+		panic(err)
+	}
+
+	return value
+}
+
+func (s *Save) Set(key string, value interface{}) {
+	log.Info().Str("key", key).Interface("value", value).Msg("writing")
+	s.dataLock.Lock()
+	defer s.dataLock.Unlock()
+
 	s.data[key] = value
 }
 
 func (s *Save) Delete(key string) {
-	log.Info().Msgf("deleting key %s", key)
+	log.Info().Str("key", key).Msg("deleting")
+	s.dataLock.Lock()
+	defer s.dataLock.Unlock()
+
 	delete(s.data, key)
 }
 
 func (s *Save) Flush() error {
 	log.Info().Msg("serializing")
+	s.dataLock.RLock()
+	defer s.dataLock.RUnlock()
+
 	if err := s.encoder.Encode(s.data); err != nil {
 		return tracerr.Wrap(err)
 	}
