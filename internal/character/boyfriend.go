@@ -1,6 +1,7 @@
 package character
 
 // Boyfriend = goat
+// W Boyfriend
 type Boyfriend struct {
 	*Character
 	IsStunned bool
