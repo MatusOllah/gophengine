@@ -32,4 +32,6 @@ var IntroText [][]string = [][]string{
 	{"dont code in rust", "we only golang"},
 	{"package main", "import fmt"},
 	{"segmentation fault", "core dumped"},
+	{"jingle bells", "dd smells"},
+	{"dd is overrated", "bf deserves more love"},
 }
