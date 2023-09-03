@@ -10,6 +10,10 @@
 
 **NOTE**: This is a mod. This is not the vanilla game and should be treated as a modification.
 
+## Why?
+
+I wanted to make a easy to use modding Go API for Friday Night Funkin' (something like Forge but for FNF).
+
 ## Features
 
 - **Options menu**
