@@ -8,6 +8,10 @@
 
 **POZOR**: Toto je mód. Toto není originálna verzia a mal by byť považovaný za modifikáciu.
 
+## Prečo?
+
+Chcel som spraviť jednoduché módovacie Go API pre Friday Night Funkin' (niečo ako Forge ale pre FNF).
+
 ## Funkcie a výhody
 
 - **Nastavenia**
