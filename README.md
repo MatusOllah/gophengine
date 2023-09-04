@@ -14,6 +14,10 @@
 
 I wanted to make a easy to use modding Go API for Friday Night Funkin' (something like Forge but for FNF).
 
+### Why Go?
+
+Go is my favourite programming language and I don't wanna learn Haxe.
+
 ## Features
 
 - **Options menu**
