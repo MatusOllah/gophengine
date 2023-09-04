@@ -12,6 +12,10 @@
 
 Chcel som spraviť jednoduché módovacie Go API pre Friday Night Funkin' (niečo ako Forge ale pre FNF).
 
+### Prečo Go?
+
+Go je môj obľúbený programovací jazyk a nechce sa mi učiť Haxe.
+
 ## Funkcie a výhody
 
 - **Nastavenia**
