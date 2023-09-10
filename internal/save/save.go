@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/rs/zerolog/log"
 	"github.com/ztrue/tracerr"
 )
 
@@ -50,8 +49,6 @@ func createSave(path string) (*Save, error) {
 
 	// creates file
 	// vytvori subor
-	log.Info().Msgf("creating file %s", path)
-
 	os.Mkdir(filepath.Dir(path), os.ModePerm)
 
 	file, _ := os.Create(path)
@@ -69,7 +66,6 @@ func openSave(path string) (*Save, error) {
 
 	// opens file
 	// otvori subor
-	log.Info().Msgf("opening file %s", path)
 	file, err := os.OpenFile(path, os.O_RDWR, 0666)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -81,7 +77,6 @@ func openSave(path string) (*Save, error) {
 
 	// decodes raw data
 	// dekoduje surove data
-	log.Info().Msg("deserializing")
 	save.dataLock.RLock()
 	defer save.dataLock.RUnlock()
 
@@ -93,7 +88,6 @@ func openSave(path string) (*Save, error) {
 }
 
 func (s *Save) Get(key string) (interface{}, error) {
-	log.Info().Str("key", key).Msg("reading")
 	s.dataLock.RLock()
 	defer s.dataLock.RUnlock()
 
@@ -115,7 +109,6 @@ func (s *Save) MustGet(key string) interface{} {
 }
 
 func (s *Save) Set(key string, value interface{}) {
-	log.Info().Str("key", key).Interface("value", value).Msg("writing")
 	s.dataLock.Lock()
 	defer s.dataLock.Unlock()
 
@@ -123,7 +116,6 @@ func (s *Save) Set(key string, value interface{}) {
 }
 
 func (s *Save) Delete(key string) {
-	log.Info().Str("key", key).Msg("deleting")
 	s.dataLock.Lock()
 	defer s.dataLock.Unlock()
 
@@ -131,7 +123,6 @@ func (s *Save) Delete(key string) {
 }
 
 func (s *Save) Flush() error {
-	log.Info().Msg("serializing")
 	s.dataLock.RLock()
 	defer s.dataLock.RUnlock()
 
