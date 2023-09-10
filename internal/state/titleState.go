@@ -36,7 +36,7 @@ type TitleState struct {
 
 func getRandIntroText() []string {
 	introText := ge.IntroText[ge.G.Rand.Intn(len(ge.IntroText))]
-	log.Info().Strs("introText", introText).Msg("got intro text")
+	log.Info().Strs("introText", introText).Msg("")
 
 	return introText
 }
