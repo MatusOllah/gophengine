@@ -8,6 +8,7 @@ import (
 
 	"github.com/MatusOllah/gophengine/internal/save"
 	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/rs/zerolog/log"
 	"github.com/vpxyz/xorshift/xorshift1024star"
 	"github.com/ztrue/tracerr"
 )
@@ -32,12 +33,24 @@ func InitGlobal() error {
 		return tracerr.Wrap(err)
 	}
 
-	configSave, err := save.NewSave(filepath.Join(configDir, "GophEngine/config.gecfg"))
+	configPath := filepath.Join(configDir, "GophEngine/config.gecfg")
+	if Options.Config != "" {
+		configPath = Options.Config
+	}
+	log.Info().Msgf("using config file %s", configPath)
+
+	configSave, err := save.NewSave(configPath)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
 
-	progressSave, err := save.NewSave(filepath.Join(configDir, "GophEngine/progress.gecfg"))
+	progressPath := filepath.Join(configDir, "GophEngine/progress.gecfg")
+	if Options.Progress != "" {
+		progressPath = Options.Progress
+	}
+	log.Info().Msgf("using progress file %s", progressPath)
+
+	progressSave, err := save.NewSave(progressPath)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
