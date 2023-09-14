@@ -12,7 +12,7 @@
 
 ## Why?
 
-I wanted to make a easy to use modding Go API for Friday Night Funkin' (something like Forge but for FNF).
+I wanted to make a easy to use modding Go API for Friday Night Funkin' (something like MinecraftForge but for FNF).
 
 ### Why Go?
 
@@ -20,9 +20,7 @@ Go is my favourite programming language and I don't wanna learn Haxe.
 
 ## Features
 
-- **Options menu**
-
-- **Written in Go**
+- Options menu
 
 ## Notable tools and libraries
 
