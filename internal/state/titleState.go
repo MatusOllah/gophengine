@@ -127,13 +127,18 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	}
 }
 
+func (ts *TitleState) skipIntro() {
+	log.Info().Msg("skipIntro")
+	//TODO: skip intro
+}
+
 func (ts *TitleState) drawText(img *ebiten.Image) {
 	for i, s := range ts.text {
 		ebitenutil.DebugPrintAt(img, s, img.Bounds().Dx()/2, (i*60)+200)
 	}
 }
 
-func (s *TitleState) createText(text []string) {
+func (s *TitleState) createText(text ...string) {
 	s.text = append(s.text, text...)
 }
 
@@ -148,18 +153,18 @@ func (s *TitleState) deleteText() {
 func titleState_BeatHit(curBeat int) {
 	switch curBeat {
 	case 1:
-		titleState.createText([]string{
+		titleState.createText(
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
 			"evilsk8er",
-		})
+		)
 	case 3:
 		titleState.addText("present")
 	case 4:
 		titleState.deleteText()
 	case 5:
-		titleState.createText([]string{"In association", "with"})
+		titleState.createText("In association", "with")
 	case 7:
 		titleState.addText("newgrounds")
 		titleState.drawNg = true
@@ -167,7 +172,7 @@ func titleState_BeatHit(curBeat int) {
 		titleState.drawNg = false
 		titleState.deleteText()
 	case 9:
-		titleState.createText([]string{titleState.introText[0]})
+		titleState.createText(titleState.introText[0])
 	case 11:
 		titleState.addText(titleState.introText[1])
 	case 12:
@@ -180,6 +185,6 @@ func titleState_BeatHit(curBeat int) {
 		titleState.addText("Funkin")
 	case 16:
 		titleState.deleteText()
-		//TODO: skip intro
+		titleState.skipIntro()
 	}
 }
