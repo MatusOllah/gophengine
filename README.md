@@ -18,10 +18,6 @@ I wanted to make a easy to use modding Go API for Friday Night Funkin' (somethin
 
 Go is my favourite programming language and I don't wanna learn Haxe.
 
-## Features
-
-- Options menu
-
 ## Notable tools and libraries
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics, audio and input

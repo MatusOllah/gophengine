@@ -16,10 +16,6 @@ Chcel som spraviť jednoduché módovacie Go API pre Friday Night Funkin' (nieč
 
 Go je môj obľúbený programovací jazyk a nechce sa mi učiť Haxe.
 
-## Funkcie a výhody
-
-- Nastavenia
-
 ## Pozoruhodné nástroje a knižnice
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika, zvuk a vstup
