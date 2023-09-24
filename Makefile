@@ -23,5 +23,5 @@ build:
 .PHONY: clean
 clean:
 	rm -rf $(BINARY)/$(GOOS)-$(GOARCH)
-	rm rsrc_windows_386.syso
-	rm rsrc_windows_amd64.syso
+	rm -f rsrc_windows_386.syso
+	rm -f rsrc_windows_amd64.syso
