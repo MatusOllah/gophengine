@@ -116,10 +116,14 @@ func main() {
 		return file + ":" + strconv.Itoa(line)
 	}
 
+	beforeInit := time.Now()
+
 	if err := ge.InitGlobal(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
 	}
+
+	log.Info().Msgf("init took %v", time.Since(beforeInit))
 
 	log.Info().Msgf("GophEngine version %s", ge.G.Version)
 	log.Info().Msgf("Go version %s", runtime.Version())
