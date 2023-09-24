@@ -6,8 +6,8 @@ BINARY=./bin
 
 FLAGS=-v
 
-GOOS=windows
-GOARCH=amd64
+GOOS=$(shell go env GOOS)
+GOARCH=$(shell go env GOARCH)
 
 .PHONY: all
 all: build
