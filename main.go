@@ -80,20 +80,6 @@ func setIcon() error {
 }
 
 func main() {
-	if ge.StringSliceContains(os.Args, "-h") ||
-		ge.StringSliceContains(os.Args, "--help") ||
-		ge.StringSliceContains(os.Args, "-?") ||
-		ge.StringSliceContains(os.Args, "/h") ||
-		ge.StringSliceContains(os.Args, "/help") ||
-		ge.StringSliceContains(os.Args, "/?") {
-		fmt.Println("This CLI has Super Boyfriend powers")
-		if err := ge.PrintBoyfriend(); err != nil {
-			tracerr.Print(err)
-			os.Exit(1)
-		}
-		fmt.Println()
-	}
-
 	if _, err := flags.NewParser(&ge.Options, flags.HelpFlag|flags.IgnoreUnknown|flags.PassDoubleDash).Parse(); err != nil {
 		tracerr.Print(err)
 		os.Exit(1)
