@@ -125,10 +125,12 @@ func main() {
 
 	log.Info().Msgf("init took %v", time.Since(beforeInit))
 
+	fmt.Println()
 	log.Info().Msgf("GophEngine version %s", ge.G.Version)
 	log.Info().Msgf("Go version %s", runtime.Version())
 	log.Info().Msgf("Friday Night Funkin' version %s", ge.G.FNFVersion)
 	log.Info().Msg("ahoj!")
+	fmt.Println()
 
 	if ge.Options.ExtractAssets {
 		err := ge.ExtractAssets()
