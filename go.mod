@@ -1,6 +1,6 @@
 module github.com/MatusOllah/gophengine
 
-go 1.18
+go 1.21
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.4.15
