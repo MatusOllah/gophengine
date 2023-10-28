@@ -2,6 +2,7 @@ package state
 
 import (
 	"bytes"
+	"encoding/csv"
 	"image/color"
 	_ "image/png"
 	"io/fs"
@@ -33,15 +34,32 @@ type TitleState struct {
 	danceLeft       bool
 }
 
-func getRandIntroText() []string {
-	introText := ge.IntroText[ge.G.Rand.Intn(len(ge.IntroText))]
+func getRandIntroText() ([]string, error) {
+	f, err := assets.FS.Open("data/introText.csv")
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	r := csv.NewReader(f)
+	r.Comment = '#'
+
+	records, err := r.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+
+	introText := records[ge.G.Rand.Intn(len(records))]
 	slog.Info("got intro text", "introText", introText)
 
-	return introText
+	return introText, nil
 }
 
 func NewTitleState() (*TitleState, error) {
-	it := getRandIntroText()
+	it, err := getRandIntroText()
+	if err != nil {
+		return nil, err
+	}
 
 	ng := ge.NewSprite((float64(ge.G.ScreenWidth)/2)-150, float64(ge.G.ScreenHeight)*0.52)
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
