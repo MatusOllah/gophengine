@@ -6,8 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
-
-	"github.com/ztrue/tracerr"
 )
 
 type Save struct {
@@ -28,14 +26,14 @@ func NewSave(path string) (*Save, error) {
 	if ferr == nil {
 		_save, err := openSave(path)
 		if err != nil {
-			return nil, tracerr.Wrap(err)
+			return nil, err
 		}
 
 		save = _save
 	} else if errors.Is(ferr, os.ErrNotExist) {
 		_save, err := createSave(path)
 		if err != nil {
-			return nil, tracerr.Wrap(err)
+			return nil, err
 		}
 
 		save = _save
@@ -68,7 +66,7 @@ func openSave(path string) (*Save, error) {
 	// otvori subor
 	file, err := os.OpenFile(path, os.O_RDWR, 0666)
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	save.file = file
@@ -81,7 +79,7 @@ func openSave(path string) (*Save, error) {
 	defer save.dataLock.RUnlock()
 
 	if err := save.decoder.Decode(&save.data); err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	return save, nil
@@ -93,7 +91,7 @@ func (s *Save) Get(key string) (interface{}, error) {
 
 	value, ok := s.data[key]
 	if !ok {
-		return nil, tracerr.New("key not found")
+		return nil, errors.New("key not found")
 	}
 
 	return value, nil
@@ -127,7 +125,7 @@ func (s *Save) Flush() error {
 	defer s.dataLock.RUnlock()
 
 	if err := s.encoder.Encode(s.data); err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	return nil
@@ -135,7 +133,7 @@ func (s *Save) Flush() error {
 
 func (s *Save) Close() error {
 	if err := s.file.Close(); err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	return nil

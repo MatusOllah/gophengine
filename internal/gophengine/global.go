@@ -10,7 +10,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/rs/zerolog/log"
 	"github.com/vpxyz/xorshift/xorshift1024star"
-	"github.com/ztrue/tracerr"
 )
 
 type Global struct {
@@ -30,7 +29,7 @@ var G *Global
 func InitGlobal() error {
 	configDir, err := os.UserConfigDir()
 	if err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	configPath := filepath.Join(configDir, "GophEngine/config.gecfg")
@@ -41,7 +40,7 @@ func InitGlobal() error {
 
 	configSave, err := save.NewSave(configPath)
 	if err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	progressPath := filepath.Join(configDir, "GophEngine/progress.gecfg")
@@ -52,7 +51,7 @@ func InitGlobal() error {
 
 	progressSave, err := save.NewSave(progressPath)
 	if err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	rand := rand.New(xorshift1024star.NewSource(time.Now().UTC().UnixNano()))

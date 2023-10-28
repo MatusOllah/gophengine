@@ -18,7 +18,6 @@ import (
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/ztrue/tracerr"
 )
 
 type Game struct {
@@ -29,7 +28,7 @@ type Game struct {
 func NewGame() (*Game, error) {
 	state, err := state.NewTitleState()
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	return &Game{
@@ -43,7 +42,7 @@ func (game *Game) Update() error {
 	game.last = time.Now()
 
 	if err := game.currentState.Update(dt); err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	return nil
@@ -66,12 +65,12 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 func setIcon() error {
 	data, err := fs.ReadFile(assets.FS, "icon.png")
 	if err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	img, _, err := image.Decode(bytes.NewReader(data))
 	if err != nil {
-		return tracerr.Wrap(err)
+		return err
 	}
 
 	ebiten.SetWindowIcon([]image.Image{img})
@@ -81,8 +80,7 @@ func setIcon() error {
 
 func main() {
 	if _, err := flags.NewParser(&ge.Options, flags.HelpFlag|flags.IgnoreUnknown|flags.PassDoubleDash).Parse(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	log.Logger = log.Output(zerolog.ConsoleWriter{
@@ -105,8 +103,7 @@ func main() {
 	beforeInit := time.Now()
 
 	if err := ge.InitGlobal(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	log.Info().Msgf("init took %v", time.Since(beforeInit))
@@ -121,8 +118,7 @@ func main() {
 	if ge.Options.ExtractAssets {
 		err := ge.ExtractAssets()
 		if err != nil {
-			tracerr.Print(err)
-			os.Exit(1)
+			panic(err)
 		}
 
 		os.Exit(0)
@@ -135,29 +131,24 @@ func main() {
 	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 	if err := setIcon(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	game, err := NewGame()
 	if err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	if err := ebiten.RunGame(game); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	if err := ge.G.ConfigSave.Flush(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	if err := ge.G.ProgressSave.Flush(); err != nil {
-		tracerr.Print(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	ge.G.ConfigSave.Close()

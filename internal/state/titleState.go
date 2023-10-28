@@ -15,7 +15,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
-	"github.com/ztrue/tracerr"
 )
 
 var titleState *TitleState
@@ -47,14 +46,14 @@ func NewTitleState() (*TitleState, error) {
 	ng := ge.NewSprite((float64(ge.G.ScreenWidth)/2)-150, float64(ge.G.ScreenHeight)*0.52)
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 	ng.Img = ngImg
 
 	logoBl := ge.NewSprite(-150, -100)
 	logoBlImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/logoBumpin.png")
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	logoBl.Img = logoBlImg
@@ -65,17 +64,17 @@ func NewTitleState() (*TitleState, error) {
 	}
 	freakyMenuContent, err := fs.ReadFile(assets.FS, freakyMenuPath)
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	freakyMenuStream, err := vorbis.DecodeWithSampleRate(48000, bytes.NewReader(freakyMenuContent))
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	freakyMenu, err := ge.G.AudioContext.NewPlayer(audio.NewInfiniteLoop(freakyMenuStream, freakyMenuStream.Length()))
 	if err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	mb := ge.NewMusicBeat()

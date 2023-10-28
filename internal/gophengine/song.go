@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/rs/zerolog/log"
-	"github.com/ztrue/tracerr"
 )
 
 type Song struct {
@@ -26,7 +25,7 @@ func LoadSongFromJSON(rawJson []byte) (*Song, error) {
 	}
 
 	if err := json.Unmarshal(rawJson, &tmpSong); err != nil {
-		return nil, tracerr.Wrap(err)
+		return nil, err
 	}
 
 	log.Info().Msgf("loaded song %s", tmpSong.Song.Song)
