@@ -2,8 +2,8 @@ package gophengine
 
 import (
 	"encoding/json"
-
-	"github.com/rs/zerolog/log"
+	"fmt"
+	"log/slog"
 )
 
 type Song struct {
@@ -18,7 +18,7 @@ type Song struct {
 }
 
 func LoadSongFromJSON(rawJson []byte) (*Song, error) {
-	log.Info().Msg("loading song from JSON")
+	slog.Info("loading song from JSON")
 
 	var tmpSong struct {
 		Song Song `json:"song"`
@@ -28,7 +28,7 @@ func LoadSongFromJSON(rawJson []byte) (*Song, error) {
 		return nil, err
 	}
 
-	log.Info().Msgf("loaded song %s", tmpSong.Song.Song)
+	slog.Info(fmt.Sprintf("loaded song %s", tmpSong.Song.Song))
 
 	tmpSong.Song.ValidScore = true
 

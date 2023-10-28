@@ -1,6 +1,8 @@
 package gophengine
 
 import (
+	"fmt"
+	"log/slog"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -8,7 +10,6 @@ import (
 
 	"github.com/MatusOllah/gophengine/internal/save"
 	"github.com/hajimehoshi/ebiten/v2/audio"
-	"github.com/rs/zerolog/log"
 	"github.com/vpxyz/xorshift/xorshift1024star"
 )
 
@@ -36,7 +37,7 @@ func InitGlobal() error {
 	if Options.Config != "" {
 		configPath = Options.Config
 	}
-	log.Info().Msgf("using config file %s", configPath)
+	slog.Info(fmt.Sprintf("using config file %s", configPath))
 
 	configSave, err := save.NewSave(configPath)
 	if err != nil {
@@ -47,7 +48,7 @@ func InitGlobal() error {
 	if Options.Progress != "" {
 		progressPath = Options.Progress
 	}
-	log.Info().Msgf("using progress file %s", progressPath)
+	slog.Info(fmt.Sprintf("using progress file %s", progressPath))
 
 	progressSave, err := save.NewSave(progressPath)
 	if err != nil {

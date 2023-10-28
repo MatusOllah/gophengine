@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"image"
 	"io/fs"
+	"log"
+	"log/slog"
 	"os"
 	"runtime"
-	"strconv"
 	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
@@ -16,8 +17,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/jessevdk/go-flags"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 )
 
 type Game struct {
@@ -83,22 +82,7 @@ func main() {
 		panic(err)
 	}
 
-	log.Logger = log.Output(zerolog.ConsoleWriter{
-		Out:        os.Stdout,
-		TimeFormat: time.RFC3339,
-	}).With().Caller().Logger()
-
-	zerolog.CallerMarshalFunc = func(pc uintptr, file string, line int) string {
-		short := file
-		for i := len(file) - 1; i > 0; i-- {
-			if file[i] == '/' {
-				short = file[i+1:]
-				break
-			}
-		}
-		file = short
-		return file + ":" + strconv.Itoa(line)
-	}
+	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	beforeInit := time.Now()
 
@@ -106,13 +90,13 @@ func main() {
 		panic(err)
 	}
 
-	log.Info().Msgf("init took %v", time.Since(beforeInit))
+	slog.Info(fmt.Sprintf("init took %v", time.Since(beforeInit)))
 
 	fmt.Println()
-	log.Info().Msgf("GophEngine version %s", ge.G.Version)
-	log.Info().Msgf("Go version %s", runtime.Version())
-	log.Info().Msgf("Friday Night Funkin' version %s", ge.G.FNFVersion)
-	log.Info().Msg("ahoj!")
+	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
+	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
+	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", ge.G.FNFVersion))
+	slog.Info("ahoj!")
 	fmt.Println()
 
 	if ge.Options.ExtractAssets {
@@ -127,7 +111,7 @@ func main() {
 	ebiten.SetFPSMode(ebiten.FPSModeVsyncOffMaximum)
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
-	log.Info().Msg("creating window")
+	slog.Info("creating window")
 	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 	if err := setIcon(); err != nil {

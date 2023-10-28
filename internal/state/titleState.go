@@ -5,6 +5,7 @@ import (
 	"image/color"
 	_ "image/png"
 	"io/fs"
+	"log/slog"
 
 	"github.com/MatusOllah/gophengine/assets"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
@@ -12,7 +13,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/rs/zerolog/log"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 )
@@ -35,7 +35,7 @@ type TitleState struct {
 
 func getRandIntroText() []string {
 	introText := ge.IntroText[ge.G.Rand.Intn(len(ge.IntroText))]
-	log.Info().Strs("introText", introText).Msg("")
+	slog.Info("got intro text", "introText", introText)
 
 	return introText
 }
@@ -127,7 +127,7 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 }
 
 func (ts *TitleState) skipIntro() {
-	log.Info().Msg("skipIntro")
+	slog.Info("skipIntro")
 	//TODO: skip intro
 }
 

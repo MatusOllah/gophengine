@@ -1,13 +1,14 @@
 package gophengine
 
 import (
+	"fmt"
 	"io"
 	"io/fs"
+	"log/slog"
 	"os"
 	"path/filepath"
 
 	"github.com/MatusOllah/gophengine/assets"
-	"github.com/rs/zerolog/log"
 )
 
 func ExtractAssets() error {
@@ -23,7 +24,7 @@ func ExtractAssets() error {
 		if d.IsDir() {
 			dirPath := filepath.Join("assets", path)
 
-			log.Info().Msgf("creating directory %s", dirPath)
+			slog.Info(fmt.Sprintf("creating directory %s", dirPath))
 			if err := os.MkdirAll(dirPath, fs.ModePerm); err != nil {
 				return err
 			}
@@ -33,7 +34,7 @@ func ExtractAssets() error {
 
 		dstPath := filepath.Join("assets", path)
 
-		log.Info().Msgf("extracting %s => %s", path, dstPath)
+		slog.Info(fmt.Sprintf("extracting %s => %s", path, dstPath))
 
 		src, err := assets.FS.Open(path)
 		if err != nil {

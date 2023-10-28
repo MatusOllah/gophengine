@@ -1,6 +1,8 @@
 package gophengine
 
-import "github.com/rs/zerolog/log"
+import (
+	"log/slog"
+)
 
 type Conductor struct {
 	Bpm            int
@@ -48,7 +50,7 @@ func (c *Conductor) MapBPMChanges(song *Song) {
 		totalPos += ((60 / float64(curBPM)) * 1000 / 4) * float64(deltaSteps)
 	}
 
-	log.Info().Msgf("new BPM map %v", c.BPMChangeMap)
+	slog.Info("new BPM map", "BPMChangeMap", c.BPMChangeMap)
 }
 
 func (c *Conductor) ChangeBPM(newBpm int) {
