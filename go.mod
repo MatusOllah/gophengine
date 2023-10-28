@@ -18,7 +18,7 @@ require (
 	github.com/jfreymuth/oggvorbis v1.0.4 // indirect
 	github.com/jfreymuth/vorbis v1.0.2 // indirect
 	golang.org/x/exp/shiny v0.0.0-20221126150942-6ab00d035af9 // indirect
-	golang.org/x/image v0.1.0 // indirect
+	golang.org/x/image v0.5.0 // indirect
 	golang.org/x/mobile v0.0.0-20220722155234-aaac322e2105 // indirect
 	golang.org/x/sys v0.1.0 // indirect
 )
