@@ -127,16 +127,16 @@ func main() {
 		panic(err)
 	}
 
-	if err := ge.G.ConfigSave.Flush(); err != nil {
+	if err := ge.G.OptionsConfig.Flush(); err != nil {
 		panic(err)
 	}
 
-	if err := ge.G.ProgressSave.Flush(); err != nil {
+	if err := ge.G.ProgressConfig.Flush(); err != nil {
 		panic(err)
 	}
 
-	ge.G.ConfigSave.Close()
-	ge.G.ProgressSave.Close()
+	ge.G.OptionsConfig.Close()
+	ge.G.ProgressConfig.Close()
 
 	runtime.GC()
 	os.Exit(0)
