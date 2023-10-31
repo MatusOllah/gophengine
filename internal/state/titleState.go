@@ -22,7 +22,6 @@ var titleState *TitleState
 
 type TitleState struct {
 	ng              *ge.Sprite
-	drawNg          bool
 	mb              *ge.MusicBeat
 	inited          bool
 	text            []string
@@ -67,6 +66,7 @@ func NewTitleState() (*TitleState, error) {
 		return nil, err
 	}
 	ng.Img = ngImg
+	ng.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
 	logoBlImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/logoBumpin.png")
@@ -101,7 +101,6 @@ func NewTitleState() (*TitleState, error) {
 	ts := &TitleState{
 		introText:       it,
 		ng:              ng,
-		drawNg:          false,
 		mb:              mb,
 		inited:          false,
 		logoBl:          logoBl,
@@ -138,10 +137,7 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
 
 	s.drawText(screen)
-
-	if s.drawNg {
-		s.ng.Draw(screen)
-	}
+	s.ng.Draw(screen)
 }
 
 func (ts *TitleState) skipIntro() {
@@ -185,9 +181,9 @@ func titleState_BeatHit(curBeat int) {
 		titleState.createText("In association", "with")
 	case 7:
 		titleState.addText("newgrounds")
-		titleState.drawNg = true
+		titleState.ng.Visible = true
 	case 8:
-		titleState.drawNg = false
+		titleState.ng.Visible = false
 		titleState.deleteText()
 	case 9:
 		titleState.createText(titleState.introText[0])
