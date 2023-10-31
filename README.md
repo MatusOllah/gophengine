@@ -22,6 +22,4 @@ Go is my favourite programming language and I don't wanna learn Haxe.
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics, audio and input
 - [ganim8](https://github.com/yohamta/ganim8) - animations
-- [zerolog](https://github.com/rs/zerolog) - logging
-- [tracerr](https://github.com/ztrue/tracerr) - error handling
 - [go-winres](https://github.com/tc-hib/go-winres) - embedding .ico files

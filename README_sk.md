@@ -20,6 +20,4 @@ Go je môj obľúbený programovací jazyk a nechce sa mi učiť Haxe.
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika, zvuk a vstup
 - [ganim8](https://github.com/yohamta/ganim8) - animácie
-- [zerolog](https://github.com/rs/zerolog) - záznam a zápis údajov
-- [tracerr](https://github.com/ztrue/tracerr) - spracovanie chýb
 - [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov
