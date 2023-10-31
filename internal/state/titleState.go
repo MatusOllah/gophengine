@@ -175,6 +175,7 @@ func titleState_BeatHit(curBeat int) {
 			"phantomArcade",
 			"kawaisprite",
 			"evilsk8er",
+			"MatusOllah",
 		)
 	case 3:
 		titleState.addText("present")
