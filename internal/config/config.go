@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"errors"
 	"log/slog"
+	"maps"
 	"os"
 	"path/filepath"
 	"sync"
@@ -16,6 +17,11 @@ type Config struct {
 	file    *os.File
 	encoder *gob.Encoder
 	decoder *gob.Decoder
+}
+
+// Register simply calls gob.Register.
+func Register(value interface{}) {
+	gob.Register(value)
 }
 
 func New(path string) (*Config, error) {
@@ -86,6 +92,24 @@ func openConfig(path string) (*Config, error) {
 	return cfg, nil
 }
 
+// Data returns a copy of the map.
+func (cfg *Config) Data() map[string]interface{} {
+	cfg.dataLock.RLock()
+	defer cfg.dataLock.RUnlock()
+
+	data := cfg.data
+
+	return data
+}
+
+// Append appends m to the map.
+func (cfg *Config) Append(m map[string]interface{}) {
+	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
+
+	maps.Copy(cfg.data, m)
+}
+
 func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
@@ -115,11 +139,20 @@ func (cfg *Config) Set(key string, value interface{}) {
 	cfg.data[key] = value
 }
 
+// Delete deletes key from the map.
 func (cfg *Config) Delete(key string) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 
 	delete(cfg.data, key)
+}
+
+// Wipe wipes (clears) the map.
+func (cfg *Config) Wipe() {
+	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
+
+	cfg.data = map[string]interface{}{}
 }
 
 func (cfg *Config) Flush() error {
