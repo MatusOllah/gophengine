@@ -152,7 +152,7 @@ func (cfg *Config) Wipe() {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 
-	cfg.data = map[string]interface{}{}
+	clear(cfg.data)
 }
 
 func (cfg *Config) Flush() error {
