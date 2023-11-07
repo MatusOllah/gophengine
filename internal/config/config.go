@@ -10,6 +10,8 @@ import (
 	"sync"
 )
 
+var ErrNotFound error = errors.New("key not found")
+
 type Config struct {
 	dataLock sync.RWMutex
 	data     map[string]interface{}
@@ -19,11 +21,12 @@ type Config struct {
 	decoder *gob.Decoder
 }
 
-// Register simply calls gob.Register.
+// Register simply calls gob.Register. If you are encoding a non-primitive type that implements something you should use this.
 func Register(value interface{}) {
 	gob.Register(value)
 }
 
+// New creates / opens and decodes a new Config.
 func New(path string) (*Config, error) {
 	var cfg *Config
 
@@ -31,14 +34,14 @@ func New(path string) (*Config, error) {
 	// skontroluje ci subor existuje
 	_, ferr := os.Stat(path)
 	if ferr == nil {
-		_cfg, err := openConfig(path)
+		_cfg, err := Open(path)
 		if err != nil {
 			return nil, err
 		}
 
 		cfg = _cfg
 	} else if errors.Is(ferr, os.ErrNotExist) {
-		_cfg, err := createConfig(path)
+		_cfg, err := Create(path)
 		if err != nil {
 			return nil, err
 		}
@@ -49,7 +52,8 @@ func New(path string) (*Config, error) {
 	return cfg, nil
 }
 
-func createConfig(path string) (*Config, error) {
+// Create creates a new Config.
+func Create(path string) (*Config, error) {
 	cfg := new(Config)
 
 	// creates file
@@ -66,7 +70,8 @@ func createConfig(path string) (*Config, error) {
 	return cfg, nil
 }
 
-func openConfig(path string) (*Config, error) {
+// Open opens a existing Config.
+func Open(path string) (*Config, error) {
 	cfg := new(Config)
 
 	// opens file
@@ -102,6 +107,14 @@ func (cfg *Config) Data() map[string]interface{} {
 	return data
 }
 
+// SetData overwrites the map.
+func (cfg *Config) SetData(m map[string]interface{}) {
+	cfg.dataLock.RLock()
+	defer cfg.dataLock.RUnlock()
+
+	cfg.data = m
+}
+
 // Append appends m to the map.
 func (cfg *Config) Append(m map[string]interface{}) {
 	cfg.dataLock.Lock()
@@ -110,18 +123,20 @@ func (cfg *Config) Append(m map[string]interface{}) {
 	maps.Copy(cfg.data, m)
 }
 
+// Get gets a value from the map.
 func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
 
 	value, ok := cfg.data[key]
 	if !ok {
-		return nil, errors.New("key not found")
+		return nil, ErrNotFound
 	}
 
 	return value, nil
 }
 
+// MustGet simply calls Get and returns nil if an error occured.
 func (cfg *Config) MustGet(key string) interface{} {
 	value, err := cfg.Get(key)
 	if err != nil {
@@ -132,6 +147,7 @@ func (cfg *Config) MustGet(key string) interface{} {
 	return value
 }
 
+// Set sets key to value.
 func (cfg *Config) Set(key string, value interface{}) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
@@ -155,6 +171,7 @@ func (cfg *Config) Wipe() {
 	clear(cfg.data)
 }
 
+// Flush gob encodes and writes data to the file.
 func (cfg *Config) Flush() error {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
@@ -166,10 +183,7 @@ func (cfg *Config) Flush() error {
 	return nil
 }
 
+// Close simply calls (*os.File).Close and closes the file.
 func (cfg *Config) Close() error {
-	if err := cfg.file.Close(); err != nil {
-		return err
-	}
-
-	return nil
+	return cfg.file.Close()
 }
