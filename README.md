@@ -3,6 +3,7 @@
 **[Po Slovensky](https://github.com/MatusOllah/gophengine/blob/main/README_sk.md)**
 
 ---
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine)
 
 ![bf-gopher](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher.png)
 
