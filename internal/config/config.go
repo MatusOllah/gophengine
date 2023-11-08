@@ -21,7 +21,7 @@ type Config struct {
 	decoder *gob.Decoder
 }
 
-// Register simply calls gob.Register. If you are encoding a non-primitive type that implements something you should use this.
+// Register simply calls gob.Register. If you are encoding a non-primitive type (like a struct or map) that implements something you should use this.
 func Register(value interface{}) {
 	gob.Register(value)
 }
