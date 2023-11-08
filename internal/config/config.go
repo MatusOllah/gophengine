@@ -28,28 +28,23 @@ func Register(value interface{}) {
 
 // New creates / opens and decodes a new Config.
 func New(path string) (*Config, error) {
-	var cfg *Config
-
-	// checks if file exists
-	// skontroluje ci subor existuje
-	_, ferr := os.Stat(path)
-	if ferr == nil {
-		_cfg, err := Open(path)
+	if exists(path) {
+		cfg, err := Open(path)
 		if err != nil {
 			return nil, err
 		}
 
-		cfg = _cfg
-	} else if errors.Is(ferr, os.ErrNotExist) {
-		_cfg, err := Create(path)
+		return cfg, nil
+	} else {
+		cfg, err := Create(path)
 		if err != nil {
 			return nil, err
 		}
 
-		cfg = _cfg
+		return cfg, nil
 	}
 
-	return cfg, nil
+	panic("unreachable")
 }
 
 // Create creates a new Config.
