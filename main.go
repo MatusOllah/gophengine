@@ -22,6 +22,7 @@ import (
 type Game struct {
 	last         time.Time
 	currentState state.State
+	shader       *ebiten.Shader
 }
 
 func NewGame() (*Game, error) {
@@ -30,9 +31,22 @@ func NewGame() (*Game, error) {
 		return nil, err
 	}
 
+	slog.Info("Compiling shaders")
+	shaderBytes, err := assets.FS.ReadFile("data/shaders/shader.kage")
+	if err != nil {
+		return nil, err
+	}
+
+	shader, err := ebiten.NewShader(shaderBytes)
+	if err != nil {
+		return nil, err
+	}
+	slog.Info("done compiling shaders")
+
 	return &Game{
 		last:         time.Now(),
 		currentState: state,
+		shader:       shader,
 	}, nil
 }
 
@@ -48,7 +62,13 @@ func (game *Game) Update() error {
 }
 
 func (game *Game) Draw(screen *ebiten.Image) {
-	game.currentState.Draw(screen)
+	img := ebiten.NewImage(screen.Bounds().Dx(), screen.Bounds().Dy())
+	game.currentState.Draw(img)
+
+	// shader
+	op := &ebiten.DrawRectShaderOptions{}
+	op.Images[0] = img
+	screen.DrawRectShader(screen.Bounds().Dx(), screen.Bounds().Dy(), game.shader, op)
 
 	ebitenutil.DebugPrint(screen, fmt.Sprintf(
 		"FPS: %.2f\nTPS: %.2f",
