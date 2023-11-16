@@ -1,5 +1,5 @@
 GO=go
-WINRES=go-winres
+WINRES=$(GO) run github.com/tc-hib/go-winres@latest
 
 ICON=icon.ico
 BINARY=./bin
