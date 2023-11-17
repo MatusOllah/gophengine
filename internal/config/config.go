@@ -1,8 +1,10 @@
 package config
 
 import (
+	"bytes"
 	"encoding/gob"
 	"errors"
+	"io"
 	"log/slog"
 	"maps"
 	"os"
@@ -17,6 +19,7 @@ type Config struct {
 	data     map[string]interface{}
 
 	file    *os.File
+	buf     *bytes.Buffer
 	encoder *gob.Encoder
 	decoder *gob.Decoder
 }
@@ -59,8 +62,9 @@ func Create(path string) (*Config, error) {
 
 	cfg.data = make(map[string]interface{})
 	cfg.file = file
-	cfg.encoder = gob.NewEncoder(cfg.file)
-	cfg.decoder = gob.NewDecoder(cfg.file)
+	cfg.buf = new(bytes.Buffer)
+	cfg.encoder = gob.NewEncoder(cfg.buf)
+	cfg.decoder = gob.NewDecoder(cfg.buf)
 
 	return cfg, nil
 }
@@ -77,13 +81,19 @@ func Open(path string) (*Config, error) {
 	}
 
 	cfg.file = file
-	cfg.encoder = gob.NewEncoder(cfg.file)
-	cfg.decoder = gob.NewDecoder(cfg.file)
+	cfg.buf = new(bytes.Buffer)
+	cfg.encoder = gob.NewEncoder(cfg.buf)
+	cfg.decoder = gob.NewDecoder(cfg.buf)
 
 	// decodes raw data
 	// dekoduje surove data
-	cfg.dataLock.RLock()
-	defer cfg.dataLock.RUnlock()
+	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
+
+	_, err = io.Copy(cfg.buf, cfg.file)
+	if err != nil {
+		return nil, err
+	}
 
 	if err := cfg.decoder.Decode(&cfg.data); err != nil {
 		return nil, err
@@ -174,6 +184,13 @@ func (cfg *Config) Flush() error {
 	if err := cfg.encoder.Encode(cfg.data); err != nil {
 		return err
 	}
+
+	_, err := cfg.file.WriteAt(cfg.buf.Bytes(), 0)
+	if err != nil {
+		return err
+	}
+
+	cfg.file.Sync()
 
 	return nil
 }
