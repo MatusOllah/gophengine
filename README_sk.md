@@ -3,7 +3,7 @@
 ---
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine)
 
-![bf-gopher](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher.png)
+![bf-gopher_240x320](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png)
 
 **GophEngine** je Go implementácia hry **Friday Night Funkin'** s vylepšeniami.
 
