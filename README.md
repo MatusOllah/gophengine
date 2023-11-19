@@ -1,6 +1,6 @@
 # GophEngine
 
-**[Po Slovensky](https://github.com/MatusOllah/gophengine/blob/main/README_sk.md)**
+**[Po Slovensky](https://github.com/MatusOllah/gophengine/blob/main/README_sk_SK.md)**
 
 ---
 Status: work-in-progress
