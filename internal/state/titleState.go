@@ -7,6 +7,7 @@ import (
 	_ "image/png"
 	"io/fs"
 	"log/slog"
+	"sync"
 
 	"github.com/MatusOllah/gophengine/assets"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
@@ -23,7 +24,7 @@ var titleState *TitleState
 type TitleState struct {
 	ng              *ge.Sprite
 	mb              *ge.MusicBeat
-	inited          bool
+	once            *sync.Once
 	text            []string
 	introText       []string
 	logoBl          *ge.Sprite
@@ -102,7 +103,7 @@ func NewTitleState() (*TitleState, error) {
 		introText:       it,
 		ng:              ng,
 		mb:              mb,
-		inited:          false,
+		once:            new(sync.Once),
 		logoBl:          logoBl,
 		freakyMenu:      freakyMenu,
 		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
@@ -115,13 +116,12 @@ func NewTitleState() (*TitleState, error) {
 }
 
 func (s *TitleState) Update(dt float64) error {
-	if !s.inited {
+	s.once.Do(func() {
+		slog.Info("(*sync.Once).Do")
 		s.freakyMenu.Play()
 
 		ge.G.Conductor.ChangeBPM(102)
-
-		s.inited = true
-	}
+	})
 
 	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Current().Milliseconds())
 
