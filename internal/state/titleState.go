@@ -91,7 +91,7 @@ func NewTitleState() (*TitleState, error) {
 		return nil, err
 	}
 
-	freakyMenu, err := ge.G.AudioContext.NewPlayer(audio.NewInfiniteLoop(freakyMenuStream, freakyMenuStream.Length()))
+	freakyMenu, err := audio.CurrentContext().NewPlayer(audio.NewInfiniteLoop(freakyMenuStream, freakyMenuStream.Length()))
 	if err != nil {
 		return nil, err
 	}

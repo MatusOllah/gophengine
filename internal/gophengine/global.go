@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/MatusOllah/gophengine/internal/config"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/vpxyz/xorshift/xorshift1024star"
 )
 
@@ -19,7 +18,6 @@ type Global struct {
 	FNFVersion     string
 	ScreenWidth    int
 	ScreenHeight   int
-	AudioContext   *audio.Context
 	OptionsConfig  *config.Config
 	ProgressConfig *config.Config
 	Conductor      *Conductor
@@ -63,7 +61,6 @@ func InitGlobal() error {
 		FNFVersion:     "0.2.7.1",
 		ScreenWidth:    1280,
 		ScreenHeight:   720,
-		AudioContext:   audio.NewContext(48000),
 		OptionsConfig:  optionsConfig,
 		ProgressConfig: progressConfig,
 		Conductor:      NewConductor(100),

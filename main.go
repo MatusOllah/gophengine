@@ -15,6 +15,7 @@ import (
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/jessevdk/go-flags"
 )
@@ -109,6 +110,8 @@ func main() {
 	if err := ge.InitGlobal(); err != nil {
 		panic(err)
 	}
+
+	audio.NewContext(48000)
 
 	slog.Info(fmt.Sprintf("init took %v", time.Since(beforeInit)))
 
