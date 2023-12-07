@@ -1,3 +1,5 @@
+![bf-gopher_240x320](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png)
+
 # GophEngine
 
 **[Po Slovensky](https://github.com/MatusOllah/gophengine/blob/main/README_sk_SK.md)**
@@ -6,8 +8,6 @@
 Status: work-in-progress
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine)
-
-![bf-gopher_240x320](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png)
 
 **GophEngine** is a Go implementation of **Friday Night Funkin'** with improvments.
 
