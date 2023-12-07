@@ -4,7 +4,7 @@ WINRES=$(GO) run github.com/tc-hib/go-winres@latest
 ICON=icon.ico
 BINARY=./bin
 
-FLAGS=-v -ldflags="-w"
+FLAGS=-v -ldflags="-s -w"
 
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
