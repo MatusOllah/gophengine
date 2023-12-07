@@ -1,5 +1,5 @@
 # settings
-ISRELEASE = true
+IS_RELEASE = true
 
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
@@ -19,7 +19,7 @@ GO_GCFLAGS =
 GO_LDFLAGS =
 GO_FLAGS = -v
 
-ifeq ($(ISRELEASE),true)
+ifeq ($(IS_RELEASE),true)
 	GO_GCFLAGS += -dwarf=false
 	GO_LDFLAGS += -s -w
 endif
