@@ -123,7 +123,7 @@ func (s *TitleState) Update(dt float64) error {
 		ge.G.Conductor.ChangeBPM(102)
 	})
 
-	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Current().Milliseconds())
+	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Position().Milliseconds())
 
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
