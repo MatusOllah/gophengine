@@ -105,15 +105,11 @@ func main() {
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
-	beforeInit := time.Now()
-
 	if err := ge.InitGlobal(); err != nil {
 		panic(err)
 	}
 
 	audio.NewContext(48000)
-
-	slog.Info(fmt.Sprintf("init took %v", time.Since(beforeInit)))
 
 	fmt.Println()
 	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
@@ -131,6 +127,9 @@ func main() {
 		os.Exit(0)
 	}
 
+	slog.Info("initializing game")
+	beforeGameInit := time.Now()
+
 	ebiten.SetVsyncEnabled(ge.Options.VSync)
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
@@ -145,6 +144,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
 	if err := ebiten.RunGame(game); err != nil {
 		panic(err)
