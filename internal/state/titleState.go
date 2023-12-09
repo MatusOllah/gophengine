@@ -143,8 +143,6 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	s.drawText(screen)
 	s.ng.Draw(screen)
 
-	ebitenutil.DebugPrintAt(screen, "horalky", 420, 420)
-
 	s.flasher.Draw(screen)
 }
 
