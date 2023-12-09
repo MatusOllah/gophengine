@@ -150,6 +150,12 @@ func main() {
 		panic(err)
 	}
 
+	cleanUp()
+}
+
+func cleanUp() {
+	slog.Info("cleaning up")
+
 	if err := ge.G.OptionsConfig.Flush(); err != nil {
 		panic(err)
 	}
@@ -161,6 +167,5 @@ func main() {
 	ge.G.OptionsConfig.Close()
 	ge.G.ProgressConfig.Close()
 
-	runtime.GC()
 	os.Exit(0)
 }
