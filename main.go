@@ -131,7 +131,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	ebiten.SetFPSMode(ebiten.FPSModeVsyncOffMaximum)
+	ebiten.SetVsyncEnabled(ge.Options.VSync)
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
 	slog.Info("creating window")
