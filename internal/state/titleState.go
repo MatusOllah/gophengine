@@ -32,6 +32,7 @@ type TitleState struct {
 	freakyMenu      *audio.Player
 	freakyMenuTween *gween.Tween
 	danceLeft       bool
+	flasher         *ge.Flasher
 }
 
 func getRandIntroText() ([]string, error) {
@@ -108,6 +109,7 @@ func NewTitleState() (*TitleState, error) {
 		freakyMenu:      freakyMenu,
 		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
 		danceLeft:       false,
+		flasher:         ge.NewFlasher(color.NRGBA{255, 255, 255, 255}, 1),
 	}
 
 	titleState = ts
@@ -130,6 +132,8 @@ func (s *TitleState) Update(dt float64) error {
 
 	s.mb.Update()
 
+	s.flasher.Update(dt)
+
 	return nil
 }
 
@@ -138,11 +142,17 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 
 	s.drawText(screen)
 	s.ng.Draw(screen)
+
+	ebitenutil.DebugPrintAt(screen, "horalky", 420, 420)
+
+	s.flasher.Draw(screen)
 }
 
 func (ts *TitleState) skipIntro() {
 	slog.Info("skipIntro")
 	//TODO: skip intro
+	ts.ng.Img.Dispose()
+	ts.flasher.Flash()
 }
 
 func (ts *TitleState) drawText(img *ebiten.Image) {
