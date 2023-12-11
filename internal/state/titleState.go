@@ -100,6 +100,11 @@ func NewTitleState() (*TitleState, error) {
 	mb := ge.NewMusicBeat()
 	mb.BeatHitFunc = titleState_BeatHit
 
+	flasher, err := ge.NewFlasher(1)
+	if err != nil {
+		return nil, err
+	}
+
 	ts := &TitleState{
 		introText:       it,
 		ng:              ng,
@@ -109,7 +114,7 @@ func NewTitleState() (*TitleState, error) {
 		freakyMenu:      freakyMenu,
 		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
 		danceLeft:       false,
-		flasher:         ge.NewFlasher(color.NRGBA{255, 255, 255, 255}, 1),
+		flasher:         flasher,
 	}
 
 	titleState = ts
