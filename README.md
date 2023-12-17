@@ -1,4 +1,6 @@
-![bf-gopher_240x320](https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png)
+<p align="center">
+    <img src="https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png">
+</p>
 
 # GophEngine
 
