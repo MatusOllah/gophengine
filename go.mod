@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
-	github.com/jessevdk/go-flags v1.5.0
+	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/vpxyz/xorshift v1.2.2
 )

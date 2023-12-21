@@ -12,12 +12,12 @@ import (
 	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
+	"github.com/MatusOllah/gophengine/internal/flagutil"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/jessevdk/go-flags"
 )
 
 type Game struct {
@@ -99,10 +99,6 @@ func setIcon() error {
 }
 
 func main() {
-	if _, err := flags.NewParser(&ge.Options, flags.HelpFlag|flags.IgnoreUnknown|flags.PassDoubleDash).Parse(); err != nil {
-		panic(err)
-	}
-
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	if err := ge.InitGlobal(); err != nil {
@@ -118,7 +114,7 @@ func main() {
 	slog.Info("ahoj!")
 	fmt.Println()
 
-	if ge.Options.ExtractAssets {
+	if flagutil.MustGetBool(ge.G.FlagSet, "extract-assets") {
 		err := ge.ExtractAssets()
 		if err != nil {
 			panic(err)
@@ -130,7 +126,7 @@ func main() {
 	slog.Info("initializing game")
 	beforeGameInit := time.Now()
 
-	ebiten.SetVsyncEnabled(ge.Options.VSync)
+	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.G.FlagSet, "vsync"))
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
 	slog.Info("creating window")
