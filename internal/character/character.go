@@ -7,7 +7,7 @@ type Character struct {
 	HoldTimer    float64
 }
 
-func NewCharacter(x, y float64, char string, isPlayer bool) *Character {
+func New(x, y float64, char string, isPlayer bool) *Character {
 	return &Character{
 		IsPlayer:     isPlayer,
 		CurCharacter: char,
