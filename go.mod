@@ -4,17 +4,22 @@ go 1.21
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
+	github.com/ncruces/zenity v0.10.10
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/vpxyz/xorshift v1.2.2
 )
 
 require (
+	github.com/akavel/rsrc v0.10.2 // indirect
+	github.com/dchest/jsmin v0.0.0-20220218165748-59f39799265f // indirect
 	github.com/ebitengine/oto/v3 v3.1.0 // indirect
 	github.com/ebitengine/purego v0.5.1 // indirect
 	github.com/jezek/xgb v1.1.0 // indirect
 	github.com/jfreymuth/oggvorbis v1.0.5 // indirect
 	github.com/jfreymuth/vorbis v1.0.2 // indirect
+	github.com/josephspurrier/goversioninfo v1.4.0 // indirect
+	github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844 // indirect
 	golang.org/x/exp/shiny v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/image v0.14.0 // indirect
 	golang.org/x/mobile v0.0.0-20231108233038-35478a0c49da // indirect

@@ -24,6 +24,7 @@ func initFlags() (*pflag.FlagSet, error) {
 	flagSet.String("config", filepath.Join(configDir, "GophEngine/config.gecfg"), "Path to config.gecfg config file")
 	flagSet.String("progress", filepath.Join(configDir, "GophEngine/progress.gecfg"), "Path to progress.gecfg progress file")
 	flagSet.Bool("vsync", false, "Enable VSync")
+	flagSet.BoolP("gui", "g", true, "Enable GUI & dialogs")
 
 	if err := flagSet.Parse(os.Args[1:]); err != nil && err != pflag.ErrHelp {
 		return nil, err
