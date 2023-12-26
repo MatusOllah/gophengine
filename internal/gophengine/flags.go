@@ -26,6 +26,11 @@ func initFlags() (*pflag.FlagSet, error) {
 	flagSet.Bool("vsync", false, "Enable VSync")
 	flagSet.BoolP("gui", "g", true, "Enable GUI & dialogs")
 
+	// config flags
+	flagSet.Bool("config-load-defaults", false, "Wipe config and load defaults")
+
+	flagSet.StringSlice("config-string", []string{}, "Override a string value in config")
+
 	if err := flagSet.Parse(os.Args[1:]); err != nil && err != pflag.ErrHelp {
 		return nil, err
 	}
@@ -34,6 +39,7 @@ func initFlags() (*pflag.FlagSet, error) {
 		fmt.Printf("GophEngine is a Go implementation of Friday Night Funkin' with improvments.\n\n")
 		fmt.Printf("Usage: %s [OPTIONS]\n\nOptions:\n", os.Args[0])
 		fmt.Print(flagSet.FlagUsages())
+		fmt.Printf("\nConfig Override Usage: --config-[TYPE]=\"[KEY]:[VALUE]\"\n")
 		os.Exit(0)
 	}
 	return flagSet, nil

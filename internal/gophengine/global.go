@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"log/slog"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/BurntSushi/toml"
@@ -41,17 +42,24 @@ func InitGlobal() error {
 	optionsPath := flagutil.MustGetString(flagSet, "config")
 	slog.Info(fmt.Sprintf("using config file %s", optionsPath))
 
-	optionsConfig, err := config.New(optionsPath)
+	optionsConfig, err := config.New(optionsPath, true)
 	if err != nil {
 		return err
 	}
 
-	loadDefaultOptions(optionsConfig)
+	if err := overrideConfigValues(optionsConfig, flagSet); err != nil {
+		return err
+	}
+
+	if flagutil.MustGetBool(flagSet, "config-load-defaults") {
+		slog.Info("loading defaults")
+		config.LoadDefaultOptions(optionsConfig)
+	}
 
 	progressPath := flagutil.MustGetString(flagSet, "progress")
 	slog.Info(fmt.Sprintf("using progress file %s", progressPath))
 
-	progressConfig, err := config.New(progressPath)
+	progressConfig, err := config.New(progressPath, false)
 	if err != nil {
 		return err
 	}
@@ -66,7 +74,9 @@ func InitGlobal() error {
 		return err
 	}
 
-	localizer := i18n.NewLocalizer(bundle, optionsConfig.MustGet("locale").(string))
+	locale := optionsConfig.MustGet("locale").(string)
+	slog.Info("using locale", "locale", locale)
+	localizer := i18n.NewLocalizer(bundle, locale)
 
 	G = &Global{
 		Rand:           rand,
@@ -95,6 +105,26 @@ func loadLocales(bundle *i18n.Bundle) error {
 		if _, err := bundle.LoadMessageFileFS(assets.FS, file); err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+func overrideConfigValues(cfg *config.Config, flagSet *pflag.FlagSet) error {
+	// string
+	ss, err := flagSet.GetStringSlice("config-string")
+	if err != nil {
+		return err
+	}
+	for _, s := range ss {
+		slice := strings.Split(s, ":")
+		if len(slice) != 2 {
+			return fmt.Errorf("invalid config override syntax: %s", s)
+		}
+		key := slice[0]
+		value := slice[1]
+
+		cfg.Set(key, value)
 	}
 
 	return nil

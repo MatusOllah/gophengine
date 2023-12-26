@@ -30,7 +30,7 @@ func Register(value interface{}) {
 }
 
 // New creates / opens and decodes a new Config.
-func New(path string) (*Config, error) {
+func New(path string, loadDefaults bool) (*Config, error) {
 	if exists(path) {
 		cfg, err := Open(path)
 		if err != nil {
@@ -39,7 +39,7 @@ func New(path string) (*Config, error) {
 
 		return cfg, nil
 	} else {
-		cfg, err := Create(path)
+		cfg, err := Create(path, loadDefaults)
 		if err != nil {
 			return nil, err
 		}
@@ -51,7 +51,7 @@ func New(path string) (*Config, error) {
 }
 
 // Create creates a new Config.
-func Create(path string) (*Config, error) {
+func Create(path string, loadDefaults bool) (*Config, error) {
 	cfg := new(Config)
 
 	// creates file
@@ -65,6 +65,10 @@ func Create(path string) (*Config, error) {
 	cfg.buf = new(bytes.Buffer)
 	cfg.encoder = gob.NewEncoder(cfg.buf)
 	cfg.decoder = gob.NewDecoder(cfg.buf)
+
+	if loadDefaults {
+		LoadDefaultOptions(cfg)
+	}
 
 	return cfg, nil
 }
