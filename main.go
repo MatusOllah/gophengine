@@ -115,8 +115,7 @@ func main() {
 	fmt.Println()
 
 	if flagutil.MustGetBool(ge.G.FlagSet, "extract-assets") {
-		err := ge.ExtractAssets()
-		if err != nil {
+		if err := ge.ExtractAssets(); err != nil {
 			panic(err)
 		}
 
