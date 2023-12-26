@@ -108,6 +108,7 @@ func main() {
 	if err := ge.InitGlobal(); err != nil {
 		panic(err)
 	}
+	defer cleanUp()
 
 	audio.NewContext(48000)
 
@@ -124,7 +125,7 @@ func main() {
 			showError(err)
 		}
 
-		os.Exit(0)
+		return
 	}
 
 	slog.Info("initializing game")
@@ -150,8 +151,7 @@ func main() {
 	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
 	if flagutil.MustGetBool(ge.G.FlagSet, "just-init") {
-		cleanUp()
-		os.Exit(0)
+		return
 	}
 
 	if err := ebiten.RunGame(game); err != nil {
