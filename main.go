@@ -149,6 +149,11 @@ func main() {
 
 	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
+	if flagutil.MustGetBool(ge.G.FlagSet, "just-init") {
+		cleanUp()
+		os.Exit(0)
+	}
+
 	if err := ebiten.RunGame(game); err != nil {
 		slog.Error(err.Error())
 		showError(err)

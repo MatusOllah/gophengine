@@ -25,6 +25,7 @@ func initFlags() (*pflag.FlagSet, error) {
 	flagSet.String("progress", filepath.Join(configDir, "GophEngine/progress.gecfg"), "Path to progress.gecfg progress file")
 	flagSet.Bool("vsync", false, "Enable VSync")
 	flagSet.BoolP("gui", "g", true, "Enable GUI & dialogs")
+	flagSet.Bool("just-init", false, "Initialize game and exit")
 
 	// config flags
 	flagSet.Bool("config-load-defaults", false, "Wipe config and load defaults")
