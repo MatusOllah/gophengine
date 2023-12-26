@@ -18,6 +18,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/ncruces/zenity"
 )
 
 type Game struct {
@@ -116,7 +117,8 @@ func main() {
 
 	if flagutil.MustGetBool(ge.G.FlagSet, "extract-assets") {
 		if err := ge.ExtractAssets(); err != nil {
-			panic(err)
+			slog.Error(err.Error())
+			showError(err)
 		}
 
 		os.Exit(0)
@@ -132,18 +134,21 @@ func main() {
 	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 	if err := setIcon(); err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		showError(err)
 	}
 
 	game, err := NewGame()
 	if err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		showError(err)
 	}
 
 	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
 	if err := ebiten.RunGame(game); err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		showError(err)
 	}
 
 	cleanUp()
@@ -153,15 +158,24 @@ func cleanUp() {
 	slog.Info("cleaning up")
 
 	if err := ge.G.OptionsConfig.Flush(); err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		showError(err)
 	}
 
 	if err := ge.G.ProgressConfig.Flush(); err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		showError(err)
 	}
 
 	ge.G.OptionsConfig.Close()
 	ge.G.ProgressConfig.Close()
 
 	os.Exit(0)
+}
+
+func showError(err error) {
+	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+		zenity.Error(err.Error())
+	}
+	os.Exit(1)
 }
