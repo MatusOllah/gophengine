@@ -3,11 +3,14 @@ module github.com/MatusOllah/gophengine
 go 1.21
 
 require (
+	github.com/BurntSushi/toml v1.3.2
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
 	github.com/ncruces/zenity v0.10.10
+	github.com/nicksnyder/go-i18n/v2 v2.3.0
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/vpxyz/xorshift v1.2.2
+	golang.org/x/text v0.14.0
 )
 
 require (
