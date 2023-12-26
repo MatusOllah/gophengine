@@ -2,14 +2,19 @@ package gophengine
 
 import (
 	"fmt"
+	"io/fs"
 	"log/slog"
 	"math/rand"
 	"time"
 
+	"github.com/BurntSushi/toml"
+	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/flagutil"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/spf13/pflag"
 	"github.com/vpxyz/xorshift/xorshift1024star"
+	"golang.org/x/text/language"
 )
 
 type Global struct {
@@ -22,6 +27,7 @@ type Global struct {
 	ProgressConfig *config.Config
 	Conductor      *Conductor
 	FlagSet        *pflag.FlagSet
+	Localizer      *i18n.Localizer
 }
 
 var G *Global
@@ -40,6 +46,8 @@ func InitGlobal() error {
 		return err
 	}
 
+	loadDefaultOptions(optionsConfig)
+
 	progressPath := flagutil.MustGetString(flagSet, "progress")
 	slog.Info(fmt.Sprintf("using progress file %s", progressPath))
 
@@ -49,6 +57,16 @@ func InitGlobal() error {
 	}
 
 	rand := rand.New(xorshift1024star.NewSource(time.Now().UTC().UnixNano()))
+
+	// initialize localizer
+	bundle := i18n.NewBundle(language.English)
+	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
+
+	if err := loadLocales(bundle); err != nil {
+		return err
+	}
+
+	localizer := i18n.NewLocalizer(bundle, optionsConfig.MustGet("locale").(string))
 
 	G = &Global{
 		Rand:           rand,
@@ -60,6 +78,23 @@ func InitGlobal() error {
 		ProgressConfig: progressConfig,
 		Conductor:      NewConductor(100),
 		FlagSet:        flagSet,
+		Localizer:      localizer,
+	}
+
+	return nil
+}
+
+func loadLocales(bundle *i18n.Bundle) error {
+	files, err := fs.Glob(assets.FS, "data/locale/*.toml")
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		slog.Info("loading locale", "file", file)
+		if _, err := bundle.LoadMessageFileFS(assets.FS, file); err != nil {
+			return err
+		}
 	}
 
 	return nil

@@ -1,0 +1,1 @@
+FPSCounter = "FPS: {{.FPS}}\nTPS: {{.TPS}}"

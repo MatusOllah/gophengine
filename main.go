@@ -19,6 +19,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/ncruces/zenity"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type Game struct {
@@ -72,11 +73,13 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	op.Images[0] = img
 	screen.DrawRectShader(screen.Bounds().Dx(), screen.Bounds().Dy(), game.shader, op)
 
-	ebitenutil.DebugPrint(screen, fmt.Sprintf(
-		"FPS: %.2f\nTPS: %.2f",
-		ebiten.ActualFPS(),
-		ebiten.ActualTPS(),
-	))
+	ebitenutil.DebugPrint(screen, ge.G.Localizer.MustLocalize(&i18n.LocalizeConfig{
+		MessageID: "FPSCounter",
+		TemplateData: map[string]interface{}{
+			"FPS": ebiten.ActualFPS(),
+			"TPS": ebiten.ActualTPS(),
+		},
+	}))
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
