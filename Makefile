@@ -24,7 +24,7 @@ ifeq ($(IS_RELEASE),true)
 	GO_LDFLAGS += -s -w
 endif
 
-GO_FLAGS += -gcflags="$(GO_GCFLAGS)" -ldflags="$(GO_LDFLAGS)"
+GO_FLAGS += -gcflags="$(GO_GCFLAGS)" -ldflags="$(GO_LDFLAGS)" -buildvcs=true
 
 .PHONY: all
 all: build
