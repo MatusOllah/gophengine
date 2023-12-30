@@ -19,7 +19,7 @@ var ErrNotFound error = errors.New("image not found")
 
 // GetImagesByPrefixFromFS is basically addByPrefix in HaxeFlixel.
 // It gets images by prefix from the filesystem and returns them.
-func GetImagesByPrefixFromFS(prefix string, fsys fs.FS, path string) ([]*ebiten.Image, error) {
+func GetImagesByPrefixFromFS(fsys fs.FS, path string, prefix string) ([]*ebiten.Image, error) {
 	var finalFiles []string
 	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
@@ -65,7 +65,7 @@ func GetImagesByPrefixFromFS(prefix string, fsys fs.FS, path string) ([]*ebiten.
 
 // GetImagesByIndicesFromFS is basically addByIndices in HaxeFlixel.
 // It gets images by indices from the filesystem and returns them.
-func GetImagesByIndicesFromFS(prefix string, indices []int, fsys fs.FS, path string) ([]*ebiten.Image, error) {
+func GetImagesByIndicesFromFS(fsys fs.FS, path string, prefix string, indices []int) ([]*ebiten.Image, error) {
 	var files []string
 	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
