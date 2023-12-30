@@ -132,7 +132,3 @@ func MustGetImagesByIndicesFromFS(fsys fs.FS, path string, prefix string, indice
 
 	return imgs
 }
-
-func fileNameWithoutExt(fileName string) string {
-	return fileName[:len(fileName)-len(filepath.Ext(fileName))]
-}
