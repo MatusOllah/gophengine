@@ -17,7 +17,8 @@ Status: work-in-progress
 
 ## Why?
 
-I wanted to make a easy to use modding Go API for Friday Night Funkin' (something like MinecraftForge but for FNF).
+I wanted to make a easy to use Go (my fav programming language) modding API for Friday Night Funkin' (my fav game) (something like MinecraftForge but for FNF).
+I also wanted to fix everything what's wrong with the vanilla FNF engine and add some more features and improvments.
 
 ### Why Go?
 
