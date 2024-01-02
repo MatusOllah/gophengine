@@ -62,7 +62,7 @@ func NewTitleState() (*TitleState, error) {
 		return nil, err
 	}
 
-	ng := ge.NewSprite((float64(ge.G.ScreenWidth)/2)-150, float64(ge.G.ScreenHeight)*0.52)
+	ng := ge.NewSprite((float64(ge.G.Width)/2)-150, float64(ge.G.Height)*0.52)
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
 	if err != nil {
 		return nil, err
