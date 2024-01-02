@@ -23,18 +23,19 @@ import (
 var titleState *TitleState
 
 type TitleState struct {
-	ng              *ge.Sprite
-	mb              *ge.MusicBeat
-	once            *sync.Once
-	text            []string
-	introText       []string
-	logoBl          *ge.Sprite
-	gfDance         *ge.Sprite
-	titleText       *ge.Sprite
-	freakyMenu      *audio.Player
-	freakyMenuTween *gween.Tween
-	danceLeft       bool
-	flasher         *ge.Flasher
+	ng                 *ge.Sprite
+	mb                 *ge.MusicBeat
+	once               *sync.Once
+	text               []string
+	introText          []string
+	logoBl             *ge.Sprite
+	gfDance            *ge.Sprite
+	titleText          *ge.Sprite
+	freakyMenu         *audio.Player
+	freakyMenuTween    *gween.Tween
+	danceLeft          bool
+	flasher            *ge.Flasher
+	blackScreenVisible bool
 }
 
 func getRandIntroText() ([]string, error) {
@@ -107,17 +108,18 @@ func NewTitleState() (*TitleState, error) {
 	}
 
 	ts := &TitleState{
-		introText:       it,
-		ng:              ng,
-		mb:              mb,
-		once:            new(sync.Once),
-		logoBl:          logoBl,
-		gfDance:         gfDance,
-		titleText:       titleText,
-		freakyMenu:      freakyMenu,
-		freakyMenuTween: gween.New(0, 0.7, 4, ease.Linear),
-		danceLeft:       false,
-		flasher:         flasher,
+		introText:          it,
+		ng:                 ng,
+		mb:                 mb,
+		once:               new(sync.Once),
+		logoBl:             logoBl,
+		gfDance:            gfDance,
+		titleText:          titleText,
+		freakyMenu:         freakyMenu,
+		freakyMenuTween:    gween.New(0, 0.7, 4, ease.Linear),
+		danceLeft:          false,
+		flasher:            flasher,
+		blackScreenVisible: true,
 	}
 
 	titleState = ts
@@ -146,7 +148,9 @@ func (s *TitleState) Update(dt float64) error {
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
-	screen.Fill(color.Black)
+	if s.blackScreenVisible {
+		screen.Fill(color.Black)
+	}
 
 	s.drawText(screen)
 	s.ng.Draw(screen)
@@ -157,6 +161,7 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 func (ts *TitleState) skipIntro() {
 	slog.Info("skipIntro")
 	//TODO: skip intro
+	ts.blackScreenVisible = false
 	ts.ng.Img.Dispose()
 	ts.flasher.Flash()
 }
