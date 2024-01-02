@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-make IS_RELEASE=false
+make IS_RELEASE=true
