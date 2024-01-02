@@ -142,6 +142,8 @@ func (s *TitleState) Update(dt float64) error {
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
 
+	//TODO: press enter to begin screen
+
 	s.flasher.Update(dt)
 
 	return nil
@@ -151,6 +153,8 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	if s.blackScreenVisible {
 		screen.Fill(color.Black)
 	}
+
+	//TODO: press enter to begin screen
 
 	s.drawText(screen)
 	s.ng.Draw(screen)
