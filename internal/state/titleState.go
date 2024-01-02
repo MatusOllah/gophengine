@@ -135,10 +135,10 @@ func (s *TitleState) Update(dt float64) error {
 
 	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Position().Milliseconds())
 
+	s.mb.Update()
+
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
-
-	s.mb.Update()
 
 	s.flasher.Update(dt)
 
