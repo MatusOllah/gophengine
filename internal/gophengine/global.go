@@ -24,6 +24,8 @@ type Global struct {
 	FNFVersion     string
 	ScreenWidth    int
 	ScreenHeight   int
+	Width          int
+	Height         int
 	OptionsConfig  *config.Config
 	ProgressConfig *config.Config
 	Conductor      *Conductor
@@ -84,6 +86,8 @@ func InitGlobal() error {
 		FNFVersion:     "0.2.7.1",
 		ScreenWidth:    1280,
 		ScreenHeight:   720,
+		Width:          1280,
+		Height:         702,
 		OptionsConfig:  optionsConfig,
 		ProgressConfig: progressConfig,
 		Conductor:      NewConductor(100),
