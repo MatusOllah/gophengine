@@ -79,7 +79,7 @@ func (game *Game) Draw(screen *ebiten.Image) {
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return ge.G.ScreenWidth, ge.G.ScreenHeight
+	return 1280, 720
 }
 
 func setIcon() error {
