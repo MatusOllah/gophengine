@@ -6,7 +6,6 @@ import (
 	"fmt"
 	_ "image/png"
 	"io/fs"
-	"log/slog"
 	"path/filepath"
 	"slices"
 	"sort"
@@ -64,12 +63,11 @@ func GetImagesByPrefixFromFS(fsys fs.FS, path string, prefix string) ([]*ebiten.
 	return images, nil
 }
 
-// MustGetImagesByPrefixFromFS simply calls GetImagesByPrefixFromFS and returns nil if an error occurs.
+// MustGetImagesByPrefixFromFS simply calls GetImagesByPrefixFromFS and panics if an error occurs.
 func MustGetImagesByPrefixFromFS(fsys fs.FS, path string, prefix string) []*ebiten.Image {
 	imgs, err := GetImagesByPrefixFromFS(fsys, path, prefix)
 	if err != nil {
-		slog.Error(err.Error())
-		return nil
+		panic(err)
 	}
 	return imgs
 }
@@ -122,12 +120,11 @@ func GetImagesByIndicesFromFS(fsys fs.FS, path string, prefix string, indices []
 	return images, nil
 }
 
-// MustGetImagesByIndicesFromFS simply calls GetImagesByIndicesFromFS and returns nil if an error occurs.
+// MustGetImagesByIndicesFromFS simply calls GetImagesByIndicesFromFS and panics if an error occurs.
 func MustGetImagesByIndicesFromFS(fsys fs.FS, path string, prefix string, indices []int) []*ebiten.Image {
 	imgs, err := GetImagesByIndicesFromFS(fsys, path, prefix, indices)
 	if err != nil {
-		slog.Error(err.Error())
-		return nil
+		panic(err)
 	}
 
 	return imgs
