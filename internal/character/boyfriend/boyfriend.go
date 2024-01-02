@@ -7,6 +7,7 @@ type Boyfriend struct {
 	IsStunned bool
 }
 
+// New creates a new Boyfriend.
 func New(x, y float64) *Boyfriend {
 	return &Boyfriend{
 		Character: character.New(x, y, "bf", true),
