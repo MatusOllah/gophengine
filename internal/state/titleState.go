@@ -71,12 +71,6 @@ func NewTitleState() (*TitleState, error) {
 	ng.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
-	logoBlImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/logoBumpin.png")
-	if err != nil {
-		return nil, err
-	}
-
-	logoBl.Img = logoBlImg
 
 	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
 	if err != nil {
