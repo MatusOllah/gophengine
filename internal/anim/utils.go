@@ -21,7 +21,7 @@ var ErrNotFound error = errors.New("image not found")
 // It gets images by prefix from the filesystem and returns them.
 func GetImagesByPrefixFromFS(fsys fs.FS, path string, prefix string) ([]*ebiten.Image, error) {
 	var finalFiles []string
-	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+	err := fs.WalkDir(fsys, path, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ func MustGetImagesByPrefixFromFS(fsys fs.FS, path string, prefix string) []*ebit
 // It gets images by indices from the filesystem and returns them.
 func GetImagesByIndicesFromFS(fsys fs.FS, path string, prefix string, indices []int) ([]*ebiten.Image, error) {
 	var files []string
-	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+	err := fs.WalkDir(fsys, path, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
