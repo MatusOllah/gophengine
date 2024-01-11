@@ -87,7 +87,7 @@ func InitGlobal() error {
 		ScreenWidth:    1280,
 		ScreenHeight:   720,
 		Width:          1280,
-		Height:         702,
+		Height:         720,
 		OptionsConfig:  optionsConfig,
 		ProgressConfig: progressConfig,
 		Conductor:      NewConductor(100),
