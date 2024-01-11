@@ -24,6 +24,11 @@ I also wanted to fix everything what's wrong with the vanilla FNF engine and add
 
 Go is my favourite programming language and I don't wanna learn Haxe.
 
+## Naming
+
+"Goph" means Go Gopher (Go programming language mascot) and "Engine" means FNF engine.
+I wanted to call this funkin-go, but "I made a mod with GophEngine" just sounds more natural than "I made a mod with funkin-go".
+
 ## Notable tools and libraries
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics, audio and input

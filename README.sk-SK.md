@@ -20,6 +20,11 @@ Chcel som aj napraviť všetko, čo je zlé vo vanilla FNF engine a pridať viac
 
 Go je môj obľúbený programovací jazyk a nechce sa mi učiť Haxe.
 
+## Menovanie
+
+"Goph" znamená Go Gopher (maskot Go programovacieho jazyku) a "Engine" znamená FNF engine.
+Chcel som toto nazvať funkin-go, ale "Spravil som mód s GophEngine" znie prirodzenejšie než "Spravil som mód s funkin-go".
+
 ## Pozoruhodné nástroje a knižnice
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika, zvuk a vstup
