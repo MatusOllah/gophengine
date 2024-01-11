@@ -41,6 +41,7 @@ build: clean
 	$(WINRES) make
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(BINARY)
 
+.PHONY: upx
 upx:
 ifeq ($(IS_RELEASE),true)
 	upx $(UPX_FLAGS) $(EXE)
