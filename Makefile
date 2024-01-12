@@ -14,7 +14,7 @@ ICON = icon.ico
 # output
 BINARY = ./bin/$(GOOS)-$(GOARCH)
 
-EXE = $(BINARY)/gophengine.exe
+EXE = $(BINARY)/gophengine$(shell go env GOEXE)
 
 # flags
 UPX_FLAGS = --best --lzma
@@ -28,7 +28,7 @@ ifeq ($(IS_RELEASE),true)
 	GO_LDFLAGS += -s -w
 endif
 
-GO_FLAGS += -gcflags="$(GO_GCFLAGS)" -ldflags="$(GO_LDFLAGS)" -buildvcs=true
+GO_FLAGS += -gcflags="$(GO_GCFLAGS)" -ldflags="$(GO_LDFLAGS)" -buildvcs=true -buildmode=pie
 
 .PHONY: all
 all: build upx
@@ -39,7 +39,7 @@ build: clean
 
 	$(GO) get
 	$(WINRES) make
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(BINARY)
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE)
 
 .PHONY: upx
 upx:
@@ -49,6 +49,6 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf $(BINARY)/$(GOOS)-$(GOARCH)
+	rm -rf $(BINARY)
 	rm -f rsrc_windows_386.syso
 	rm -f rsrc_windows_amd64.syso
