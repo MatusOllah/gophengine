@@ -46,8 +46,6 @@ func New(path string, loadDefaults bool) (*Config, error) {
 
 		return cfg, nil
 	}
-
-	panic("unreachable")
 }
 
 // Create creates a new Config.
