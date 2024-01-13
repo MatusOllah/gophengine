@@ -21,13 +21,16 @@ func NewSprite(x, y float64) *Sprite {
 	}
 }
 
+func (s *Sprite) DrawImageOptions() *ebiten.DrawImageOptions {
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(s.X, s.Y)
+	return op
+}
+
 func (s *Sprite) Draw(img *ebiten.Image) {
 	if !s.Visible {
 		return
 	}
 
-	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(s.X, s.Y)
-
-	img.DrawImage(s.Img, op)
+	img.DrawImage(s.Img, s.DrawImageOptions())
 }
