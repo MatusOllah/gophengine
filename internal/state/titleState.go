@@ -26,8 +26,8 @@ type TitleState struct {
 	ng                 *ge.Sprite
 	mb                 *ge.MusicBeat
 	once               *sync.Once
-	text               []string
-	introText          []string
+	randIntroText      []string
+	introText          *ge.IntroText
 	logoBl             *ge.Sprite
 	gfDance            *ge.Sprite
 	titleText          *ge.Sprite
@@ -108,7 +108,8 @@ func NewTitleState() (*TitleState, error) {
 	}
 
 	ts := &TitleState{
-		introText:          it,
+		randIntroText:      it,
+		introText:          ge.NewIntroText(),
 		ng:                 ng,
 		mb:                 mb,
 		once:               new(sync.Once),
@@ -156,7 +157,7 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 
 	//TODO: press enter to begin screen
 
-	s.drawText(screen)
+	s.introText.Draw(screen)
 	s.ng.Draw(screen)
 
 	s.flasher.Draw(screen)
@@ -164,34 +165,15 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 
 func (ts *TitleState) skipIntro() {
 	slog.Info("skipIntro")
-	//TODO: skip intro
 	ts.blackScreenVisible = false
 	ts.ng.Img.Dispose()
 	ts.flasher.Flash()
 }
 
-func (ts *TitleState) drawText(img *ebiten.Image) {
-	for i, s := range ts.text {
-		ebitenutil.DebugPrintAt(img, s, img.Bounds().Dx()/2, (i*60)+200)
-	}
-}
-
-func (s *TitleState) createText(text ...string) {
-	s.text = append(s.text, text...)
-}
-
-func (s *TitleState) addText(text string) {
-	s.text = append(s.text, text)
-}
-
-func (s *TitleState) deleteText() {
-	s.text = nil
-}
-
 func titleState_BeatHit(curBeat int) {
 	switch curBeat {
 	case 1:
-		titleState.createText(
+		titleState.introText.CreateText(
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
@@ -199,31 +181,31 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleState.addText("present")
+		titleState.introText.AddText("present")
 	case 4:
-		titleState.deleteText()
+		titleState.introText.DeleteText()
 	case 5:
-		titleState.createText("In association", "with")
+		titleState.introText.CreateText("In association", "with")
 	case 7:
-		titleState.addText("newgrounds")
+		titleState.introText.AddText("newgrounds")
 		titleState.ng.Visible = true
 	case 8:
 		titleState.ng.Visible = false
-		titleState.deleteText()
+		titleState.introText.DeleteText()
 	case 9:
-		titleState.createText(titleState.introText[0])
+		titleState.introText.CreateText(titleState.randIntroText[0])
 	case 11:
-		titleState.addText(titleState.introText[1])
+		titleState.introText.AddText(titleState.randIntroText[1])
 	case 12:
-		titleState.deleteText()
+		titleState.introText.DeleteText()
 	case 13:
-		titleState.addText("Friday")
+		titleState.introText.AddText("Friday")
 	case 14:
-		titleState.addText("Night")
+		titleState.introText.AddText("Night")
 	case 15:
-		titleState.addText("Funkin")
+		titleState.introText.AddText("Funkin")
 	case 16:
-		titleState.deleteText()
+		titleState.introText.DeleteText()
 		titleState.skipIntro()
 	}
 }
