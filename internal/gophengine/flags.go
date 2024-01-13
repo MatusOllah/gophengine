@@ -32,7 +32,7 @@ func initFlags() (*pflag.FlagSet, error) {
 
 	flagSet.StringSlice("config-string", []string{}, "Override a string value in config")
 
-	if err := flagSet.Parse(os.Args[1:]); err != nil && err != pflag.ErrHelp {
+	if err := flagSet.Parse(os.Args[1:]); err != nil {
 		return nil, err
 	}
 
