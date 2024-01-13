@@ -91,17 +91,16 @@ func Open(path string) (*Config, error) {
 
 	// decodes raw data
 	// dekoduje surove data
-	cfg.dataLock.Lock()
-	defer cfg.dataLock.Unlock()
-
 	_, err = io.Copy(cfg.buf, cfg.file)
 	if err != nil {
 		return nil, err
 	}
 
+	cfg.dataLock.Lock()
 	if err := cfg.decoder.Decode(&cfg.data); err != nil {
 		return nil, err
 	}
+	cfg.dataLock.Unlock()
 
 	return cfg, nil
 }
@@ -109,39 +108,33 @@ func Open(path string) (*Config, error) {
 // Data returns a copy of the map.
 func (cfg *Config) Data() map[string]interface{} {
 	cfg.dataLock.RLock()
-	defer cfg.dataLock.RUnlock()
-
 	data := cfg.data
-
+	cfg.dataLock.RUnlock()
 	return data
 }
 
 // SetData overwrites the map.
 func (cfg *Config) SetData(m map[string]interface{}) {
 	cfg.dataLock.RLock()
-	defer cfg.dataLock.RUnlock()
-
 	cfg.data = m
+	cfg.dataLock.RUnlock()
 }
 
 // Append appends m to the map.
 func (cfg *Config) Append(m map[string]interface{}) {
 	cfg.dataLock.Lock()
-	defer cfg.dataLock.Unlock()
-
 	maps.Copy(cfg.data, m)
+	cfg.dataLock.Unlock()
 }
 
 // Get gets a value from the map.
 func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
-	defer cfg.dataLock.RUnlock()
-
 	value, ok := cfg.data[key]
 	if !ok {
 		return nil, ErrNotFound
 	}
-
+	cfg.dataLock.RUnlock()
 	return value, nil
 }
 
@@ -159,35 +152,31 @@ func (cfg *Config) MustGet(key string) interface{} {
 // Set sets key to value.
 func (cfg *Config) Set(key string, value interface{}) {
 	cfg.dataLock.Lock()
-	defer cfg.dataLock.Unlock()
-
 	cfg.data[key] = value
+	cfg.dataLock.Unlock()
 }
 
 // Delete deletes key from the map.
 func (cfg *Config) Delete(key string) {
 	cfg.dataLock.Lock()
-	defer cfg.dataLock.Unlock()
-
 	delete(cfg.data, key)
+	cfg.dataLock.Unlock()
 }
 
 // Wipe wipes (clears) the map.
 func (cfg *Config) Wipe() {
 	cfg.dataLock.Lock()
-	defer cfg.dataLock.Unlock()
-
 	clear(cfg.data)
+	cfg.dataLock.Unlock()
 }
 
 // Flush gob encodes and writes data to the file.
 func (cfg *Config) Flush() error {
 	cfg.dataLock.RLock()
-	defer cfg.dataLock.RUnlock()
-
 	if err := cfg.encoder.Encode(cfg.data); err != nil {
 		return err
 	}
+	cfg.dataLock.RUnlock()
 
 	_, err := cfg.file.WriteAt(cfg.buf.Bytes(), 0)
 	if err != nil {
