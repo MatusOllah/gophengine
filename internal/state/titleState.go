@@ -83,6 +83,7 @@ func NewTitleState() (*TitleState, error) {
 	titleText := ge.NewSprite(100, float64(ge.G.Height)*0.8)
 	titleText.AnimController.SetAnim("idle", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/titleEnter", "Press Enter to Begin"), anim.Dur24FPS))
 	titleText.AnimController.SetAnim("press", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/titleEnter", "ENTER PRESSED"), anim.Dur24FPS))
+	titleText.AnimController.Play("idle")
 
 	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
 	if err != nil {
@@ -144,6 +145,7 @@ func (s *TitleState) Update(dt float64) error {
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
 
 	//TODO: press enter to begin screen
+	s.titleText.AnimController.Update(dt)
 
 	s.flasher.Update(dt)
 
@@ -151,11 +153,12 @@ func (s *TitleState) Update(dt float64) error {
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
+	//TODO: press enter to begin screen
+	s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
+
 	if s.blackScreenVisible {
 		screen.Fill(color.Black)
 	}
-
-	//TODO: press enter to begin screen
 
 	s.introText.Draw(screen)
 	s.ng.Draw(screen)
