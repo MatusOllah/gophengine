@@ -154,6 +154,7 @@ func cleanUp() {
 	ge.G.OptionsConfig.Close()
 	ge.G.ProgressConfig.Close()
 
+	slog.Info("exiting")
 	os.Exit(0)
 }
 
