@@ -16,6 +16,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 )
@@ -36,6 +37,7 @@ type TitleState struct {
 	danceLeft          bool
 	flasher            *ge.Flasher
 	blackScreenVisible bool
+	skippedIntro       bool
 }
 
 func getRandIntroText() ([]string, error) {
@@ -122,6 +124,7 @@ func NewTitleState() (*TitleState, error) {
 		danceLeft:          false,
 		flasher:            flasher,
 		blackScreenVisible: true,
+		skippedIntro:       false,
 	}
 
 	titleState = ts
@@ -151,6 +154,10 @@ func (s *TitleState) Update(dt float64) error {
 
 	s.flasher.Update(dt)
 
+	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !s.skippedIntro {
+		s.skipIntro()
+	}
+
 	return nil
 }
 
@@ -162,14 +169,17 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 		screen.Fill(color.Black)
 	}
 
-	s.introText.Draw(screen)
-	s.ng.Draw(screen)
+	if !s.skippedIntro {
+		s.introText.Draw(screen)
+		s.ng.Draw(screen)
+	}
 
 	s.flasher.Draw(screen)
 }
 
 func (ts *TitleState) skipIntro() {
 	slog.Info("skipIntro")
+	ts.skippedIntro = true
 	ts.blackScreenVisible = false
 	ts.ng.Img.Dispose()
 	ts.flasher.Flash()
