@@ -137,13 +137,15 @@ func (s *TitleState) Update(dt float64) error {
 		ge.G.Conductor.ChangeBPM(102)
 	})
 
+	// Conductor & MusicBeat (MusicBeatState)
 	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Position().Milliseconds())
-
 	s.mb.Update()
 
+	// freakyMenu Volume
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
 	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
 
+	// Title screen
 	//TODO: press enter to begin screen
 	s.titleText.AnimController.Update(dt)
 
