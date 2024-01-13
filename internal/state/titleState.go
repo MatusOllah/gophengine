@@ -178,8 +178,11 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 }
 
 func (ts *TitleState) skipIntro() {
-	slog.Info("skipIntro")
+	if ts.skippedIntro {
+		return
+	}
 	ts.skippedIntro = true
+	slog.Info("skipIntro")
 	ts.blackScreenVisible = false
 	ts.ng.Img.Dispose()
 	ts.flasher.Flash()
