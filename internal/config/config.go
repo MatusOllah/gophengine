@@ -161,6 +161,13 @@ func (cfg *Config) Delete(key string) {
 	cfg.dataLock.Unlock()
 }
 
+// Toggle toggles a bool value.
+func (cfg *Config) Toggle(key string) {
+	cfg.dataLock.Lock()
+	cfg.data[key] = !cfg.data[key].(bool)
+	cfg.dataLock.Unlock()
+}
+
 // Wipe wipes (clears) the map.
 func (cfg *Config) Wipe() {
 	cfg.dataLock.Lock()
