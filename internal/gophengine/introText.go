@@ -44,6 +44,6 @@ func (it *IntroText) AddText(text string) {
 
 func (it *IntroText) DeleteText() {
 	it.textLock.Lock()
-	clear(it.text)
+	it.text = []string{}
 	it.textLock.Unlock()
 }
