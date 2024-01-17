@@ -150,7 +150,7 @@ func (s *TitleState) Update(dt float64) error {
 
 	// Title screen
 	//TODO: press enter to begin screen
-	s.titleText.AnimController.Update()
+	s.titleText.AnimController.UpdateWithDelta(dt)
 
 	s.flasher.Update(dt)
 
