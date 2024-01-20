@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
+	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/ncruces/zenity"
 )
 
@@ -43,14 +44,14 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 			return err
 		}
 
-		_dlg, err := zenity.Progress(zenity.Title("Extracting assets"), zenity.MaxValue(numFiles))
+		_dlg, err := zenity.Progress(zenity.Title(ge.Localize("ExtractAssetsDialogTitle")), zenity.MaxValue(numFiles))
 		if err != nil {
 			return err
 		}
 		defer _dlg.Close()
 		dlg = _dlg
 
-		dlg.Text("Extracting...")
+		dlg.Text(ge.Localize("ExtractAssetsDialogText"))
 	}
 
 	// create destination directory
@@ -68,7 +69,7 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 			dirPath := filepath.Join(dst, path)
 
 			if gui {
-				dlg.Text("Creating directory " + dirPath)
+				dlg.Text(ge.LocalizeTmpl("CreatingDir", map[string]interface{}{"Path": dirPath}))
 			}
 
 			slog.Info("creating directory", "path", dirPath)
@@ -85,7 +86,7 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 		if gui {
 			value++
 			dlg.Value(value)
-			dlg.Text("extracting " + path)
+			dlg.Text(ge.LocalizeTmpl("Extracting", map[string]interface{}{"Path": path}))
 		}
 
 		slog.Info("extracting", "src", path, "dst", dstPath)

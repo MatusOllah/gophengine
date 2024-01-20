@@ -1,3 +1,7 @@
 FPSCounter = "FPS (snímky za sekundu): {{.FPS}}\nTPS (tiky za sekundu)  : {{.TPS}}"
 InitGameDialogTitle = "Inicializujem hru"
 InitGameDialogText = "Inicializujem hru..."
+ExtractAssetsDialogTitle = "Extrahujem assets"
+ExtractAssetsDialogText = "Extrahujem..."
+CreatingDir = "Vytváram zložku {{.Path}} ..."
+Extracting = "Extrahujem súbor {{.Path}} ..."
