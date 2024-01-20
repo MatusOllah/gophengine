@@ -1,1 +1,3 @@
 FPSCounter = "FPS: {{.FPS}}\nTPS: {{.TPS}}"
+InitGameDialogTitle = "Initializing game"
+InitGameDialogText = "Initializing game..."

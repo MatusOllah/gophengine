@@ -109,8 +109,8 @@ func main() {
 
 	var dlg zenity.ProgressDialog
 	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
-		dlg, _ = zenity.Progress(zenity.Title("Initializing game"), zenity.Pulsate())
-		dlg.Text("Initializing game...")
+		dlg, _ = zenity.Progress(zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.Pulsate())
+		dlg.Text(ge.Localize("InitGameDialogText"))
 	}
 
 	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.G.FlagSet, "vsync"))
