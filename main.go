@@ -107,6 +107,12 @@ func main() {
 	slog.Info("initializing game")
 	beforeGameInit := time.Now()
 
+	var dlg zenity.ProgressDialog
+	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+		dlg, _ = zenity.Progress(zenity.Title("Initializing game"), zenity.Pulsate())
+		dlg.Text("Initializing game...")
+	}
+
 	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.G.FlagSet, "vsync"))
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
@@ -124,6 +130,10 @@ func main() {
 		showError(err)
 	}
 
+	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+		dlg.Complete()
+		dlg.Close()
+	}
 	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
 	if flagutil.MustGetBool(ge.G.FlagSet, "just-init") {
