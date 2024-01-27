@@ -1,12 +1,13 @@
 package gophengine
 
 import (
+	crand "crypto/rand"
+	"encoding/binary"
 	"fmt"
 	"io/fs"
 	"log/slog"
 	"math/rand"
 	"strings"
-	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/MatusOllah/gophengine/assets"
@@ -66,7 +67,11 @@ func InitGlobal() error {
 		return err
 	}
 
-	rand := rand.New(xorshift1024star.NewSource(time.Now().UTC().UnixNano()))
+	var seed int64
+	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed); err != nil {
+		return err
+	}
+	rand := rand.New(xorshift1024star.NewSource(seed))
 
 	// initialize localizer
 	bundle := i18n.NewBundle(language.English)
