@@ -23,6 +23,7 @@ import (
 
 type Game struct {
 	last         time.Time
+	dt           float64
 	currentState state.State
 }
 
@@ -39,10 +40,10 @@ func NewGame() (*Game, error) {
 }
 
 func (game *Game) Update() error {
-	dt := time.Since(game.last).Seconds()
+	game.dt = time.Since(game.last).Seconds()
 	game.last = time.Now()
 
-	if err := game.currentState.Update(dt); err != nil {
+	if err := game.currentState.Update(game.dt); err != nil {
 		return err
 	}
 
@@ -53,8 +54,9 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
-		"FPS": ebiten.ActualFPS(),
-		"TPS": ebiten.ActualTPS(),
+		"FPS":       ebiten.ActualFPS(),
+		"TPS":       ebiten.ActualTPS(),
+		"DeltaTime": game.dt,
 	}))
 }
 
