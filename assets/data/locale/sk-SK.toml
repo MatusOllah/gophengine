@@ -1,3 +1,3 @@
-FPSCounter = "FPS (snímky za sekundu): {{.FPS}}\nTPS (tiky za sekundu)  : {{.TPS}}\nDelta čas: {{.DeltaTime}}"
+FPSCounter = "FPS (snimky za sekundu): {{.FPS}}\nTPS (tiky za sekundu)  : {{.TPS}}\nDelta cas: {{.DeltaTime}}" # kvôli niečomu diakritika nefunguje cez ten default Ebitengine font...
 InitGameDialogTitle = "Inicializujem hru"
 InitGameDialogText = "Inicializujem hru..."
