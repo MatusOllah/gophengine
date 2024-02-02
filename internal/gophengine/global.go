@@ -13,6 +13,7 @@ import (
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/flagutil"
+	"github.com/gopxl/beep"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/spf13/pflag"
 	"github.com/vpxyz/xorshift/xorshift1024star"
@@ -32,6 +33,8 @@ type Global struct {
 	Conductor      *Conductor
 	FlagSet        *pflag.FlagSet
 	Localizer      *i18n.Localizer
+	SampleRate     beep.SampleRate
+	Mixer          *beep.Mixer
 }
 
 var G *Global
@@ -98,6 +101,8 @@ func InitGlobal() error {
 		Conductor:      NewConductor(100),
 		FlagSet:        flagSet,
 		Localizer:      localizer,
+		SampleRate:     beep.SampleRate(44100),
+		Mixer:          &beep.Mixer{},
 	}
 
 	return nil

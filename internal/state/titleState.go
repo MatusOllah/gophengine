@@ -1,20 +1,20 @@
 package state
 
 import (
-	"bytes"
 	"encoding/csv"
 	"image/color"
 	_ "image/png"
-	"io/fs"
 	"log/slog"
 	"sync"
 
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/internal/anim"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/effects"
+	"github.com/gopxl/beep/speaker"
+	"github.com/gopxl/beep/vorbis"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
-	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/tanema/gween"
@@ -32,7 +32,8 @@ type TitleState struct {
 	logoBl             *ge.Sprite
 	gfDance            *ge.Sprite
 	titleText          *ge.Sprite
-	freakyMenu         *audio.Player
+	freakyMenuStreamer beep.StreamSeekCloser
+	freakyMenu         *effects.Volume
 	freakyMenuTween    *gween.Tween
 	danceLeft          bool
 	flasher            *ge.Flasher
@@ -87,19 +88,22 @@ func NewTitleState() (*TitleState, error) {
 	titleText.AnimController.SetAnim("press", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/titleEnter", "ENTER PRESSED"), anim.Dur24FPS))
 	titleText.AnimController.Play("idle")
 
-	freakyMenuContent, err := fs.ReadFile(assets.FS, "music/freakyMenu.ogg")
+	freakyMenuFile, err := assets.FS.Open("music/freakyMenu.ogg")
+	if err != nil {
+		return nil, err
+	}
+	defer freakyMenuFile.Close()
+
+	freakyMenuStreamer, _, err := vorbis.Decode(freakyMenuFile)
 	if err != nil {
 		return nil, err
 	}
 
-	freakyMenuStream, err := vorbis.DecodeWithSampleRate(48000, bytes.NewReader(freakyMenuContent))
-	if err != nil {
-		return nil, err
-	}
-
-	freakyMenu, err := audio.CurrentContext().NewPlayer(audio.NewInfiniteLoop(freakyMenuStream, freakyMenuStream.Length()))
-	if err != nil {
-		return nil, err
+	freakyMenu := &effects.Volume{
+		Streamer: beep.Loop(-1, freakyMenuStreamer),
+		Base:     2,
+		Volume:   0,
+		Silent:   false,
 	}
 
 	mb := ge.NewMusicBeat()
@@ -119,8 +123,9 @@ func NewTitleState() (*TitleState, error) {
 		logoBl:             logoBl,
 		gfDance:            gfDance,
 		titleText:          titleText,
+		freakyMenuStreamer: freakyMenuStreamer,
 		freakyMenu:         freakyMenu,
-		freakyMenuTween:    gween.New(0, 0.7, 4, ease.Linear),
+		freakyMenuTween:    gween.New(-10, -0.7, 4, ease.Linear), // 0 => 0.7
 		danceLeft:          false,
 		flasher:            flasher,
 		blackScreenVisible: true,
@@ -135,18 +140,20 @@ func NewTitleState() (*TitleState, error) {
 func (s *TitleState) Update(dt float64) error {
 	s.once.Do(func() {
 		slog.Info("(*sync.Once).Do")
-		s.freakyMenu.Play()
+		ge.G.Mixer.Add(s.freakyMenu)
 
 		ge.G.Conductor.ChangeBPM(102)
 	})
 
 	// Conductor & MusicBeat (MusicBeatState)
-	ge.G.Conductor.SongPosition = float64(s.freakyMenu.Position().Milliseconds())
+	ge.G.Conductor.SongPosition = float64(ge.G.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
 	s.mb.Update()
 
 	// freakyMenu Volume
 	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
-	s.freakyMenu.SetVolume(float64(freakyMenuVolume))
+	speaker.Lock()
+	s.freakyMenu.Volume = float64(freakyMenuVolume)
+	speaker.Unlock()
 
 	// Title screen
 	//TODO: press enter to begin screen

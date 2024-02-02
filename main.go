@@ -15,8 +15,8 @@ import (
 	"github.com/MatusOllah/gophengine/internal/flagutil"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/MatusOllah/gophengine/internal/state"
+	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/ncruces/zenity"
 )
@@ -28,6 +28,8 @@ type Game struct {
 }
 
 func NewGame() (*Game, error) {
+	speaker.Init(ge.G.SampleRate, ge.G.SampleRate.N(time.Second/10))
+
 	state, err := state.NewTitleState()
 	if err != nil {
 		return nil, err
@@ -88,8 +90,6 @@ func main() {
 	}
 	defer cleanUp()
 
-	audio.NewContext(48000)
-
 	fmt.Println()
 	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
@@ -142,6 +142,7 @@ func main() {
 		return
 	}
 
+	speaker.Play(ge.G.Mixer)
 	if err := ebiten.RunGame(game); err != nil {
 		slog.Error(err.Error())
 		showError(err)
