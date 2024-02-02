@@ -6,6 +6,7 @@ import (
 	_ "image/png"
 	"log/slog"
 	"sync"
+	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/internal/anim"
@@ -39,6 +40,7 @@ type TitleState struct {
 	flasher            *ge.Flasher
 	blackScreenVisible bool
 	skippedIntro       bool
+	transitioning      bool
 }
 
 func getRandIntroText() ([]string, error) {
@@ -78,6 +80,7 @@ func NewTitleState() (*TitleState, error) {
 
 	logoBl := ge.NewSprite(-150, -100)
 	logoBl.AnimController.SetAnim("bump", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/logoBumpin", "logo bumpin"), anim.Dur24FPS))
+	logoBl.AnimController.Play("bump")
 
 	gfDance := ge.NewSprite(float64(ge.G.Width)*0.4, float64(ge.G.Height)*0.07)
 	gfDance.AnimController.SetAnim("danceLeft", anim.NewAnimation(anim.MustGetImagesByIndicesFromFS(assets.FS, "images/gfDanceTitle", "gfDance", []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}), anim.Dur24FPS))
@@ -130,6 +133,7 @@ func NewTitleState() (*TitleState, error) {
 		flasher:            flasher,
 		blackScreenVisible: true,
 		skippedIntro:       false,
+		transitioning:      false,
 	}
 
 	titleState = ts
@@ -157,9 +161,26 @@ func (s *TitleState) Update(dt float64) error {
 
 	// Title screen
 	//TODO: press enter to begin screen
+	s.gfDance.AnimController.UpdateWithDelta(dt)
+	s.logoBl.AnimController.UpdateWithDelta(dt)
 	s.titleText.AnimController.UpdateWithDelta(dt)
 
 	s.flasher.Update(dt)
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !s.transitioning && s.skippedIntro {
+		s.titleText.AnimController.Play("press")
+		s.flasher.Flash()
+
+		if err := ge.PlaySoundFromFS(assets.FS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+			return err
+		}
+
+		s.transitioning = true
+
+		time.AfterFunc(2*time.Second, func() {
+			panic("main menu not implemented yet")
+		})
+	}
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !s.skippedIntro {
 		s.skipIntro()
@@ -170,6 +191,8 @@ func (s *TitleState) Update(dt float64) error {
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
 	//TODO: press enter to begin screen
+	s.gfDance.AnimController.Draw(screen, s.gfDance.DrawImageOptions())
+	s.logoBl.AnimController.Draw(screen, s.logoBl.DrawImageOptions())
 	s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
 
 	if s.blackScreenVisible {
@@ -196,6 +219,15 @@ func (ts *TitleState) skipIntro() {
 }
 
 func titleState_BeatHit(curBeat int) {
+	titleState.logoBl.AnimController.Play("bump")
+	titleState.danceLeft = !titleState.danceLeft
+
+	if titleState.danceLeft {
+		titleState.gfDance.AnimController.Play("danceRight")
+	} else {
+		titleState.gfDance.AnimController.Play("danceLeft")
+	}
+
 	switch curBeat {
 	case 1:
 		titleState.introText.CreateText(
