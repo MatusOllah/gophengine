@@ -125,7 +125,7 @@ func NewTitleState() (*TitleState, error) {
 		titleText:          titleText,
 		freakyMenuStreamer: freakyMenuStreamer,
 		freakyMenu:         freakyMenu,
-		freakyMenuTween:    gween.New(-10, -0.7, 4, ease.Linear), // 0 => 0.7
+		freakyMenuTween:    gween.New(-10, -0.3, 4, ease.Linear), // 0 => 0.7
 		danceLeft:          false,
 		flasher:            flasher,
 		blackScreenVisible: true,
