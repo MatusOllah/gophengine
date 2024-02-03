@@ -160,7 +160,6 @@ func (s *TitleState) Update(dt float64) error {
 	speaker.Unlock()
 
 	// Title screen
-	//TODO: press enter to begin screen
 	s.gfDance.AnimController.UpdateWithDelta(dt)
 	s.logoBl.AnimController.UpdateWithDelta(dt)
 	s.titleText.AnimController.UpdateWithDelta(dt)
@@ -175,6 +174,7 @@ func (s *TitleState) Update(dt float64) error {
 			return err
 		}
 
+		slog.Info("pressed enter, transitioning")
 		s.transitioning = true
 
 		time.AfterFunc(2*time.Second, func() {
@@ -190,7 +190,6 @@ func (s *TitleState) Update(dt float64) error {
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
-	//TODO: press enter to begin screen
 	s.gfDance.AnimController.Draw(screen, s.gfDance.DrawImageOptions())
 	s.logoBl.AnimController.Draw(screen, s.logoBl.DrawImageOptions())
 	s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
