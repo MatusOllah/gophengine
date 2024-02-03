@@ -40,7 +40,7 @@ func NewFlasher(dur float32) (*Flasher, error) {
 
 func (f *Flasher) Draw(img *ebiten.Image) {
 	if f.flash && !f.done {
-		slog.Info("drawing", "flash", f.flash, "done", f.done, "alpha", f.alpha)
+		//slog.Info("drawing", "flash", f.flash, "done", f.done, "alpha", f.alpha)
 
 		newImg := ebiten.NewImage(img.Bounds().Dx(), img.Bounds().Dy())
 
