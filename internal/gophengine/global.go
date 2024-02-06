@@ -21,20 +21,21 @@ import (
 )
 
 type Global struct {
-	Rand           *rand.Rand
-	Version        string
-	FNFVersion     string
-	ScreenWidth    int
-	ScreenHeight   int
-	Width          int
-	Height         int
-	OptionsConfig  *config.Config
-	ProgressConfig *config.Config
-	Conductor      *Conductor
-	FlagSet        *pflag.FlagSet
-	Localizer      *i18n.Localizer
-	SampleRate     beep.SampleRate
-	Mixer          *beep.Mixer
+	Rand            *rand.Rand
+	Version         string
+	FNFVersion      string
+	ScreenWidth     int
+	ScreenHeight    int
+	Width           int
+	Height          int
+	OptionsConfig   *config.Config
+	ProgressConfig  *config.Config
+	Conductor       *Conductor
+	FlagSet         *pflag.FlagSet
+	Localizer       *i18n.Localizer
+	SampleRate      beep.SampleRate
+	Mixer           *beep.Mixer
+	ResampleQuality int
 }
 
 var G *Global
@@ -89,20 +90,21 @@ func InitGlobal() error {
 	localizer := i18n.NewLocalizer(bundle, locale)
 
 	G = &Global{
-		Rand:           rand,
-		Version:        "1.0",
-		FNFVersion:     "0.2.7.1",
-		ScreenWidth:    1280,
-		ScreenHeight:   720,
-		Width:          1280,
-		Height:         720,
-		OptionsConfig:  optionsConfig,
-		ProgressConfig: progressConfig,
-		Conductor:      NewConductor(100),
-		FlagSet:        flagSet,
-		Localizer:      localizer,
-		SampleRate:     beep.SampleRate(44100),
-		Mixer:          &beep.Mixer{},
+		Rand:            rand,
+		Version:         "1.0",
+		FNFVersion:      "0.2.7.1",
+		ScreenWidth:     1280,
+		ScreenHeight:    720,
+		Width:           1280,
+		Height:          720,
+		OptionsConfig:   optionsConfig,
+		ProgressConfig:  progressConfig,
+		Conductor:       NewConductor(100),
+		FlagSet:         flagSet,
+		Localizer:       localizer,
+		SampleRate:      beep.SampleRate(48000),
+		Mixer:           &beep.Mixer{},
+		ResampleQuality: 4,
 	}
 
 	return nil

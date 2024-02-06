@@ -34,6 +34,7 @@ type TitleState struct {
 	gfDance            *ge.Sprite
 	titleText          *ge.Sprite
 	freakyMenuStreamer beep.StreamSeekCloser
+	freakyMenuFormat   beep.Format
 	freakyMenu         *effects.Volume
 	freakyMenuTween    *gween.Tween
 	danceLeft          bool
@@ -97,13 +98,13 @@ func NewTitleState() (*TitleState, error) {
 	}
 	defer freakyMenuFile.Close()
 
-	freakyMenuStreamer, _, err := vorbis.Decode(freakyMenuFile)
+	freakyMenuStreamer, freakyMenuFormat, err := vorbis.Decode(freakyMenuFile)
 	if err != nil {
 		return nil, err
 	}
 
 	freakyMenu := &effects.Volume{
-		Streamer: beep.Loop(-1, freakyMenuStreamer),
+		Streamer: ge.Resample(freakyMenuFormat.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
@@ -127,6 +128,7 @@ func NewTitleState() (*TitleState, error) {
 		gfDance:            gfDance,
 		titleText:          titleText,
 		freakyMenuStreamer: freakyMenuStreamer,
+		freakyMenuFormat:   freakyMenuFormat,
 		freakyMenu:         freakyMenu,
 		freakyMenuTween:    gween.New(-10, -0.3, 4, ease.Linear), // 0 => 0.7
 		danceLeft:          false,
@@ -150,7 +152,7 @@ func (s *TitleState) Update(dt float64) error {
 	})
 
 	// Conductor & MusicBeat (MusicBeatState)
-	ge.G.Conductor.SongPosition = float64(ge.G.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
+	ge.G.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
 	s.mb.Update()
 
 	// freakyMenu Volume
