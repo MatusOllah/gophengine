@@ -24,6 +24,7 @@ import (
 
 var titleState *TitleState
 
+// TitleState is the intro and "press enter to begin" screen.
 type TitleState struct {
 	ng                 *ge.Sprite
 	mb                 *ge.MusicBeat
