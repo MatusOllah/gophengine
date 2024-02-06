@@ -4,6 +4,7 @@ import (
 	"math"
 )
 
+// MusicBeat is basically MusicBeatState in vanilla FNF.
 type MusicBeat struct {
 	LastBeat float64
 	LastStep float64
