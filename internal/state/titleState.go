@@ -144,7 +144,7 @@ func NewTitleState() (*TitleState, error) {
 func (s *TitleState) Update(dt float64) error {
 	s.once.Do(func() {
 		slog.Info("(*sync.Once).Do")
-		ge.G.Mixer.Add(s.freakyMenu)
+		speaker.Play(s.freakyMenu)
 
 		ge.G.Conductor.ChangeBPM(102)
 	})
