@@ -102,6 +102,7 @@ func InitGlobal() error {
 		FlagSet:        flagSet,
 		Localizer:      localizer,
 		SampleRate:     beep.SampleRate(44100),
+		Mixer:          &beep.Mixer{},
 	}
 
 	return nil

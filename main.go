@@ -142,6 +142,7 @@ func main() {
 		return
 	}
 
+	speaker.Play(ge.G.Mixer)
 	if err := ebiten.RunGame(game); err != nil {
 		slog.Error(err.Error())
 		showError(err)
