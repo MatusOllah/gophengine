@@ -21,20 +21,33 @@ import (
 )
 
 type Global struct {
-	Rand            *rand.Rand
-	Version         string
-	FNFVersion      string
-	ScreenWidth     int
-	ScreenHeight    int
-	Width           int
-	Height          int
-	OptionsConfig   *config.Config
-	ProgressConfig  *config.Config
-	Conductor       *Conductor
-	FlagSet         *pflag.FlagSet
-	Localizer       *i18n.Localizer
-	SampleRate      beep.SampleRate
-	Mixer           *beep.Mixer
+	Rand           *rand.Rand
+	Version        string
+	FNFVersion     string
+	ScreenWidth    int
+	ScreenHeight   int
+	Width          int
+	Height         int
+	OptionsConfig  *config.Config
+	ProgressConfig *config.Config
+	Conductor      *Conductor
+	FlagSet        *pflag.FlagSet
+	Localizer      *i18n.Localizer
+	SampleRate     beep.SampleRate
+	Mixer          *beep.Mixer
+
+	/*
+		This specifies the quality of the resampling process. Higher quality implies worse performance. Values below 1 or above 64 are invalid and Resample will panic. Here's a table for deciding which quality to pick.
+
+		quality | use case
+		--------|---------
+		1       | very high performance, on-the-fly resampling, low quality
+		3-4     | good performance, on-the-fly resampling, good quality
+		6       | higher CPU usage, usually not suitable for on-the-fly resampling, very good quality
+		>6      | even higher CPU usage, for offline resampling, very good quality
+
+		Sane quality values are usually below 16. Higher values will consume too much CPU, giving negligible quality improvements.
+	*/
 	ResampleQuality int
 }
 
