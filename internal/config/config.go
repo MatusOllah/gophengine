@@ -14,6 +14,8 @@ import (
 
 var ErrNotFound error = errors.New("key not found")
 
+type MapFunc func(string, interface{}) interface{}
+
 type Config struct {
 	dataLock sync.RWMutex
 	data     map[string]interface{}
@@ -147,6 +149,18 @@ func (cfg *Config) MustGet(key string) interface{} {
 	return value
 }
 
+// GetWithFallback gets a value from the map and returns the given fallback if not found.
+func (cfg *Config) GetWithFallback(key string, fallback interface{}) interface{} {
+	cfg.dataLock.RLock()
+	value, ok := cfg.data[key]
+	if !ok {
+		slog.Warn("key not found", "key", key, "fallback", fallback)
+		return fallback
+	}
+	cfg.dataLock.RUnlock()
+	return value
+}
+
 // Set sets key to value.
 func (cfg *Config) Set(key string, value interface{}) {
 	cfg.dataLock.Lock()
@@ -165,6 +179,23 @@ func (cfg *Config) Delete(key string) {
 func (cfg *Config) Toggle(key string) {
 	cfg.dataLock.Lock()
 	cfg.data[key] = !cfg.data[key].(bool)
+	cfg.dataLock.Unlock()
+}
+
+// Exists checks if key exists.
+func (cfg *Config) Exists(key string) bool {
+	cfg.dataLock.RLock()
+	_, ok := cfg.data[key]
+	cfg.dataLock.RUnlock()
+	return ok
+}
+
+// Map iterates over the map and applies the MapFunc to every item.
+func (cfg *Config) Map(fn MapFunc) {
+	cfg.dataLock.Lock()
+	for k, v := range cfg.data {
+		cfg.data[k] = fn(k, v)
+	}
 	cfg.dataLock.Unlock()
 }
 
