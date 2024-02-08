@@ -31,6 +31,7 @@ I wanted to call this funkin-go, but "I made a mod with GophEngine" just sounds 
 
 ## Notable tools and libraries
 
-- [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics, audio and input
+- [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics and input
+- [Beep](https://github.com/gopxl/beep) - audio
 - [ganim8](https://github.com/yohamta/ganim8) - animations
 - [go-winres](https://github.com/tc-hib/go-winres) - embedding .ico files

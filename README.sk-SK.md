@@ -27,6 +27,7 @@ Chcel som toto nazvať funkin-go, ale "Spravil som mód s GophEngine" znie priro
 
 ## Pozoruhodné nástroje a knižnice
 
-- [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika, zvuk a vstup
+- [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika a vstup
+- [Beep](https://github.com/gopxl/beep) - audio
 - [ganim8](https://github.com/yohamta/ganim8) - animácie
 - [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov
