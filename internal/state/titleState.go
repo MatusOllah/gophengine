@@ -60,7 +60,7 @@ func getRandIntroText() ([]string, error) {
 		return nil, err
 	}
 
-	introText := records[ge.G.Rand.Intn(len(records))]
+	introText := records[ge.G.Rand.IntN(len(records))]
 	slog.Info("got intro text", "introText", introText)
 
 	return introText, nil

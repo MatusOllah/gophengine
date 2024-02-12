@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/fs"
 	"log/slog"
-	"math/rand"
+	"math/rand/v2"
 	"strings"
 
 	"github.com/BurntSushi/toml"
