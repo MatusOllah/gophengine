@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"os"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
@@ -83,12 +84,31 @@ func setIcon() error {
 	return nil
 }
 
+func getLogLevel() slog.Leveler {
+	switch strings.ToLower(flagutil.MustGetString(ge.FlagSet, "log-level")) {
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		return slog.LevelInfo
+	case "warn":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	default:
+		return slog.LevelInfo
+	}
+}
+
 func main() {
 	if err := ge.InitFlags(); err != nil {
 		panic(err)
 	}
 
-	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
+	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, &slogcolor.Options{
+		Level:       getLogLevel(),
+		TimeFormat:  time.DateTime,
+		SrcFileMode: slogcolor.ShortFile,
+	})))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	if err := ge.InitGlobal(); err != nil {
