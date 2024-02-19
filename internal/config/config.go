@@ -41,6 +41,7 @@ func New(path string, loadDefaults bool) (*Config, error) {
 
 		return cfg, nil
 	} else {
+		slog.Warn("config not found, creating new config", "path", path)
 		cfg, err := Create(path, loadDefaults)
 		if err != nil {
 			return nil, err
