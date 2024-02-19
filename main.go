@@ -15,6 +15,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/flagutil"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/MatusOllah/gophengine/internal/state"
+	"github.com/MatusOllah/slogcolor"
 	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -83,6 +84,7 @@ func setIcon() error {
 }
 
 func main() {
+	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	if err := ge.InitGlobal(); err != nil {
