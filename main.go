@@ -116,12 +116,10 @@ func main() {
 	}
 	defer cleanUp()
 
-	fmt.Println()
 	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", ge.G.FNFVersion))
 	slog.Info("ahoj!")
-	fmt.Println()
 
 	if flagutil.MustGetBool(ge.FlagSet, "extract-assets") {
 		if err := ge.ExtractAssets(); err != nil {
