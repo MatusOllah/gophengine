@@ -31,7 +31,6 @@ type Global struct {
 	OptionsConfig  *config.Config
 	ProgressConfig *config.Config
 	Conductor      *Conductor
-	FlagSet        *pflag.FlagSet
 	Localizer      *i18n.Localizer
 	SampleRate     beep.SampleRate
 	Mixer          *beep.Mixer
@@ -54,12 +53,7 @@ type Global struct {
 var G *Global
 
 func InitGlobal() error {
-	flagSet, err := initFlags()
-	if err != nil {
-		return err
-	}
-
-	optionsPath := flagutil.MustGetString(flagSet, "config")
+	optionsPath := flagutil.MustGetString(FlagSet, "config")
 	slog.Info(fmt.Sprintf("using config file %s", optionsPath))
 
 	optionsConfig, err := config.New(optionsPath, true)
@@ -67,16 +61,16 @@ func InitGlobal() error {
 		return err
 	}
 
-	if err := overrideConfigValues(optionsConfig, flagSet); err != nil {
+	if err := overrideConfigValues(optionsConfig, FlagSet); err != nil {
 		return err
 	}
 
-	if flagutil.MustGetBool(flagSet, "config-load-defaults") {
+	if flagutil.MustGetBool(FlagSet, "config-load-defaults") {
 		slog.Info("loading defaults")
 		config.LoadDefaultOptions(optionsConfig)
 	}
 
-	progressPath := flagutil.MustGetString(flagSet, "progress")
+	progressPath := flagutil.MustGetString(FlagSet, "progress")
 	slog.Info(fmt.Sprintf("using progress file %s", progressPath))
 
 	progressConfig, err := config.New(progressPath, false)
@@ -113,7 +107,6 @@ func InitGlobal() error {
 		OptionsConfig:   optionsConfig,
 		ProgressConfig:  progressConfig,
 		Conductor:       NewConductor(100),
-		FlagSet:         flagSet,
 		Localizer:       localizer,
 		SampleRate:      beep.SampleRate(48000),
 		Mixer:           &beep.Mixer{},

@@ -9,10 +9,12 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func initFlags() (*pflag.FlagSet, error) {
+var FlagSet *pflag.FlagSet
+
+func InitFlags() error {
 	configDir, err := os.UserConfigDir()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	flagSet := pflag.NewFlagSet(os.Args[0], pflag.ExitOnError)
@@ -25,6 +27,7 @@ func initFlags() (*pflag.FlagSet, error) {
 	flagSet.String("progress", filepath.Join(configDir, "GophEngine/progress.gecfg"), "Path to progress.gecfg progress file")
 	flagSet.Bool("vsync", false, "Enable VSync")
 	flagSet.BoolP("gui", "g", true, "Enable GUI & dialogs")
+	flagSet.String("log-level", "info", "Log level (debug, info, warn, error)")
 	flagSet.Bool("just-init", false, "Initialize game and exit")
 
 	// config flags
@@ -33,7 +36,7 @@ func initFlags() (*pflag.FlagSet, error) {
 	flagSet.StringSlice("config-string", []string{}, "Override a string value in config")
 
 	if err := flagSet.Parse(os.Args[1:]); err != nil {
-		return nil, err
+		return err
 	}
 
 	if flagutil.MustGetBool(flagSet, "help") {
@@ -43,5 +46,8 @@ func initFlags() (*pflag.FlagSet, error) {
 		fmt.Printf("\nConfig Override Usage: --config-[TYPE]=\"[KEY]:[VALUE]\"\n")
 		os.Exit(0)
 	}
-	return flagSet, nil
+
+	FlagSet = flagSet
+
+	return nil
 }

@@ -7,5 +7,5 @@ import (
 )
 
 func ExtractAssets() error {
-	return fsutil.Extract(assets.FS, "assets", flagutil.MustGetBool(G.FlagSet, "gui"))
+	return fsutil.Extract(assets.FS, "assets", flagutil.MustGetBool(FlagSet, "gui"))
 }

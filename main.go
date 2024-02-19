@@ -84,6 +84,10 @@ func setIcon() error {
 }
 
 func main() {
+	if err := ge.InitFlags(); err != nil {
+		panic(err)
+	}
+
 	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, slogcolor.DefaultOptions)))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
@@ -99,7 +103,7 @@ func main() {
 	slog.Info("ahoj!")
 	fmt.Println()
 
-	if flagutil.MustGetBool(ge.G.FlagSet, "extract-assets") {
+	if flagutil.MustGetBool(ge.FlagSet, "extract-assets") {
 		if err := ge.ExtractAssets(); err != nil {
 			slog.Error(err.Error())
 			showError(err)
@@ -112,12 +116,12 @@ func main() {
 	beforeGameInit := time.Now()
 
 	var dlg zenity.ProgressDialog
-	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+	if flagutil.MustGetBool(ge.FlagSet, "gui") {
 		dlg, _ = zenity.Progress(zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.Pulsate())
 		dlg.Text(ge.Localize("InitGameDialogText"))
 	}
 
-	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.G.FlagSet, "vsync"))
+	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.FlagSet, "vsync"))
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 
 	slog.Info("creating window")
@@ -134,13 +138,13 @@ func main() {
 		showError(err)
 	}
 
-	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+	if flagutil.MustGetBool(ge.FlagSet, "gui") {
 		dlg.Complete()
 		dlg.Close()
 	}
 	slog.Info("init game done", "time", time.Since(beforeGameInit))
 
-	if flagutil.MustGetBool(ge.G.FlagSet, "just-init") {
+	if flagutil.MustGetBool(ge.FlagSet, "just-init") {
 		return
 	}
 
@@ -174,7 +178,7 @@ func cleanUp() {
 }
 
 func showError(err error) {
-	if flagutil.MustGetBool(ge.G.FlagSet, "gui") {
+	if flagutil.MustGetBool(ge.FlagSet, "gui") {
 		zenity.Error(err.Error())
 	}
 	os.Exit(1)
