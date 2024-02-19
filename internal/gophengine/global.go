@@ -7,7 +7,6 @@ import (
 	"io/fs"
 	"log/slog"
 	"math/rand/v2"
-	"strings"
 
 	"github.com/BurntSushi/toml"
 	"github.com/MatusOllah/gophengine/assets"
@@ -15,7 +14,6 @@ import (
 	"github.com/MatusOllah/gophengine/internal/flagutil"
 	"github.com/gopxl/beep"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"github.com/spf13/pflag"
 	"github.com/vpxyz/xorshift/xorshift1024star"
 	"golang.org/x/text/language"
 )
@@ -58,10 +56,6 @@ func InitGlobal() error {
 
 	optionsConfig, err := config.New(optionsPath, true)
 	if err != nil {
-		return err
-	}
-
-	if err := overrideConfigValues(optionsConfig, FlagSet); err != nil {
 		return err
 	}
 
@@ -127,26 +121,6 @@ func loadLocales(bundle *i18n.Bundle) error {
 		if _, err := bundle.LoadMessageFileFS(assets.FS, file); err != nil {
 			return err
 		}
-	}
-
-	return nil
-}
-
-func overrideConfigValues(cfg *config.Config, flagSet *pflag.FlagSet) error {
-	// string
-	ss, err := flagSet.GetStringSlice("config-string")
-	if err != nil {
-		return err
-	}
-	for _, s := range ss {
-		slice := strings.Split(s, ":")
-		if len(slice) != 2 {
-			return fmt.Errorf("invalid config override syntax: %s", s)
-		}
-		key := slice[0]
-		value := slice[1]
-
-		cfg.Set(key, value)
 	}
 
 	return nil
