@@ -12,7 +12,7 @@ type Boyfriend struct {
 	IsStunned bool
 }
 
-// New creates a new Boyfriend.
+// New allocates and creates a new [Boyfriend].
 func New(x, y float64) *Boyfriend {
 	slog.Info("Beep!")
 
