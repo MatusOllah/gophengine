@@ -59,9 +59,8 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, norm.NFC.String(ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
-		"FPS":       ebiten.ActualFPS(),
-		"TPS":       ebiten.ActualTPS(),
-		"DeltaTime": game.dt,
+		"FPS": ebiten.ActualFPS(),
+		"TPS": ebiten.ActualTPS(),
 	})))
 }
 

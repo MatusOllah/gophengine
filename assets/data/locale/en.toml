@@ -1,3 +1,3 @@
-FPSCounter = "FPS: {{.FPS}}\nTPS: {{.TPS}}\nDelta time: {{.DeltaTime}}"
+FPSCounter = "FPS: {{.FPS}}\nTPS: {{.TPS}}"
 InitGameDialogTitle = "Initializing game"
 InitGameDialogText = "Initializing game..."
