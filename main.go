@@ -21,6 +21,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/ncruces/zenity"
+	"golang.org/x/text/unicode/norm"
 )
 
 type Game struct {
@@ -57,11 +58,11 @@ func (game *Game) Update() error {
 func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
-	ebitenutil.DebugPrint(screen, ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
+	ebitenutil.DebugPrint(screen, norm.NFC.String(ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
 		"FPS":       ebiten.ActualFPS(),
 		"TPS":       ebiten.ActualTPS(),
 		"DeltaTime": game.dt,
-	}))
+	})))
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
