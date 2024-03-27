@@ -2,7 +2,7 @@
     <img src="https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png">
 </p>
 
-# GophEngine
+# 🎤 GophEngine
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine)
 

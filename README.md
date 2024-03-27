@@ -2,7 +2,7 @@
     <img src="https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png">
 </p>
 
-# GophEngine
+# 🎤 GophEngine
 
 **[Po Slovensky 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/README.sk-SK.md)**
 
