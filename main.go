@@ -85,7 +85,7 @@ func setIcon() error {
 }
 
 func getLogLevel() slog.Leveler {
-	switch strings.ToLower(flagutil.MustGetString(ge.FlagSet, "log-level")) {
+	switch s := strings.ToLower(flagutil.MustGetString(ge.FlagSet, "log-level")); s {
 	case "debug":
 		return slog.LevelDebug
 	case "info":
@@ -95,7 +95,7 @@ func getLogLevel() slog.Leveler {
 	case "error":
 		return slog.LevelError
 	default:
-		return slog.LevelInfo
+		panic("unknown log level: " + s)
 	}
 }
 
