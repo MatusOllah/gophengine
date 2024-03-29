@@ -24,6 +24,23 @@ Go je môj obľúbený programovací jazyk a nechce sa mi učiť Haxe.
 "Goph" znamená Go Gopher (maskot Go programovacieho jazyku) a "Engine" znamená FNF engine.
 Chcel som toto nazvať funkin-go, ale "Spravil som mód s GophEngine" znie prirodzenejšie než "Spravil som mód s funkin-go".
 
+## Kompilovanie & inštalovanie
+
+### pomocou `go install`
+
+1. Nainštaluj Go >= 1.22.0
+2. Nainštaluj C prekladač
+3. Spusti `go install -v github.com/MatusOllah/gophengine`
+
+### pomocou Makefile
+
+1. Nainštaluj Go >= 1.22.0
+2. Nainštaluj C prekladač
+3. Stiahni tento repozitár
+4. Spusti `make` v zložke, kde je repozitár
+
+Choď [tu](https://ebitengine.org/en/documents/install.html) pre ďalšie info.
+
 ## Pozoruhodné nástroje a knižnice
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika a vstup

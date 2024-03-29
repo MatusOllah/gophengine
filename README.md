@@ -28,6 +28,23 @@ Go is my favourite programming language and I don't wanna learn Haxe.
 "Goph" means Go Gopher (Go programming language mascot) and "Engine" means FNF engine.
 I wanted to call this funkin-go, but "I made a mod with GophEngine" just sounds more natural than "I made a mod with funkin-go".
 
+## Building & installing
+
+### using `go install`
+
+1. Install Go >= 1.22.0
+2. Install a C compiler
+3. Run `go install -v github.com/MatusOllah/gophengine`
+
+### using Makefile
+
+1. Install Go >= 1.22.0
+2. Install a C compiler
+3. Clone this repo
+4. Run `make` in the cloned repo's directory
+
+Go [here](https://ebitengine.org/en/documents/install.html) for more details.
+
 ## Notable tools and libraries
 
 - [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics and input
