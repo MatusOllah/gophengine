@@ -115,7 +115,7 @@ func main() {
 		panic(err)
 	}
 	defer cleanUp()
-	slog.Info("pre-init done")
+	slog.Info("finished early initialization")
 
 	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
