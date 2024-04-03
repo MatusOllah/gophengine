@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	"io"
 	"io/fs"
 	"log"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
@@ -99,12 +101,26 @@ func getLogLevel() slog.Leveler {
 	}
 }
 
+func getLogFilePath() string {
+	return filepath.Join(os.TempDir(), "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
+}
+
 func main() {
 	if err := ge.InitFlags(); err != nil {
 		panic(err)
 	}
 
-	slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, &slogcolor.Options{
+	logfilePath := getLogFilePath()
+	if err := os.MkdirAll(filepath.Dir(logfilePath), 0666); err != nil {
+		panic(err)
+	}
+	logfile, err := os.OpenFile(logfilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer logfile.Close()
+
+	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(logfile, os.Stderr), &slogcolor.Options{
 		Level:       getLogLevel(),
 		TimeFormat:  time.DateTime,
 		SrcFileMode: slogcolor.ShortFile,
