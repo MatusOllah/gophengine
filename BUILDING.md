@@ -21,25 +21,25 @@ The steps for installing with MSYS2 (recommended) are as follows:
 2. Once installed do not use the MSYS terminal that opens
 3. Open "MSYS2 MinGW 64-bit" from the start menu
 4. Run the following commands (if asked for install options be sure to choose "all"):
-    `pacman -Syu`
-    `pacman -S git mingw-w64-x86_64-toolchain`
+    * `pacman -Syu`
+    * `pacman -S git mingw-w64-x86_64-toolchain`
 
 5. You will need to add `/c/Program\ Files/Go/bin` and `~/Go/bin` to your `$PATH`, for MSYS2 you can run the following command:
-    `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
+    * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
 
 ### macOS X
 
 1. Install [Go](https://go.dev).
 2. Install Xcode from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 3. Set up the Xcode command line tools by opening a Terminal window and typing the following:
-    `xcode-select --install`
+    * `xcode-select --install`
 4. On macOS the graphics driver will already be installed.
 
 ### Linux
 
 1. Install [Go](https://go.dev).
 2. Install a C Compiler using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
-    `sudo apt install gcc automake`
+    * `sudo apt install gcc automake`
 3. Install the graphics library header files using your distribution's package manager. One of the following commands should work.
     * **Debian / Ubuntu / Linux Mint:** `sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config`
     * **Fedora / RHEL:** `sudo dnf install mesa-libGL-devel mesa-libGLES-devel libXrandr-devel libXcursor-devel libXinerama-devel libXi-devel libXxf86vm-devel alsa-lib-devel pkg-config`
