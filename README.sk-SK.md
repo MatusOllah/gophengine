@@ -13,6 +13,7 @@
 ## Prečo?
 
 Chcel som spraviť jednoduché Go (môj obľúbený programovací jazyk) módovacie API pre Friday Night Funkin' (moju obľúbenú hru). Niečo ako MinecraftForge ale pre FNF.
+
 Chcel som aj napraviť všetko, čo je zlé vo vanilla FNF engine a pridať viac funkcií a vylepšení.
 
 ### Prečo Go?
