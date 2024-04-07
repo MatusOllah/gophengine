@@ -15,8 +15,8 @@ Note that **this is just required for development**; your GophEngine FNF mods **
 2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit).
 3. On Windows the graphics driver will already be installed, but it is recommended to ensure they are up to date.
 
-The steps for installing with MSYS2 (recommended) are as follows:
 
+The steps for installing with MSYS2 (recommended) are as follows:
 1. Install MSYS2 from [msys2.org](https://www.msys2.org/).
 2. Once installed do not use the MSYS terminal that opens
 3. Open "MSYS2 MinGW 64-bit" from the start menu
