@@ -5,6 +5,7 @@ Instead of painstakingly installing dependencies and debugging broken Haxe code,
 ## Prerequisites
 
 GophEngine requires 3 basic elements to be present: the **Go toolchain (version 1.22 or later)**, a **C compiler** and a **system graphics driver**.
+
 A C Compiler is required as GophEngine uses not only Go but also C.
 
 Note that **this is just required for development**; your GophEngine FNF mods **will not require any setup or dependency installation for end users!**
