@@ -26,20 +26,7 @@ Chcel som toto nazvať funkin-go, ale "Spravil som mód s GophEngine" znie priro
 
 ## Kompilovanie & inštalovanie
 
-### pomocou `go install`
-
-1. Nainštaluj Go >= 1.22.0
-2. Nainštaluj C prekladač
-3. Spusti `go install -v github.com/MatusOllah/gophengine`
-
-### pomocou Makefile
-
-1. Nainštaluj Go >= 1.22.0
-2. Nainštaluj C prekladač
-3. Stiahni tento repozitár
-4. Spusti `make` v zložke, kde je repozitár
-
-Choď [tu](https://ebitengine.org/en/documents/install.html) pre ďalšie info.
+Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md) (slovenský preklad som ešte nespravil).
 
 ## Pozoruhodné nástroje a knižnice
 
