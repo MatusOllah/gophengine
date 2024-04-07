@@ -1,4 +1,4 @@
-# Building & Installing
+# 🔨 Building & Installing
 
 Instead of painstakingly installing dependencies and debugging broken Haxe code, installation is completely pain-free.
 
