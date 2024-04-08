@@ -22,7 +22,7 @@ I also wanted to fix everything what's wrong with the vanilla FNF engine and add
 
 ### Why Go?
 
-Go is my favourite programming language and I don't wanna learn Haxe.
+Go is my favorite programming language and I don't wanna learn Haxe.
 
 ## Naming
 
