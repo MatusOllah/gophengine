@@ -30,8 +30,8 @@ Examples of unacceptable behavior by participants include:
 	address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a
 	professional setting
-* Being a FNF degenerate.
-* Shipping Boyfriend and Pico (or other characters) together.
+* Being a FNF degenerate
+* Shipping Boyfriend and Pico (or other characters) together
 
 ## Our Responsibilities
 
