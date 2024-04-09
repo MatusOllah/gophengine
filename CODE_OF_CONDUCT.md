@@ -28,7 +28,6 @@ Examples of unacceptable behavior by participants include:
 * Publishing others' private information, such as a physical or electronic address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a professional setting
 * Being a FNF degenerate
-* Shipping Boyfriend and Pico (or other characters) together
 
 ## Our Responsibilities
 
@@ -74,6 +73,5 @@ available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.ht
 * Treat everyone with respect and kindness.
 * Be thoughtful in how you communicate.
 * Don’t be destructive or inflammatory.
-* Don't be a jerk.
 * Don't be a FNF degenerate.
 * If you encounter an issue, please mail matusollah420@gmail.com.
