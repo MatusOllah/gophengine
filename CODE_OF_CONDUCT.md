@@ -74,5 +74,6 @@ available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.ht
 * Treat everyone with respect and kindness.
 * Be thoughtful in how you communicate.
 * Don’t be destructive or inflammatory.
+* Don't be a jerk.
 * Don't be a FNF degenerate.
 * If you encounter an issue, please mail matusollah420@gmail.com.
