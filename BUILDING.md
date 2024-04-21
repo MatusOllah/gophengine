@@ -8,7 +8,7 @@ GophEngine requires 3 basic elements to be present: the **Go toolchain (version 
 
 A C Compiler is required as GophEngine uses not only Go but also C.
 
-> [!NOTE]  
+> [!NOTE]
 > this is just required for development; your GophEngine FNF mods will not require any setup or dependency installation for end users!
 
 ### Windows
