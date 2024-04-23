@@ -97,12 +97,87 @@ func getLogLevel() slog.Leveler {
 	case "error":
 		return slog.LevelError
 	default:
-		panic("unknown log level: " + s)
+		return slog.LevelInfo
 	}
 }
 
 func getLogFilePath() string {
 	return filepath.Join(os.TempDir(), "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
+}
+
+// main func here
+func run() error {
+	if err := ge.InitGlobal(); err != nil {
+		return err
+	}
+	slog.Info("finished early initialization")
+
+	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
+	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
+	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", ge.G.FNFVersion))
+	slog.Info("ahoj!")
+
+	if flagutil.MustGetBool(ge.FlagSet, "extract-assets") {
+		if err := ge.ExtractAssets(); err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	slog.Info("initializing game")
+	beforeGameInit := time.Now()
+
+	var dlg zenity.ProgressDialog
+	if flagutil.MustGetBool(ge.FlagSet, "gui") {
+		dlg, _ = zenity.Progress(zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.Pulsate())
+		dlg.Text(ge.Localize("InitGameDialogText"))
+	}
+
+	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.FlagSet, "vsync"))
+	ebiten.SetTPS(ebiten.SyncWithFPS)
+
+	slog.Info("creating window")
+	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
+	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
+	if err := setIcon(); err != nil {
+		return err
+	}
+
+	game, err := NewGame()
+	if err != nil {
+		return err
+	}
+
+	if flagutil.MustGetBool(ge.FlagSet, "gui") {
+		dlg.Complete()
+		dlg.Close()
+	}
+	slog.Info("init game done", "time", time.Since(beforeGameInit))
+
+	if flagutil.MustGetBool(ge.FlagSet, "just-init") {
+		return nil
+	}
+
+	speaker.Play(ge.G.Mixer)
+	if err := ebiten.RunGame(game); err != nil {
+		return err
+	}
+
+	slog.Info("cleaning up")
+
+	if err := ge.G.OptionsConfig.Flush(); err != nil {
+		return err
+	}
+
+	if err := ge.G.ProgressConfig.Flush(); err != nil {
+		return err
+	}
+
+	ge.G.OptionsConfig.Close()
+	ge.G.ProgressConfig.Close()
+
+	return nil
 }
 
 func main() {
@@ -127,94 +202,12 @@ func main() {
 	})))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
-	if err := ge.InitGlobal(); err != nil {
-		panic(err)
-	}
-	defer cleanUp()
-	slog.Info("finished early initialization")
-
-	slog.Info(fmt.Sprintf("GophEngine version %s", ge.G.Version))
-	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
-	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", ge.G.FNFVersion))
-	slog.Info("ahoj!")
-
-	if flagutil.MustGetBool(ge.FlagSet, "extract-assets") {
-		if err := ge.ExtractAssets(); err != nil {
-			slog.Error(err.Error())
-			showError(err)
+	// moved main func to run(); learned this from Melkey
+	if err := run(); err != nil {
+		slog.Error(err.Error())
+		if flagutil.MustGetBool(ge.FlagSet, "gui") {
+			zenity.Error(err.Error())
 		}
-
-		return
+		os.Exit(1)
 	}
-
-	slog.Info("initializing game")
-	beforeGameInit := time.Now()
-
-	var dlg zenity.ProgressDialog
-	if flagutil.MustGetBool(ge.FlagSet, "gui") {
-		dlg, _ = zenity.Progress(zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.Pulsate())
-		dlg.Text(ge.Localize("InitGameDialogText"))
-	}
-
-	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.FlagSet, "vsync"))
-	ebiten.SetTPS(ebiten.SyncWithFPS)
-
-	slog.Info("creating window")
-	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
-	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
-	if err := setIcon(); err != nil {
-		slog.Error(err.Error())
-		showError(err)
-	}
-
-	game, err := NewGame()
-	if err != nil {
-		slog.Error(err.Error())
-		showError(err)
-	}
-
-	if flagutil.MustGetBool(ge.FlagSet, "gui") {
-		dlg.Complete()
-		dlg.Close()
-	}
-	slog.Info("init game done", "time", time.Since(beforeGameInit))
-
-	if flagutil.MustGetBool(ge.FlagSet, "just-init") {
-		return
-	}
-
-	speaker.Play(ge.G.Mixer)
-	if err := ebiten.RunGame(game); err != nil {
-		slog.Error(err.Error())
-		showError(err)
-	}
-
-	cleanUp()
-}
-
-func cleanUp() {
-	slog.Info("cleaning up")
-
-	if err := ge.G.OptionsConfig.Flush(); err != nil {
-		slog.Error(err.Error())
-		showError(err)
-	}
-
-	if err := ge.G.ProgressConfig.Flush(); err != nil {
-		slog.Error(err.Error())
-		showError(err)
-	}
-
-	ge.G.OptionsConfig.Close()
-	ge.G.ProgressConfig.Close()
-
-	slog.Info("exiting")
-	os.Exit(0)
-}
-
-func showError(err error) {
-	if flagutil.MustGetBool(ge.FlagSet, "gui") {
-		zenity.Error(err.Error())
-	}
-	os.Exit(1)
 }
