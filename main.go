@@ -195,7 +195,7 @@ func main() {
 	}
 	defer logfile.Close()
 
-	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(logfile, os.Stderr), &slogcolor.Options{
+	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), &slogcolor.Options{
 		Level:       getLogLevel(),
 		TimeFormat:  time.DateTime,
 		SrcFileMode: slogcolor.ShortFile,
