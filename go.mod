@@ -7,8 +7,9 @@ require (
 	github.com/MatusOllah/slogcolor v1.0.0
 	github.com/gopxl/beep v1.3.0
 	github.com/hajimehoshi/ebiten/v2 v2.6.3
+	github.com/jeandeaual/go-locale v0.0.0-20240223122105-ce5225dcaa49
 	github.com/ncruces/zenity v0.10.10
-	github.com/nicksnyder/go-i18n/v2 v2.3.0
+	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/vpxyz/xorshift v1.2.2
@@ -33,5 +34,5 @@ require (
 	golang.org/x/image v0.14.0 // indirect
 	golang.org/x/mobile v0.0.0-20231108233038-35478a0c49da // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 )
