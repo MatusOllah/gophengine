@@ -56,6 +56,9 @@ Run `go install -v github.com/MatusOllah/gophengine`
 
 ### using Makefile
 
-Clone this repo and run `make` in the cloned repo's directory.
+1. Clone this repo:
+    * `git clone https://github.com/MatusOllah/gophengine.git`
+2. Run `make` in the cloned repo's directory:
+    * `cd ./gophengine/ && make`
 
 Go [here](https://ebitengine.org/en/documents/install.html) for more details.
