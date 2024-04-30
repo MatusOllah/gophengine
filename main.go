@@ -60,6 +60,8 @@ func (game *Game) Update() error {
 func (game *Game) Draw(screen *ebiten.Image) {
 	game.currentState.Draw(screen)
 
+	// kvôli niečomu diakritika nefunguje cez ten default Ebitengine font...
+	// preto tu je to norm.NFC.String()
 	ebitenutil.DebugPrint(screen, norm.NFC.String(ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),
 		"TPS": ebiten.ActualTPS(),
