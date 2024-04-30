@@ -52,7 +52,7 @@ The steps for installing with MSYS2 (recommended) are as follows:
 
 ### using `go install`
 
-Run `go install -v github.com/MatusOllah/gophengine`
+Run `go install -v github.com/MatusOllah/gophengine@latest`
 
 ### using Makefile
 
