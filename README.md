@@ -12,7 +12,8 @@ Status: work-in-progress
 
 **GophEngine** is a Go implementation of **Friday Night Funkin'** with improvments.
 
-**NOTE**: This is a mod. This is not the vanilla game and should be treated as a modification.
+> [!NOTE]
+> This is a mod. This is not the vanilla game and should be treated as a modification.
 
 ## Why?
 
