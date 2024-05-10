@@ -94,7 +94,7 @@ func InitGlobal() error {
 
 	locale := optionsConfig.MustGet("Locale").(string)
 	slog.Info("using locale", "locale", locale)
-	localizer := i18n.NewLocalizer(bundle, "en", locale)
+	localizer := i18n.NewLocalizer(bundle, locale, "en")
 
 	G = &Global{
 		Rand:            rand,
