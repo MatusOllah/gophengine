@@ -29,6 +29,7 @@ func InitFlags() error {
 	flagSet.BoolP("gui", "g", true, "Enable GUI & dialogs")
 	flagSet.String("log-level", "info", "Log level (\"debug\", \"info\", \"warn\", \"error\")")
 	flagSet.Bool("just-init", false, "Initialize game and exit")
+	flagSet.Bool("portable", false, "Save everything in the current directory (aka portable mode)")
 
 	// config flags
 	flagSet.Bool("config-load-defaults", false, "Wipe config and load defaults")

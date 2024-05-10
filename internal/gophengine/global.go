@@ -52,6 +52,9 @@ var G *Global
 
 func InitGlobal() error {
 	optionsPath := flagutil.MustGetString(FlagSet, "config")
+	if flagutil.MustGetBool(FlagSet, "portable") {
+		optionsPath = "GophEngine/config.gecfg"
+	}
 	slog.Info(fmt.Sprintf("using config file %s", optionsPath))
 
 	optionsConfig, err := config.New(optionsPath, true)
@@ -65,6 +68,9 @@ func InitGlobal() error {
 	}
 
 	progressPath := flagutil.MustGetString(FlagSet, "progress")
+	if flagutil.MustGetBool(FlagSet, "portable") {
+		optionsPath = "GophEngine/progress.gecfg"
+	}
 	slog.Info(fmt.Sprintf("using progress file %s", progressPath))
 
 	progressConfig, err := config.New(progressPath, false)
