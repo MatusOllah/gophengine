@@ -3,7 +3,6 @@ package animhcl
 
 import (
 	"cmp"
-	"errors"
 	"fmt"
 	_ "image/png"
 	"io/fs"
@@ -225,7 +224,7 @@ func getFramesByIndicesFromFS(fsys fs.FS, path string, prefix string, indices []
 			return cmp.Compare(filepath.Base(s1), filepath.Base(s2))
 		})
 		if !ok {
-			return nil, errors.New(fmt.Sprintf("frame not found: %s", wantedFile))
+			return nil, fmt.Errorf("frame not found: %s", wantedFile)
 		}
 		fileIndices = append(fileIndices, fileIndex)
 	}
