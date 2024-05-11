@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
-	"github.com/MatusOllah/gophengine/internal/anim"
+	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	ge "github.com/MatusOllah/gophengine/internal/gophengine"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/effects"
@@ -81,17 +81,25 @@ func NewTitleState() (*TitleState, error) {
 	ng.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
-	logoBl.AnimController.SetAnim("bump", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/logoBumpin", "logo bumpin"), anim.Dur24FPS))
-	logoBl.AnimController.Play("bump")
+	ac, err := animhcl.LoadAnimsFromFS(assets.FS, "images/logoBumpin/logoBumpin.anim.hcl")
+	if err != nil {
+		return nil, err
+	}
+	logoBl.AnimController = ac
 
 	gfDance := ge.NewSprite(float64(ge.G.Width)*0.4, float64(ge.G.Height)*0.07)
-	gfDance.AnimController.SetAnim("danceLeft", anim.NewAnimation(anim.MustGetImagesByIndicesFromFS(assets.FS, "images/gfDanceTitle", "gfDance", []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}), anim.Dur24FPS))
-	gfDance.AnimController.SetAnim("danceRight", anim.NewAnimation(anim.MustGetImagesByIndicesFromFS(assets.FS, "images/gfDanceTitle", "gfDance", []int{15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}), anim.Dur24FPS))
+	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/gfDanceTitle/gfDanceTitle.anim.hcl")
+	if err != nil {
+		return nil, err
+	}
+	gfDance.AnimController = ac
 
 	titleText := ge.NewSprite(100, float64(ge.G.Height)*0.8)
-	titleText.AnimController.SetAnim("idle", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/titleEnter", "Press Enter to Begin"), anim.Dur24FPS))
-	titleText.AnimController.SetAnim("press", anim.NewAnimation(anim.MustGetImagesByPrefixFromFS(assets.FS, "images/titleEnter", "ENTER PRESSED"), anim.Dur24FPS))
-	titleText.AnimController.Play("idle")
+	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/titleEnter/titleEnter.anim.hcl")
+	if err != nil {
+		return nil, err
+	}
+	titleText.AnimController = ac
 
 	freakyMenuFile, err := assets.FS.Open("music/freakyMenu.ogg")
 	if err != nil {
