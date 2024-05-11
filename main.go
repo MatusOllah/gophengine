@@ -134,7 +134,7 @@ func run() error {
 
 	var dlg zenity.ProgressDialog
 	if flagutil.MustGetBool(ge.FlagSet, "gui") {
-		dlg, _ = zenity.Progress(zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.Pulsate())
+		dlg, _ = zenity.Progress(zenity.Pulsate(), zenity.Title(ge.Localize("InitGameDialogTitle")), zenity.NoCancel())
 		dlg.Text(ge.Localize("InitGameDialogText"))
 	}
 
@@ -152,6 +152,8 @@ func run() error {
 	if err != nil {
 		return err
 	}
+
+	time.Sleep(time.Second)
 
 	if flagutil.MustGetBool(ge.FlagSet, "gui") {
 		dlg.Complete()
