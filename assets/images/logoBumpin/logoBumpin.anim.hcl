@@ -3,6 +3,6 @@ AnimController {
 
     Animation "bump" {
         Frames = fromPrefix(PATH, "logo bumpin")
-        FrameDuration = "41ms"
+        FrameDuration = DUR_24FPS
     }
 }

@@ -3,11 +3,11 @@ AnimController {
 
     Animation "idle" {
         Frames = fromPrefix(PATH, "Press Enter to Begin")
-        FrameDuration = "41ms"
+        FrameDuration = DUR_24FPS
     }
 
     Animation "press" {
         Frames = fromPrefix(PATH, "ENTER PRESSED")
-        FrameDuration = "41ms"
+        FrameDuration = DUR_24FPS
     }
 }
