@@ -58,7 +58,8 @@ func LoadAnimsFromFS(fsys fs.FS, _path string) (*anim.AnimController, error) {
 	}
 	diags = gohcl.DecodeBody(hclf.Body, &hcl.EvalContext{
 		Variables: map[string]cty.Value{
-			"PATH": cty.StringVal(path.Dir(_path)),
+			"PATH":      cty.StringVal(path.Dir(_path)),
+			"DUR_24FPS": cty.StringVal(anim.Dur24FPS.String()),
 		},
 		Functions: map[string]function.Function{
 			"fromPrefix": function.New(&function.Spec{
