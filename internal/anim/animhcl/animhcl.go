@@ -1,3 +1,4 @@
+// Package animhcl allows loading from external HCL files (see `assets/images` for examples).
 package animhcl
 
 import (
