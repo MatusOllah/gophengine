@@ -201,9 +201,11 @@ func (s *TitleState) Update(dt float64) error {
 }
 
 func (s *TitleState) Draw(screen *ebiten.Image) {
-	s.gfDance.AnimController.Draw(screen, s.gfDance.DrawImageOptions())
-	s.logoBl.AnimController.Draw(screen, s.logoBl.DrawImageOptions())
-	s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
+	if s.skippedIntro {
+		s.gfDance.AnimController.Draw(screen, s.gfDance.DrawImageOptions())
+		s.logoBl.AnimController.Draw(screen, s.logoBl.DrawImageOptions())
+		s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
+	}
 
 	if s.blackScreenVisible {
 		screen.Fill(color.Black)
