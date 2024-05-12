@@ -153,8 +153,6 @@ func run() error {
 		return err
 	}
 
-	time.Sleep(time.Second)
-
 	if flagutil.MustGetBool(ge.FlagSet, "gui") {
 		dlg.Complete()
 		dlg.Close()
