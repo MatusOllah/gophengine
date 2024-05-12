@@ -171,9 +171,11 @@ func (s *TitleState) Update(dt float64) error {
 	speaker.Unlock()
 
 	// Title screen
-	s.gfDance.AnimController.UpdateWithDelta(dt)
-	s.logoBl.AnimController.UpdateWithDelta(dt)
-	s.titleText.AnimController.UpdateWithDelta(dt)
+	if s.skippedIntro {
+		s.gfDance.AnimController.UpdateWithDelta(dt)
+		s.logoBl.AnimController.UpdateWithDelta(dt)
+		s.titleText.AnimController.UpdateWithDelta(dt)
+	}
 
 	s.flasher.Update(dt)
 
