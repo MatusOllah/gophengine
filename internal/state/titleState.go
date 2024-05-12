@@ -217,15 +217,15 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	s.flasher.Draw(screen)
 }
 
-func (ts *TitleState) skipIntro() {
-	if ts.skippedIntro {
+func (s *TitleState) skipIntro() {
+	if s.skippedIntro {
 		return
 	}
-	ts.skippedIntro = true
+	s.skippedIntro = true
 	slog.Info("skipIntro")
-	ts.blackScreenVisible = false
-	ts.ng.Img.Dispose()
-	ts.flasher.Flash()
+	s.blackScreenVisible = false
+	s.ng.Img.Dispose()
+	s.flasher.Flash()
 }
 
 func titleState_BeatHit(curBeat int) {
