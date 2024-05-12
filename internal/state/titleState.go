@@ -191,6 +191,7 @@ func (s *TitleState) Update(dt float64) error {
 		s.transitioning = true
 
 		time.AfterFunc(2*time.Second, func() {
+			//TODO: main menu
 			panic("main menu not implemented yet")
 		})
 	}
