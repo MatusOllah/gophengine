@@ -11,7 +11,7 @@ A C Compiler is required as GophEngine uses not only Go but also C.
 > [!NOTE]
 > this is just required for development; your GophEngine FNF mods will not require any setup or dependency installation for end users!
 
-### Windows
+### 🪟 Windows
 
 1. Install [Go](https://go.dev).
 2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit).
@@ -28,7 +28,7 @@ The steps for installing with MSYS2 (recommended) are as follows:
 5. You will need to add `/c/Program\ Files/Go/bin` and `~/Go/bin` to your `$PATH`, for MSYS2 you can run the following command:
     * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
 
-### macOS X
+### 🍎 macOS X
 
 1. Install [Go](https://go.dev).
 2. Install Xcode from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
@@ -36,7 +36,7 @@ The steps for installing with MSYS2 (recommended) are as follows:
     * `xcode-select --install`
 4. On macOS the graphics driver will already be installed.
 
-### Linux
+### 🐧 Linux
 
 1. Install [Go](https://go.dev).
 2. Install a C Compiler using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
