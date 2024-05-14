@@ -14,7 +14,7 @@ A C Compiler is required as GophEngine uses not only Go but also C.
 ### 🪟 Windows
 
 1. Install [Go](https://go.dev).
-2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit).
+2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit) (MSVC isn't supported yet).
 3. On Windows the graphics driver will already be installed, but it is recommended to ensure they are up to date.
 
 The steps for installing with MSYS2 (recommended) are as follows:
