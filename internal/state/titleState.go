@@ -72,7 +72,7 @@ func NewTitleState() (*TitleState, error) {
 		return nil, err
 	}
 
-	ng := ge.NewSprite((float64(ge.G.Width)/2)-150, float64(ge.G.Height)*0.52)
+	ng := ge.NewSprite(int((float64(ge.G.Width)/2)-150), int(float64(ge.G.Height)*0.52))
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
 	if err != nil {
 		return nil, err
@@ -87,14 +87,14 @@ func NewTitleState() (*TitleState, error) {
 	}
 	logoBl.AnimController = ac
 
-	gfDance := ge.NewSprite(float64(ge.G.Width)*0.4, float64(ge.G.Height)*0.07)
+	gfDance := ge.NewSprite(int(float64(ge.G.Width)*0.4), int(float64(ge.G.Height)*0.07))
 	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/gfDanceTitle/gfDanceTitle.anim.hcl")
 	if err != nil {
 		return nil, err
 	}
 	gfDance.AnimController = ac
 
-	titleText := ge.NewSprite(100, float64(ge.G.Height)*0.8)
+	titleText := ge.NewSprite(100, int(float64(ge.G.Height)*0.8))
 	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/titleEnter/titleEnter.anim.hcl")
 	if err != nil {
 		return nil, err
