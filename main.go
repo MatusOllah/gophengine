@@ -69,7 +69,8 @@ func (game *Game) Draw(screen *ebiten.Image) {
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return ge.G.Width, ge.G.Height
+	f := ebiten.Monitor().DeviceScaleFactor()
+	return int(float64(ge.G.Width) * f), int(float64(ge.G.Height) * f)
 }
 
 func setIcon() error {
