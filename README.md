@@ -4,7 +4,7 @@
 
 # 🎤 GophEngine
 
-**[Po Slovensky 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/README.sk-SK.md)**
+**English 🇬🇧** | **[Slovenčina 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/README.sk-SK.md)**
 
 Status: work-in-progress
 

@@ -4,6 +4,8 @@
 
 # 🎤 GophEngine
 
+**[English 🇬🇧](https://github.com/MatusOllah/gophengine/blob/main/README.md)** | **Slovenčina 🇸🇰**
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine)
 
 **GophEngine** je Go implementácia hry **Friday Night Funkin'** s vylepšeniami.
