@@ -13,9 +13,13 @@
 
 ## Prečo?
 
-Chcel som spraviť jednoduché Go (môj obľúbený programovací jazyk) módovacie API pre Friday Night Funkin' (moju obľúbenú hru). Niečo ako MinecraftForge ale pre FNF.
+Urobil som to z niekoľkých dôvodov:
 
-Chcel som aj napraviť všetko, čo je zlé vo vanilla FNF engine a pridať viac funkcií a vylepšení.
+* Chcel som vytvoriť jednoducho použiteľné Go (moj obľúbený programovací jazyk) moddingové API pre Friday Night Funkin' (moju obľúbenú hru). Niečo ako MinecraftForge, ale pre FNF.
+* Tiež som chcel opraviť všetko, čo je zlé vo vanilla FNF engine a pridať niekoľko ďalších funkcií a vylepšení.
+* Ako protest proti FNF v0.3.2 .
+  * Vytvoril som toto ako odpoveď na FNF v0.3.2 (Weekend 1 update), ktorá zaviedla veľmi násilné a grafické cutscény, v ktorých je môj obľúbený postava, Boyfriend, zabitá. Tieto zmeny významne menia tón a zážitok z hry spôsobom, ktorý mnohí fanúšikovia postavy Boyfriend, vrátane mňa, považujú za nepríjemný.
+  * Účelom tohto "forku" je odstrániť tieto násilné a grafické cutscény zavedené vo FNF v0.3.2 a obnoviť postavu Boyfriend a ďalšie naratívne prvky, ktoré boli negatívne ovplyvnené.
 
 ### Prečo Go?
 
@@ -32,7 +36,7 @@ Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](http
 
 ## Pozoruhodné nástroje a knižnice
 
-- [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika a vstup
-- [Beep](https://github.com/gopxl/beep) - audio
-- [ganim8](https://github.com/yohamta/ganim8) - animácie
-- [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov
+* [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika a vstup
+* [Beep](https://github.com/gopxl/beep) - audio
+* [ganim8](https://github.com/yohamta/ganim8) - animácie
+* [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov

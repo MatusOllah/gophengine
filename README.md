@@ -17,9 +17,13 @@ Status: work-in-progress
 
 ## Why?
 
-I wanted to make a easy to use Go (my fav programming language) modding API for Friday Night Funkin' (my fav game). Something like MinecraftForge but for FNF.
+I made this for a couple of reasons:
 
-I also wanted to fix everything what's wrong with the vanilla FNF engine and add some more features and improvments.
+* I wanted to make a easy-to-use Go (my fav programming language) modding API for Friday Night Funkin' (my fav game). Something like MinecraftForge but for FNF.
+* I also wanted to fix everything what's wrong with the vanilla FNF engine and add some more features and improvments.
+* As a protest against FNF v0.3.2 .
+  * I made this in response to FNF v0.3.2 (the Weekend 1 update), which introduced highly violent and graphic cutscenes where my favorite character, Boyfriend, is killed. These changes significantly alter the tone and experience of the game in a way that many Boyfriend fans, including myself, find upsetting.
+  * The purpose of this "fork" is to remove the violent and graphic cutscenes introduced in FNF v0.3.2 and to restore Boyfriend and other narrative elements that were negatively impacted.
 
 ### Why Go?
 
@@ -36,7 +40,7 @@ Build instructions for GophEngine are available in [BUILDING.md](https://github.
 
 ## Notable tools and libraries
 
-- [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics and input
-- [Beep](https://github.com/gopxl/beep) - audio
-- [ganim8](https://github.com/yohamta/ganim8) - animations
-- [go-winres](https://github.com/tc-hib/go-winres) - embedding .ico files
+* [Ebitengine](https://github.com/hajimehoshi/ebiten) - graphics and input
+* [Beep](https://github.com/gopxl/beep) - audio
+* [ganim8](https://github.com/yohamta/ganim8) - animations
+* [go-winres](https://github.com/tc-hib/go-winres) - embedding .ico files
