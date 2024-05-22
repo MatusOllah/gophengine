@@ -20,7 +20,7 @@ Urobil som to z niekoľkých dôvodov:
 * Chcel som vytvoriť jednoducho použiteľné Go (moj obľúbený programovací jazyk) moddingové API pre Friday Night Funkin' (moju obľúbenú hru). Niečo ako MinecraftForge, ale pre FNF.
 * Tiež som chcel opraviť všetko, čo je zlé vo vanilla FNF engine a pridať niekoľko ďalších funkcií a vylepšení.
 * Ako protest proti FNF v0.3.2 .
-  * Vytvoril som toto ako odpoveď na FNF v0.3.2 (Weekend 1 update), ktorá zaviedla veľmi násilné a grafické cutscény, v ktorých je moja obľúbená postava, Boyfriend, zavraždená. Tieto zmeny významne menia tón a zážitok z hry spôsobom, ktorý mnohí fanúšikovia postavy Boyfriend, vrátane mňa, považujú za nepríjemný.
+  * Vytvoril som toto ako odpoveď na FNF v0.3.2 (Weekend 1 update), ktorá zaviedla veľmi násilné a grafické cutscény, v ktorých je moja obľúbená postava, Boyfriend, zabitá a nahradená s Picom. Tieto zmeny významne menia tón a zážitok z hry spôsobom, ktorý mnohí fanúšikovia postavy Boyfriend, vrátane mňa, považujú za nepríjemný.
   * Účelom tohto "forku" je odstrániť tieto násilné a grafické cutscény zavedené vo FNF v0.3.2 a obnoviť postavu Boyfriend a ďalšie naratívne prvky, ktoré boli negatívne ovplyvnené.
 * Chcel som len prepísať Friday Night Funkin' v Go.
 
