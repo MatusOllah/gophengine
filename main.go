@@ -6,7 +6,6 @@ import (
 	"image"
 	"io"
 	"io/fs"
-	"log"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -205,7 +204,6 @@ func main() {
 	opts.TimeFormat = time.DateTime
 	opts.SrcFileMode = slogcolor.ShortFile
 	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
-	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	// moved main func to run(); learned this from Melkey
 	if err := run(); err != nil {
