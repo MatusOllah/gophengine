@@ -200,11 +200,11 @@ func main() {
 	}
 	defer logfile.Close()
 
-	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), &slogcolor.Options{
-		Level:       getLogLevel(),
-		TimeFormat:  time.DateTime,
-		SrcFileMode: slogcolor.ShortFile,
-	})))
+	opts := slogcolor.DefaultOptions
+	opts.Level = getLogLevel()
+	opts.TimeFormat = time.DateTime
+	opts.SrcFileMode = slogcolor.ShortFile
+	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 
 	// moved main func to run(); learned this from Melkey
