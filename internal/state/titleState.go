@@ -231,7 +231,7 @@ func (s *TitleState) skipIntro() {
 	s.skippedIntro = true
 	slog.Info("skipIntro")
 	s.blackScreenVisible = false
-	s.ng.Img.Dispose()
+	s.ng.Img.Deallocate()
 	s.flasher.Flash()
 }
 
