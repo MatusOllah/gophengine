@@ -3,6 +3,7 @@
 package anim
 
 import (
+	"image"
 	"log"
 	"regexp"
 	"strconv"
@@ -317,6 +318,8 @@ func (anim *Animation) Resume() {
 }
 
 // Draw draws the animation with the specified option parameters.
-func (anim *Animation) Draw(screen *ebiten.Image, op *ebiten.DrawImageOptions) {
-	screen.DrawImage(anim.frames[anim.position], op)
+func (anim *Animation) Draw(screen *ebiten.Image, pt image.Point) {
+	opts := &ebiten.DrawImageOptions{}
+	opts.GeoM.Translate(float64(pt.X), float64(pt.Y))
+	screen.DrawImage(anim.frames[anim.position], opts)
 }

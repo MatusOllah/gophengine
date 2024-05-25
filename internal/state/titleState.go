@@ -207,9 +207,9 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
 
 	if s.skippedIntro {
-		s.gfDance.AnimController.Draw(screen, s.gfDance.DrawImageOptions())
-		s.logoBl.AnimController.Draw(screen, s.logoBl.DrawImageOptions())
-		s.titleText.AnimController.Draw(screen, s.titleText.DrawImageOptions())
+		s.gfDance.AnimController.Draw(screen, s.gfDance.Position)
+		s.logoBl.AnimController.Draw(screen, s.logoBl.Position)
+		s.titleText.AnimController.Draw(screen, s.titleText.Position)
 	}
 
 	if s.blackScreenVisible {

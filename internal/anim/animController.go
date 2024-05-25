@@ -1,6 +1,7 @@
 package anim
 
 import (
+	"image"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -32,11 +33,11 @@ func (ac *AnimController) UpdateWithDelta(dt float64) {
 	ac.GetAnim(ac.curAnim).UpdateWithDelta(time.Duration(dt * float64(1e9)))
 }
 
-func (ac *AnimController) Draw(img *ebiten.Image, op *ebiten.DrawImageOptions) {
+func (ac *AnimController) Draw(img *ebiten.Image, pt image.Point) {
 	if ac.curAnim == "" {
 		return
 	}
-	ac.GetAnim(ac.curAnim).Draw(img, op)
+	ac.GetAnim(ac.curAnim).Draw(img, pt)
 }
 
 func (ac *AnimController) Play(name string) {
