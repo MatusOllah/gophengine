@@ -16,6 +16,7 @@ func LoadDefaultOptions(cfg *Config) {
 	slog.Info("got locale", "userLocale", userLocale)
 
 	cfg.SetData(map[string]interface{}{
-		"Locale": userLocale,
+		"Locale":     userLocale,
+		"Fullscreen": false,
 	})
 }

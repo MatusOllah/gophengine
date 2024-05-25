@@ -21,6 +21,7 @@ import (
 	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/ncruces/zenity"
 	"golang.org/x/text/unicode/norm"
 )
@@ -51,6 +52,12 @@ func (game *Game) Update() error {
 
 	if err := game.currentState.Update(game.dt); err != nil {
 		return err
+	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyF11) {
+		ge.G.OptionsConfig.Toggle("Fullscreen")
+		ebiten.SetFullscreen(ge.G.OptionsConfig.MustGet("Fullscreen").(bool))
+		slog.Info("toggled fullscreen", "Fullscreen", ge.G.OptionsConfig.MustGet("Fullscreen").(bool))
 	}
 
 	return nil
@@ -140,6 +147,8 @@ func run() error {
 
 	ebiten.SetVsyncEnabled(flagutil.MustGetBool(ge.FlagSet, "vsync"))
 	ebiten.SetTPS(ebiten.SyncWithFPS)
+
+	ebiten.SetFullscreen(ge.G.OptionsConfig.MustGet("Fullscreen").(bool))
 
 	slog.Info("creating window")
 	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
