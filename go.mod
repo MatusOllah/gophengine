@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/BurntSushi/toml v1.3.2
-	github.com/MatusOllah/slogcolor v1.2.0
+	github.com/MatusOllah/slogcolor v1.2.1
 	github.com/gopxl/beep v1.4.1
 	github.com/hajimehoshi/ebiten/v2 v2.7.3
 	github.com/hashicorp/hcl/v2 v2.20.1

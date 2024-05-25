@@ -1,9 +1,7 @@
 github.com/BurntSushi/toml v1.3.2 h1:o7IhLm0Msx3BaB+n3Ag7L8EVlByGnpq14C4YWiu/gL8=
 github.com/BurntSushi/toml v1.3.2/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
-github.com/MatusOllah/slogcolor v1.0.0 h1:RVkPNzpK5E2DmxevRVt3zEphIAX8kOOZ5EI2VEabcPY=
-github.com/MatusOllah/slogcolor v1.0.0/go.mod h1:5y1H50XuQIBvuYTJlmokWi+4FuPiJN5L7Z0jM4K4bYA=
-github.com/MatusOllah/slogcolor v1.2.0 h1:LVoni7PcoiOmO3Z3Ay/WYIGsHX66BUhbzxAaApaJUc4=
-github.com/MatusOllah/slogcolor v1.2.0/go.mod h1:5y1H50XuQIBvuYTJlmokWi+4FuPiJN5L7Z0jM4K4bYA=
+github.com/MatusOllah/slogcolor v1.2.1 h1:FXKrXJmLzRQIn02budqgN6PIe4sL9TyYldNt7cCtAvk=
+github.com/MatusOllah/slogcolor v1.2.1/go.mod h1:5y1H50XuQIBvuYTJlmokWi+4FuPiJN5L7Z0jM4K4bYA=
 github.com/agext/levenshtein v1.2.3 h1:YB2fHEn0UJagG8T1rrWknE3ZQzWM06O8AMAatNn7lmo=
 github.com/agext/levenshtein v1.2.3/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
 github.com/akavel/rsrc v0.10.2 h1:Zxm8V5eI1hW4gGaYsJQUhxpjkENuG91ki8B4zCrvEsw=
