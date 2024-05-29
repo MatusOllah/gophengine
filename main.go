@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/fs"
 	"log/slog"
+	"math"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -75,8 +76,8 @@ func (game *Game) Draw(screen *ebiten.Image) {
 }
 
 func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	f := ebiten.Monitor().DeviceScaleFactor()
-	return int(float64(ge.G.Width) * f), int(float64(ge.G.Height) * f)
+	scale := ebiten.Monitor().DeviceScaleFactor()
+	return int(math.Ceil(float64(ge.G.Width) * scale)), int(math.Ceil(float64(ge.G.Height) * scale))
 }
 
 func setIcon() error {
