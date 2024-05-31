@@ -260,11 +260,11 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleState.introText.AddText("present")
+		titleState.introText.AddText(ge.Localize("IntroTextPresent"))
 	case 4:
 		titleState.introText.DeleteText()
 	case 5:
-		titleState.introText.CreateText("In association", "with")
+		titleState.introText.CreateText(ge.Localize("IntroTextInAssoc"), ge.Localize("IntroTextWith"))
 	case 7:
 		titleState.introText.AddText("newgrounds")
 		titleState.ng.Visible = true

@@ -1,3 +1,6 @@
 FPSCounter = "FPS: {{.FPS}}\nTPS: {{.TPS}}"
 InitGameDialogTitle = "Initializing game"
 InitGameDialogText = "Initializing game..."
+IntroTextPresent = "present"
+IntroTextInAssoc = "In association"
+IntroTextWith = "with"
