@@ -127,9 +127,14 @@ func NewTitleState() (*TitleState, error) {
 		return nil, err
 	}
 
+	introText, err := ge.NewIntroText()
+	if err != nil {
+		return nil, err
+	}
+
 	ts := &TitleState{
 		randIntroText:      it,
-		introText:          ge.NewIntroText(),
+		introText:          introText,
 		ng:                 ng,
 		mb:                 mb,
 		once:               new(sync.Once),
