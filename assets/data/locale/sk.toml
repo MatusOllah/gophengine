@@ -1,6 +1,6 @@
 FPSCounter = "FPS (snímky za sekundu): {{.FPS}}\nTPS (tiky za sekundu)  : {{.TPS}}"
 InitGameDialogTitle = "Inicializujem hru"
 InitGameDialogText = "Inicializujem hru..."
-IntroTextPresent = "predstavujú"
+IntroTextPresent = "uvádzajú"
 IntroTextInAssoc = "V asociácií"
 IntroTextWith = "s"
