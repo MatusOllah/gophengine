@@ -98,7 +98,7 @@ func InitGlobal() error {
 
 	G = &Global{
 		Rand:            rand,
-		Version:         "1.0",
+		Version:         "1.0.0",
 		FNFVersion:      "0.2.7.1",
 		ScreenWidth:     1280,
 		ScreenHeight:    720,

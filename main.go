@@ -150,7 +150,7 @@ func run() error {
 
 	slog.Info("creating window")
 	ebiten.SetWindowSize(ge.G.ScreenWidth, ge.G.ScreenHeight)
-	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
+	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine v" + ge.G.Version)
 	if err := setIcon(); err != nil {
 		return err
 	}
