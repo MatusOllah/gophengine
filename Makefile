@@ -38,8 +38,8 @@ build: clean
 	mkdir -p $(BINARY)
 
 	$(GO) get
-	$(WINRES) make
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE)
+	$(WINRES) make  --out ./cmd/gophengine/rsrc
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE) ./cmd/gophengine
 
 .PHONY: upx
 upx:
@@ -50,5 +50,5 @@ endif
 .PHONY: clean
 clean:
 	rm -rf $(BINARY)
-	rm -f rsrc_windows_386.syso
-	rm -f rsrc_windows_amd64.syso
+	rm -f ./cmd/gophengine/rsrc_windows_386.syso
+	rm -f ./cmd/gophengine/rsrc_windows_amd64.syso
