@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/assets"
+	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/flagutil"
 	"github.com/MatusOllah/gophengine/internal/fsutil"
 	"github.com/MatusOllah/slogcolor"
@@ -115,7 +115,7 @@ func main() {
 
 	// Game init
 	slog.Info("initializing game")
-	g, err := gophengine.NewGame(flagutil.MustGetString(flagSet, "config"), flagutil.MustGetString(flagSet, "progress")) // TODO: portable mode
+	g, err := fnfgame.New(flagutil.MustGetString(flagSet, "config"), flagutil.MustGetString(flagSet, "progress")) // TODO: portable mode
 	if err != nil {
 		slog.Error(err.Error())
 		if flagutil.MustGetBool(flagSet, "gui") {

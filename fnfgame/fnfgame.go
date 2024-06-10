@@ -1,4 +1,4 @@
-package gophengine
+package fnfgame
 
 import (
 	crand "crypto/rand"
@@ -23,7 +23,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-type Game struct {
+type FNFGame struct {
 	windowWidth          int
 	windowHeight         int
 	width                int
@@ -57,14 +57,14 @@ func loadLocales(bundle *i18n.Bundle) error {
 	return nil
 }
 
-func NewGame(optionsPath, progressPath string) (*Game, error) {
-	game := new(Game)
-	game.windowWidth = 1280
-	game.windowHeight = 720
-	game.width = 1280
-	game.height = 720
+func New(optionsPath, progressPath string) (*FNFGame, error) {
+	g := new(FNFGame)
+	g.windowWidth = 1280
+	g.windowHeight = 720
+	g.width = 1280
+	g.height = 720
 
-	game.last = time.Now()
+	g.last = time.Now()
 
 	// Rand
 	var seed1 uint64
@@ -75,21 +75,21 @@ func NewGame(optionsPath, progressPath string) (*Game, error) {
 	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed2); err != nil {
 		return nil, err
 	}
-	game.random = rand.New(rand.NewPCG(seed1, seed2))
+	g.random = rand.New(rand.NewPCG(seed1, seed2))
 
 	// Options config (config.gecfg)
 	optionsConfig, err := config.New(optionsPath, true)
 	if err != nil {
 		return nil, err
 	}
-	game.optionsConfig = optionsConfig
+	g.optionsConfig = optionsConfig
 
 	// Progress config (progress.gecfg)
 	progressConfig, err := config.New(progressPath, false)
 	if err != nil {
 		return nil, err
 	}
-	game.progressConfig = progressConfig
+	g.progressConfig = progressConfig
 
 	// initialize localizer
 	bundle := i18n.NewBundle(language.English)
@@ -101,31 +101,31 @@ func NewGame(optionsPath, progressPath string) (*Game, error) {
 
 	locale := optionsConfig.MustGet("Locale").(string)
 	slog.Info("using locale", "locale", locale)
-	game.localizer = i18n.NewLocalizer(bundle, locale, "en")
+	g.localizer = i18n.NewLocalizer(bundle, locale, "en")
 
 	//Audio
-	game.conductor = ge.NewConductor(100)
-	game.sampleRate = beep.SampleRate(48000)
-	game.audioMixer = &beep.Mixer{}
-	game.audioResampleQuality = 4
+	g.conductor = ge.NewConductor(100)
+	g.sampleRate = beep.SampleRate(48000)
+	g.audioMixer = &beep.Mixer{}
+	g.audioResampleQuality = 4
 
-	speaker.Init(game.sampleRate, game.sampleRate.N(time.Second/10))
+	speaker.Init(g.sampleRate, g.sampleRate.N(time.Second/10))
 
 	// State
 	state, err := state.NewTitleState()
 	if err != nil {
 		return nil, err
 	}
-	game.curState = state
+	g.curState = state
 
-	return game, nil
+	return g, nil
 }
 
-func (game *Game) Update() error {
-	game.dt = time.Since(game.last).Seconds()
-	game.last = time.Now()
+func (g *FNFGame) Update() error {
+	g.dt = time.Since(g.last).Seconds()
+	g.last = time.Now()
 
-	if err := game.curState.Update(game.dt); err != nil {
+	if err := g.curState.Update(g.dt); err != nil {
 		return err
 	}
 
@@ -138,8 +138,8 @@ func (game *Game) Update() error {
 	return nil
 }
 
-func (game *Game) Draw(screen *ebiten.Image) {
-	game.curState.Draw(screen)
+func (g *FNFGame) Draw(screen *ebiten.Image) {
+	g.curState.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, ge.LocalizeTmpl("FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),
@@ -147,41 +147,41 @@ func (game *Game) Draw(screen *ebiten.Image) {
 	}))
 }
 
-func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+func (g *FNFGame) Layout(outsideWidth, outsideHeight int) (int, int) {
 	scale := ebiten.Monitor().DeviceScaleFactor()
 	return int(math.Ceil(float64(ge.G.Width) * scale)), int(math.Ceil(float64(ge.G.Height) * scale))
 }
 
-func (game *Game) InitEbiten() {
+func (g *FNFGame) InitEbiten() {
 	ebiten.SetVsyncEnabled(false) // TODO: get vsync from config
 	ebiten.SetTPS(ebiten.SyncWithFPS)
 	ebiten.SetFullscreen(ge.G.OptionsConfig.MustGet("Fullscreen").(bool))
 	slog.Info("creating window")
-	ebiten.SetWindowSize(game.windowWidth, game.windowHeight)
+	ebiten.SetWindowSize(g.windowWidth, g.windowHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 }
 
-func (game *Game) Start() error {
-	speaker.Play(game.audioMixer)
-	return ebiten.RunGame(game)
+func (g *FNFGame) Start() error {
+	speaker.Play(g.audioMixer)
+	return ebiten.RunGame(g)
 }
 
-func (game *Game) Close() error {
+func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
-	if err := game.optionsConfig.Flush(); err != nil {
+	if err := g.optionsConfig.Flush(); err != nil {
 		return err
 	}
 
-	if err := game.progressConfig.Flush(); err != nil {
+	if err := g.progressConfig.Flush(); err != nil {
 		return err
 	}
 
-	if err := game.optionsConfig.Close(); err != nil {
+	if err := g.optionsConfig.Close(); err != nil {
 		return err
 	}
 
-	if err := game.progressConfig.Close(); err != nil {
+	if err := g.progressConfig.Close(); err != nil {
 		return err
 	}
 

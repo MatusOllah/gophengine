@@ -37,7 +37,7 @@ all: build upx
 build: clean
 	mkdir -p $(BINARY)
 
-	$(GO) get
+#	$(GO) get
 	$(WINRES) make  --out ./cmd/gophengine/rsrc
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE) ./cmd/gophengine
 
