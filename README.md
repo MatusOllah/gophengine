@@ -23,7 +23,7 @@ I made this for a couple of reasons:
 * I also wanted to fix everything what's wrong with the vanilla FNF engine and add some more features and improvments.
 * As a protest against FNF v0.3.2 .
   * I made this in response to FNF v0.3.2 (the Weekend 1 update), which introduced highly violent and graphic NSFW/L cutscenes where my favorite character, Boyfriend, is killed, and replaced with Pico. These changes significantly alter the tone and experience of the game in a way that many Boyfriend fans, including myself, find upsetting.
-  * The purpose of this "fork" is to remove the violent and graphic cutscenes introduced in FNF v0.3.2, to restore Boyfriend and other narrative elements that were negatively impacted and to create a generally "cleaner" version of the game.
+  * The purpose of this "fork" is to rollback FNF v0.3.2, to restore Boyfriend and other narrative elements that were negatively impacted and to create a generally "cleaner" version of the game.
 * I just wanted to rewrite Friday Night Funkin' in Go.
 
 ### Why Go?
