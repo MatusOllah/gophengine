@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
+	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/flagutil"
 	"github.com/MatusOllah/gophengine/internal/fsutil"
@@ -113,9 +114,24 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Context
+	slog.Info("initializing context")
+	ctx, err := context.New(&context.NewContextConfig{
+		AssetsFS:           assets.FS,
+		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
+		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
+	})
+	if err != nil {
+		slog.Error(err.Error())
+		if flagutil.MustGetBool(flagSet, "gui") {
+			zenity.Error(err.Error())
+		}
+		os.Exit(1)
+	}
+
 	// Game init
 	slog.Info("initializing game")
-	g, err := fnfgame.New(flagutil.MustGetString(flagSet, "config"), flagutil.MustGetString(flagSet, "progress")) // TODO: portable mode
+	g, err := fnfgame.New(ctx) // TODO: portable mode
 	if err != nil {
 		slog.Error(err.Error())
 		if flagutil.MustGetBool(flagSet, "gui") {

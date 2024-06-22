@@ -2,9 +2,9 @@ package gophengine
 
 import (
 	"image/color"
+	"io/fs"
 	"sync"
 
-	"github.com/MatusOllah/gophengine/assets"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
@@ -17,8 +17,8 @@ type IntroText struct {
 	outlineFace text.Face
 }
 
-func NewIntroText() (*IntroText, error) {
-	f1, err := assets.FS.Open("fonts/phantom-full.ttf")
+func NewIntroText(fsys fs.FS) (*IntroText, error) {
+	f1, err := fsys.Open("fonts/phantom-full.ttf")
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func NewIntroText() (*IntroText, error) {
 		return nil, err
 	}
 
-	f2, err := assets.FS.Open("fonts/phantom-outline.ttf")
+	f2, err := fsys.Open("fonts/phantom-outline.ttf")
 	if err != nil {
 		return nil, err
 	}

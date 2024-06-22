@@ -14,12 +14,15 @@ type MusicBeat struct {
 
 	StepHitFunc func(int)
 	BeatHitFunc func(int)
+
+	c *Conductor
 }
 
-func NewMusicBeat() *MusicBeat {
+func NewMusicBeat(c *Conductor) *MusicBeat {
 	return &MusicBeat{
 		StepHitFunc: func(_ int) {},
 		BeatHitFunc: func(_ int) {},
+		c:           c,
 	}
 }
 
@@ -45,13 +48,13 @@ func (mb *MusicBeat) UpdateCurStep() {
 		Bpm:      0,
 	}
 
-	for _, bcm := range G.Conductor.BPMChangeMap {
-		if G.Conductor.SongPosition >= bcm.SongTime {
+	for _, bcm := range mb.c.BPMChangeMap {
+		if mb.c.SongPosition >= bcm.SongTime {
 			lastChange = bcm
 		}
 	}
 
-	mb.CurStep = lastChange.StepTime + int(math.Floor((G.Conductor.SongPosition-lastChange.SongTime)/G.Conductor.StepCrochet))
+	mb.CurStep = lastChange.StepTime + int(math.Floor((mb.c.SongPosition-lastChange.SongTime)/mb.c.StepCrochet))
 }
 
 func (mb *MusicBeat) StepHit() {

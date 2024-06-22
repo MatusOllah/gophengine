@@ -18,8 +18,8 @@ type Flasher struct {
 	whiteImg *ebiten.Image
 }
 
-func NewFlasher(dur float32) (*Flasher, error) {
-	white := ebiten.NewImage(G.Width, G.Height)
+func NewFlasher(width, height int, dur float32) (*Flasher, error) {
+	white := ebiten.NewImage(width, height)
 	white.Fill(color.White)
 
 	return &Flasher{

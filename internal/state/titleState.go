@@ -8,9 +8,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MatusOllah/gophengine/assets"
+	ge "github.com/MatusOllah/gophengine"
+	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
-	ge "github.com/MatusOllah/gophengine/internal/gophengine"
+	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/effects"
 	"github.com/gopxl/beep/speaker"
@@ -26,6 +28,7 @@ var titleState *TitleState
 
 // TitleState is the intro and "press enter to begin" screen.
 type TitleState struct {
+	ctx                *context.Context
 	ng                 *ge.Sprite
 	mb                 *ge.MusicBeat
 	once               *sync.Once
@@ -45,8 +48,8 @@ type TitleState struct {
 	transitioning      bool
 }
 
-func getRandIntroText() ([]string, error) {
-	f, err := assets.FS.Open("data/introText.csv")
+func getRandIntroText(ctx *context.Context) ([]string, error) {
+	f, err := ctx.AssetsFS.Open("data/introText.csv")
 	if err != nil {
 		return nil, err
 	}
@@ -60,20 +63,20 @@ func getRandIntroText() ([]string, error) {
 		return nil, err
 	}
 
-	introText := records[ge.G.Rand.IntN(len(records))]
+	introText := records[ctx.Rand.IntN(len(records))]
 	slog.Info("got intro text", "introText", introText)
 
 	return introText, nil
 }
 
-func NewTitleState() (*TitleState, error) {
-	it, err := getRandIntroText()
+func NewTitleState(ctx *context.Context) (*TitleState, error) {
+	it, err := getRandIntroText(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	ng := ge.NewSprite(int((float64(ge.G.Width)/2)-150), int(float64(ge.G.Height)*0.52))
-	ngImg, _, err := ebitenutil.NewImageFromFileSystem(assets.FS, "images/newgrounds_logo.png")
+	ng := ge.NewSprite(int((float64(ctx.GameWidth)/2)-150), int(float64(ctx.GameHeight)*0.52))
+	ngImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/newgrounds_logo.png")
 	if err != nil {
 		return nil, err
 	}
@@ -81,27 +84,27 @@ func NewTitleState() (*TitleState, error) {
 	ng.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
-	ac, err := animhcl.LoadAnimsFromFS(assets.FS, "images/logoBumpin/logoBumpin.anim.hcl")
+	ac, err := animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl")
 	if err != nil {
 		return nil, err
 	}
 	logoBl.AnimController = ac
 
-	gfDance := ge.NewSprite(int(float64(ge.G.Width)*0.4), int(float64(ge.G.Height)*0.07))
-	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/gfDanceTitle/gfDanceTitle.anim.hcl")
+	gfDance := ge.NewSprite(int(float64(ctx.GameWidth)*0.4), int(float64(ctx.GameHeight)*0.07))
+	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl")
 	if err != nil {
 		return nil, err
 	}
 	gfDance.AnimController = ac
 
-	titleText := ge.NewSprite(100, int(float64(ge.G.Height)*0.8))
-	ac, err = animhcl.LoadAnimsFromFS(assets.FS, "images/titleEnter/titleEnter.anim.hcl")
+	titleText := ge.NewSprite(100, int(float64(ctx.GameHeight)*0.8))
+	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl")
 	if err != nil {
 		return nil, err
 	}
 	titleText.AnimController = ac
 
-	freakyMenuFile, err := assets.FS.Open("music/freakyMenu.ogg")
+	freakyMenuFile, err := ctx.AssetsFS.Open("music/freakyMenu.ogg")
 	if err != nil {
 		return nil, err
 	}
@@ -113,26 +116,27 @@ func NewTitleState() (*TitleState, error) {
 	}
 
 	freakyMenu := &effects.Volume{
-		Streamer: ge.Resample(freakyMenuFormat.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
+		Streamer: beep.Resample(ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, ctx.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
 	}
 
-	mb := ge.NewMusicBeat()
+	mb := ge.NewMusicBeat(ctx.Conductor)
 	mb.BeatHitFunc = titleState_BeatHit
 
-	flasher, err := ge.NewFlasher(1)
+	flasher, err := ge.NewFlasher(ctx.GameWidth, ctx.GameHeight, 1)
 	if err != nil {
 		return nil, err
 	}
 
-	introText, err := ge.NewIntroText()
+	introText, err := ge.NewIntroText(ctx.AssetsFS)
 	if err != nil {
 		return nil, err
 	}
 
 	ts := &TitleState{
+		ctx:                ctx,
 		randIntroText:      it,
 		introText:          introText,
 		ng:                 ng,
@@ -160,13 +164,13 @@ func NewTitleState() (*TitleState, error) {
 func (s *TitleState) Update(dt float64) error {
 	s.once.Do(func() {
 		slog.Info("(*sync.Once).Do")
-		ge.G.Mixer.Add(s.freakyMenu)
+		s.ctx.AudioMixer.Add(s.freakyMenu)
 
-		ge.G.Conductor.ChangeBPM(102)
+		s.ctx.Conductor.ChangeBPM(102)
 	})
 
 	// Conductor & MusicBeat (MusicBeatState)
-	ge.G.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
+	s.ctx.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
 	s.mb.Update()
 
 	// freakyMenu Volume
@@ -188,7 +192,7 @@ func (s *TitleState) Update(dt float64) error {
 		s.titleText.AnimController.Play("press")
 		s.flasher.Flash()
 
-		if err := ge.PlaySoundFromFS(assets.FS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+		if err := audioutil.PlaySoundFromFS(s.ctx, s.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3); err != nil {
 			return err
 		}
 
@@ -260,11 +264,11 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleState.introText.AddText(ge.Localize("IntroTextPresent"))
+		titleState.introText.AddText(i18nutil.Localize(titleState.ctx.Localizer, "IntroTextPresent"))
 	case 4:
 		titleState.introText.DeleteText()
 	case 5:
-		titleState.introText.CreateText(ge.Localize("IntroTextInAssoc"), ge.Localize("IntroTextWith"))
+		titleState.introText.CreateText(i18nutil.Localize(titleState.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(titleState.ctx.Localizer, "IntroTextWith"))
 	case 7:
 		titleState.introText.AddText("newgrounds")
 		titleState.ng.Visible = true
