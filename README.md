@@ -29,10 +29,6 @@ I created GophEngine for several reasons:
 
 Go is my favorite programming language, and I prefer it over learning Haxe.
 
-## Naming
-
-The name "GophEngine" combines "Goph" (representing the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
-
 ## Features
 
 * Enhanced privacy with no Newgrounds integration
@@ -56,6 +52,10 @@ The name "GophEngine" combines "Goph" (representing the Go programming language 
 ## Building & installing (from source)
 
 Build instructions for GophEngine are available in [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md).
+
+## Naming
+
+The name "GophEngine" combines "Goph" (representing the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
 
 ## Notable tools and libraries
 
