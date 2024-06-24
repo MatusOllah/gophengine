@@ -52,7 +52,7 @@ Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go.
 | Úložisko         | 256 MB                                                                             | 512 MB                                                                 |
 | Operačný systém  | Windows 7 / macOS 10.12 / Linux kernel 2.6.32                                      | Windows 10 / macOS 10.15 / Linux kernel 5.x.x                          |
 
-## Kompilovanie & inštalovanie
+## Kompilovanie & inštalovanie (zo zdrojového kódu)
 
 Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md) (slovenský preklad som ešte nespravil).
 
