@@ -41,6 +41,17 @@ Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go.
 * Riadne menu možností pre lepšie prispôsobenie
 * Robustné Go moddingové API pre jednoduché modifikácie
 
+## Hardvérové požiadavky
+
+| Komponent        | Minimálne                                                                          | Odporúčané                                                             |
+|------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| Procesor         | Intel Core i3 / AMD Ryzen 3                                                        | Intel Core i5 / AMD Ryzen 5                                            |
+| Pamäť            | 4 GB                                                                               | 8 GB                                                                   |
+| Grafická karta   | Intel HD Graphics 4000 / NVIDIA GeForce GTX 600 Series / AMD Radeon HD 7000 Series | Intel HD Graphics 5000 / NVIDIA GeForce GTX 750 Ti / AMD Radeon RX 560 |
+| DirectX / OpenGL | DirectX 11 / OpenGL 3.0                                                            | DirectX 11 / OpenGL 4.5                                                |
+| Úložisko         | 256 MB                                                                             | 512 MB                                                                 |
+| Operačný systém  | Windows 7 / macOS 10.12 / Linux kernel 2.6.32                                      | Windows 10 / macOS 10.15 / Linux kernel 5.x.x                          |
+
 ## Kompilovanie & inštalovanie
 
 Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md) (slovenský preklad som ešte nespravil).
