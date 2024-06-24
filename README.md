@@ -55,7 +55,7 @@ Build instructions for GophEngine are available in [BUILDING.md](https://github.
 
 ## Naming
 
-The name "GophEngine" combines "Goph" (representing the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
+The name "GophEngine" combines "Goph" (representing Gopher, the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
 
 ## Notable tools and libraries
 

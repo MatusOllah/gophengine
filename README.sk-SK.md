@@ -53,7 +53,7 @@ Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](http
 
 ## Menovanie
 
-Názov "GophEngine" kombinuje "Goph" (reprezentujúci maskot Go programovacieho jazyka) a "Engine" (reprezentujúci FNF engine).
+Názov "GophEngine" kombinuje "Goph" (reprezentujúci Gophera, maskota Go programovacieho jazyka) a "Engine" (reprezentujúci FNF engine).
 Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go."
 
 ## Pozoruhodné nástroje a knižnice
