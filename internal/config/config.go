@@ -139,7 +139,7 @@ func (cfg *Config) Get(key string) (interface{}, error) {
 	return value, nil
 }
 
-// MustGet simply calls Get and returns nil if an error occured.
+// MustGet simply calls Get and returns nil if an error occurred.
 func (cfg *Config) MustGet(key string) interface{} {
 	value, err := cfg.Get(key)
 	if err != nil {
