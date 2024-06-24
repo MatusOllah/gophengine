@@ -19,7 +19,7 @@ GophEngine som vytvoril z niekoľkých dôvodov:
 
 * Pre vytvorenie jednoducho použitelného Go moddingového API pre Friday Night Funkin', podobné MinecraftForge, ale pre FNF.
 * Pre opravenie chýb v pôvodnom FNF enginu a pridať nové funkcie a vylepšenia.
-* Pre podporu pozitívnej a netoxickej komunity okolo hry (bez toxickej komunity a vývojárov), pre podporu fanúšikov postavy Boyfriend a vyhýbanie sa anti-Boyfriend postojom.
+* Pre podporu pozitívnej a netoxickej komunity okolo hry, pre podporu fanúšikov postavy Boyfriend a vyhýbanie sa anti-Boyfriend postojom bez toxickej komunity a vývojárov.
 * Pre odstránenie násilného NSFL obsahu zavedené v FNF v0.3.2 a pre vytvorenie čistejšej verzie hry.
 * Pre prepísanie hry Friday Night Funkin' v Go, mojom obľúbenom programovacom jazyku.
 
