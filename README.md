@@ -6,7 +6,7 @@
 
 **English 🇬🇧** | **[Slovenčina 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/README.sk-SK.md)**
 
-Status: work-in-progress
+**Status:** work-in-progress
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine)
 
@@ -17,24 +17,30 @@ Status: work-in-progress
 
 ## Why?
 
-I made this for a couple of reasons:
+I created GophEngine for several reasons:
 
-* I wanted to make a easy-to-use Go (my fav programming language) modding API for Friday Night Funkin' (my fav game). Something like MinecraftForge but for FNF.
-* I also wanted to fix everything what's wrong with the vanilla FNF engine and add some more features and improvments.
-* I hate the toxic community & developers and I wanted to make my own FNF clone.
-* As a protest against FNF v0.3.2 .
-  * I made this in response to FNF v0.3.2 (the Weekend 1 update), which introduced highly violent and graphic NSFW/L cutscenes where my favorite character, Boyfriend, is killed, and replaced with Pico. These changes significantly alter the tone and experience of the game in a way that many Boyfriend fans, including myself, find upsetting.
-  * The purpose of this "fork" is to rollback FNF v0.3.2, to restore Boyfriend and other narrative elements that were negatively impacted and to create a generally "cleaner" version of the game.
-* I just wanted to rewrite Friday Night Funkin' in Go.
+* To develop an easy-to-use Go modding API for Friday Night Funkin', similar to MinecraftForge but for FNF.
+* To fix issues in the vanilla FNF engine and add new features and improvements.
+* To foster a positive and non-toxic community around the game without the toxic community and developers, supporting Boyfriend fans and avoiding anti-Boyfriend sentiments.
+* To remove violent NSFW/L content introduced in FNF v0.3.2, and create a cleaner version of the game.
+* To rewrite Friday Night Funkin' in Go, my favorite programming language.
 
 ### Why Go?
 
-Go is my favorite programming language and I don't wanna learn Haxe.
+Go is my favorite programming language, and I prefer it over learning Haxe.
 
 ## Naming
 
-"Goph" means Go Gopher (Go programming language mascot) and "Engine" means FNF engine.
-I wanted to call this funkin-go, but "I made a mod with GophEngine" just sounds more natural than "I made a mod with funkin-go".
+The name "GophEngine" combines "Goph" (representing the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
+
+## Features
+
+* Enhanced privacy with no Newgrounds integration
+* Entirely written in Go with little to no Haxe
+* Family-friendly and welcoming to Boyfriend fans (no NSFW/L content)
+* Small tweaks and optimizations for a smoother and more enjoyable experience
+* A proper options menu for better customization
+* Robust Go modding API for easy modification
 
 ## Building & installing (from source)
 
