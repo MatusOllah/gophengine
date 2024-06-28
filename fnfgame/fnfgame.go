@@ -86,14 +86,6 @@ func (g *FNFGame) Start() error {
 func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
-	if err := g.ctx.OptionsConfig.Flush(); err != nil {
-		return err
-	}
-
-	if err := g.ctx.ProgressConfig.Flush(); err != nil {
-		return err
-	}
-
 	if err := g.ctx.OptionsConfig.Close(); err != nil {
 		return err
 	}
