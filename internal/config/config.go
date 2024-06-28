@@ -227,5 +227,9 @@ func (cfg *Config) Flush() error {
 
 // Close simply calls (*os.File).Close and closes the file.
 func (cfg *Config) Close() error {
+	if err := cfg.Flush(); err != nil {
+		return err
+	}
+
 	return cfg.file.Close()
 }
