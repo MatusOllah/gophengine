@@ -26,6 +26,8 @@ import (
 
 var titleState *TitleState
 
+var _ ge.State = (*TitleState)(nil)
+
 // TitleState is the intro and "press enter to begin" screen.
 type TitleState struct {
 	ctx                *context.Context
@@ -201,7 +203,8 @@ func (s *TitleState) Update(dt float64) error {
 
 		time.AfterFunc(2*time.Second, func() {
 			//TODO: main menu
-			panic("main menu not implemented yet")
+			slog.Warn("[TODO] main menu not implemented yet")
+			titleState.ctx.StateController.SwitchState(&NopState{})
 		})
 	}
 

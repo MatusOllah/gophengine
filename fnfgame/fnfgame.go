@@ -15,10 +15,9 @@ import (
 )
 
 type FNFGame struct {
-	ctx      *context.Context
-	last     time.Time
-	dt       float64
-	curState state.State
+	ctx  *context.Context
+	last time.Time
+	dt   float64
 }
 
 func New(ctx *context.Context) (*FNFGame, error) {
@@ -32,7 +31,7 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	if err != nil {
 		return nil, err
 	}
-	g.curState = state
+	g.ctx.StateController.SwitchState(state)
 
 	return g, nil
 }
@@ -41,7 +40,7 @@ func (g *FNFGame) Update() error {
 	g.dt = time.Since(g.last).Seconds()
 	g.last = time.Now()
 
-	if err := g.curState.Update(g.dt); err != nil {
+	if err := g.ctx.StateController.Update(g.dt); err != nil {
 		return err
 	}
 
@@ -55,7 +54,7 @@ func (g *FNFGame) Update() error {
 }
 
 func (g *FNFGame) Draw(screen *ebiten.Image) {
-	g.curState.Draw(screen)
+	g.ctx.StateController.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, i18nutil.LocalizeTmpl(g.ctx.Localizer, "FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),

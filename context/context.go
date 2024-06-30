@@ -22,6 +22,7 @@ type Context struct {
 	GameWidth            int
 	GameHeight           int
 	AssetsFS             fs.FS
+	StateController      *ge.StateController
 	Rand                 *rand.Rand
 	OptionsConfig        *config.Config
 	ProgressConfig       *config.Config
@@ -33,13 +34,15 @@ type Context struct {
 }
 
 func New(cfg *NewContextConfig) (*Context, error) {
-	ctx := new(Context)
+	ctx := &Context{}
 	ctx.WindowWidth = 1280
 	ctx.WindowHeight = 720
 	ctx.GameWidth = 1280
 	ctx.GameHeight = 720
 
 	ctx.AssetsFS = cfg.AssetsFS
+
+	ctx.StateController = ge.NewStateController(nil)
 
 	// Rand
 	var seed1 uint64

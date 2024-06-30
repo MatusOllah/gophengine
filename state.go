@@ -1,4 +1,4 @@
-package state
+package gophengine
 
 import "github.com/hajimehoshi/ebiten/v2"
 
