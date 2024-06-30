@@ -42,11 +42,7 @@ func (mb *MusicBeat) UpdateBeat() {
 }
 
 func (mb *MusicBeat) UpdateCurStep() {
-	lastChange := BPMChangeEvent{
-		StepTime: 0,
-		SongTime: 0,
-		Bpm:      0,
-	}
+	lastChange := BPMChangeEvent{}
 
 	for _, bcm := range mb.c.BPMChangeMap {
 		if mb.c.SongPosition >= bcm.SongTime {
