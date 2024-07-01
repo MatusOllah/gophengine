@@ -56,9 +56,15 @@ Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](http
 Názov "GophEngine" kombinuje "Goph" (reprezentujúci Gophera, maskota Go programovacieho jazyka) a "Engine" (reprezentujúci FNF engine).
 Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go."
 
-## Pozoruhodné nástroje a knižnice
+## 💲 Darujte
 
-* [Ebitengine](https://github.com/hajimehoshi/ebiten) - grafika a vstup
-* [Beep](https://github.com/gopxl/beep) - audio
-* [ganim8](https://github.com/yohamta/ganim8) - animácie
-* [go-winres](https://github.com/tc-hib/go-winres) - vkladanie .ico súborov
+Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu Baldovskej pitahaya)
+
+Môžete darovať prostredníctvom nasledujúcich platforiem:
+
+* **Bitcoin (BTC):** `bc1quvhzs4qkvcnpsg3dv8l82gy2egsh0e0zd5y3le`
+* **Litecoin (LTC):** `ltc1qxpe3vz2cmt3k66h89nhyk34dc5mun4rcdhjrjh`
+* **Dogecoin (DOGE):** `A7G3rDzXifHzuekVHwupaQ6hmzdFgVXLoY`
+* **Duino-Coin (DUCO):** `SladkyCitron`
+
+Ďakujem za vašu podporu! 😊
