@@ -32,6 +32,7 @@ type animation struct {
 }
 
 type animController struct {
+	Name        string      `hcl:"Name,label"`
 	DefaultAnim string      `hcl:"DefaultAnim,optional"`
 	Animations  []animation `hcl:"Animation,block"`
 }
@@ -40,8 +41,8 @@ func refineNonNull(b *cty.RefinementBuilder) *cty.RefinementBuilder {
 	return b.NotNull()
 }
 
-func LoadAnimsFromFS(fsys fs.FS, _path string) (*anim.AnimController, error) {
-	slog.Debug("loading *.anim.hcl", "_path", _path)
+func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimController, error) {
+	slog.Debug("loading *.anim.hcl", "_path", _path, "name", name)
 
 	src, err := fs.ReadFile(fsys, _path)
 	if err != nil {
@@ -54,7 +55,7 @@ func LoadAnimsFromFS(fsys fs.FS, _path string) (*anim.AnimController, error) {
 	}
 
 	var v struct {
-		AnimController animController `hcl:"AnimController,block"`
+		AnimControllers []animController `hcl:"AnimController,block"`
 	}
 	diags = gohcl.DecodeBody(hclf.Body, &hcl.EvalContext{
 		Variables: map[string]cty.Value{
@@ -133,25 +134,31 @@ func LoadAnimsFromFS(fsys fs.FS, _path string) (*anim.AnimController, error) {
 	slog.Debug("done parsing", "v", fmt.Sprintf("%+v", v))
 
 	ac := anim.NewAnimController()
-	for _, a := range v.AnimController.Animations {
-		dur, err := time.ParseDuration(a.FrameDuration)
-		if err != nil {
-			return nil, err
+	for _, _ac := range v.AnimControllers {
+		if _ac.Name != name {
+			continue
 		}
 
-		var images []*ebiten.Image
-		for _, frame := range a.Frames {
-			img, _, err := ebitenutil.NewImageFromFileSystem(fsys, path.Dir(_path)+"/"+frame)
+		for _, a := range _ac.Animations {
+			dur, err := time.ParseDuration(a.FrameDuration)
 			if err != nil {
 				return nil, err
 			}
-			images = append(images, img)
+
+			var images []*ebiten.Image
+			for _, frame := range a.Frames {
+				img, _, err := ebitenutil.NewImageFromFileSystem(fsys, path.Dir(_path)+"/"+frame)
+				if err != nil {
+					return nil, err
+				}
+				images = append(images, img)
+			}
+
+			ac.SetAnim(a.Name, anim.NewAnimation(images, dur))
 		}
 
-		ac.SetAnim(a.Name, anim.NewAnimation(images, dur))
+		ac.Play(_ac.DefaultAnim)
 	}
-
-	ac.Play(v.AnimController.DefaultAnim)
 
 	if diags.HasErrors() {
 		return nil, diags

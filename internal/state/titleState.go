@@ -87,21 +87,21 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 	ng.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
-	ac, err := animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl")
+	ac, err := animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
 	if err != nil {
 		return nil, err
 	}
 	logoBl.AnimController = ac
 
 	gfDance := ge.NewSprite(int(float64(ctx.GameWidth)*0.4), int(float64(ctx.GameHeight)*0.07))
-	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl")
+	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
 	if err != nil {
 		return nil, err
 	}
 	gfDance.AnimController = ac
 
 	titleText := ge.NewSprite(100, int(float64(ctx.GameHeight)*0.8))
-	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl")
+	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-AnimController {
+AnimController "logoBumpin" {
     DefaultAnim = "bump"
 
     Animation "bump" {

@@ -1,4 +1,4 @@
-AnimController {
+AnimController "titleEnter" {
     DefaultAnim = "idle"
 
     Animation "idle" {
