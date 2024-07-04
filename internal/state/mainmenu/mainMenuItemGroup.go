@@ -88,7 +88,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 				return err
 			}
 
-			//TODO: flicker
+			//TODO: flicker animation
 
 			if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
 				return err
