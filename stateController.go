@@ -24,6 +24,6 @@ func (sc *StateController) Update(dt float64) error {
 }
 
 func (sc *StateController) SwitchState(newState State) {
-	slog.Debug("[StateController] switching state", "old", fmt.Sprintf("%T", sc.curState), "new", fmt.Sprintf("%T", newState))
+	slog.Info("[StateController] switching state", "old", fmt.Sprintf("%T", sc.curState), "new", fmt.Sprintf("%T", newState))
 	sc.curState = newState
 }

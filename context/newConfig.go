@@ -6,4 +6,5 @@ type NewContextConfig struct {
 	AssetsFS           fs.FS
 	OptionsConfigPath  string
 	ProgressConfigPath string
+	Version            string
 }

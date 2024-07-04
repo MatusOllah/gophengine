@@ -3,7 +3,7 @@ package config
 import (
 	"bytes"
 	"encoding/gob"
-	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"maps"
@@ -11,8 +11,6 @@ import (
 	"path/filepath"
 	"sync"
 )
-
-var ErrNotFound error = errors.New("key not found")
 
 type MapFunc func(string, interface{}) interface{}
 
@@ -133,7 +131,7 @@ func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
 	value, ok := cfg.data[key]
 	if !ok {
-		return nil, ErrNotFound
+		return nil, fmt.Errorf("key not found: %s", key)
 	}
 	cfg.dataLock.RUnlock()
 	return value, nil

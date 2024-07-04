@@ -13,6 +13,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/MatusOllah/gophengine/internal/state/mainmenu"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/effects"
 	"github.com/gopxl/beep/speaker"
@@ -190,7 +191,7 @@ func (s *TitleState) Update(dt float64) error {
 
 	s.flasher.Update(dt)
 
-	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !s.transitioning && s.skippedIntro {
+	if inpututil.IsKeyJustPressed(s.ctx.Controls.Accept) && !s.transitioning && s.skippedIntro {
 		s.titleText.AnimController.Play("press")
 		s.flasher.Flash()
 
@@ -202,13 +203,15 @@ func (s *TitleState) Update(dt float64) error {
 		s.transitioning = true
 
 		time.AfterFunc(2*time.Second, func() {
-			//TODO: main menu
-			slog.Warn("[TODO] main menu not implemented yet")
-			titleState.ctx.StateController.SwitchState(&NopState{})
+			mms, err := mainmenu.NewMainMenuState(s.ctx)
+			if err != nil {
+				panic(err) // TODO: handle error properly
+			}
+			titleState.ctx.StateController.SwitchState(mms)
 		})
 	}
 
-	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !s.skippedIntro {
+	if inpututil.IsKeyJustPressed(s.ctx.Controls.Accept) && !s.skippedIntro {
 		s.skipIntro()
 	}
 

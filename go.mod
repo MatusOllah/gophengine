@@ -11,6 +11,7 @@ require (
 	github.com/jeandeaual/go-locale v0.0.0-20240223122105-ce5225dcaa49
 	github.com/ncruces/zenity v0.10.12
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
+	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/zclconf/go-cty v1.14.4

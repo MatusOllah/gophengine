@@ -44,7 +44,7 @@ func (g *FNFGame) Update() error {
 		return err
 	}
 
-	if inpututil.IsKeyJustPressed(ebiten.KeyF11) {
+	if inpututil.IsKeyJustPressed(g.ctx.Controls.Fullscreen) {
 		g.ctx.OptionsConfig.Toggle("Fullscreen")
 		ebiten.SetFullscreen(g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))
 		slog.Info("toggled fullscreen", "Fullscreen", g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))

@@ -23,6 +23,7 @@ type Context struct {
 	GameHeight           int
 	AssetsFS             fs.FS
 	StateController      *ge.StateController
+	Controls             *ge.Controls
 	Rand                 *rand.Rand
 	OptionsConfig        *config.Config
 	ProgressConfig       *config.Config
@@ -31,6 +32,7 @@ type Context struct {
 	SampleRate           beep.SampleRate
 	AudioMixer           *beep.Mixer
 	AudioResampleQuality int
+	Version              string
 }
 
 func New(cfg *NewContextConfig) (*Context, error) {
@@ -69,6 +71,13 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	}
 	ctx.ProgressConfig = progressConfig
 
+	// Controls
+	ctl, err := ge.GetControlsFromConfig(ctx.OptionsConfig)
+	if err != nil {
+		return nil, err
+	}
+	ctx.Controls = ctl
+
 	// Localizer
 	bundle := i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
@@ -86,6 +95,8 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.SampleRate = beep.SampleRate(44100)
 	ctx.AudioMixer = &beep.Mixer{}
 	ctx.AudioResampleQuality = 4
+
+	ctx.Version = cfg.Version
 
 	return ctx, nil
 }

@@ -35,3 +35,11 @@ func (s *Sprite) Draw(img *ebiten.Image) {
 
 	img.DrawImage(s.Img, s.DrawImageOptions())
 }
+
+func (s *Sprite) DrawWithOptions(img *ebiten.Image, opts *ebiten.DrawImageOptions) {
+	if !s.Visible {
+		return
+	}
+
+	img.DrawImage(s.Img, opts)
+}

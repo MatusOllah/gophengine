@@ -120,6 +120,7 @@ func main() {
 		AssetsFS:           assets.FS,
 		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
 		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
+		Version:            version,
 	})
 	if err != nil {
 		slog.Error(err.Error())
