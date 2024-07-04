@@ -2,7 +2,6 @@ package fnfgame
 
 import (
 	"log/slog"
-	"math"
 	"time"
 
 	"github.com/MatusOllah/gophengine/context"
@@ -63,8 +62,7 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 }
 
 func (g *FNFGame) Layout(outsideWidth, outsideHeight int) (int, int) {
-	scale := ebiten.Monitor().DeviceScaleFactor()
-	return int(math.Ceil(float64(g.ctx.GameWidth) * scale)), int(math.Ceil(float64(g.ctx.GameHeight) * scale))
+	return g.ctx.GameWidth, g.ctx.GameHeight
 }
 
 func (g *FNFGame) InitEbiten() {
