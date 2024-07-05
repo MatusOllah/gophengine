@@ -42,12 +42,14 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		item.Sprite.AnimController.UpdateWithDelta(dt)
 	}
 
+	// Prevent the user from selecting when transitioning
 	if g.isSelected {
 		return nil
 	}
 
+	// Handle keyboard input for up navigation
 	if inpututil.IsKeyJustPressed(g.ctx.Controls.Up) {
-		g.items[g.curSelected].Sprite.AnimController.Play("idle")
+		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected != 0 {
 			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
@@ -60,8 +62,9 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 	}
 
+	// Handle keyboard input for down navigation
 	if inpututil.IsKeyJustPressed(g.ctx.Controls.Down) {
-		g.items[g.curSelected].Sprite.AnimController.Play("idle")
+		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected != len(g.items)-1 {
 			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
@@ -74,7 +77,28 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 	}
 
-	if inpututil.IsKeyJustPressed(g.ctx.Controls.Accept) {
+	// Handle mouse wheel input
+	_, yOffset := ebiten.Wheel()
+	if yOffset != 0 {
+		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
+
+		if yOffset < 0 && g.curSelected < len(g.items)-1 {
+			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+				return err
+			}
+			g.curSelected++
+		} else if yOffset > 0 && g.curSelected > 0 {
+			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+				return err
+			}
+			g.curSelected--
+		}
+
+		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
+	}
+
+	// Handle item selection (keyboard + LMB)
+	if inpututil.IsKeyJustPressed(g.ctx.Controls.Accept) || inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 
 		if g.items[g.curSelected].Name == "donate" {
