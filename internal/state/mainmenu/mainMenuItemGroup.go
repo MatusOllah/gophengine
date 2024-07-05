@@ -51,7 +51,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	if inpututil.IsKeyJustPressed(g.ctx.Controls.Up) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
-		if g.curSelected != 0 {
+		if g.curSelected > 0 {
 			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
 				return err
 			}
@@ -66,7 +66,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	if inpututil.IsKeyJustPressed(g.ctx.Controls.Down) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
-		if g.curSelected != len(g.items)-1 {
+		if g.curSelected < len(g.items)-1 {
 			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
 				return err
 			}
