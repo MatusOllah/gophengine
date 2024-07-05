@@ -1,6 +1,7 @@
 package gophengine
 
 import (
+	"log/slog"
 	"math"
 )
 
@@ -58,9 +59,11 @@ func (mb *MusicBeat) StepHit() {
 		mb.BeatHit()
 	}
 
+	slog.Debug("[MusicBeat] StepHit", "CurStep", mb.CurStep)
 	mb.StepHitFunc(mb.CurStep)
 }
 
 func (mb *MusicBeat) BeatHit() {
+	slog.Debug("[MusicBeat] BeatHit", "CurBeat", mb.CurBeat)
 	mb.BeatHitFunc(mb.CurBeat)
 }
