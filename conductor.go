@@ -1,8 +1,6 @@
 package gophengine
 
-import (
-	"log/slog"
-)
+import "log/slog"
 
 type Conductor struct {
 	Bpm            int
