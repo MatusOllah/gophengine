@@ -42,57 +42,59 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		item.Sprite.AnimController.UpdateWithDelta(dt)
 	}
 
-	if !g.isSelected {
-		if inpututil.IsKeyJustPressed(g.ctx.Controls.Up) {
-			g.items[g.curSelected].Sprite.AnimController.Play("idle")
+	if g.isSelected {
+		return nil
+	}
 
-			if g.curSelected != 0 {
-				if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
-					return err
-				}
+	if inpututil.IsKeyJustPressed(g.ctx.Controls.Up) {
+		g.items[g.curSelected].Sprite.AnimController.Play("idle")
 
-				g.curSelected--
-			}
-
-			slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
-		}
-
-		if inpututil.IsKeyJustPressed(g.ctx.Controls.Down) {
-			g.items[g.curSelected].Sprite.AnimController.Play("idle")
-
-			if g.curSelected != len(g.items)-1 {
-				if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
-					return err
-				}
-
-				g.curSelected++
-			}
-
-			slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
-		}
-
-		if inpututil.IsKeyJustPressed(g.ctx.Controls.Accept) {
-			slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
-
-			if g.items[g.curSelected].Name == "donate" {
-				// skip flicker anim
-				if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
-					return err
-				}
-				return nil
-			}
-
-			g.isSelected = true
-
-			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+		if g.curSelected != 0 {
+			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
 				return err
 			}
 
-			//TODO: flicker animation
+			g.curSelected--
+		}
 
+		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
+	}
+
+	if inpututil.IsKeyJustPressed(g.ctx.Controls.Down) {
+		g.items[g.curSelected].Sprite.AnimController.Play("idle")
+
+		if g.curSelected != len(g.items)-1 {
+			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+				return err
+			}
+
+			g.curSelected++
+		}
+
+		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
+	}
+
+	if inpututil.IsKeyJustPressed(g.ctx.Controls.Accept) {
+		slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
+
+		if g.items[g.curSelected].Name == "donate" {
+			// skip flicker anim
 			if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
 				return err
 			}
+			return nil
+		}
+
+		g.isSelected = true
+
+		if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+			return err
+		}
+
+		//TODO: flicker animation
+
+		if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
+			return err
 		}
 	}
 
