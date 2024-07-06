@@ -62,7 +62,7 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 }
 
 func (g *FNFGame) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return g.ctx.GameWidth, g.ctx.GameHeight
+	return g.ctx.Width, g.ctx.Height
 }
 
 func (g *FNFGame) InitEbiten() {

@@ -78,7 +78,7 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 		return nil, err
 	}
 
-	ng := ge.NewSprite(int((float64(ctx.GameWidth)/2)-150), int(float64(ctx.GameHeight)*0.52))
+	ng := ge.NewSprite(int((float64(ctx.Width)/2)-150), int(float64(ctx.Height)*0.52))
 	ngImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/newgrounds_logo.png")
 	if err != nil {
 		return nil, err
@@ -93,14 +93,14 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 	}
 	logoBl.AnimController = ac
 
-	gfDance := ge.NewSprite(int(float64(ctx.GameWidth)*0.4), int(float64(ctx.GameHeight)*0.07))
+	gfDance := ge.NewSprite(int(float64(ctx.Width)*0.4), int(float64(ctx.Height)*0.07))
 	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
 	if err != nil {
 		return nil, err
 	}
 	gfDance.AnimController = ac
 
-	titleText := ge.NewSprite(100, int(float64(ctx.GameHeight)*0.8))
+	titleText := ge.NewSprite(100, int(float64(ctx.Height)*0.8))
 	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
 	if err != nil {
 		return nil, err
@@ -128,7 +128,7 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 	mb := ge.NewMusicBeat(ctx.Conductor)
 	mb.BeatHitFunc = titleState_BeatHit
 
-	flasher, err := ge.NewFlasher(ctx.GameWidth, ctx.GameHeight, 1)
+	flasher, err := ge.NewFlasher(ctx.Width, ctx.Height, 1)
 	if err != nil {
 		return nil, err
 	}

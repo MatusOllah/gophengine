@@ -37,25 +37,25 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 	magenta.Img = magentaImg
 	magenta.Visible = false
 
-	storyModeSprite := ge.NewSprite(int(float64(ctx.GameWidth/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
+	storyModeSprite := ge.NewSprite(int(float64(ctx.Width/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
 	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "story mode")
 	if err != nil {
 		return nil, err
 	}
 
-	freeplaySprite := ge.NewSprite(int(float64(ctx.GameWidth/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
+	freeplaySprite := ge.NewSprite(int(float64(ctx.Width/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
 	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "freeplay")
 	if err != nil {
 		return nil, err
 	}
 
-	donateSprite := ge.NewSprite(int(float64(ctx.GameWidth/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
+	donateSprite := ge.NewSprite(int(float64(ctx.Width/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
 	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "donate")
 	if err != nil {
 		return nil, err
 	}
 
-	optionsSprite := ge.NewSprite(int(float64(ctx.GameWidth/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
+	optionsSprite := ge.NewSprite(int(float64(ctx.Width/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
 	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "options")
 	if err != nil {
 		return nil, err
