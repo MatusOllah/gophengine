@@ -104,6 +104,8 @@ func (s *MainMenuState) Draw(screen *ebiten.Image) {
 	s.magenta.DrawWithOptions(screen, bgOpts)
 
 	s.menuItems.Draw(screen)
+
+	ebitenutil.DebugPrintAt(screen, s.ctx.Version, 0, 700)
 }
 
 func (s *MainMenuState) Update(dt float64) error {
