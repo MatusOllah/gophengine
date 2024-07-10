@@ -37,7 +37,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
     * `xcode-select --install`
 4. On macOS the graphics driver will already be installed.
 
-### 🐧 Linux
+### 🐧 GNU/Linux
 
 1. Install [Go](https://go.dev).
 2. Install a C Compiler using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
