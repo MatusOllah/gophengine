@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png" alt="GophEngine logo">
+    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/bf-gopher_240x320.png" alt="GophEngine logo">
 </p>
 
 # 🎤 GophEngine
@@ -51,7 +51,7 @@ Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe
 
 ## Kompilovanie & inštalovanie (zo zdrojového kódu)
 
-Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md) (slovenský preklad som ešte nespravil).
+Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md) (slovenský preklad som ešte nespravil).
 
 ## Menovanie
 

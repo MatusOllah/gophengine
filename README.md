@@ -1,10 +1,10 @@
 <p align="center">
-    <img src="https://github.com/MatusOllah/gophengine/blob/main/bf-gopher_240x320.png" alt="GophEngine logo">
+    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/bf-gopher_240x320.png" alt="GophEngine logo">
 </p>
 
 # 🎤 GophEngine
 
-**English 🇺🇸** | **[Slovenčina 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/README.sk-SK.md)**
+**English 🇺🇸** | **[Slovenčina 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/docs/README.sk.md)**
 
 **Status:** work-in-progress
 
@@ -53,7 +53,7 @@ Go is my favorite programming language, and I prefer it over learning Haxe.
 
 ## Building & installing (from source)
 
-Build instructions for GophEngine are available in [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/BUILDING.md).
+Build instructions for GophEngine are available in [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md).
 
 ## Naming
 
