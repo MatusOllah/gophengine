@@ -10,8 +10,6 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine)
 
-> "Can we build a FNF engine without Newgrounds?"
-
 **GophEngine** is a Go implementation of **Friday Night Funkin' v0.2.7.1** with improvements.
 
 > [!NOTE]
