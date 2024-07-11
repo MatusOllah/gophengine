@@ -49,7 +49,7 @@ Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe
 
 ## Kompilovanie & inštalovanie (zo zdrojového kódu)
 
-Pokyny na kompilovanie pre GophEngine sú zatiaľ dostupné v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md) (slovenský preklad som ešte nespravil).
+Pokyny na kompilovanie pre GophEngine sú dostupné v [BUILDING.sk.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.sk.md).
 
 ## Menovanie
 
