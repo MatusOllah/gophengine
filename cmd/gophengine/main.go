@@ -63,6 +63,62 @@ func getLogFilePath() string {
 	return filepath.Join(os.TempDir(), "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
 }
 
+func _main() error {
+	slog.Info(fmt.Sprintf("GophEngine version %s", version))
+	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
+	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
+	slog.Info("ahoj!")
+
+	if flagutil.MustGetBool(flagSet, "extract-assets") {
+		if err := fsutil.Extract(assets.FS, "assets", flagutil.MustGetBool(flagSet, "gui")); err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	// Window icon
+	slog.Info("setting window icon")
+	if err := setIcon(); err != nil {
+		return err
+	}
+
+	// Context
+	slog.Info("initializing context")
+	ctx, err := context.New(&context.NewContextConfig{
+		AssetsFS:           assets.FS,
+		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
+		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
+		Version:            version,
+	})
+	if err != nil {
+		return err
+	}
+
+	// Game init
+	slog.Info("initializing game")
+	g, err := fnfgame.New(ctx) // TODO: portable mode
+	if err != nil {
+		return err
+	}
+
+	// Ebiten init
+	slog.Info("initializing ebitengine")
+	g.InitEbiten()
+
+	if flagutil.MustGetBool(flagSet, "just-init") {
+		return nil
+	}
+
+	// Start
+	slog.Info("starting game")
+	if err := g.Start(); err != nil {
+		return err
+	}
+
+	return g.Close()
+}
+
 func main() {
 	// Flags
 	if err := initFlags(); err != nil {
@@ -87,84 +143,11 @@ func main() {
 	opts.SrcFileMode = slogcolor.ShortFile
 	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
 
-	slog.Info(fmt.Sprintf("GophEngine version %s", version))
-	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
-	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
-	slog.Info("ahoj!")
-
-	if flagutil.MustGetBool(flagSet, "extract-assets") {
-		if err := fsutil.Extract(assets.FS, "assets", flagutil.MustGetBool(flagSet, "gui")); err != nil {
-			slog.Error(err.Error())
-			if flagutil.MustGetBool(flagSet, "gui") {
-				zenity.Error(err.Error())
-			}
-			os.Exit(1)
-		}
-
-		return
-	}
-
-	// Window icon
-	slog.Info("setting window icon")
-	if err := setIcon(); err != nil {
+	if err := _main(); err != nil {
 		slog.Error(err.Error())
 		if flagutil.MustGetBool(flagSet, "gui") {
 			zenity.Error(err.Error())
 		}
-		os.Exit(1)
-	}
-
-	// Context
-	slog.Info("initializing context")
-	ctx, err := context.New(&context.NewContextConfig{
-		AssetsFS:           assets.FS,
-		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
-		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
-		Version:            version,
-	})
-	if err != nil {
-		slog.Error(err.Error())
-		if flagutil.MustGetBool(flagSet, "gui") {
-			zenity.Error(err.Error())
-		}
-		os.Exit(1)
-	}
-
-	// Game init
-	slog.Info("initializing game")
-	g, err := fnfgame.New(ctx) // TODO: portable mode
-	if err != nil {
-		slog.Error(err.Error())
-		if flagutil.MustGetBool(flagSet, "gui") {
-			zenity.Error(err.Error())
-		}
-		os.Exit(1)
-	}
-	defer func() {
-		if err := g.Close(); err != nil {
-			slog.Error(err.Error())
-			if flagutil.MustGetBool(flagSet, "gui") {
-				zenity.Error(err.Error())
-			}
-			os.Exit(1)
-		}
-	}()
-
-	// Ebiten init
-	slog.Info("initializing ebitengine")
-	g.InitEbiten()
-
-	if flagutil.MustGetBool(flagSet, "just-init") {
-		return
-	}
-
-	// Start
-	slog.Info("starting game")
-	if err := g.Start(); err != nil {
-		slog.Error(err.Error())
-		if flagutil.MustGetBool(flagSet, "gui") {
-			zenity.Error(err.Error())
-		}
-		os.Exit(1)
+		panic(err)
 	}
 }
