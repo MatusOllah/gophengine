@@ -69,4 +69,7 @@ Môžete darovať prostredníctvom nasledujúcich platforiem:
 
 Ďakujem za vašu podporu! 😊
 
-<img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup" style="float: right;">
+<p align="center">
+    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup">
+</p>
+

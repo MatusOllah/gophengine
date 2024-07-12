@@ -70,4 +70,6 @@ You can donate through the following platforms:
 
 Thank you for your support! 😊
 
-<img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup" style="float: right;">
+<p align="center">
+    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup">
+</p>
