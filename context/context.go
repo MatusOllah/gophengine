@@ -12,6 +12,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/gopxl/beep"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	input "github.com/quasilyte/ebitengine-input"
 	"golang.org/x/text/language"
 )
 
@@ -23,7 +24,8 @@ type Context struct {
 	Height               int
 	AssetsFS             fs.FS
 	StateController      *ge.StateController
-	Controls             *ge.Controls
+	InputSystem          input.System
+	InputHandler         *input.Handler
 	Rand                 *rand.Rand
 	OptionsConfig        *config.Config
 	ProgressConfig       *config.Config
@@ -72,11 +74,12 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.ProgressConfig = progressConfig
 
 	// Controls
-	ctl, err := ge.GetControlsFromConfig(ctx.OptionsConfig)
+	ctx.InputSystem.Init(input.SystemConfig{input.AnyDevice})
+	keymap, err := ge.LoadKeymapFromConfig(ctx.OptionsConfig)
 	if err != nil {
 		return nil, err
 	}
-	ctx.Controls = ctl
+	ctx.InputHandler = ctx.InputSystem.NewHandler(0, keymap)
 
 	// Localizer
 	bundle := i18n.NewBundle(language.English)

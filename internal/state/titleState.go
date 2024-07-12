@@ -20,7 +20,6 @@ import (
 	"github.com/gopxl/beep/vorbis"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 )
@@ -191,7 +190,7 @@ func (s *TitleState) Update(dt float64) error {
 
 	s.flasher.Update(dt)
 
-	if inpututil.IsKeyJustPressed(s.ctx.Controls.Accept) && !s.transitioning && s.skippedIntro {
+	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.transitioning && s.skippedIntro {
 		s.titleText.AnimController.Play("press")
 		s.flasher.Flash()
 
@@ -211,7 +210,7 @@ func (s *TitleState) Update(dt float64) error {
 		})
 	}
 
-	if inpututil.IsKeyJustPressed(s.ctx.Controls.Accept) && !s.skippedIntro {
+	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.skippedIntro {
 		s.skipIntro()
 	}
 

@@ -1,97 +1,78 @@
 package gophengine
 
 import (
+	"log/slog"
+
 	"github.com/MatusOllah/gophengine/internal/config"
-	"github.com/hajimehoshi/ebiten/v2"
+	input "github.com/quasilyte/ebitengine-input"
 )
 
-type Controls struct {
-	Up, Down, Left, Right, Accept, Back, Pause, Reset, Fullscreen ebiten.Key
-}
+const (
+	ActionUp input.Action = iota
+	ActionDown
+	ActionLeft
+	ActionRight
+	ActionAccept
+	ActionBack
+	ActionPause
+	ActionReset
+	ActionFullscreen
+)
 
-func GetControlsFromConfig(cfg *config.Config) (*Controls, error) {
-	ctl := &Controls{}
+func LoadKeymapFromConfig(cfg *config.Config) (input.Keymap, error) {
+	slog.Info("loading keymap")
 
-	// Up
-	up, err := cfg.Get("Controls.Up")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Up.UnmarshalText(up.([]byte)); err != nil {
-		return nil, err
-	}
+	keymap := input.Keymap{}
 
-	// Down
-	down, err := cfg.Get("Controls.Down")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Down.UnmarshalText(down.([]byte)); err != nil {
-		return nil, err
-	}
+	getKeys := func(id string, action input.Action) error {
+		_keys, err := cfg.Get(id)
+		if err != nil {
+			return err
+		}
 
-	// Left
-	left, err := cfg.Get("Controls.Left")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Left.UnmarshalText(left.([]byte)); err != nil {
-		return nil, err
-	}
+		var keys []input.Key
+		for _, s := range _keys.([]string) {
+			key, err := input.ParseKey(s)
+			if err != nil {
+				return err
+			}
+			keys = append(keys, key)
+		}
 
-	// Right
-	right, err := cfg.Get("Controls.Right")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Right.UnmarshalText(right.([]byte)); err != nil {
-		return nil, err
+		keymap[action] = keys
+
+		return nil
 	}
 
-	// Accept
-	accept, err := cfg.Get("Controls.Accept")
-	if err != nil {
+	if err := getKeys("Controls.Up", ActionUp); err != nil {
 		return nil, err
 	}
-	if err := ctl.Accept.UnmarshalText(accept.([]byte)); err != nil {
+	if err := getKeys("Controls.Down", ActionDown); err != nil {
 		return nil, err
 	}
-
-	// Back
-	back, err := cfg.Get("Controls.Back")
-	if err != nil {
+	if err := getKeys("Controls.Left", ActionLeft); err != nil {
 		return nil, err
 	}
-	if err := ctl.Back.UnmarshalText(back.([]byte)); err != nil {
+	if err := getKeys("Controls.Right", ActionRight); err != nil {
 		return nil, err
 	}
-
-	// Pause
-	pause, err := cfg.Get("Controls.Pause")
-	if err != nil {
+	if err := getKeys("Controls.Accept", ActionAccept); err != nil {
 		return nil, err
 	}
-	if err := ctl.Pause.UnmarshalText(pause.([]byte)); err != nil {
+	if err := getKeys("Controls.Back", ActionBack); err != nil {
+		return nil, err
+	}
+	if err := getKeys("Controls.Pause", ActionPause); err != nil {
+		return nil, err
+	}
+	if err := getKeys("Controls.Reset", ActionReset); err != nil {
+		return nil, err
+	}
+	if err := getKeys("Controls.Fullscreen", ActionFullscreen); err != nil {
 		return nil, err
 	}
 
-	// Reset
-	reset, err := cfg.Get("Controls.Reset")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Reset.UnmarshalText(reset.([]byte)); err != nil {
-		return nil, err
-	}
+	slog.Info("loading keymap OK", "keymap", keymap)
 
-	// Fullscreen
-	fullscreen, err := cfg.Get("Controls.Fullscreen")
-	if err != nil {
-		return nil, err
-	}
-	if err := ctl.Fullscreen.UnmarshalText(fullscreen.([]byte)); err != nil {
-		return nil, err
-	}
-
-	return ctl, nil
+	return keymap, nil
 }

@@ -4,13 +4,13 @@ import (
 	"log/slog"
 	"time"
 
+	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/MatusOllah/gophengine/internal/state"
 	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type FNFGame struct {
@@ -39,11 +39,13 @@ func (g *FNFGame) Update() error {
 	g.dt = time.Since(g.last).Seconds()
 	g.last = time.Now()
 
+	g.ctx.InputSystem.UpdateWithDelta(g.dt)
+
 	if err := g.ctx.StateController.Update(g.dt); err != nil {
 		return err
 	}
 
-	if inpututil.IsKeyJustPressed(g.ctx.Controls.Fullscreen) {
+	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionFullscreen) {
 		g.ctx.OptionsConfig.Toggle("Fullscreen")
 		ebiten.SetFullscreen(g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))
 		slog.Info("toggled fullscreen", "Fullscreen", g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))

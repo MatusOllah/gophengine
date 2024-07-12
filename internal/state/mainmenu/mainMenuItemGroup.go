@@ -3,10 +3,10 @@ package mainmenu
 import (
 	"log/slog"
 
+	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type mainMenuItemGroup struct {
@@ -48,7 +48,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle keyboard input for up navigation
-	if inpututil.IsKeyJustPressed(g.ctx.Controls.Up) {
+	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionUp) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected > 0 {
@@ -63,7 +63,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle keyboard input for down navigation
-	if inpututil.IsKeyJustPressed(g.ctx.Controls.Down) {
+	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionDown) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected < len(g.items)-1 {
@@ -98,7 +98,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle item selection (keyboard + LMB)
-	if inpututil.IsKeyJustPressed(g.ctx.Controls.Accept) || inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) {
 		slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 
 		if g.items[g.curSelected].Name == "donate" {
