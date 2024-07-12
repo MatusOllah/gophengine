@@ -59,7 +59,7 @@ The name "GophEngine" combines "Goph" (representing Gopher, the Go programming l
 
 ## 💲 Donate
 
-If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy Baldovská pitahaya)
+If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Baldovská pitahaya](https://baldovska.sk))
 
 You can donate through the following platforms:
 
@@ -69,3 +69,5 @@ You can donate through the following platforms:
 * **Duino-Coin (DUCO):** `SladkyCitron`
 
 Thank you for your support! 😊
+
+<img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup" style="float: right;">

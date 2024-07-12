@@ -58,7 +58,7 @@ Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go.
 
 ## 💲 Darujte
 
-Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu Baldovskej pitahaya)
+Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu [Baldovskej pitahaya](https://baldovska.sk))
 
 Môžete darovať prostredníctvom nasledujúcich platforiem:
 
@@ -68,3 +68,5 @@ Môžete darovať prostredníctvom nasledujúcich platforiem:
 * **Duino-Coin (DUCO):** `SladkyCitron`
 
 Ďakujem za vašu podporu! 😊
+
+<img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup" style="float: right;">
