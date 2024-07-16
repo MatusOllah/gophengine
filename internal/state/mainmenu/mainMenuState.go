@@ -8,8 +8,11 @@ import (
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/jeandeaual/go-locale"
 	"github.com/pkg/browser"
 )
+
+var instance *MainMenuState
 
 type MainMenuState struct {
 	ctx       *context.Context
@@ -76,7 +79,16 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 			Name:   "donate",
 			Sprite: donateSprite,
 			OnSelect: func(i *mainMenuItem) error {
-				return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/README.md#-donate")
+				l, err := locale.GetLocale()
+				if err != nil {
+					return err
+				}
+
+				if l == "sk" || l == "sk-SK" {
+					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/docs/README.sk.md#-darujte")
+				} else {
+					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/README.md#-donate")
+				}
 			},
 		},
 		{
@@ -86,13 +98,17 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 		},
 	}
 
-	return &MainMenuState{
+	state := &MainMenuState{
 		ctx:       ctx,
 		menuItems: newMainMenuItemGroup(ctx, menuItems...),
 		bg:        bg,
 		magenta:   magenta,
 		bgOffsetY: 0,
-	}, nil
+	}
+
+	instance = state
+
+	return state, nil
 }
 
 func (s *MainMenuState) Draw(screen *ebiten.Image) {
