@@ -8,7 +8,7 @@
 
 **Status:** work-in-progress
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine)
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE)
 
 **GophEngine** is a Go implementation of **Friday Night Funkin' v0.2.7.1** with improvements and an alternative to vanilla FNF.
 
@@ -22,7 +22,7 @@ I created GophEngine for several reasons:
 * To develop an easy-to-use Go modding API for Friday Night Funkin', similar to MinecraftForge but for FNF.
 * To fix issues in the vanilla FNF engine and add new features and improvements.
 * To foster a positive and non-toxic community around the game supporting Boyfriend fans and avoiding anti-Boyfriend sentiments, without the toxic community and developers.
-* To remove violent NSFL content introduced in FNF v0.3.2, and create a cleaner version of the game.
+* To remove violent NSFL (Not Safe For Life) content introduced in FNF v0.3.2, and create a cleaner version of the game.
 * To rewrite Friday Night Funkin' in Go, my favorite programming language.
 
 ### Why Go?

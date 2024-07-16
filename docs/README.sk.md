@@ -6,7 +6,7 @@
 
 **[English 🇺🇸](https://github.com/MatusOllah/gophengine/blob/main/README.md)** | **Slovenčina 🇸🇰**
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine)
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE)
 
 **GophEngine** je Go implementácia hry **Friday Night Funkin' v0.2.7.1** s vylepšeniami a alternatíva k vanilla FNF.
 
@@ -20,7 +20,7 @@ GophEngine som vytvoril z niekoľkých dôvodov:
 * Pre vytvorenie jednoducho použitelného Go moddingového API pre Friday Night Funkin', podobné MinecraftForge, ale pre FNF.
 * Pre opravenie chýb v pôvodnom FNF enginu a pridať nové funkcie a vylepšenia.
 * Pre podporu pozitívnej a netoxickej komunity okolo hry, pre podporu fanúšikov postavy Boyfriend a vyhýbanie sa anti-Boyfriend postojom bez toxickej komunity a vývojárov.
-* Pre odstránenie násilného NSFL obsahu zavedené v FNF v0.3.2 a pre vytvorenie čistejšej verzie hry.
+* Pre odstránenie násilného NSFL (Not Safe For Life) obsahu zavedené v FNF v0.3.2 a pre vytvorenie čistejšej verzie hry.
 * Pre prepísanie hry Friday Night Funkin' v Go, mojom obľúbenom programovacom jazyku.
 
 ### Prečo Go?
@@ -73,4 +73,3 @@ Môžete darovať prostredníctvom nasledujúcich platforiem:
 <p align="center">
     <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup">
 </p>
-
