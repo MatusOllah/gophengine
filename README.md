@@ -37,6 +37,7 @@ Go is my favorite programming language, and I prefer it over learning Haxe.
 * Small tweaks and optimizations for a smoother and more enjoyable experience
 * A proper options menu for better customization
 * Robust Go modding API for easy modification
+* Faster compile times
 
 ## Hardware Requirements
 

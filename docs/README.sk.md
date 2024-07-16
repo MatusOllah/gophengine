@@ -35,6 +35,7 @@ Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe
 * Drobné úpravy a optimalizácie pre lepší a príjemnejší zážitok
 * Riadne menu možností pre lepšie prispôsobenie
 * Robustné Go moddingové API pre jednoduché modifikácie
+* Rýchlejšie časy kompilácie
 
 ## Hardvérové požiadavky
 
