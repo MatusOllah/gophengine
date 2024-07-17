@@ -2,21 +2,26 @@ package mainmenu
 
 import (
 	"log/slog"
+	"time"
 
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/ncruces/zenity"
 )
 
 type mainMenuItemGroup struct {
 	items       []*mainMenuItem
 	curSelected int
 	isSelected  bool
+	flicker     *ge.Flicker
+	itemFlicker *ge.Flicker
+	magenta     *ge.Sprite
 	ctx         *context.Context
 }
 
-func newMainMenuItemGroup(ctx *context.Context, items ...*mainMenuItem) *mainMenuItemGroup {
+func newMainMenuItemGroup(ctx *context.Context, items []*mainMenuItem, magenta *ge.Sprite) *mainMenuItemGroup {
 	for i, item := range items {
 		item.Sprite.Position.Y = 60 + (i * 160)
 	}
@@ -25,13 +30,18 @@ func newMainMenuItemGroup(ctx *context.Context, items ...*mainMenuItem) *mainMen
 		items:       items,
 		curSelected: 0,
 		isSelected:  false,
+		flicker:     ge.NewFlicker(magenta, 1100*time.Millisecond, 150*time.Millisecond),
+		itemFlicker: ge.NewFlicker(nil, time.Second, 60*time.Millisecond),
+		magenta:     magenta,
 		ctx:         ctx,
 	}
 }
 
 func (g *mainMenuItemGroup) Draw(screen *ebiten.Image) {
 	for _, item := range g.items {
-		item.Sprite.AnimController.Draw(screen, item.Sprite.Position)
+		if item.Sprite.Visible {
+			item.Sprite.AnimController.Draw(screen, item.Sprite.Position)
+		}
 	}
 }
 
@@ -41,6 +51,9 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 	for _, item := range g.items {
 		item.Sprite.AnimController.UpdateWithDelta(dt)
 	}
+
+	g.flicker.Update()
+	g.itemFlicker.Update()
 
 	// Prevent the user from selecting when transitioning
 	if g.isSelected {
@@ -115,7 +128,21 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 			return err
 		}
 
-		//TODO: flicker animation
+		g.flicker.Flicker()
+
+		for i := range g.items {
+			if g.curSelected == i {
+				continue
+			}
+			slog.Debug("hiding item", "i", i)
+			g.items[i].Sprite.Visible = false // TODO: tween animation
+		}
+
+		g.itemFlicker.Sprite = g.items[g.curSelected].Sprite
+		g.itemFlicker.OnCompleteCallback = func() {
+			zenity.Warning("TODO: switch state")
+		}
+		g.itemFlicker.Flicker()
 
 		if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
 			return err

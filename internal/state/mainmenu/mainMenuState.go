@@ -100,7 +100,7 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 
 	state := &MainMenuState{
 		ctx:       ctx,
-		menuItems: newMainMenuItemGroup(ctx, menuItems...),
+		menuItems: newMainMenuItemGroup(ctx, menuItems, magenta),
 		bg:        bg,
 		magenta:   magenta,
 		bgOffsetY: 0,

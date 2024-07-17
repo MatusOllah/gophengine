@@ -4,7 +4,6 @@ import (
 	"log/slog"
 
 	ge "github.com/MatusOllah/gophengine"
-	"github.com/ncruces/zenity"
 )
 
 type mainMenuItem struct {
@@ -15,5 +14,5 @@ type mainMenuItem struct {
 
 func NopOnSelectFunc(i *mainMenuItem) error {
 	slog.Warn(i.Name + " not implemented yet!")
-	return zenity.Warning(i.Name + " not implemented yet!")
+	return nil
 }
