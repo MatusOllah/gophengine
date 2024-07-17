@@ -201,13 +201,27 @@ func (s *TitleState) Update(dt float64) error {
 		slog.Info("pressed enter, transitioning")
 		s.transitioning = true
 
+		// Bit janky solution with the error channel but whatever
+		errCh := make(chan error, 1)
+
 		time.AfterFunc(2*time.Second, func() {
 			mms, err := mainmenu.NewMainMenuState(s.ctx)
 			if err != nil {
-				panic(err) // TODO: handle error properly
+				errCh <- err
+				return
 			}
 			titleState.ctx.StateController.SwitchState(mms)
+			errCh <- nil
 		})
+
+		select {
+		case err := <-errCh:
+			if err != nil {
+				return err
+			}
+		default:
+			// Continue with update routine
+		}
 	}
 
 	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.skippedIntro {
