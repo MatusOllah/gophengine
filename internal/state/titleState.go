@@ -24,7 +24,7 @@ import (
 	"github.com/tanema/gween/ease"
 )
 
-var titleState *TitleState
+var instance *TitleState
 
 var _ ge.State = (*TitleState)(nil)
 
@@ -158,7 +158,7 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 		transitioning:      false,
 	}
 
-	titleState = ts
+	instance = ts
 
 	return ts, nil
 }
@@ -210,7 +210,7 @@ func (s *TitleState) Update(dt float64) error {
 				errCh <- err
 				return
 			}
-			titleState.ctx.StateController.SwitchState(mms)
+			instance.ctx.StateController.SwitchState(mms)
 			errCh <- nil
 		})
 
@@ -264,18 +264,18 @@ func (s *TitleState) skipIntro() {
 }
 
 func titleState_BeatHit(curBeat int) {
-	titleState.logoBl.AnimController.Play("bump")
-	titleState.danceLeft = !titleState.danceLeft
+	instance.logoBl.AnimController.Play("bump")
+	instance.danceLeft = !instance.danceLeft
 
-	if titleState.danceLeft {
-		titleState.gfDance.AnimController.Play("danceRight")
+	if instance.danceLeft {
+		instance.gfDance.AnimController.Play("danceRight")
 	} else {
-		titleState.gfDance.AnimController.Play("danceLeft")
+		instance.gfDance.AnimController.Play("danceLeft")
 	}
 
 	switch curBeat {
 	case 1:
-		titleState.introText.CreateText(
+		instance.introText.CreateText(
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
@@ -283,31 +283,31 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleState.introText.AddText(i18nutil.Localize(titleState.ctx.Localizer, "IntroTextPresent"))
+		instance.introText.AddText(i18nutil.Localize(instance.ctx.Localizer, "IntroTextPresent"))
 	case 4:
-		titleState.introText.DeleteText()
+		instance.introText.DeleteText()
 	case 5:
-		titleState.introText.CreateText(i18nutil.Localize(titleState.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(titleState.ctx.Localizer, "IntroTextWith"))
+		instance.introText.CreateText(i18nutil.Localize(instance.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(instance.ctx.Localizer, "IntroTextWith"))
 	case 7:
-		titleState.introText.AddText("newgrounds")
-		titleState.ng.Visible = true
+		instance.introText.AddText("newgrounds")
+		instance.ng.Visible = true
 	case 8:
-		titleState.ng.Visible = false
-		titleState.introText.DeleteText()
+		instance.ng.Visible = false
+		instance.introText.DeleteText()
 	case 9:
-		titleState.introText.CreateText(titleState.randIntroText[0])
+		instance.introText.CreateText(instance.randIntroText[0])
 	case 11:
-		titleState.introText.AddText(titleState.randIntroText[1])
+		instance.introText.AddText(instance.randIntroText[1])
 	case 12:
-		titleState.introText.DeleteText()
+		instance.introText.DeleteText()
 	case 13:
-		titleState.introText.AddText("Friday")
+		instance.introText.AddText("Friday")
 	case 14:
-		titleState.introText.AddText("Night")
+		instance.introText.AddText("Night")
 	case 15:
-		titleState.introText.AddText("Funkin")
+		instance.introText.AddText("Funkin")
 	case 16:
-		titleState.introText.DeleteText()
-		titleState.skipIntro()
+		instance.introText.DeleteText()
+		instance.skipIntro()
 	}
 }
