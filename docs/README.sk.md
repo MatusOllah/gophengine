@@ -57,6 +57,10 @@ Pokyny na kompilovanie pre GophEngine sú dostupné v [BUILDING.sk.md](https://g
 Názov "GophEngine" kombinuje "Goph" (reprezentujúci Gophera, maskota Go programovacieho jazyka) a "Engine" (reprezentujúci FNF engine).
 Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go."
 
+## Prispievanie
+
+Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/CONTRIBUTING.md).
+
 ## 💲 Darujte
 
 Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu [Baldovskej pitahaye](https://baldovska.sk))

@@ -58,6 +58,10 @@ Build instructions for GophEngine are available in [BUILDING.md](https://github.
 
 The name "GophEngine" combines "Goph" (representing Gopher, the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
 
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/CONTRIBUTING.md) for details on how to get started.
+
 ## 💲 Donate
 
 If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Baldovská pitahaya](https://baldovska.sk))
