@@ -59,7 +59,7 @@ Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go.
 
 ## Prispievanie
 
-Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/CONTRIBUTING.md).
+Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/CONTRIBUTING.md).
 
 ## 💲 Darujte
 

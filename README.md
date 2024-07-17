@@ -60,7 +60,7 @@ The name "GophEngine" combines "Goph" (representing Gopher, the Go programming l
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/CONTRIBUTING.md) for details on how to get started.
+We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/CONTRIBUTING.md) for details on how to get started.
 
 ## 💲 Donate
 
