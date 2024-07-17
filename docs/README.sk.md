@@ -30,7 +30,7 @@ Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe
 ## Funkcie
 
 * Zvýšené súkromie bez integrácie Newgrounds
-* Úplne napísané v Go s minimálnym alebo žiadnym použitím Haxe
+* Úplne napísané v Go so žiadnym použitím Haxe
 * Prívetivé pre rodiny a fanúšikov postavy Boyfriend (bez obsahu NSFW/L)
 * Drobné úpravy a optimalizácie pre lepší a príjemnejší zážitok
 * Riadne menu možností pre lepšie prispôsobenie

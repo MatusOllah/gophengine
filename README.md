@@ -32,7 +32,7 @@ Go is my favorite programming language, and I prefer it over learning Haxe.
 ## Features
 
 * Enhanced privacy with no Newgrounds integration
-* Entirely written in Go with little to no Haxe
+* Entirely written in Go with no Haxe
 * Family-friendly and welcoming to Boyfriend fans (no NSFW/L content)
 * Small tweaks and optimizations for a smoother and more enjoyable experience
 * A proper options menu for better customization
