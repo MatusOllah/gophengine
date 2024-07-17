@@ -8,7 +8,6 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/ncruces/zenity"
 )
 
 type mainMenuItemGroup struct {
@@ -52,8 +51,12 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		item.Sprite.AnimController.UpdateWithDelta(dt)
 	}
 
-	g.flicker.Update()
-	g.itemFlicker.Update()
+	if err := g.flicker.Update(); err != nil {
+		return err
+	}
+	if err := g.itemFlicker.Update(); err != nil {
+		return err
+	}
 
 	// Prevent the user from selecting when transitioning
 	if g.isSelected {
@@ -139,14 +142,15 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		}
 
 		g.itemFlicker.Sprite = g.items[g.curSelected].Sprite
-		g.itemFlicker.OnCompleteCallback = func() {
-			zenity.Warning("TODO: switch state")
+		g.itemFlicker.OnCompleteCallback = func() error {
+			if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
+				return err
+			}
+
+			return nil
 		}
 		g.itemFlicker.Flicker()
 
-		if err := g.items[g.curSelected].OnSelect(g.items[g.curSelected]); err != nil {
-			return err
-		}
 	}
 
 	return nil
