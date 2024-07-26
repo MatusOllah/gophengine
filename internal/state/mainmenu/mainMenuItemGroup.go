@@ -113,7 +113,7 @@ func (g *mainMenuItemGroup) Update(dt float64) error {
 		slog.Info("highlighted menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 	}
 
-	// Handle item selection keyboard
+	// Handle item selection (keyboard)
 	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) {
 		slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 
