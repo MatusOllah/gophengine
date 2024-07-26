@@ -82,6 +82,12 @@ func (g *FNFGame) Start() error {
 	return ebiten.RunGame(g)
 }
 
+func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
+	speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10))
+	speaker.Play(g.ctx.AudioMixer)
+	return ebiten.RunGameWithOptions(g, opts)
+}
+
 func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
