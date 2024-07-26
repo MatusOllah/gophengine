@@ -49,7 +49,7 @@ func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	}
 
 	regularFace := truetype.NewFace(regularFont, &truetype.Options{
-		Size:    24,
+		Size:    16,
 		DPI:     72,
 		Hinting: font.HintingFull,
 	})
@@ -136,7 +136,7 @@ func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text("Exit", titleFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
+		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "ExitDialogTitle"), titleFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
