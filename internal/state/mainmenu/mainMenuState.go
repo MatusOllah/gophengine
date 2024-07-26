@@ -6,6 +6,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
+	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/jeandeaual/go-locale"
@@ -15,11 +16,13 @@ import (
 var instance *MainMenuState
 
 type MainMenuState struct {
-	ctx       *context.Context
-	menuItems *mainMenuItemGroup
-	bg        *ge.Sprite
-	magenta   *ge.Sprite
-	bgOffsetY int
+	ctx        *context.Context
+	menuItems  *mainMenuItemGroup
+	bg         *ge.Sprite
+	magenta    *ge.Sprite
+	ui         *ebitenui.UI
+	shouldExit bool
+	bgOffsetY  int
 }
 
 var _ ge.State = (*MainMenuState)(nil)
@@ -98,12 +101,19 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 		},
 	}
 
+	ui, err := makeUI(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	state := &MainMenuState{
-		ctx:       ctx,
-		menuItems: newMainMenuItemGroup(ctx, menuItems, magenta),
-		bg:        bg,
-		magenta:   magenta,
-		bgOffsetY: 0,
+		ctx:        ctx,
+		menuItems:  newMainMenuItemGroup(ctx, menuItems, magenta),
+		bg:         bg,
+		magenta:    magenta,
+		bgOffsetY:  0,
+		shouldExit: false,
+		ui:         ui,
 	}
 
 	instance = state
@@ -122,8 +132,16 @@ func (s *MainMenuState) Draw(screen *ebiten.Image) {
 	s.menuItems.Draw(screen)
 
 	ebitenutil.DebugPrintAt(screen, s.ctx.Version, 0, 700)
+
+	s.ui.Draw(screen)
 }
 
 func (s *MainMenuState) Update(dt float64) error {
+	if s.shouldExit {
+		return ebiten.Termination
+	}
+
+	s.ui.Update()
+
 	return s.menuItems.Update(dt)
 }

@@ -5,6 +5,8 @@ go 1.22.0
 require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/MatusOllah/slogcolor v1.2.1
+	github.com/ebitenui/ebitenui v0.5.8
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/gopxl/beep v1.4.1
 	github.com/hajimehoshi/ebiten/v2 v2.7.3
 	github.com/hashicorp/hcl/v2 v2.20.1
@@ -16,6 +18,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/zclconf/go-cty v1.14.4
+	golang.org/x/image v0.18.0
 	golang.org/x/text v0.16.0
 )
 
@@ -41,8 +44,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quasilyte/gmath v0.0.0-20221217210116-fba37a2e15c7 // indirect
 	github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
-	golang.org/x/image v0.18.0 // indirect
+	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect

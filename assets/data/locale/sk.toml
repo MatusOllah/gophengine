@@ -2,3 +2,6 @@ FPSCounter = "FPS (snímky za sekundu): {{printf \"%.2f\" .FPS}}\nTPS (tiky za s
 IntroTextPresent = "uvádzajú"
 IntroTextInAssoc = "V asociácií"
 IntroTextWith = "s"
+ExitDialogText = "Naozaj si praješ ukončiť hru?"
+ExitDialogExitButton = "Ukončiť"
+ExitDialogStayButton = "Zostať"

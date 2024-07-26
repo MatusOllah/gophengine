@@ -24,7 +24,7 @@ func LoadDefaultOptions(cfg *Config) {
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},
 		"Controls.Left":       []string{input.KeyLeft.String(), input.KeyA.String()},
 		"Controls.Right":      []string{input.KeyRight.String(), input.KeyD.String()},
-		"Controls.Accept":     []string{input.KeyEnter.String(), input.KeyMouseLeft.String()},
+		"Controls.Accept":     []string{input.KeyEnter.String()},
 		"Controls.Back":       []string{input.KeyEscape.String(), input.KeyBackspace.String()},
 		"Controls.Pause":      []string{input.KeyEscape.String()},
 		"Controls.Reset":      []string{input.KeyR.String()},
