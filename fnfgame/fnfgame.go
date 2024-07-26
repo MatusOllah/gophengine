@@ -77,13 +77,17 @@ func (g *FNFGame) InitEbiten() {
 }
 
 func (g *FNFGame) Start() error {
-	speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10))
+	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
+		return err
+	}
 	speaker.Play(g.ctx.AudioMixer)
 	return ebiten.RunGame(g)
 }
 
 func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
-	speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10))
+	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
+		return err
+	}
 	speaker.Play(g.ctx.AudioMixer)
 	return ebiten.RunGameWithOptions(g, opts)
 }
