@@ -68,6 +68,7 @@ func getLogFilePath() string {
 	return filepath.Join(tempDir, "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
 }
 
+// Actual main func here
 func _main() error {
 	slog.Info(fmt.Sprintf("GophEngine version %s", version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
@@ -154,6 +155,8 @@ func main() {
 	opts.SrcFileMode = slogcolor.ShortFile
 	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
 
+	// moved main func to _main and handle error here
+	// learned this from Melkey
 	if err := _main(); err != nil {
 		slog.Error(err.Error())
 		if flagutil.MustGetBool(flagSet, "gui") {
