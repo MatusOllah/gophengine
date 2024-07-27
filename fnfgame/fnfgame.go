@@ -1,6 +1,7 @@
 package fnfgame
 
 import (
+	"fmt"
 	"log/slog"
 	"time"
 
@@ -28,7 +29,7 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	// State
 	state, err := state.NewTitleState(ctx)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
 	}
 	g.ctx.StateController.SwitchState(state)
 
@@ -42,7 +43,7 @@ func (g *FNFGame) Update() error {
 	g.ctx.InputSystem.UpdateWithDelta(g.dt)
 
 	if err := g.ctx.StateController.Update(g.dt); err != nil {
-		return err
+		return fmt.Errorf("error updating state: %w", err)
 	}
 
 	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionFullscreen) {
@@ -78,29 +79,35 @@ func (g *FNFGame) InitEbiten() {
 
 func (g *FNFGame) Start() error {
 	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
-		return err
+		return fmt.Errorf("fnfgame Start: error initializing speaker: %w", err)
 	}
 	speaker.Play(g.ctx.AudioMixer)
-	return ebiten.RunGame(g)
+	if err := ebiten.RunGame(g); err != nil {
+		return fmt.Errorf("fnfgame Start: error running game: %w", err)
+	}
+	return nil
 }
 
 func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
 	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
-		return err
+		return fmt.Errorf("fnfgame StartWithOptions: error initializing speaker: %w", err)
 	}
 	speaker.Play(g.ctx.AudioMixer)
-	return ebiten.RunGameWithOptions(g, opts)
+	if err := ebiten.RunGameWithOptions(g, opts); err != nil {
+		return fmt.Errorf("fnfgame StartWithOptions: error running game: %w", err)
+	}
+	return nil
 }
 
 func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
 	if err := g.ctx.OptionsConfig.Close(); err != nil {
-		return err
+		return fmt.Errorf("fnfgame Close: error closing OptionsConfig: %w", err)
 	}
 
 	if err := g.ctx.ProgressConfig.Close(); err != nil {
-		return err
+		return fmt.Errorf("fnfgame Close: error closing ProgressConfig: %w", err)
 	}
 
 	return nil
