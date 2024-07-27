@@ -48,6 +48,7 @@ type TitleState struct {
 	blackScreenVisible bool
 	skippedIntro       bool
 	transitioning      bool
+	errCh              chan error
 }
 
 func getRandIntroText(ctx *context.Context) ([]string, error) {
@@ -156,6 +157,7 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 		blackScreenVisible: true,
 		skippedIntro:       false,
 		transitioning:      false,
+		errCh:              make(chan error, 1),
 	}
 
 	instance = ts
@@ -170,6 +172,15 @@ func (s *TitleState) Update(dt float64) error {
 
 		s.ctx.Conductor.ChangeBPM(102)
 	})
+
+	select {
+	case err := <-s.errCh:
+		if err != nil {
+			return err
+		}
+	default:
+		// Continue with update routine
+	}
 
 	// Conductor & MusicBeat (MusicBeatState)
 	s.ctx.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
@@ -202,26 +213,15 @@ func (s *TitleState) Update(dt float64) error {
 		s.transitioning = true
 
 		// Bit janky solution with the error channel but whatever
-		errCh := make(chan error, 1)
-
 		time.AfterFunc(2*time.Second, func() {
 			mms, err := mainmenu.NewMainMenuState(s.ctx)
 			if err != nil {
-				errCh <- err
+				instance.errCh <- err
 				return
 			}
 			instance.ctx.StateController.SwitchState(mms)
-			errCh <- nil
+			instance.errCh <- nil
 		})
-
-		select {
-		case err := <-errCh:
-			if err != nil {
-				return err
-			}
-		default:
-			// Continue with update routine
-		}
 	}
 
 	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.skippedIntro {
