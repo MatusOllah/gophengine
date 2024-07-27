@@ -14,8 +14,10 @@ import (
 
 var ErrKeyNotExist error = errors.New("key does not exist")
 
+// MapFunc represents a mapping function. It takes in a key and value and returns a new value.
 type MapFunc func(string, interface{}) interface{}
 
+// Self-explanatory.
 type Config struct {
 	dataLock sync.RWMutex
 	data     map[string]interface{}
