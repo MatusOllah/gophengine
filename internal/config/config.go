@@ -3,7 +3,7 @@ package config
 import (
 	"bytes"
 	"encoding/gob"
-	"fmt"
+	"errors"
 	"io"
 	"log/slog"
 	"maps"
@@ -11,6 +11,8 @@ import (
 	"path/filepath"
 	"sync"
 )
+
+var ErrKeyNotExist error = errors.New("key does not exist")
 
 type MapFunc func(string, interface{}) interface{}
 
@@ -126,12 +128,12 @@ func (cfg *Config) Append(m map[string]interface{}) {
 	cfg.dataLock.Unlock()
 }
 
-// Get gets a value from the map.
+// Get gets a value from the map. If there is an error, it will be of type *KeyError.
 func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
 	value, ok := cfg.data[key]
 	if !ok {
-		return nil, fmt.Errorf("key not found: %s", key)
+		return nil, &KeyError{Op: "get", Key: key, Err: ErrKeyNotExist}
 	}
 	cfg.dataLock.RUnlock()
 	return value, nil
