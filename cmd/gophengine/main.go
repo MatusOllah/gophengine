@@ -60,7 +60,12 @@ func getLogLevel() slog.Leveler {
 
 // getLogFilePath get the logfile path from the temporary directory and current time.
 func getLogFilePath() string {
-	return filepath.Join(os.TempDir(), "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
+	tempDir := os.TempDir()
+	if flagutil.MustGetBool(flagSet, "portable") {
+		tempDir = "."
+	}
+
+	return filepath.Join(tempDir, "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
 }
 
 func _main() error {
@@ -85,12 +90,18 @@ func _main() error {
 
 	// Context
 	slog.Info("initializing context")
-	ctx, err := context.New(&context.NewContextConfig{
+
+	cfg := &context.NewContextConfig{
 		AssetsFS:           assets.FS,
 		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
 		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
 		Version:            version,
-	})
+	}
+	if flagutil.MustGetBool(flagSet, "portable") {
+		cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
+		cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
+	}
+	ctx, err := context.New(cfg)
 	if err != nil {
 		return err
 	}
