@@ -109,10 +109,10 @@ func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0x40, 0xFF, 0x40, 0xFF}),
 		}),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "ExitDialogStayButton"), regularFace, &widget.ButtonTextColor{
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
+			color.NRGBA{0, 0, 0, 0xFF},
+			color.NRGBA{0, 0, 0, 0xFF},
+			color.NRGBA{0, 0, 0, 0xFF},
+			color.NRGBA{0, 0, 0, 0xFF},
 		}),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:   10,
