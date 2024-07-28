@@ -151,7 +151,7 @@ func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		widget.WindowOpts.Contents(exitDialogContainer),
 		widget.WindowOpts.TitleBar(titleBarContainer, 25),
 		widget.WindowOpts.Draggable(),
-		widget.WindowOpts.Modal(),
+		//widget.WindowOpts.Modal(),
 		widget.WindowOpts.CloseMode(widget.NONE),
 		widget.WindowOpts.MinSize(400, 200),
 	)
