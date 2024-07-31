@@ -6,6 +6,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
+	"github.com/MatusOllah/gophengine/internal/state/options"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -95,9 +96,16 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 			},
 		},
 		{
-			Name:     "options",
-			Sprite:   optionsSprite,
-			OnSelect: NopOnSelectFunc,
+			Name:   "options",
+			Sprite: optionsSprite,
+			OnSelect: func(_ *mainMenuItem) error {
+				optState, err := options.NewOptionsState(instance.ctx)
+				if err != nil {
+					return err
+				}
+				instance.ctx.StateController.SwitchState(optState)
+				return nil
+			},
 		},
 	}
 
