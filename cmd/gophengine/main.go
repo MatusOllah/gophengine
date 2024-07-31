@@ -151,8 +151,7 @@ func main() {
 	// Logger (using slogcolor: https://github.com/MatusOllah/slogcolor)
 	opts := slogcolor.DefaultOptions
 	opts.Level = getLogLevel()
-	opts.TimeFormat = time.DateTime
-	opts.SrcFileMode = slogcolor.ShortFile
+	opts.SrcFileLength = 32
 	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
 
 	// moved main func to _main and handle error here
