@@ -8,7 +8,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
-	"github.com/MatusOllah/gophengine/internal/state"
+	"github.com/MatusOllah/gophengine/internal/state/title"
 	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -27,7 +27,7 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	g.last = time.Now()
 
 	// State
-	state, err := state.NewTitleState(ctx)
+	state, err := title.NewTitleState(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
 	}
