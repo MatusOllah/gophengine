@@ -29,6 +29,7 @@ func initFlags() error {
 	flagSet.String("log-level", "info", "Log level (\"debug\", \"info\", \"warn\", \"error\")")
 	flagSet.Bool("just-init", false, "Initialize game and exit")
 	flagSet.Bool("portable", false, "Save everything in the current directory (aka portable mode)")
+	flagSet.String("force-locale", "", "Force a specific locale (used for testing locales)")
 
 	if err := flagSet.Parse(os.Args[1:]); err != nil {
 		return err

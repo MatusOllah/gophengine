@@ -97,6 +97,7 @@ func _main() error {
 		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
 		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
 		Version:            version,
+		Locale:             flagutil.MustGetString(flagSet, "force-locale"),
 	}
 	if flagutil.MustGetBool(flagSet, "portable") {
 		cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")

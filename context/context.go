@@ -88,9 +88,14 @@ func New(cfg *NewContextConfig) (*Context, error) {
 		return nil, err
 	}
 
-	locale := optionsConfig.MustGet("Locale").(string)
-	slog.Info("using locale", "locale", locale)
-	ctx.Localizer = i18n.NewLocalizer(bundle, locale, "en")
+	if cfg.Locale != "" {
+		slog.Info("using locale", "locale", cfg.Locale)
+		ctx.Localizer = i18n.NewLocalizer(bundle, cfg.Locale)
+	} else {
+		locale := optionsConfig.MustGet("Locale").(string)
+		slog.Info("using locale", "locale", locale)
+		ctx.Localizer = i18n.NewLocalizer(bundle, locale, "en")
+	}
 
 	//Audio
 	ctx.Conductor = ge.NewConductor(100)
