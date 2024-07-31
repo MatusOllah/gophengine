@@ -49,11 +49,10 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.StateController = ge.NewStateController(nil)
 
 	// Rand
-	var seed1 uint64
+	var seed1, seed2 uint64
 	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed1); err != nil {
 		return nil, err
 	}
-	var seed2 uint64
 	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed2); err != nil {
 		return nil, err
 	}
