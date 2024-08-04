@@ -1,4 +1,4 @@
-package options
+package optionsui
 
 import (
 	"image"
@@ -14,7 +14,7 @@ import (
 	"golang.org/x/image/font"
 )
 
-func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
+func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	notoBold, _, err := loadFonts(ctx)
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package options
 import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/state/options/optionsui"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -19,7 +20,7 @@ func NewOptionsState(ctx *context.Context) (*OptionsState, error) {
 		return nil, err
 	}
 
-	ui, err := makeUI(ctx)
+	ui, err := optionsui.MakeUI(ctx)
 	if err != nil {
 		return nil, err
 	}
