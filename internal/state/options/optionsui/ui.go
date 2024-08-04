@@ -3,7 +3,6 @@ package optionsui
 import (
 	"image"
 	"image/color"
-	"io/fs"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
@@ -66,34 +65,4 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	ui.AddWindow(window)
 
 	return ui, nil
-}
-
-func loadFonts(ctx *context.Context) (*truetype.Font, *truetype.Font, error) {
-	// Bold font
-	boldBytes, err := fs.ReadFile(ctx.AssetsFS, "fonts/NotoSans-Bold.ttf")
-	if err != nil {
-		return nil, nil, err
-	}
-
-	boldFont, err := truetype.Parse(boldBytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Regular font
-	regularBytes, err := fs.ReadFile(ctx.AssetsFS, "fonts/NotoSans-Regular.ttf")
-	if err != nil {
-		return nil, nil, err
-	}
-
-	regularFont, err := truetype.Parse(regularBytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return boldFont, regularFont, nil
-}
-
-func newLabelColorSimple(clr color.Color) *widget.LabelColor {
-	return &widget.LabelColor{clr, clr}
 }
