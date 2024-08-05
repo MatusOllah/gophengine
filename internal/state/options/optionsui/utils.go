@@ -36,6 +36,21 @@ func loadFonts(ctx *context.Context) (*truetype.Font, *truetype.Font, error) {
 	return boldFont, regularFont, nil
 }
 
+// loadPhantomFont loads the Phantom font from embedded FS.
+func loadPhantomFont(ctx *context.Context) (*truetype.Font, error) {
+	phantomBytes, err := fs.ReadFile(ctx.AssetsFS, "fonts/phantom-full.ttf")
+	if err != nil {
+		return nil, err
+	}
+
+	phantomFont, err := truetype.Parse(phantomBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return phantomFont, nil
+}
+
 // newLabelColorSimple is short for &widget.LabelColor{clr, clr}.
 func newLabelColorSimple(clr color.Color) *widget.LabelColor {
 	return &widget.LabelColor{clr, clr}
