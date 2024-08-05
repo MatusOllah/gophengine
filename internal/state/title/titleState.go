@@ -61,6 +61,11 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 	r := csv.NewReader(f)
 	r.Comment = '#'
 
+	_, err = r.Read()
+	if err != nil {
+		return nil, err
+	}
+
 	records, err := r.ReadAll()
 	if err != nil {
 		return nil, err
