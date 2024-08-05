@@ -8,9 +8,6 @@ GOARCH=$(shell go env GOARCH)
 GO = go
 WINRES = $(GO) run github.com/tc-hib/go-winres@latest
 
-# icon
-ICON = icon.ico
-
 # output
 BINARY = ./bin/$(GOOS)-$(GOARCH)
 
@@ -42,7 +39,7 @@ build: clean
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE) ./cmd/gophengine
 
 .PHONY: upx
-upx:
+upx: build
 ifeq ($(IS_RELEASE),true)
 	upx $(UPX_FLAGS) $(EXE)
 endif
