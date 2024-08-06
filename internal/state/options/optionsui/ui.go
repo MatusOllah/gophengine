@@ -14,18 +14,13 @@ import (
 )
 
 func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
-	phantom, err := loadPhantomFont(ctx)
-	if err != nil {
-		return nil, err
-	}
-
 	notoBold, _, err := loadFonts(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	// Title font
-	titleFace := truetype.NewFace(phantom, &truetype.Options{
+	titleFace := truetype.NewFace(notoBold, &truetype.Options{
 		Size:    24,
 		DPI:     72,
 		Hinting: font.HintingFull,
