@@ -3,6 +3,7 @@ package optionsui
 import (
 	"image"
 	"image/color"
+	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
@@ -14,13 +15,13 @@ import (
 )
 
 func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
-	notoBold, _, err := loadFonts(ctx)
+	res, err := newUIResources(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	// Title font
-	titleFace := truetype.NewFace(notoBold, &truetype.Options{
+	titleFace := truetype.NewFace(res.notoBold, &truetype.Options{
 		Size:    24,
 		DPI:     72,
 		Hinting: font.HintingFull,
@@ -32,7 +33,62 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(5)),
 		)),
 	)
-	windowContainer.AddChild(makePageList(notoBold))
+
+	pages := []any{
+		newTestPage(),
+	}
+
+	pageContainer := newPageContainer(res)
+
+	windowContainer.AddChild(widget.NewList(
+		widget.ListOpts.Entries(pages),
+		widget.ListOpts.EntryLabelFunc(func(p any) string {
+			return p.(*page).name
+		}),
+		widget.ListOpts.EntrySelectedHandler(func(args *widget.ListEntrySelectedEventArgs) {
+			slog.Info("selected page", "PreviousEntry", args.PreviousEntry, "Entry", args.Entry)
+			pageContainer.setPage(args.Entry.(*page))
+		}),
+		widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(
+			widget.WidgetOpts.MinSize(150, 0),
+			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+				HorizontalPosition: widget.AnchorLayoutPositionStart,
+				VerticalPosition:   widget.AnchorLayoutPositionCenter,
+				StretchVertical:    true,
+				Padding:            widget.NewInsetsSimple(10),
+			}),
+		)),
+		widget.ListOpts.SliderOpts(
+			widget.SliderOpts.Images(nil, nil),
+			widget.SliderOpts.MinHandleSize(0),
+			widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(0)),
+		),
+		widget.ListOpts.ScrollContainerOpts(
+			widget.ScrollContainerOpts.Image(&widget.ScrollContainerImage{
+				Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
+				Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
+				Mask:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
+			}),
+		),
+		widget.ListOpts.HideHorizontalSlider(),
+		widget.ListOpts.HideVerticalSlider(),
+		widget.ListOpts.EntryFontFace(titleFace),
+		widget.ListOpts.EntryColor(&widget.ListEntryColor{
+			Selected:                   color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused selected entry
+			Unselected:                 color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused unselected entry
+			SelectedBackground:         color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the unfocused selected entry
+			SelectingBackground:        color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused being selected entry
+			SelectingFocusedBackground: color.NRGBA{R: 0x4E, G: 0x4E, B: 0x4E, A: 0xFF}, // Background color for the focused being selected entry
+			SelectedFocusedBackground:  color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the focused selected entry
+			FocusedBackground:          color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the focused unselected entry
+			DisabledUnselected:         color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled unselected entry
+			DisabledSelected:           color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled selected entry
+			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
+		}),
+		widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
+		widget.ListOpts.EntryTextPosition(widget.TextPositionStart, widget.TextPositionCenter),
+	))
+	windowContainer.AddChild(pageContainer.widget)
 
 	titleBarContainer := widget.NewContainer(
 		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF})),
@@ -67,57 +123,4 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	ui.AddWindow(window)
 
 	return ui, nil
-}
-
-func makePageList(theFont *truetype.Font) widget.PreferredSizeLocateableWidget {
-	face := truetype.NewFace(theFont, &truetype.Options{
-		Size:    24,
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
-
-	return widget.NewList(
-		widget.ListOpts.Entries([]any{"Audio", "Video", "Gameplay", "Controls", "Network", "Mods", "About"}),
-		widget.ListOpts.EntryLabelFunc(func(a any) string {
-			return a.(string)
-		}),
-		widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(
-			widget.WidgetOpts.MinSize(150, 0),
-			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
-				HorizontalPosition: widget.AnchorLayoutPositionStart,
-				VerticalPosition:   widget.AnchorLayoutPositionCenter,
-				StretchVertical:    true,
-				Padding:            widget.NewInsetsSimple(10),
-			}),
-		)),
-		widget.ListOpts.SliderOpts(
-			widget.SliderOpts.Images(nil, nil),
-			widget.SliderOpts.MinHandleSize(0),
-			widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(0)),
-		),
-		widget.ListOpts.ScrollContainerOpts(
-			widget.ScrollContainerOpts.Image(&widget.ScrollContainerImage{
-				Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-				Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-				Mask:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-			}),
-		),
-		widget.ListOpts.HideHorizontalSlider(),
-		widget.ListOpts.HideVerticalSlider(),
-		widget.ListOpts.EntryFontFace(face),
-		widget.ListOpts.EntryColor(&widget.ListEntryColor{
-			Selected:                   color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused selected entry
-			Unselected:                 color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused unselected entry
-			SelectedBackground:         color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the unfocused selected entry
-			SelectingBackground:        color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused being selected entry
-			SelectingFocusedBackground: color.NRGBA{R: 0x4E, G: 0x4E, B: 0x4E, A: 0xFF}, // Background color for the focused being selected entry
-			SelectedFocusedBackground:  color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the focused selected entry
-			FocusedBackground:          color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the focused unselected entry
-			DisabledUnselected:         color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled unselected entry
-			DisabledSelected:           color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled selected entry
-			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
-		}),
-		widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
-		widget.ListOpts.EntryTextPosition(widget.TextPositionStart, widget.TextPositionCenter),
-	)
 }
