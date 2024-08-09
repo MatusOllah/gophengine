@@ -27,7 +27,6 @@ Examples of unacceptable behavior by participants include:
 * Public or private harassment
 * Publishing others' private information, such as a physical or electronic address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a professional setting
-* Being a FNF degenerate
 
 ## Our Responsibilities
 
@@ -53,7 +52,7 @@ a project may be further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at matusollah420@gmail.com. All
+reported by contacting the project team at [matusollah420@gmail.com](mailto:matusollah420@gmail.com). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
@@ -73,5 +72,4 @@ available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.ht
 * Treat everyone with respect and kindness.
 * Be thoughtful in how you communicate.
 * Don’t be destructive or inflammatory.
-* Don't be a FNF degenerate.
 * If you encounter an issue, please mail matusollah420@gmail.com.
