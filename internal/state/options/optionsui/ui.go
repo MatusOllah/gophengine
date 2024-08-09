@@ -51,6 +51,9 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	// The pages
 	pages := []any{
 		newTestPage(),
+		newTestPage(),
+		newTestPage(),
+		newTestPage(),
 	}
 
 	pageContainer := newPageContainer(res)
@@ -86,9 +89,9 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		widget.ListOpts.EntryColor(&widget.ListEntryColor{
 			Selected:                   color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused selected entry
 			Unselected:                 color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused unselected entry
-			SelectedBackground:         color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the unfocused selected entry
-			SelectingBackground:        color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused being selected entry
-			SelectingFocusedBackground: color.NRGBA{R: 0x4E, G: 0x4E, B: 0x4E, A: 0xFF}, // Background color for the focused being selected entry
+			SelectedBackground:         color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused selected entry
+			SelectingBackground:        color.NRGBA{R: 0x1E, G: 0x1E, B: 0x1E, A: 0xFF}, // Background color for the unfocused being selected entry
+			SelectingFocusedBackground: color.NRGBA{R: 0x1E, G: 0x1E, B: 0x1E, A: 0xFF}, // Background color for the focused being selected entry
 			SelectedFocusedBackground:  color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the focused selected entry
 			FocusedBackground:          color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the focused unselected entry
 			DisabledUnselected:         color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled unselected entry
