@@ -18,12 +18,6 @@ func newPageContainer(res *uiResources) *pageContainer {
 	c := widget.NewContainer(
 		widget.ContainerOpts.WidgetOpts(
 			widget.WidgetOpts.TrackHover(false),
-			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{ // TODO: fix layout
-				HorizontalPosition: widget.AnchorLayoutPositionEnd,
-				VerticalPosition:   widget.AnchorLayoutPositionCenter,
-				StretchVertical:    true,
-				Padding:            widget.NewInsetsSimple(10),
-			}),
 		),
 		widget.ContainerOpts.Layout(widget.NewRowLayout(
 			widget.RowLayoutOpts.Direction(widget.DirectionVertical),

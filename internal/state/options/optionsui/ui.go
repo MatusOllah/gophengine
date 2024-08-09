@@ -27,20 +27,36 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		Hinting: font.HintingFull,
 	})
 
+	// The main window container
 	windowContainer := widget.NewContainer(
 		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF})),
-		widget.ContainerOpts.Layout(widget.NewAnchorLayout(
-			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(5)),
+		widget.ContainerOpts.Layout(widget.NewGridLayout(
+			widget.GridLayoutOpts.Columns(1),
+			widget.GridLayoutOpts.Stretch([]bool{true}, []bool{true, false}),
+			widget.GridLayoutOpts.Padding(widget.NewInsetsSimple(10)),
+			widget.GridLayoutOpts.Spacing(0, 10),
 		)),
 	)
 
+	// The main center container
+	mainContainer := widget.NewContainer(
+		widget.ContainerOpts.Layout(widget.NewGridLayout(
+			widget.GridLayoutOpts.Columns(2),
+			widget.GridLayoutOpts.Stretch([]bool{false, true}, []bool{true}),
+			widget.GridLayoutOpts.Spacing(20, 0),
+		)),
+	)
+	windowContainer.AddChild(mainContainer)
+
+	// The pages
 	pages := []any{
 		newTestPage(),
 	}
 
 	pageContainer := newPageContainer(res)
 
-	windowContainer.AddChild(widget.NewList(
+	// The page select list
+	mainContainer.AddChild(widget.NewList(
 		widget.ListOpts.Entries(pages),
 		widget.ListOpts.EntryLabelFunc(func(p any) string {
 			return p.(*page).name
@@ -51,12 +67,6 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		}),
 		widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(
 			widget.WidgetOpts.MinSize(150, 0),
-			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
-				HorizontalPosition: widget.AnchorLayoutPositionStart,
-				VerticalPosition:   widget.AnchorLayoutPositionCenter,
-				StretchVertical:    true,
-				Padding:            widget.NewInsetsSimple(10),
-			}),
 		)),
 		widget.ListOpts.SliderOpts(
 			widget.SliderOpts.Images(nil, nil),
@@ -88,8 +98,28 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
 		widget.ListOpts.EntryTextPosition(widget.TextPositionStart, widget.TextPositionCenter),
 	))
-	windowContainer.AddChild(pageContainer.widget)
+	mainContainer.AddChild(pageContainer.widget)
 
+	// The footer container
+	// TODO: footer buttons (OK, Cancel, Apply)
+	footerContainer := widget.NewContainer(
+		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{255, 0, 0, 255})),
+		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
+	)
+	footerContainer.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text("*insert footer here*", titleFace, newLabelColorSimple(color.NRGBA{255, 255, 255, 255})),
+		widget.LabelOpts.TextOpts(
+			widget.TextOpts.WidgetOpts(
+				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+					HorizontalPosition: widget.AnchorLayoutPositionCenter,
+					VerticalPosition:   widget.AnchorLayoutPositionCenter,
+				}),
+			),
+		),
+	))
+	windowContainer.AddChild(footerContainer)
+
+	// The title bar container
 	titleBarContainer := widget.NewContainer(
 		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF})),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
@@ -106,6 +136,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		),
 	))
 
+	// The window
 	window := widget.NewWindow(
 		widget.WindowOpts.Contents(windowContainer),
 		widget.WindowOpts.TitleBar(titleBarContainer, 25),
@@ -118,6 +149,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 
 	ui := &ebitenui.UI{Container: widget.NewContainer()}
 
+	// Spawn window
 	x, y := window.Contents.PreferredSize()
 	window.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-640/2), int(float64(ctx.Height/2)-480/2))))
 	ui.AddWindow(window)
