@@ -13,7 +13,7 @@ type uiResources struct {
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
-	nr, nb, err := loadFonts(ctx)
+	nb, nr, err := loadFonts(ctx)
 	if err != nil {
 		return nil, err
 	}
