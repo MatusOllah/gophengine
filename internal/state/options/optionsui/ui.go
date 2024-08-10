@@ -123,8 +123,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(&widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}), // "0xBF" :D
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
 		}),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowOKButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
@@ -137,8 +137,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(&widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
 		}),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowCancelButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
@@ -156,8 +156,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(&widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
 		}),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowApplyButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
