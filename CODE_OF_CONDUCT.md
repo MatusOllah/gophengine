@@ -52,7 +52,7 @@ a project may be further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [matusollah420@gmail.com](mailto:matusollah420@gmail.com). All
+reported by contacting the project team. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
@@ -67,9 +67,14 @@ members of the project's leadership.
 This Code of Conduct is adapted from the Contributor Covenant, version 1.4,
 available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
+## Contact us
+
+* **e-mail:** [matusollah420@gmail.com](mailto:matusollah420@gmail.com)
+* **Discord:** @sladkycitron
+
 ## Summary
 
 * Treat everyone with respect and kindness.
 * Be thoughtful in how you communicate.
 * Don’t be destructive or inflammatory.
-* If you encounter an issue, please mail [matusollah420@gmail.com](mailto:matusollah420@gmail.com).
+* If you encounter an issue, please contact us.
