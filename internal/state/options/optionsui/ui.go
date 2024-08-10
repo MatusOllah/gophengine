@@ -126,7 +126,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
 		}),
-		widget.ButtonOpts.Text("OK", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowOKButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
@@ -140,7 +140,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
 		}),
-		widget.ButtonOpts.Text("Cancel", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowCancelButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -159,7 +159,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
 		}),
-		widget.ButtonOpts.Text("Apply", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowApplyButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
