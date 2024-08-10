@@ -27,6 +27,13 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		Hinting: font.HintingFull,
 	})
 
+	// The footer button font
+	footerButtonFace := truetype.NewFace(res.notoRegular, &truetype.Options{
+		Size:    24,
+		DPI:     72,
+		Hinting: font.HintingFull,
+	})
+
 	// The main window container
 	windowContainer := widget.NewContainer(
 		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF})),
@@ -65,7 +72,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			return p.(*page).name
 		}),
 		widget.ListOpts.EntrySelectedHandler(func(args *widget.ListEntrySelectedEventArgs) {
-			slog.Info("selected page", "PreviousEntry", args.PreviousEntry, "Entry", args.Entry)
+			slog.Info("[optionsui] selected page", "PreviousEntry", args.PreviousEntry, "Entry", args.Entry)
 			pageContainer.setPage(args.Entry.(*page))
 		}),
 		widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(
@@ -104,22 +111,61 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	mainContainer.AddChild(pageContainer.widget)
 
 	// The footer container
-	// TODO: footer buttons (OK, Cancel, Apply)
 	footerContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{255, 0, 0, 255})),
-		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
+		widget.ContainerOpts.Layout(widget.NewRowLayout(
+			widget.RowLayoutOpts.Direction(widget.DirectionHorizontal),
+			widget.RowLayoutOpts.Spacing(5),
+		)),
 	)
-	footerContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text("*insert footer here*", titleFace, newLabelColorSimple(color.NRGBA{255, 255, 255, 255})),
-		widget.LabelOpts.TextOpts(
-			widget.TextOpts.WidgetOpts(
-				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
-					HorizontalPosition: widget.AnchorLayoutPositionCenter,
-					VerticalPosition:   widget.AnchorLayoutPositionCenter,
-				}),
-			),
-		),
+
+	// OK button (saves config & exits)
+	// TODO: save config & exit
+	footerContainer.AddChild(widget.NewButton(
+		widget.ButtonOpts.Image(&widget.ButtonImage{
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}), // "0xBF" :D
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+		}),
+		widget.ButtonOpts.Text("OK", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.TextPadding(widget.Insets{
+			Left:  10,
+			Right: 30,
+		}),
 	))
+
+	// Cancel button (exits)
+	footerContainer.AddChild(widget.NewButton(
+		widget.ButtonOpts.Image(&widget.ButtonImage{
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+		}),
+		widget.ButtonOpts.Text("Cancel", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.TextPadding(widget.Insets{
+			Left:  10,
+			Right: 10,
+		}),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("[optionsui] clicked cancel button")
+			// TODO: switch state to MainMenuState
+		}),
+	))
+
+	// Apply button (saves config)
+	// TODO: save config
+	footerContainer.AddChild(widget.NewButton(
+		widget.ButtonOpts.Image(&widget.ButtonImage{
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xC4, 0xC4, 0xC4, 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xC8, 0xC8, 0xC8, 0xFF}),
+		}),
+		widget.ButtonOpts.Text("Apply", footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.TextPadding(widget.Insets{
+			Left:  10,
+			Right: 10,
+		}),
+	))
+
 	windowContainer.AddChild(footerContainer)
 
 	// The title bar container
