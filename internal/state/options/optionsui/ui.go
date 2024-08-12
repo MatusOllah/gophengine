@@ -2,13 +2,11 @@ package optionsui
 
 import (
 	"image"
-	"image/color"
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/ebitenui/ebitenui"
-	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
@@ -36,7 +34,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 
 	// The main window container
 	windowContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF})),
+		widget.ContainerOpts.BackgroundImage(res.bgImage),
 		widget.ContainerOpts.Layout(widget.NewGridLayout(
 			widget.GridLayoutOpts.Columns(1),
 			widget.GridLayoutOpts.Stretch([]bool{true}, []bool{true, false}),
@@ -84,27 +82,12 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 			widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(0)),
 		),
 		widget.ListOpts.ScrollContainerOpts(
-			widget.ScrollContainerOpts.Image(&widget.ScrollContainerImage{
-				Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-				Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-				Mask:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-			}),
+			widget.ScrollContainerOpts.Image(res.pageListScrollContainerImage),
 		),
 		widget.ListOpts.HideHorizontalSlider(),
 		widget.ListOpts.HideVerticalSlider(),
 		widget.ListOpts.EntryFontFace(titleFace),
-		widget.ListOpts.EntryColor(&widget.ListEntryColor{
-			Selected:                   color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused selected entry
-			Unselected:                 color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused unselected entry
-			SelectedBackground:         color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused selected entry
-			SelectingBackground:        color.NRGBA{R: 0x1E, G: 0x1E, B: 0x1E, A: 0xFF}, // Background color for the unfocused being selected entry
-			SelectingFocusedBackground: color.NRGBA{R: 0x1E, G: 0x1E, B: 0x1E, A: 0xFF}, // Background color for the focused being selected entry
-			SelectedFocusedBackground:  color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the focused selected entry
-			FocusedBackground:          color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the focused unselected entry
-			DisabledUnselected:         color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled unselected entry
-			DisabledSelected:           color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled selected entry
-			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
-		}),
+		widget.ListOpts.EntryColor(res.pageListEntryColor),
 		widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
 		widget.ListOpts.EntryTextPosition(widget.TextPositionStart, widget.TextPositionCenter),
 	))
@@ -121,12 +104,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	// OK button (saves config & exits)
 	// TODO: save config & exit
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(&widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}), // "0xBF" :D
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
-		}),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowOKButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowOKButton"), footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
@@ -135,12 +114,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 
 	// Cancel button (exits)
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(&widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
-		}),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowCancelButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowCancelButton"), footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -154,12 +129,8 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 	// Apply button (saves config)
 	// TODO: save config
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(&widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
-		}),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowApplyButton"), footerButtonFace, newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255})),
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowApplyButton"), footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -170,11 +141,11 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 
 	// The title bar container
 	titleBarContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF})),
+		widget.ContainerOpts.BackgroundImage(res.titleBarBGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowTitle"), titleFace, newLabelColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF})),
+		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowTitle"), titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

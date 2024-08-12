@@ -1,8 +1,6 @@
 package optionsui
 
 import (
-	"image/color"
-
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
@@ -38,7 +36,7 @@ func newPageContainer(res *uiResources) *pageContainer {
 				Stretch: true,
 			})),
 		),
-		widget.LabelOpts.Text("", titleFace, newLabelColorSimple(color.NRGBA{255, 255, 255, 255})),
+		widget.LabelOpts.Text("", titleFace, res.labelColor),
 	)
 	c.AddChild(lbl)
 
