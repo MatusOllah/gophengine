@@ -1,4 +1,4 @@
-package title
+package scene
 
 import (
 	"encoding/csv"
@@ -13,7 +13,6 @@ import (
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
-	"github.com/MatusOllah/gophengine/internal/state/mainmenu"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/effects"
 	"github.com/gopxl/beep/speaker"
@@ -24,12 +23,12 @@ import (
 	"github.com/tanema/gween/ease"
 )
 
-var instance *TitleState
+var titleSceneInstance *TitleScene
 
-var _ ge.State = (*TitleState)(nil)
+var _ ge.State = (*TitleScene)(nil)
 
-// TitleState is the intro and "press enter to begin" screen.
-type TitleState struct {
+// TitleScene is the intro and "press enter to begin" screen.
+type TitleScene struct {
 	ctx                *context.Context
 	ng                 *ge.Sprite
 	mb                 *ge.MusicBeat
@@ -77,7 +76,7 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 	return introText, nil
 }
 
-func NewTitleState(ctx *context.Context) (*TitleState, error) {
+func NewTitleScene(ctx *context.Context) (*TitleScene, error) {
 	it, err := getRandIntroText(ctx)
 	if err != nil {
 		return nil, err
@@ -143,7 +142,7 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 		return nil, err
 	}
 
-	ts := &TitleState{
+	ts := &TitleScene{
 		ctx:                ctx,
 		randIntroText:      it,
 		introText:          introText,
@@ -165,12 +164,12 @@ func NewTitleState(ctx *context.Context) (*TitleState, error) {
 		errCh:              make(chan error, 1),
 	}
 
-	instance = ts
+	titleSceneInstance = ts
 
 	return ts, nil
 }
 
-func (s *TitleState) Update(dt float64) error {
+func (s *TitleScene) Update(dt float64) error {
 	s.once.Do(func() {
 		slog.Info("(*sync.Once).Do")
 		s.ctx.AudioMixer.Add(s.freakyMenu)
@@ -219,13 +218,13 @@ func (s *TitleState) Update(dt float64) error {
 
 		// Bit janky solution with the error channel but whatever
 		time.AfterFunc(2*time.Second, func() {
-			mms, err := mainmenu.NewMainMenuState(s.ctx)
+			mms, err := NewMainMenuScene(s.ctx)
 			if err != nil {
-				instance.errCh <- err
+				titleSceneInstance.errCh <- err
 				return
 			}
-			instance.ctx.StateController.SwitchState(mms)
-			instance.errCh <- nil
+			titleSceneInstance.ctx.StateController.SwitchState(mms)
+			titleSceneInstance.errCh <- nil
 		})
 	}
 
@@ -236,7 +235,7 @@ func (s *TitleState) Update(dt float64) error {
 	return nil
 }
 
-func (s *TitleState) Draw(screen *ebiten.Image) {
+func (s *TitleScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
 
 	if s.skippedIntro {
@@ -257,7 +256,7 @@ func (s *TitleState) Draw(screen *ebiten.Image) {
 	s.flasher.Draw(screen)
 }
 
-func (s *TitleState) skipIntro() {
+func (s *TitleScene) skipIntro() {
 	if s.skippedIntro {
 		return
 	}
@@ -269,18 +268,18 @@ func (s *TitleState) skipIntro() {
 }
 
 func titleState_BeatHit(curBeat int) {
-	instance.logoBl.AnimController.Play("bump")
-	instance.danceLeft = !instance.danceLeft
+	titleSceneInstance.logoBl.AnimController.Play("bump")
+	titleSceneInstance.danceLeft = !titleSceneInstance.danceLeft
 
-	if instance.danceLeft {
-		instance.gfDance.AnimController.Play("danceRight")
+	if titleSceneInstance.danceLeft {
+		titleSceneInstance.gfDance.AnimController.Play("danceRight")
 	} else {
-		instance.gfDance.AnimController.Play("danceLeft")
+		titleSceneInstance.gfDance.AnimController.Play("danceLeft")
 	}
 
 	switch curBeat {
 	case 1:
-		instance.introText.CreateText(
+		titleSceneInstance.introText.CreateText(
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
@@ -288,31 +287,31 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		instance.introText.AddText(i18nutil.Localize(instance.ctx.Localizer, "IntroTextPresent"))
+		titleSceneInstance.introText.AddText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextPresent"))
 	case 4:
-		instance.introText.DeleteText()
+		titleSceneInstance.introText.DeleteText()
 	case 5:
-		instance.introText.CreateText(i18nutil.Localize(instance.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(instance.ctx.Localizer, "IntroTextWith"))
+		titleSceneInstance.introText.CreateText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextWith"))
 	case 7:
-		instance.introText.AddText("newgrounds")
-		instance.ng.Visible = true
+		titleSceneInstance.introText.AddText("newgrounds")
+		titleSceneInstance.ng.Visible = true
 	case 8:
-		instance.ng.Visible = false
-		instance.introText.DeleteText()
+		titleSceneInstance.ng.Visible = false
+		titleSceneInstance.introText.DeleteText()
 	case 9:
-		instance.introText.CreateText(instance.randIntroText[0])
+		titleSceneInstance.introText.CreateText(titleSceneInstance.randIntroText[0])
 	case 11:
-		instance.introText.AddText(instance.randIntroText[1])
+		titleSceneInstance.introText.AddText(titleSceneInstance.randIntroText[1])
 	case 12:
-		instance.introText.DeleteText()
+		titleSceneInstance.introText.DeleteText()
 	case 13:
-		instance.introText.AddText("Friday")
+		titleSceneInstance.introText.AddText("Friday")
 	case 14:
-		instance.introText.AddText("Night")
+		titleSceneInstance.introText.AddText("Night")
 	case 15:
-		instance.introText.AddText("Funkin")
+		titleSceneInstance.introText.AddText("Funkin")
 	case 16:
-		instance.introText.DeleteText()
-		instance.skipIntro()
+		titleSceneInstance.introText.DeleteText()
+		titleSceneInstance.skipIntro()
 	}
 }

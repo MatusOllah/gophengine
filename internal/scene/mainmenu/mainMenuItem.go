@@ -7,13 +7,13 @@ import (
 	"github.com/ncruces/zenity"
 )
 
-type mainMenuItem struct {
+type MainMenuItem struct {
 	Name     string
 	Sprite   *ge.Sprite
-	OnSelect func(*mainMenuItem) error
+	OnSelect func(*MainMenuItem) error
 }
 
-func NopOnSelectFunc(i *mainMenuItem) error {
+func NopOnSelectFunc(i *MainMenuItem) error {
 	slog.Warn(i.Name + " not implemented yet!")
 	return zenity.Warning(i.Name + " not implemented yet!")
 }

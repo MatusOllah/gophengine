@@ -1,4 +1,4 @@
-package mainmenu
+package scene
 
 import (
 	_ "image/png"
@@ -6,7 +6,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
-	"github.com/MatusOllah/gophengine/internal/state/options"
+	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -14,11 +14,11 @@ import (
 	"github.com/pkg/browser"
 )
 
-var instance *MainMenuState
+var mainMenuSceneInstance *MainMenuScene
 
-type MainMenuState struct {
+type MainMenuScene struct {
 	ctx        *context.Context
-	menuItems  *mainMenuItemGroup
+	menuItems  *mainmenu.MainMenuItemGroup
 	bg         *ge.Sprite
 	magenta    *ge.Sprite
 	ui         *ebitenui.UI
@@ -26,9 +26,9 @@ type MainMenuState struct {
 	bgOffsetY  int
 }
 
-var _ ge.State = (*MainMenuState)(nil)
+var _ ge.State = (*MainMenuScene)(nil)
 
-func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
+func NewMainMenuScene(ctx *context.Context) (*MainMenuScene, error) {
 	bgImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuBG.png")
 	if err != nil {
 		return nil, err
@@ -68,21 +68,21 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 		return nil, err
 	}
 
-	menuItems := []*mainMenuItem{
+	menuItems := []*mainmenu.MainMenuItem{
 		{
 			Name:     "story mode",
 			Sprite:   storyModeSprite,
-			OnSelect: NopOnSelectFunc,
+			OnSelect: mainmenu.NopOnSelectFunc,
 		},
 		{
 			Name:     "freeplay",
 			Sprite:   freeplaySprite,
-			OnSelect: NopOnSelectFunc,
+			OnSelect: mainmenu.NopOnSelectFunc,
 		},
 		{
 			Name:   "donate",
 			Sprite: donateSprite,
-			OnSelect: func(i *mainMenuItem) error {
+			OnSelect: func(i *mainmenu.MainMenuItem) error {
 				l, err := locale.GetLocale()
 				if err != nil {
 					return err
@@ -98,38 +98,38 @@ func NewMainMenuState(ctx *context.Context) (*MainMenuState, error) {
 		{
 			Name:   "options",
 			Sprite: optionsSprite,
-			OnSelect: func(_ *mainMenuItem) error {
-				optState, err := options.NewOptionsState(instance.ctx)
+			OnSelect: func(_ *mainmenu.MainMenuItem) error {
+				optScene, err := NewOptionsScene(mainMenuSceneInstance.ctx)
 				if err != nil {
 					return err
 				}
-				instance.ctx.StateController.SwitchState(optState)
+				mainMenuSceneInstance.ctx.StateController.SwitchState(optScene)
 				return nil
 			},
 		},
 	}
 
-	ui, err := makeUI(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	state := &MainMenuState{
+	scene := &MainMenuScene{
 		ctx:        ctx,
-		menuItems:  newMainMenuItemGroup(ctx, menuItems, magenta),
+		menuItems:  mainmenu.NewMainMenuItemGroup(ctx, menuItems, magenta),
 		bg:         bg,
 		magenta:    magenta,
 		bgOffsetY:  0,
 		shouldExit: false,
-		ui:         ui,
 	}
 
-	instance = state
+	ui, err := mainmenu.MakeUI(ctx, &scene.shouldExit)
+	if err != nil {
+		return nil, err
+	}
+	scene.ui = ui
 
-	return state, nil
+	mainMenuSceneInstance = scene
+
+	return scene, nil
 }
 
-func (s *MainMenuState) Draw(screen *ebiten.Image) {
+func (s *MainMenuScene) Draw(screen *ebiten.Image) {
 	bgOpts := s.bg.DrawImageOptions()
 	bgOpts.GeoM.Scale(1.1, 1.1)
 	bgOpts.GeoM.Translate(0, float64(s.bgOffsetY))
@@ -144,7 +144,7 @@ func (s *MainMenuState) Draw(screen *ebiten.Image) {
 	s.ui.Draw(screen)
 }
 
-func (s *MainMenuState) Update(dt float64) error {
+func (s *MainMenuScene) Update(dt float64) error {
 	if s.shouldExit {
 		return ebiten.Termination
 	}

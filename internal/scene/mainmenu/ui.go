@@ -17,7 +17,7 @@ import (
 	"golang.org/x/image/font"
 )
 
-func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
+func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	ui := &ebitenui.UI{}
 
 	// Title font
@@ -91,7 +91,7 @@ func makeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		}),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("clicked exit button, exiting")
-			instance.shouldExit = true
+			*shouldExit = true
 		}),
 	))
 

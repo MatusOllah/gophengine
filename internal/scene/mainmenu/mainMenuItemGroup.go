@@ -10,8 +10,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type mainMenuItemGroup struct {
-	items       []*mainMenuItem
+type MainMenuItemGroup struct {
+	items       []*MainMenuItem
 	curSelected int
 	isSelected  bool
 	flicker     *ge.Flicker
@@ -20,12 +20,12 @@ type mainMenuItemGroup struct {
 	ctx         *context.Context
 }
 
-func newMainMenuItemGroup(ctx *context.Context, items []*mainMenuItem, magenta *ge.Sprite) *mainMenuItemGroup {
+func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *ge.Sprite) *MainMenuItemGroup {
 	for i, item := range items {
 		item.Sprite.Position.Y = 60 + (i * 160)
 	}
 
-	return &mainMenuItemGroup{
+	return &MainMenuItemGroup{
 		items:       items,
 		curSelected: 0,
 		isSelected:  false,
@@ -36,7 +36,7 @@ func newMainMenuItemGroup(ctx *context.Context, items []*mainMenuItem, magenta *
 	}
 }
 
-func (g *mainMenuItemGroup) Draw(screen *ebiten.Image) {
+func (g *MainMenuItemGroup) Draw(screen *ebiten.Image) {
 	for _, item := range g.items {
 		if item.Sprite.Visible {
 			item.Sprite.AnimController.Draw(screen, item.Sprite.Position)
@@ -44,7 +44,7 @@ func (g *mainMenuItemGroup) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (g *mainMenuItemGroup) Update(dt float64) error {
+func (g *MainMenuItemGroup) Update(dt float64) error {
 	g.items[g.curSelected].Sprite.AnimController.Play("selected")
 
 	for _, item := range g.items {
