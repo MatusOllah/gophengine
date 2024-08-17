@@ -1,6 +1,6 @@
 package main
 
 func Fragment(_ vec4, srcPos vec2, _ vec4) vec4 {
-    grayscale := dot(imageSrc0UnsafeAt(srcPos), vec4(0.3, 0.59, 0.11, 0.0))
-    return vec4(grayscale, grayscale, grayscale, 1.0)
+	grayscale := dot(imageSrc0UnsafeAt(srcPos), vec4(0.3, 0.59, 0.11, 0.0))
+	return vec4(grayscale, grayscale, grayscale, 1.0)
 }
