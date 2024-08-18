@@ -21,8 +21,8 @@ func Fragment(_ vec4, srcPos vec2, _ vec4) vec4 {
 	diff := tex - error
 	var correction vec4
 	correction.r = 0.0
-	correction.g =  (diff.r * 0.7) + (diff.g * 1.0)
-	correction.b =  (diff.r * 0.7) + (diff.b * 1.0)
+	correction.g = (diff.r * 0.7) + (diff.g * 1.0)
+	correction.b = (diff.r * 0.7) + (diff.b * 1.0)
 	correction = tex + correction
 	correction.a = tex.a
 
