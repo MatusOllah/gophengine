@@ -23,5 +23,6 @@ func New(x, y float64) *Boyfriend {
 }
 
 func (bf *Boyfriend) Update(dt float64) error {
+	// TODO: this
 	return nil
 }
