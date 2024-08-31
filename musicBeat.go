@@ -64,6 +64,6 @@ func (mb *MusicBeat) StepHit() {
 }
 
 func (mb *MusicBeat) BeatHit() {
-	slog.Debug("[MusicBeat] BeatHit", "CurBeat", mb.CurBeat)
+	slog.Debug("[MusicBeat] #### BeatHit", "CurBeat", mb.CurBeat)
 	mb.BeatHitFunc(mb.CurBeat)
 }
