@@ -7,7 +7,15 @@ import (
 
 type NopScene struct{}
 
-var _ ge.State = (*NopScene)(nil)
+var _ ge.Scene = (*NopScene)(nil)
+
+func (s *NopScene) Init() error {
+	return nil
+}
+
+func (s *NopScene) Close() error {
+	return nil
+}
 
 func (s *NopScene) Draw(_ *ebiten.Image) {
 }

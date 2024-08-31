@@ -23,7 +23,7 @@ type Context struct {
 	Width                int
 	Height               int
 	AssetsFS             fs.FS
-	StateController      *ge.StateController
+	SceneCtrl            *ge.SceneController
 	InputSystem          input.System
 	InputHandler         *input.Handler
 	Rand                 *rand.Rand
@@ -46,7 +46,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	ctx.AssetsFS = cfg.AssetsFS
 
-	ctx.StateController = ge.NewStateController(nil)
+	ctx.SceneCtrl = ge.NewStateController(nil)
 
 	// Rand
 	var seed1, seed2 uint64

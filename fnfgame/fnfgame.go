@@ -27,11 +27,9 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	g.last = time.Now()
 
 	// State
-	state, err := scene.NewTitleScene(ctx)
-	if err != nil {
+	if err := g.ctx.SceneCtrl.SwitchScene(scene.NewTitleScene(ctx)); err != nil {
 		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
 	}
-	g.ctx.StateController.SwitchState(state)
 
 	return g, nil
 }
@@ -42,7 +40,7 @@ func (g *FNFGame) Update() error {
 
 	g.ctx.InputSystem.UpdateWithDelta(g.dt)
 
-	if err := g.ctx.StateController.Update(g.dt); err != nil {
+	if err := g.ctx.SceneCtrl.Update(g.dt); err != nil {
 		return fmt.Errorf("error updating state: %w", err)
 	}
 
@@ -56,7 +54,7 @@ func (g *FNFGame) Update() error {
 }
 
 func (g *FNFGame) Draw(screen *ebiten.Image) {
-	g.ctx.StateController.Draw(screen)
+	g.ctx.SceneCtrl.Draw(screen)
 
 	ebitenutil.DebugPrint(screen, i18nutil.LocalizeTmpl(g.ctx.Localizer, "FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),

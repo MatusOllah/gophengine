@@ -10,28 +10,53 @@ import (
 )
 
 type OptionsScene struct {
-	bg *ebiten.Image
-	ui *ebitenui.UI
+	ctx *context.Context
+	bg  *ebiten.Image
+	ui  *ebitenui.UI
 }
 
-func NewOptionsScene(ctx *context.Context) (*OptionsScene, error) {
-	bg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuDesat.png")
-	if err != nil {
-		return nil, err
-	}
+func NewOptionsScene(ctx *context.Context) *OptionsScene {
+	/*
+		bg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuDesat.png")
+		if err != nil {
+			return nil, err
+		}
 
-	ui, err := optionsui.MakeUI(ctx)
-	if err != nil {
-		return nil, err
-	}
+		ui, err := optionsui.MakeUI(ctx)
+		if err != nil {
+			return nil, err
+		}
 
-	return &OptionsScene{
-		bg: bg,
-		ui: ui,
-	}, nil
+		return &OptionsScene{
+			bg: bg,
+			ui: ui,
+		}, nil
+	*/
+
+	return &OptionsScene{ctx: ctx}
 }
 
-var _ ge.State = (*OptionsScene)(nil)
+var _ ge.Scene = (*OptionsScene)(nil)
+
+func (s *OptionsScene) Init() error {
+	bg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuDesat.png")
+	if err != nil {
+		return err
+	}
+	s.bg = bg
+
+	ui, err := optionsui.MakeUI(s.ctx)
+	if err != nil {
+		return err
+	}
+	s.ui = ui
+
+	return nil
+}
+
+func (s *OptionsScene) Close() error {
+	return nil
+}
 
 func (s *OptionsScene) Draw(screen *ebiten.Image) {
 	bgOpts := &ebiten.DrawImageOptions{}

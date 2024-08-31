@@ -26,46 +26,55 @@ type MainMenuScene struct {
 	bgOffsetY  int
 }
 
-var _ ge.State = (*MainMenuScene)(nil)
+var _ ge.Scene = (*MainMenuScene)(nil)
 
-func NewMainMenuScene(ctx *context.Context) (*MainMenuScene, error) {
-	bgImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuBG.png")
+func NewMainMenuScene(ctx *context.Context) *MainMenuScene {
+	return &MainMenuScene{ctx: ctx}
+}
+
+func (s *MainMenuScene) Init() error {
+	s.bgOffsetY = 0
+	s.shouldExit = false
+
+	bgImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuBG.png")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	bg := ge.NewSprite(0, 0)
 	bg.Img = bgImg
+	s.bg = bg
 
-	magentaImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuBGMagenta.png")
+	magentaImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuBGMagenta.png")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	magenta := ge.NewSprite(0, 0)
 	magenta.Img = magentaImg
 	magenta.Visible = false
+	s.magenta = magenta
 
-	storyModeSprite := ge.NewSprite(int(float64(ctx.Width/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
-	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "story mode")
+	storyModeSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
+	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "story mode")
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	freeplaySprite := ge.NewSprite(int(float64(ctx.Width/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
-	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "freeplay")
+	freeplaySprite := ge.NewSprite(int(float64(s.ctx.Width/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
+	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "freeplay")
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	donateSprite := ge.NewSprite(int(float64(ctx.Width/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
-	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "donate")
+	donateSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
+	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "donate")
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	optionsSprite := ge.NewSprite(int(float64(ctx.Width/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
-	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "options")
+	optionsSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
+	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "options")
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	menuItems := []*mainmenu.MainMenuItem{
@@ -99,34 +108,26 @@ func NewMainMenuScene(ctx *context.Context) (*MainMenuScene, error) {
 			Name:   "options",
 			Sprite: optionsSprite,
 			OnSelect: func(_ *mainmenu.MainMenuItem) error {
-				optScene, err := NewOptionsScene(mainMenuSceneInstance.ctx)
-				if err != nil {
-					return err
-				}
-				mainMenuSceneInstance.ctx.StateController.SwitchState(optScene)
-				return nil
+				return mainMenuSceneInstance.ctx.SceneCtrl.SwitchScene(NewOptionsScene(mainMenuSceneInstance.ctx))
 			},
 		},
 	}
 
-	scene := &MainMenuScene{
-		ctx:        ctx,
-		menuItems:  mainmenu.NewMainMenuItemGroup(ctx, menuItems, magenta),
-		bg:         bg,
-		magenta:    magenta,
-		bgOffsetY:  0,
-		shouldExit: false,
-	}
+	s.menuItems = mainmenu.NewMainMenuItemGroup(s.ctx, menuItems, magenta)
 
-	ui, err := mainmenu.MakeUI(ctx, &scene.shouldExit)
+	ui, err := mainmenu.MakeUI(s.ctx, &s.shouldExit)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	scene.ui = ui
+	s.ui = ui
 
-	mainMenuSceneInstance = scene
+	mainMenuSceneInstance = s
 
-	return scene, nil
+	return nil
+}
+
+func (s *MainMenuScene) Close() error {
+	return nil
 }
 
 func (s *MainMenuScene) Draw(screen *ebiten.Image) {

@@ -25,7 +25,7 @@ import (
 
 var titleSceneInstance *TitleScene
 
-var _ ge.State = (*TitleScene)(nil)
+var _ ge.Scene = (*TitleScene)(nil)
 
 // TitleScene is the intro and "press enter to begin" screen.
 type TitleScene struct {
@@ -76,97 +76,98 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 	return introText, nil
 }
 
-func NewTitleScene(ctx *context.Context) (*TitleScene, error) {
-	it, err := getRandIntroText(ctx)
-	if err != nil {
-		return nil, err
-	}
+func NewTitleScene(ctx *context.Context) *TitleScene {
+	return &TitleScene{ctx: ctx}
+}
 
-	ng := ge.NewSprite(int((float64(ctx.Width)/2)-150), int(float64(ctx.Height)*0.52))
-	ngImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/newgrounds_logo.png")
+func (s *TitleScene) Init() error {
+	it, err := getRandIntroText(s.ctx)
 	if err != nil {
-		return nil, err
+		return err
+	}
+	s.randIntroText = it
+
+	ng := ge.NewSprite(int((float64(s.ctx.Width)/2)-150), int(float64(s.ctx.Height)*0.52))
+	ngImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/newgrounds_logo.png")
+	if err != nil {
+		return err
 	}
 	ng.Img = ngImg
 	ng.Visible = false
+	s.ng = ng
 
 	logoBl := ge.NewSprite(-150, -100)
-	ac, err := animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
+	ac, err := animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	logoBl.AnimController = ac
+	s.logoBl = logoBl
 
-	gfDance := ge.NewSprite(int(float64(ctx.Width)*0.4), int(float64(ctx.Height)*0.07))
-	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
+	gfDance := ge.NewSprite(int(float64(s.ctx.Width)*0.4), int(float64(s.ctx.Height)*0.07))
+	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	gfDance.AnimController = ac
+	s.gfDance = gfDance
 
-	titleText := ge.NewSprite(100, int(float64(ctx.Height)*0.8))
-	ac, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
+	titleText := ge.NewSprite(100, int(float64(s.ctx.Height)*0.8))
+	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	titleText.AnimController = ac
+	s.titleText = titleText
 
-	freakyMenuFile, err := ctx.AssetsFS.Open("music/freakyMenu.ogg")
+	// FreakyMenu
+	freakyMenuFile, err := s.ctx.AssetsFS.Open("music/freakyMenu.ogg")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer freakyMenuFile.Close()
 
 	freakyMenuStreamer, freakyMenuFormat, err := vorbis.Decode(freakyMenuFile)
 	if err != nil {
-		return nil, err
+		return err
 	}
+	s.freakyMenuStreamer = freakyMenuStreamer
+	s.freakyMenuFormat = freakyMenuFormat
 
-	freakyMenu := &effects.Volume{
-		Streamer: beep.Resample(ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, ctx.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
+	s.freakyMenu = &effects.Volume{
+		Streamer: beep.Resample(s.ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, s.ctx.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
 	}
 
-	mb := ge.NewMusicBeat(ctx.Conductor)
+	mb := ge.NewMusicBeat(s.ctx.Conductor)
 	mb.BeatHitFunc = titleState_BeatHit
+	s.mb = mb
 
-	flasher, err := ge.NewFlasher(ctx.Width, ctx.Height, 1)
+	s.flasher = ge.NewFlasher(s.ctx.Width, s.ctx.Height, 1)
+
+	introText, err := ge.NewIntroText(s.ctx.AssetsFS)
 	if err != nil {
-		return nil, err
+		return err
 	}
+	s.introText = introText
 
-	introText, err := ge.NewIntroText(ctx.AssetsFS)
-	if err != nil {
-		return nil, err
-	}
+	s.once = &sync.Once{}
+	s.freakyMenuTween = gween.New(-10, -0.3, 4, ease.Linear)
+	s.danceLeft = false
+	s.blackScreenVisible = true
+	s.skippedIntro = false
+	s.transitioning = false
+	s.errCh = make(chan error, 1)
 
-	ts := &TitleScene{
-		ctx:                ctx,
-		randIntroText:      it,
-		introText:          introText,
-		ng:                 ng,
-		mb:                 mb,
-		once:               new(sync.Once),
-		logoBl:             logoBl,
-		gfDance:            gfDance,
-		titleText:          titleText,
-		freakyMenuStreamer: freakyMenuStreamer,
-		freakyMenuFormat:   freakyMenuFormat,
-		freakyMenu:         freakyMenu,
-		freakyMenuTween:    gween.New(-10, -0.3, 4, ease.Linear), // 0 => 0.7
-		danceLeft:          false,
-		flasher:            flasher,
-		blackScreenVisible: true,
-		skippedIntro:       false,
-		transitioning:      false,
-		errCh:              make(chan error, 1),
-	}
+	titleSceneInstance = s
 
-	titleSceneInstance = ts
+	return nil
+}
 
-	return ts, nil
+func (s *TitleScene) Close() error {
+	return nil
 }
 
 func (s *TitleScene) Update(dt float64) error {
@@ -218,13 +219,7 @@ func (s *TitleScene) Update(dt float64) error {
 
 		// Bit janky solution with the error channel but whatever
 		time.AfterFunc(2*time.Second, func() {
-			mms, err := NewMainMenuScene(s.ctx)
-			if err != nil {
-				titleSceneInstance.errCh <- err
-				return
-			}
-			titleSceneInstance.ctx.StateController.SwitchState(mms)
-			titleSceneInstance.errCh <- nil
+			titleSceneInstance.errCh <- titleSceneInstance.ctx.SceneCtrl.SwitchScene(NewMainMenuScene(s.ctx))
 		})
 	}
 

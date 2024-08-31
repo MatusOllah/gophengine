@@ -2,7 +2,9 @@ package gophengine
 
 import "github.com/hajimehoshi/ebiten/v2"
 
-type State interface {
+type Scene interface {
+	Init() error
+	Close() error
 	Update(dt float64) error
 	Draw(screen *ebiten.Image)
 }

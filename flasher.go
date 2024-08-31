@@ -18,7 +18,7 @@ type Flasher struct {
 	whiteImg *ebiten.Image
 }
 
-func NewFlasher(width, height int, dur float32) (*Flasher, error) {
+func NewFlasher(width, height int, dur float32) *Flasher {
 	white := ebiten.NewImage(width, height)
 	white.Fill(color.White)
 
@@ -28,7 +28,7 @@ func NewFlasher(width, height int, dur float32) (*Flasher, error) {
 		done:     false,
 		tween:    gween.New(1, 0, dur, ease.Linear),
 		whiteImg: white,
-	}, nil
+	}
 }
 
 func (f *Flasher) Draw(img *ebiten.Image) {
@@ -41,19 +41,17 @@ func (f *Flasher) Draw(img *ebiten.Image) {
 	}
 }
 
-func (f *Flasher) Update(dt float64) error {
+func (f *Flasher) Update(dt float64) {
 	if f.done {
 		f.flash = false
 		f.done = false
 		f.tween.Reset()
-		return nil
+		return
 	}
 
 	if f.flash && !f.done {
 		f.alpha, f.done = f.tween.Update(float32(dt))
 	}
-
-	return nil
 }
 
 func (f *Flasher) Flash() {
