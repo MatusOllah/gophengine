@@ -12,7 +12,7 @@ import (
 	"golang.org/x/image/font"
 )
 
-func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
+func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	res, err := newUIResources(ctx)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func MakeUI(ctx *context.Context) (*ebitenui.UI, error) {
 		}),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[optionsui] clicked cancel button")
-			// TODO: switch state to MainMenuState
+			*shouldExit = true
 		}),
 	))
 

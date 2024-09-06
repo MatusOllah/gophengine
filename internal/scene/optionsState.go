@@ -10,9 +10,10 @@ import (
 )
 
 type OptionsScene struct {
-	ctx *context.Context
-	bg  *ebiten.Image
-	ui  *ebitenui.UI
+	ctx        *context.Context
+	bg         *ebiten.Image
+	ui         *ebitenui.UI
+	shouldExit bool
 }
 
 func NewOptionsScene(ctx *context.Context) *OptionsScene {
@@ -22,13 +23,15 @@ func NewOptionsScene(ctx *context.Context) *OptionsScene {
 var _ ge.Scene = (*OptionsScene)(nil)
 
 func (s *OptionsScene) Init() error {
+	s.shouldExit = false
+
 	bg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuDesat.png")
 	if err != nil {
 		return err
 	}
 	s.bg = bg
 
-	ui, err := optionsui.MakeUI(s.ctx)
+	ui, err := optionsui.MakeUI(s.ctx, &s.shouldExit)
 	if err != nil {
 		return err
 	}
@@ -50,6 +53,10 @@ func (s *OptionsScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *OptionsScene) Update(_ float64) error {
+	if s.shouldExit {
+		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
+	}
+
 	s.ui.Update()
 
 	return nil
