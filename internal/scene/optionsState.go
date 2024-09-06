@@ -16,23 +16,6 @@ type OptionsScene struct {
 }
 
 func NewOptionsScene(ctx *context.Context) *OptionsScene {
-	/*
-		bg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/menuDesat.png")
-		if err != nil {
-			return nil, err
-		}
-
-		ui, err := optionsui.MakeUI(ctx)
-		if err != nil {
-			return nil, err
-		}
-
-		return &OptionsScene{
-			bg: bg,
-			ui: ui,
-		}, nil
-	*/
-
 	return &OptionsScene{ctx: ctx}
 }
 
