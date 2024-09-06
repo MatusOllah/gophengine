@@ -23,7 +23,7 @@ type MainMenuScene struct {
 	magenta    *ge.Sprite
 	ui         *ebitenui.UI
 	shouldExit bool
-	bgOffsetY  int
+	bgOffsetY  int // TODO: offset background when selecting menu items
 }
 
 var _ ge.Scene = (*MainMenuScene)(nil)
