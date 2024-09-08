@@ -55,10 +55,15 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// The pages
 	pages := []any{
-		newTestPage(),
-		newTestPage(),
-		newTestPage(),
-		newTestPage(),
+		newGameplayPage(),
+		newControlsPage(),
+		newAudioPage(),
+		newGraphicsPage(),
+		// TODO: Network tab; coming soon
+		newMiscellaneousPage(),
+		newModsPage(),
+		newAdvancedPage(),
+		newAboutPage(),
 	}
 
 	pageContainer := newPageContainer(res)
