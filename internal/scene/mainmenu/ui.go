@@ -4,7 +4,6 @@ import (
 	"image"
 	"image/color"
 	_ "image/png"
-	"io/fs"
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
@@ -12,47 +11,44 @@ import (
 	"github.com/ebitenui/ebitenui"
 	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"
-	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"golang.org/x/image/font"
+	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
 func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	ui := &ebitenui.UI{}
 
 	// Title font
-	titleFontBytes, err := fs.ReadFile(ctx.AssetsFS, "fonts/NotoSans-Bold.ttf")
+	titleFontFile, err := ctx.AssetsFS.Open("fonts/NotoSans-Bold.ttf")
 	if err != nil {
 		return nil, err
 	}
 
-	titleFont, err := truetype.Parse(titleFontBytes)
+	titleFaceSource, err := text.NewGoTextFaceSource(titleFontFile)
 	if err != nil {
 		return nil, err
 	}
 
-	titleFace := truetype.NewFace(titleFont, &truetype.Options{
-		Size:    24,
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
+	titleFace := &text.GoTextFace{
+		Source: titleFaceSource,
+		Size:   24,
+	}
 
 	// Regular font
-	regularFontBytes, err := fs.ReadFile(ctx.AssetsFS, "fonts/NotoSans-Regular.ttf")
+	regularFontFile, err := ctx.AssetsFS.Open("fonts/NotoSans-Regular.ttf")
 	if err != nil {
 		return nil, err
 	}
 
-	regularFont, err := truetype.Parse(regularFontBytes)
+	regularFaceSource, err := text.NewGoTextFaceSource(regularFontFile)
 	if err != nil {
 		return nil, err
 	}
 
-	regularFace := truetype.NewFace(regularFont, &truetype.Options{
-		Size:    16,
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
+	regularFace := &text.GoTextFace{
+		Source: regularFaceSource,
+		Size:   16,
+	}
 
 	var exitDialog *widget.Window
 

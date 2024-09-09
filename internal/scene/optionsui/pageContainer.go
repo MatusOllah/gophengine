@@ -2,8 +2,6 @@ package optionsui
 
 import (
 	"github.com/ebitenui/ebitenui/widget"
-	"github.com/golang/freetype/truetype"
-	"golang.org/x/image/font"
 )
 
 type pageContainer struct {
@@ -24,19 +22,13 @@ func newPageContainer(res *uiResources) *pageContainer {
 		),
 	)
 
-	titleFace := truetype.NewFace(res.notoBold, &truetype.Options{
-		Size:    24,
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
-
 	lbl := widget.NewLabel(
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(widget.WidgetOpts.LayoutData(widget.RowLayoutData{
 				Stretch: true,
 			})),
 		),
-		widget.LabelOpts.Text("", titleFace, res.labelColor),
+		widget.LabelOpts.Text("", res.fonts.titleFace, res.labelColor),
 	)
 	c.AddChild(lbl)
 

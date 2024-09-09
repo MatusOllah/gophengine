@@ -11,8 +11,7 @@ import (
 )
 
 type uiResources struct {
-	notoRegular *truetype.Font
-	notoBold    *truetype.Font
+	fonts *fonts
 
 	bgImage                      *eui_image.NineSlice
 	titleBarBGImage              *eui_image.NineSlice
@@ -24,14 +23,13 @@ type uiResources struct {
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
-	nb, nr, err := loadFonts(ctx)
+	f, err := newFonts(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	return &uiResources{
-		notoRegular: nr,
-		notoBold:    nb,
+		fonts: f,
 
 		bgImage:         eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
 		titleBarBGImage: eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF}),
