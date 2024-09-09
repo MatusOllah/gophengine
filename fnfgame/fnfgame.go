@@ -100,6 +100,10 @@ func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
 func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
+	if err := g.ctx.SceneCtrl.Close(); err != nil {
+		return fmt.Errorf("fnfgame Close: error closing SceneCtrl: %w", err)
+	}
+
 	if err := g.ctx.OptionsConfig.Close(); err != nil {
 		return fmt.Errorf("fnfgame Close: error closing OptionsConfig: %w", err)
 	}

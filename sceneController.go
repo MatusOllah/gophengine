@@ -15,6 +15,10 @@ func NewStateController(state Scene) *SceneController {
 	return &SceneController{state}
 }
 
+func (sc *SceneController) Close() error {
+	return sc.curScene.Close()
+}
+
 func (sc *SceneController) Draw(screen *ebiten.Image) {
 	sc.curScene.Draw(screen)
 }
