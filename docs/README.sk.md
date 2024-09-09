@@ -72,6 +72,7 @@ Môžete darovať prostredníctvom nasledujúcich platforiem:
 * **Litecoin (LTC):** `ltc1qxpe3vz2cmt3k66h89nhyk34dc5mun4rcdhjrjh`
 * **Dogecoin (DOGE):** `A7G3rDzXifHzuekVHwupaQ6hmzdFgVXLoY`
 * **Duino-Coin (DUCO):** `SladkyCitron`
+* **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` alebo `SladkyCitron`
 
 Ďakujem za vašu podporu! 😊
 
