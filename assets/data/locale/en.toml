@@ -1,3 +1,5 @@
+_Name = "English" # The display name of the locale
+
 FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}\nTPS: {{printf \"%.2f\" .TPS}}"
 IntroTextPresent = "present"
 IntroTextInAssoc = "In association"

@@ -1,3 +1,5 @@
+_Name = "Slovenčina" # The display name of the locale
+
 FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}\nTPS: {{printf \"%.2f\" .TPS}}"
 IntroTextPresent = "uvádzajú"
 IntroTextInAssoc = "V asociácií"
