@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/BurntSushi/toml v1.3.2
-	github.com/MatusOllah/slogcolor v1.2.1
+	github.com/MatusOllah/slogcolor v1.2.2
 	github.com/ebitenui/ebitenui v0.5.8
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/gopxl/beep v1.4.1
