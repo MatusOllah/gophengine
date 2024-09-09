@@ -6,7 +6,6 @@ require (
 	github.com/BurntSushi/toml v1.4.0
 	github.com/MatusOllah/slogcolor v1.2.2
 	github.com/ebitenui/ebitenui v0.6.0
-	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/gopxl/beep v1.4.1
 	github.com/hajimehoshi/ebiten/v2 v2.7.9
 	github.com/hashicorp/hcl/v2 v2.22.0
