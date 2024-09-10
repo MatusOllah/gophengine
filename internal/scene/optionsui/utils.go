@@ -8,10 +8,10 @@ import (
 
 // newLabelColorSimple is short for &widget.LabelColor{clr, clr}.
 func newLabelColorSimple(clr color.Color) *widget.LabelColor {
-	return &widget.LabelColor{clr, clr}
+	return &widget.LabelColor{Idle: clr, Disabled: clr}
 }
 
 // newButtonTextColorSimple is short for &widget.ButtonTextColor{clr, clr, clr, clr}.
 func newButtonTextColorSimple(clr color.Color) *widget.ButtonTextColor {
-	return &widget.ButtonTextColor{clr, clr, clr, clr}
+	return &widget.ButtonTextColor{Idle: clr, Disabled: clr, Hover: clr, Pressed: clr}
 }
