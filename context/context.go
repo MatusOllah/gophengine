@@ -35,6 +35,7 @@ type Context struct {
 	AudioMixer           *beep.Mixer
 	AudioResampleQuality int
 	Version              string
+	FNFVersion           string
 }
 
 func New(cfg *NewContextConfig) (*Context, error) {
@@ -104,6 +105,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.AudioResampleQuality = 4
 
 	ctx.Version = cfg.Version
+	ctx.FNFVersion = cfg.FNFVersion
 
 	return ctx, nil
 }

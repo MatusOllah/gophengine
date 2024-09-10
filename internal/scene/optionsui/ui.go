@@ -47,7 +47,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		newMiscellaneousPage(ctx),
 		newModsPage(ctx),
 		newAdvancedPage(ctx),
-		newAboutPage(ctx),
+		newAboutPage(ctx, res),
 	}
 
 	pageContainer := newPageContainer(res)

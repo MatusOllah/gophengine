@@ -20,3 +20,6 @@ OptionsWindowMiscellaneousPage = "Ostatné"
 OptionsWindowModsPage = "Módy"
 OptionsWindowAdvancedPage = "Pokročilé"
 OptionsWindowAboutPage = "O Hre" # "O Hre" here instead of just "O" as that wouldn't make sense
+AboutPageVersionText = "GophEngine verzia {{.Version}}"
+AboutPageGoVersionText = "Go verzia {{.GoVersion}}"
+AboutPageFNFVersionText = "Friday Night Funkin' verzia {{.FNFVersion}}"

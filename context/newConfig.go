@@ -7,6 +7,7 @@ type NewContextConfig struct {
 	OptionsConfigPath  string
 	ProgressConfigPath string
 	Version            string
+	FNFVersion         string
 
 	// If empty, uses default locale (from config)
 	Locale string
