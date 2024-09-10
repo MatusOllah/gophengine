@@ -1,10 +1,15 @@
 package optionsui
 
-func newMiscellaneousPage() *page {
+import (
+	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
+)
+
+func newMiscellaneousPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    "Miscellaneous",
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowMiscellaneousPage"),
 		content: c,
 	}
 }

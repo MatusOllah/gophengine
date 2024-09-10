@@ -1,10 +1,15 @@
 package optionsui
 
-func newGraphicsPage() *page {
+import (
+	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
+)
+
+func newGraphicsPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    "Graphics",
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowGraphicsPage"),
 		content: c,
 	}
 }

@@ -1,10 +1,15 @@
 package optionsui
 
-func newAboutPage() *page {
+import (
+	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
+)
+
+func newAboutPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    "About",
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAboutPage"),
 		content: c,
 	}
 }

@@ -1,10 +1,15 @@
 package optionsui
 
-func newAudioPage() *page {
+import (
+	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
+)
+
+func newAudioPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    "Audio",
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAudioPage"),
 		content: c,
 	}
 }

@@ -1,10 +1,15 @@
 package optionsui
 
-func newAdvancedPage() *page {
+import (
+	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/i18nutil"
+)
+
+func newAdvancedPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    "Advanced",
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAdvancedPage"),
 		content: c,
 	}
 }
