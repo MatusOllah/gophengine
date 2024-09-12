@@ -11,6 +11,8 @@ import (
 )
 
 func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
+	ui := &ebitenui.UI{}
+
 	res, err := newUIResources(ctx)
 	if err != nil {
 		return nil, err
@@ -47,7 +49,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		newMiscellaneousPage(ctx),
 		newModsPage(ctx),
 		newAdvancedPage(ctx),
-		newAboutPage(ctx, res),
+		newAboutPage(ctx, res, ui),
 	}
 
 	pageContainer := newPageContainer(res)
@@ -156,7 +158,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.WindowOpts.Resizeable(),
 	)
 
-	ui := &ebitenui.UI{Container: widget.NewContainer()}
+	ui.Container = widget.NewContainer()
 
 	// Spawn window
 	x, y := window.Contents.PreferredSize()

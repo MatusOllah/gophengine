@@ -10,6 +10,7 @@ type pageContainer struct {
 	flipBook   *widget.FlipBook
 }
 
+// TODO: use AnchorLayout instead of RowLayout
 func newPageContainer(res *uiResources) *pageContainer {
 	c := widget.NewContainer(
 		widget.ContainerOpts.WidgetOpts(
@@ -18,7 +19,7 @@ func newPageContainer(res *uiResources) *pageContainer {
 		widget.ContainerOpts.Layout(widget.NewRowLayout(
 			widget.RowLayoutOpts.Direction(widget.DirectionVertical),
 			widget.RowLayoutOpts.Padding(widget.NewInsetsSimple(10)),
-			widget.RowLayoutOpts.Spacing(10)),
+			widget.RowLayoutOpts.Spacing(5)),
 		),
 	)
 

@@ -10,6 +10,7 @@ type fonts struct {
 	footerButtonFace  text.Face
 	pageListEntryFace text.Face
 	regularFace       text.Face
+	monospaceFace     text.Face
 }
 
 func newFonts(ctx *context.Context) (*fonts, error) {
@@ -19,6 +20,11 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 	}
 
 	notoBold, err := loadFont(ctx, "fonts/NotoSans-Bold.ttf")
+	if err != nil {
+		return nil, err
+	}
+
+	notoMono, err := loadFont(ctx, "fonts/NotoSansMono-Regular.ttf")
 	if err != nil {
 		return nil, err
 	}
@@ -38,6 +44,10 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 		},
 		regularFace: &text.GoTextFace{
 			Source: notoRegular,
+			Size:   16,
+		},
+		monospaceFace: &text.GoTextFace{
+			Source: notoMono,
 			Size:   16,
 		},
 	}, nil

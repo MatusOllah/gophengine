@@ -23,3 +23,7 @@ OptionsWindowAboutPage = "O Hre" # "O Hre" here instead of just "O" as that woul
 AboutPageVersionText = "GophEngine verzia {{.Version}}"
 AboutPageGoVersionText = "Go verzia {{.GoVersion}}"
 AboutPageFNFVersionText = "Friday Night Funkin' verzia {{.FNFVersion}}"
+AboutPageShowBuildInfo = "Zobraziť informácie o zostavení"
+AboutPageShowBuildInfoTooltip = "Zobrazí informácie o zostavení Go binárneho súboru."
+BuildInfo = "Informácie o zostavení"
+Copy = "Kopírovať"

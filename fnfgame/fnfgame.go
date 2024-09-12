@@ -12,6 +12,7 @@ import (
 	"github.com/gopxl/beep/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"golang.design/x/clipboard"
 )
 
 type FNFGame struct {
@@ -29,6 +30,10 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	// State
 	if err := g.ctx.SceneCtrl.SwitchScene(scene.NewTitleScene(ctx)); err != nil {
 		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
+	}
+
+	if err := clipboard.Init(); err != nil {
+		return nil, fmt.Errorf("fnfgame New: failed to initialize clipboard: %w", err)
 	}
 
 	return g, nil
