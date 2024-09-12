@@ -120,7 +120,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		textArea.SetText("failed to read build info")
 	} else {
 		s := bi.String()
-		s = strings.ReplaceAll(s, "\t", "    ")
+		s = strings.ReplaceAll(s, "\t", "    ") // replace tabs with 4 spaces because *widget.TextArea for some reason can't render tabs???
 		textArea.SetText(s)
 	}
 
