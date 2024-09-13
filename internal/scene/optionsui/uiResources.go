@@ -23,6 +23,8 @@ type uiResources struct {
 	textAreaScrollContainerImage *widget.ScrollContainerImage
 	scrollSliderTrackImage       *widget.SliderTrackImage
 	scrollButtonImage            *widget.ButtonImage
+	tooltipBGImage               *eui_image.NineSlice
+	tooltipLabelColor            *widget.LabelColor
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
@@ -55,7 +57,7 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
 		},
 		buttonImage: &widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}), // "0xBF" :D
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
 		},
@@ -80,5 +82,11 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 128}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 128}),
 		},
+
+		// Tooltip background color inspired by Boyfriend's hair color (#50a5eb).
+		// This choice adds a fun, thematic touch to the GUI and serves as a little easter egg
+		// for fans of the game, aligning with the playful spirit of Friday Night Funkin'.
+		// Also, it just looks good.
+		tooltipBGImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x50, G: 0xA5, B: 0xEB, A: 0xFF}),
 	}, nil
 }

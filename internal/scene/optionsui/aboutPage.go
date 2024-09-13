@@ -99,6 +99,14 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 			slog.Info("clicked GitHub button, opening link")
 			browser.OpenURL("https://github.com/MatusOllah/gophengine")
 		}),
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
+				i18nutil.Localize(ctx.Localizer, "AboutPageGitHubButtonTooltip"),
+				res.fonts.regularFace,
+				color.Black,
+				res.tooltipBGImage,
+			)),
+		),
 	))
 
 	return &page{
