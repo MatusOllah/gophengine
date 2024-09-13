@@ -56,12 +56,18 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledSelected:           color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the disabled selected entry
 			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
 		},
+
+		// Button background color inspired by Boyfriend's hair color (#50a5eb).
+		// This choice adds a fun, thematic touch to the GUI and serves as a little easter egg
+		// for fans of the game, aligning with the playful spirit of Friday Night Funkin'.
+		// Also, it just looks good.
 		buttonImage: &widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 0xFF}),
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 0x50, G: 0xA5, B: 0xEB, A: 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{R: 0x29, G: 0x91, B: 0xEC, A: 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{R: 0x18, G: 0x7A, B: 0xCA, A: 0xFF}),
 		},
 		buttonTextColor: newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255}),
+
 		exitButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x00, 0x00, 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x24, 0x24, 0xFF}),
@@ -78,15 +84,10 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			Hover: eui_image.NewNineSliceColor(color.NRGBA{0, 0, 0, 25}),
 		},
 		scrollButtonImage: &widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xBF, 0xBF, 0xBF, 128}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xCF, 0xCF, 0xCF, 128}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xDF, 0xDF, 0xDF, 128}),
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0x4E, 0x4E, 0x4E, 128}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0x5E, 0x5E, 0x5E, 128}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0x6E, 0x6E, 0x6E, 128}),
 		},
-
-		// Tooltip background color inspired by Boyfriend's hair color (#50a5eb).
-		// This choice adds a fun, thematic touch to the GUI and serves as a little easter egg
-		// for fans of the game, aligning with the playful spirit of Friday Night Funkin'.
-		// Also, it just looks good.
-		tooltipBGImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x50, G: 0xA5, B: 0xEB, A: 0xFF}),
+		tooltipBGImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x6E, G: 0x6E, B: 0x6E, A: 0xFF}),
 	}, nil
 }
