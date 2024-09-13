@@ -90,7 +90,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageViewSrcOnGitHub"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageGitHubButton"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
