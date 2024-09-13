@@ -16,9 +16,6 @@ import (
 	"golang.design/x/clipboard"
 )
 
-// NOTE: Creators: Matúš Ollah (me) & The Funkin' Crew
-// Thinking if I could add something like "Made with ❤️ by Matúš Ollah & The Funkin' Crew" or something like that
-
 func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page {
 	c := newPageContentContainer()
 
