@@ -12,6 +12,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
+	"github.com/pkg/browser"
 	"golang.design/x/clipboard"
 )
 
@@ -21,30 +22,60 @@ import (
 func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page {
 	c := newPageContentContainer()
 
-	//TODO: the actual about page (see options.md)
+	// The labels
+	c.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text(
+			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageGEVersion", map[string]interface{}{"Version": ctx.Version}),
+			res.fonts.regularFace,
+			res.labelColor,
+		),
+	))
+	c.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text(
+			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageGoVersion", map[string]interface{}{
+				"GoVersion": runtime.Version(),
+				"GOOS":      runtime.GOOS,
+				"GOARCH":    runtime.GOARCH,
+			}),
+			res.fonts.regularFace,
+			res.labelColor,
+		),
+	))
+	c.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text(
+			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageFNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
+			res.fonts.regularFace,
+			res.labelColor,
+		),
+	))
+
+	c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", res.fonts.regularFace, res.labelColor)))
 
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageVersionText", map[string]interface{}{"Version": ctx.Version}),
+			i18nutil.Localize(ctx.Localizer, "AboutPageCredits"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageGoVersionText", map[string]interface{}{"GoVersion": runtime.Version()}),
+			i18nutil.Localize(ctx.Localizer, "AboutPageLicense"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageFNFVersionText", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
+			i18nutil.Localize(ctx.Localizer, "AboutPageCreators"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
+
 	c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", res.fonts.regularFace, res.labelColor)))
+
+	// The buttons
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageShowBuildInfo"), res.fonts.regularFace, res.buttonTextColor),
@@ -56,7 +87,18 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 			slog.Info("clicked build info button")
 			showBuildInfoWindow(ctx, res, ui)
 		}),
-		//TODO: show tooltip
+	))
+	c.AddChild(widget.NewButton(
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageViewSrcOnGitHub"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.TextPadding(widget.Insets{
+			Left:  10,
+			Right: 10,
+		}),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("clicked GitHub button, opening link")
+			browser.OpenURL("https://github.com/MatusOllah/gophengine")
+		}),
 	))
 
 	return &page{
