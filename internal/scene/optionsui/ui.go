@@ -46,7 +46,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		newAudioPage(ctx),
 		newGraphicsPage(ctx),
 		// TODO: Network tab; coming soon
-		newMiscellaneousPage(ctx),
+		newMiscellaneousPage(ctx, res),
 		newModsPage(ctx),
 		newAdvancedPage(ctx),
 		newAboutPage(ctx, res, ui),

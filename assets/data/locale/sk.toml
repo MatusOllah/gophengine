@@ -17,6 +17,7 @@ OptionsWindowControlsPage = "Ovládanie"
 OptionsWindowAudioPage = "Zvuk"
 OptionsWindowGraphicsPage = "Grafika"
 OptionsWindowMiscellaneousPage = "Ostatné"
+Locale = "Jazyk:"
 OptionsWindowModsPage = "Módy"
 OptionsWindowAdvancedPage = "Pokročilé"
 OptionsWindowAboutPage = "O Hre" # "O Hre" here instead of just "O" as that wouldn't make sense
