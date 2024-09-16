@@ -132,7 +132,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Copy"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
-			slog.Info("clicked copy build info button")
+			slog.Info("[showBuildInfoWindow] clicked copy build info button")
 			clipboard.Write(clipboard.FmtText, []byte(textArea.GetText()))
 		}),
 	))
@@ -162,6 +162,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		),
 	)
 
+	slog.Info("[showBuildInfoWindow] reading build info")
 	bi, ok := debug.ReadBuildInfo()
 	if !ok {
 		textArea.SetText("failed to read build info")
