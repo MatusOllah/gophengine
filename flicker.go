@@ -41,7 +41,7 @@ func (f *Flicker) Update() error {
 	if time.Since(f.startTime) < f.dur {
 		// Handle the flicker logic
 		if time.Since(f.flickerTimer) > f.interval {
-			slog.Debug("[Flicker] flickering", "flickerTimer", f.flickerTimer, "startTime", f.startTime, "visible", f.Sprite.Visible)
+			slog.Debug("[Flicker] flickering", "visible", f.Sprite.Visible)
 			f.Sprite.Visible = !f.Sprite.Visible
 			f.flickerTimer = time.Now()
 		}
