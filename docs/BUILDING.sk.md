@@ -15,7 +15,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 ### 🪟 Windows
 
 1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
-2. Nainštalujte C kompilátor. Najjednoduchší spôsob, ako nainštalovať C kompilátor na Windowse, je použiť niečo ako [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) alebo [w64devkit](https://github.com/skeeto/w64devkit) (MSVC zatiaľ nie je podporovaný).
+2. Nainštalujte C kompilátor. Najjednoduchší spôsob, ako nainštalovať C kompilátor na Windowse, je použiť niečo ako [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) alebo [w64devkit](https://github.com/skeeto/w64devkit) (MSVC nie je podporovaný).
 3. Na Windowse bude grafický ovládač už nainštalovaný, ale odporúča sa overiť, či je aktuálny.
 
 #### Postup pre inštaláciu cez MSYS2 (odporúčané)
@@ -31,7 +31,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 
 ### 🍎 macOS
 
-1. Nainštalujte [Go](https://go.dev).
+1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
 2. Nainštalujte Xcode z [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 3. Nastavte Xcode otvorením terminálu a napísaním nasledujúceho:
     * `xcode-select --install`
@@ -39,7 +39,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 
 ### 🐧 GNU/Linux
 
-1. Nainštalujte [Go](https://go.dev).
+1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
 2. Nainštalujte C kompilátor pomocou správcu balíkov vašej distribúcie. Napríklad Ubuntu (alebo iné distribúcie založené na Debiane) používa `apt`.
     * `sudo apt install gcc`
 3. Nainštalujte hlavičkové súbory grafickej knižnice pomocou správcu balíkov vašej distribúcie. Použite príslušný príkaz pre vašu distribúciu:
@@ -61,9 +61,19 @@ go install -v github.com/MatusOllah/gophengine@latest
 
 ### Pomocou Makefile
 
-1. Klonujte tento repozitár:
+1. Naklonujte tento repozitár:
     * `git clone https://github.com/MatusOllah/gophengine.git`
-2. Spustite `make` v priečinku klonovaného repozitára:
+2. Spustite `make` v priečinku naklonovaného repozitára:
     * `cd ./gophengine/ && make`
+
+### Pomocou budovacích (build) skriptov
+
+1. Naklonujte tento repozitár:
+    * `git clone https://github.com/MatusOllah/gophengine.git`
+2. Prejdite do priečinka naklonovaného repozitára:
+    * `cd ./gophengine/`
+3. Spustite skript:
+    * pre vývojovú verziu (debug): `scripts/build-debug.sh`
+    * pre finálnu verziu (release): `scripts/build-release.sh`
 
 Pre viac informácií navštívte [sprievodcu inštalácie Ebitengine](https://ebitengine.org/en/documents/install.html).

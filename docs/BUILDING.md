@@ -15,7 +15,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 ### 🪟 Windows
 
 1. Install [Go](https://go.dev) (version go1.22.0 or later).
-2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit) (MSVC isn't supported yet).
+2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit) (MSVC isn't supported).
 3. On Windows the graphics driver will already be installed, but it is recommended to ensure they are up to date.
 
 #### Steps for installing with MSYS2 (recommended)
@@ -31,7 +31,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ### 🍎 macOS
 
-1. Install [Go](https://go.dev).
+1. Install [Go](https://go.dev) (version go1.22.0 or later).
 2. Install Xcode from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 3. Set up the Xcode command line tools by opening a Terminal window and typing the following:
     * `xcode-select --install`
@@ -39,7 +39,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ### 🐧 GNU/Linux
 
-1. Install [Go](https://go.dev).
+1. Install [Go](https://go.dev) (version go1.22.0 or later).
 2. Install a C Compiler using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
     * `sudo apt install gcc`
 3. Install the graphics library header files using your distribution's package manager. Use the appropriate command for your distro:
@@ -51,7 +51,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ## Building
 
-### using `go install`
+### Using `go install`
 
 Run the following command:
 
@@ -59,11 +59,21 @@ Run the following command:
 go install -v github.com/MatusOllah/gophengine@latest
 ```
 
-### using Makefile
+### Using Makefile
 
 1. Clone this repo:
     * `git clone https://github.com/MatusOllah/gophengine.git`
 2. Run `make` in the cloned repo's directory:
     * `cd ./gophengine/ && make`
+
+### Using the build scripts
+
+1. Clone this repo:
+    * `git clone https://github.com/MatusOllah/gophengine.git`
+2. Move to the cloned repo's directory:
+    * `cd ./gophengine/`
+3. Run the script:
+    * for a debug build: `scripts/build-debug.sh`
+    * for a release build: `scripts/build-release.sh`
 
 For more details, visit the [Ebitengine installation guide](https://ebitengine.org/en/documents/install.html).
