@@ -29,6 +29,10 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 		slog.Error("[locale] failed to get locales", "err", err)
 	}
 
+	locStringFunc := func(e any) string {
+		return e.(*locale).String()
+	}
+
 	comboBox := widget.NewListComboButton(
 		widget.ListComboButtonOpts.SelectComboButtonOpts(
 			widget.SelectComboButtonOpts.ComboButtonOpts(
@@ -57,14 +61,7 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
 			widget.ListOpts.HideHorizontalSlider(),
 		),
-		widget.ListComboButtonOpts.EntryLabelFunc(
-			func(e any) string {
-				return e.(*locale).String()
-			},
-			func(e any) string {
-				return e.(*locale).String()
-			},
-		),
+		widget.ListComboButtonOpts.EntryLabelFunc(locStringFunc, locStringFunc),
 		widget.ListComboButtonOpts.EntrySelectedHandler(func(args *widget.ListComboButtonEntrySelectedEventArgs) {
 			slog.Info("[locale] selected entry", "entry", args.Entry)
 			cfg["Locale"] = args.Entry.(*locale).locale
