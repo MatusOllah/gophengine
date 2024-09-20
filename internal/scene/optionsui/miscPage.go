@@ -67,7 +67,7 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 		),
 		widget.ListComboButtonOpts.EntrySelectedHandler(func(args *widget.ListComboButtonEntrySelectedEventArgs) {
 			slog.Info("[locale] selected entry", "entry", args.Entry)
-			ctx.OptionsConfig.Set("Locale", args.Entry.(*locale).locale)
+			cfg["Locale"] = args.Entry.(*locale).locale
 		}),
 	)
 
