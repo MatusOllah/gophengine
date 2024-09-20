@@ -107,7 +107,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAboutPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsAboutPage"),
 		content: c,
 	}
 }

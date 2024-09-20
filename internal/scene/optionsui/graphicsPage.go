@@ -9,7 +9,7 @@ func newGraphicsPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowGraphicsPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsGraphicsPage"),
 		content: c,
 	}
 }

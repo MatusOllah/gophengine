@@ -9,7 +9,7 @@ func newAudioPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAudioPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsAudioPage"),
 		content: c,
 	}
 }

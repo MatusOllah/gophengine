@@ -9,7 +9,7 @@ func newGameplayPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowGameplayPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsGameplayPage"),
 		content: c,
 	}
 }

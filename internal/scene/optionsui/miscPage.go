@@ -82,7 +82,7 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 	))
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowMiscellaneousPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsMiscellaneousPage"),
 		content: c,
 	}
 }

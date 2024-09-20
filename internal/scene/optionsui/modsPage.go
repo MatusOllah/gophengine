@@ -9,7 +9,7 @@ func newModsPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowModsPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsModsPage"),
 		content: c,
 	}
 }

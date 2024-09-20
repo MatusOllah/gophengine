@@ -9,7 +9,7 @@ func newAdvancedPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsWindowAdvancedPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "OptionsAdvancedPage"),
 		content: c,
 	}
 }
