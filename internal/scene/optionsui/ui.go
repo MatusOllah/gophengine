@@ -2,6 +2,7 @@ package optionsui
 
 import (
 	"image"
+	"image/color"
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
@@ -114,6 +115,14 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			// exit
 			*shouldExit = true
 		}),
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
+				i18nutil.Localize(ctx.Localizer, "OptionsWindowRestartWarningTooltip"),
+				res.fonts.regularFace,
+				color.Black,
+				res.tooltipBGImage,
+			)),
+		),
 	))
 
 	// Cancel button (exits)
@@ -128,6 +137,14 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			slog.Info("[optionsui] clicked cancel button")
 			*shouldExit = true
 		}),
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
+				i18nutil.Localize(ctx.Localizer, "OptionsWindowRestartWarningTooltip"),
+				res.fonts.regularFace,
+				color.Black,
+				res.tooltipBGImage,
+			)),
+		),
 	))
 
 	// Apply button (saves config)
@@ -144,6 +161,14 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			slog.Info("[optionsui] saving config")
 			ctx.OptionsConfig.SetData(cfg)
 		}),
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
+				i18nutil.Localize(ctx.Localizer, "OptionsWindowRestartWarningTooltip"),
+				res.fonts.regularFace,
+				color.Black,
+				res.tooltipBGImage,
+			)),
+		),
 	))
 
 	windowContainer.AddChild(footerContainer)
