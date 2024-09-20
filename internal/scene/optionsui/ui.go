@@ -10,8 +10,12 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 )
 
+//TODO: maybe move uiResources and cfg to a uiContext struct?
+
 func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	ui := &ebitenui.UI{}
+
+	cfg := ctx.OptionsConfig.Data()
 
 	res, err := newUIResources(ctx)
 	if err != nil {
@@ -46,7 +50,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		newAudioPage(ctx),
 		newGraphicsPage(ctx),
 		// TODO: Network tab; coming soon
-		newMiscellaneousPage(ctx, res),
+		newMiscellaneousPage(ctx, res, cfg),
 		newModsPage(ctx),
 		newAdvancedPage(ctx),
 		newAboutPage(ctx, res, ui),
@@ -93,13 +97,22 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	)
 
 	// OK button (saves config & exits)
-	// TODO: save config & exit
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowOKButton"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
+		}),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("[optionsui] clicked OK button")
+
+			// save config
+			slog.Info("[optionsui] saving config")
+			ctx.OptionsConfig.SetData(cfg)
+
+			// exit
+			*shouldExit = true
 		}),
 	))
 
@@ -118,13 +131,18 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	))
 
 	// Apply button (saves config)
-	// TODO: save config
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
 		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsWindowApplyButton"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
+		}),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("[optionsui] clicked apply button")
+
+			slog.Info("[optionsui] saving config")
+			ctx.OptionsConfig.SetData(cfg)
 		}),
 	))
 

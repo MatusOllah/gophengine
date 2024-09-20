@@ -101,14 +101,14 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			Mask:     eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
 		listEntryColor: &widget.ListEntryColor{
-			Selected:                   color.NRGBA{254, 255, 255, 255},             //Foreground color for the unfocused selected entry
-			Unselected:                 color.NRGBA{254, 255, 255, 255},             //Foreground color for the unfocused unselected entry
-			SelectedBackground:         color.NRGBA{R: 130, G: 130, B: 200, A: 255}, //Background color for the unfocused selected entry
-			SelectedFocusedBackground:  color.NRGBA{R: 130, G: 130, B: 170, A: 255}, //Background color for the focused selected entry
-			FocusedBackground:          color.NRGBA{R: 170, G: 170, B: 180, A: 255}, //Background color for the focused unselected entry
-			DisabledUnselected:         color.NRGBA{100, 100, 100, 255},             //Foreground color for the disabled unselected entry
-			DisabledSelected:           color.NRGBA{100, 100, 100, 255},             //Foreground color for the disabled selected entry
-			DisabledSelectedBackground: color.NRGBA{100, 100, 100, 255},             //Background color for the disabled selected entry
+			Selected:                   color.NRGBA{255, 255, 255, 255},                //Foreground color for the unfocused selected entry
+			Unselected:                 color.NRGBA{255, 255, 255, 255},                //Foreground color for the unfocused unselected entry
+			SelectedBackground:         color.NRGBA{R: 0x54, G: 0x98, B: 0xD0, A: 255}, //Background color for the unfocused selected entry
+			SelectedFocusedBackground:  color.NRGBA{R: 0x58, G: 0x8B, B: 0xB5, A: 255}, //Background color for the focused selected entry
+			FocusedBackground:          color.NRGBA{R: 170, G: 170, B: 180, A: 255},    //Background color for the focused unselected entry
+			DisabledUnselected:         color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled unselected entry
+			DisabledSelected:           color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled selected entry
+			DisabledSelectedBackground: color.NRGBA{100, 100, 100, 255},                //Background color for the disabled selected entry
 		},
 	}, nil
 }
