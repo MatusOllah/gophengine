@@ -70,7 +70,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 		),
 	))
 
-	c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", res.fonts.regularFace, res.labelColor)))
+	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
 	// The buttons
 	c.AddChild(widget.NewButton(
