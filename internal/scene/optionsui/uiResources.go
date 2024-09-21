@@ -18,8 +18,8 @@ type uiResources struct {
 	pageListEntryColor           *widget.ListEntryColor
 	buttonImage                  *widget.ButtonImage
 	buttonTextColor              *widget.ButtonTextColor
-	exitButtonImage              *widget.ButtonImage
-	exitButtonTextColor          *widget.ButtonTextColor
+	dangerButtonImage            *widget.ButtonImage
+	dangerButtonTextColor        *widget.ButtonTextColor
 	textAreaScrollContainerImage *widget.ScrollContainerImage
 	scrollSliderTrackImage       *widget.SliderTrackImage
 	scrollButtonImage            *widget.ButtonImage
@@ -71,12 +71,12 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 		},
 		buttonTextColor: newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255}),
 
-		exitButtonImage: &widget.ButtonImage{
+		dangerButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x00, 0x00, 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x24, 0x24, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x40, 0x40, 0xFF}),
 		},
-		exitButtonTextColor: newButtonTextColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
+		dangerButtonTextColor: newButtonTextColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
 		textAreaScrollContainerImage: &widget.ScrollContainerImage{
 			Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 			Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),

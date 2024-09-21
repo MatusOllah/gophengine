@@ -10,6 +10,7 @@ type fonts struct {
 	footerButtonFace  text.Face
 	pageListEntryFace text.Face
 	regularFace       text.Face
+	headingFace       text.Face
 	monospaceFace     text.Face
 }
 
@@ -45,6 +46,10 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 		regularFace: &text.GoTextFace{
 			Source: notoRegular,
 			Size:   16,
+		},
+		headingFace: &text.GoTextFace{
+			Source: notoBold,
+			Size:   18,
 		},
 		monospaceFace: &text.GoTextFace{
 			Source: notoMono,

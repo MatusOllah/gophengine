@@ -198,8 +198,8 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 				VerticalPosition:   widget.AnchorLayoutPositionCenter,
 			}),
 		),
-		widget.ButtonOpts.Image(res.exitButtonImage),
-		widget.ButtonOpts.Text("X", res.fonts.monospaceFace, res.exitButtonTextColor),
+		widget.ButtonOpts.Image(res.dangerButtonImage),
+		widget.ButtonOpts.Text("X", res.fonts.monospaceFace, res.dangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:   5,
 			Right:  5,
