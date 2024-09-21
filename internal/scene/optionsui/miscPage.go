@@ -7,6 +7,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/ncruces/zenity"
@@ -196,12 +197,23 @@ func exportOptionsConfig(ctx *context.Context) error {
 		zenity.ConfirmOverwrite(),
 		zenity.FileFilters{
 			{"GophEngine Configuration File", []string{"*.gecfg"}, false},
-			{"Gob-encoded File (must be a map[string]any!)", []string{"*.gob"}, false},
+			//{"Gob-encoded File (must be a map[string]any!)", []string{"*.gob"}, false},
 		},
 	)
 	slog.Info("export options config", "path", path)
 
-	//TODO: this
+	cfg, err := config.New(path, false)
+	if err != nil {
+		return err
+	}
+
+	cfg.SetData(ctx.OptionsConfig.Data())
+
+	if err := cfg.Close(); err != nil {
+		return err
+	}
+
+	slog.Info("export OK")
 
 	return nil
 }
