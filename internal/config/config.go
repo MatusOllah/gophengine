@@ -28,7 +28,9 @@ type Config struct {
 	decoder *gob.Decoder
 }
 
-// Register simply calls gob.Register. If you are encoding a non-primitive type (like a struct or map) that implements something you should use this.
+// Register simply calls gob.Register.
+// If you are encoding a non-primitive type (like a struct or map) that implements something you should use this.
+// At least that's how I understand it.
 func Register(value interface{}) {
 	gob.Register(value)
 }
@@ -82,7 +84,7 @@ func Open(path string) (*Config, error) {
 
 	// opens file
 	// otvori subor
-	file, err := os.OpenFile(path, os.O_RDWR, 0666)
+	file, err := os.OpenFile(path, os.O_RDWR, 0644)
 	if err != nil {
 		return nil, err
 	}
@@ -111,33 +113,34 @@ func Open(path string) (*Config, error) {
 // Data returns a copy of the map.
 func (cfg *Config) Data() map[string]interface{} {
 	cfg.dataLock.RLock()
-	data := cfg.data
-	cfg.dataLock.RUnlock()
+	defer cfg.dataLock.RUnlock()
+	data := make(map[string]interface{})
+	maps.Copy(data, cfg.data)
 	return data
 }
 
 // SetData overwrites the map.
 func (cfg *Config) SetData(m map[string]interface{}) {
-	cfg.dataLock.RLock()
+	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	cfg.data = m
-	cfg.dataLock.RUnlock()
 }
 
 // Append appends m to the map.
 func (cfg *Config) Append(m map[string]interface{}) {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	maps.Copy(cfg.data, m)
-	cfg.dataLock.Unlock()
 }
 
 // Get gets a value from the map. If there is an error, it will be of type *KeyError.
 func (cfg *Config) Get(key string) (interface{}, error) {
 	cfg.dataLock.RLock()
+	defer cfg.dataLock.RUnlock()
 	value, ok := cfg.data[key]
 	if !ok {
 		return nil, &KeyError{Op: "get", Key: key, Err: ErrKeyNotExist}
 	}
-	cfg.dataLock.RUnlock()
 	return value, nil
 }
 
@@ -155,67 +158,68 @@ func (cfg *Config) MustGet(key string) interface{} {
 // GetWithFallback gets a value from the map and returns the given fallback if not found.
 func (cfg *Config) GetWithFallback(key string, fallback interface{}) interface{} {
 	cfg.dataLock.RLock()
+	defer cfg.dataLock.RUnlock()
 	value, ok := cfg.data[key]
 	if !ok {
 		slog.Warn("key not found", "key", key, "fallback", fallback)
 		return fallback
 	}
-	cfg.dataLock.RUnlock()
 	return value
 }
 
 // Set sets key to value.
 func (cfg *Config) Set(key string, value interface{}) {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	cfg.data[key] = value
-	cfg.dataLock.Unlock()
 }
 
 // Delete deletes key from the map.
 func (cfg *Config) Delete(key string) {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	delete(cfg.data, key)
-	cfg.dataLock.Unlock()
 }
 
 // Toggle toggles a bool value.
 func (cfg *Config) Toggle(key string) {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	cfg.data[key] = !cfg.data[key].(bool)
-	cfg.dataLock.Unlock()
 }
 
 // Exists checks if key exists.
 func (cfg *Config) Exists(key string) bool {
 	cfg.dataLock.RLock()
+	defer cfg.dataLock.RUnlock()
 	_, ok := cfg.data[key]
-	cfg.dataLock.RUnlock()
 	return ok
 }
 
 // Map iterates over the map and applies the MapFunc to every item.
 func (cfg *Config) Map(fn MapFunc) {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	for k, v := range cfg.data {
 		cfg.data[k] = fn(k, v)
 	}
-	cfg.dataLock.Unlock()
 }
 
 // Wipe wipes (clears) the map.
 func (cfg *Config) Wipe() {
 	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
 	clear(cfg.data)
-	cfg.dataLock.Unlock()
 }
 
 // Flush gob encodes and writes data to the file.
 func (cfg *Config) Flush() error {
-	cfg.dataLock.RLock()
+	cfg.dataLock.Lock()
+	defer cfg.dataLock.Unlock()
+
 	if err := cfg.encoder.Encode(cfg.data); err != nil {
 		return err
 	}
-	cfg.dataLock.RUnlock()
 
 	_, err := cfg.file.WriteAt(cfg.buf.Bytes(), 0)
 	if err != nil {
@@ -223,6 +227,8 @@ func (cfg *Config) Flush() error {
 	}
 
 	cfg.file.Sync()
+
+	cfg.buf.Reset()
 
 	return nil
 }
