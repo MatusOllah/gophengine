@@ -70,6 +70,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 		),
 	))
 
+	// Separator
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
 	// The buttons
