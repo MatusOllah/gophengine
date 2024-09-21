@@ -24,6 +24,7 @@ func (l *locale) String() string {
 func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}) *page {
 	c := newPageContentContainer()
 
+	// Locale
 	l, curLoc, err := getLocales(ctx)
 	if err != nil {
 		slog.Error("[locale] failed to get locales", "err", err)
@@ -70,13 +71,15 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 
 	comboBox.SetSelectedEntry(curLoc)
 
-	// Locale
 	c.AddChild(newHorizontalContainer(
 		widget.NewLabel(
 			widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Locale"), res.fonts.regularFace, res.labelColor),
 		),
 		comboBox,
 	))
+
+	// Separator
+	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
 	return &page{
 		name:    i18nutil.Localize(ctx.Localizer, "OptionsMiscellaneousPage"),

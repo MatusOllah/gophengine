@@ -28,3 +28,25 @@ func newHorizontalContainer(w ...widget.PreferredSizeLocateableWidget) *widget.C
 
 	return c
 }
+
+func newSeparator(res *uiResources, ld interface{}) widget.PreferredSizeLocateableWidget {
+	c := widget.NewContainer(
+		widget.ContainerOpts.Layout(widget.NewRowLayout(
+			widget.RowLayoutOpts.Direction(widget.DirectionVertical),
+			widget.RowLayoutOpts.Padding(widget.Insets{
+				Top:    10,
+				Bottom: 10,
+			}))),
+		widget.ContainerOpts.WidgetOpts(widget.WidgetOpts.LayoutData(ld)),
+	)
+
+	c.AddChild(widget.NewGraphic(
+		widget.GraphicOpts.WidgetOpts(widget.WidgetOpts.LayoutData(widget.RowLayoutData{
+			Stretch:   true,
+			MaxHeight: 2,
+		})),
+		widget.GraphicOpts.ImageNineSlice(res.separatorImage),
+	))
+
+	return c
+}

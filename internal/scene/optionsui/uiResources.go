@@ -27,6 +27,7 @@ type uiResources struct {
 	listSliderTrackImage         *widget.SliderTrackImage
 	listScrollContainerImage     *widget.ScrollContainerImage
 	listEntryColor               *widget.ListEntryColor
+	separatorImage               *eui_image.NineSlice
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
@@ -110,5 +111,6 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledSelected:           color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled selected entry
 			DisabledSelectedBackground: color.NRGBA{100, 100, 100, 255},                //Background color for the disabled selected entry
 		},
+		separatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
 	}, nil
 }
