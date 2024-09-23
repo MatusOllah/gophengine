@@ -192,11 +192,11 @@ func getCurLocale(ctx *context.Context) (*locale, error) {
 
 func exportOptionsConfig(ctx *context.Context) error {
 	path, err := zenity.SelectFileSave(
-		zenity.Title("Export options config"),
+		zenity.Title(i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig")),
 		zenity.Filename("options.gecfg"),
 		zenity.ConfirmOverwrite(),
 		zenity.FileFilters{
-			{"GophEngine Configuration File", []string{"*.gecfg"}, false},
+			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
 			//{"Gob-encoded File (must be a map[string]any!)", []string{"*.gob"}, false},
 		},
 	)
