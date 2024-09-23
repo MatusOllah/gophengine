@@ -10,6 +10,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/ncruces/zenity"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
@@ -203,13 +204,13 @@ func exportOptionsConfig(ctx *context.Context) error {
 			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
 		},
 	)
-	slog.Info("exporting options config", "path", path)
-
 	if err == zenity.ErrCanceled {
 		return nil
 	} else if err != nil {
 		return err
 	}
+
+	slog.Info("exporting options config", "path", path)
 
 	cfg, err := config.New(path, false)
 	if err != nil {
@@ -235,13 +236,13 @@ func importOptionsConfig(ctx *context.Context) error {
 			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
 		},
 	)
-	slog.Info("importing options config", "path", path)
-
 	if err == zenity.ErrCanceled {
 		return nil
 	} else if err != nil {
 		return err
 	}
+
+	slog.Info("importing options config", "path", path)
 
 	cfg, err := config.New(path, false)
 	if err != nil {
@@ -259,4 +260,8 @@ func importOptionsConfig(ctx *context.Context) error {
 	slog.Info("import OK")
 
 	return nil
+}
+
+func wipeOptionsConfig(ctx *context.Context, ui *ebitenui.UI) {
+	//TODO: this
 }
