@@ -30,6 +30,11 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 		return nil, err
 	}
 
+	notoEmoji, err := loadFont(ctx, "fonts/NotoEmoji-Regular.ttf")
+	if err != nil {
+		return nil, err
+	}
+
 	return &fonts{
 		titleFace: &text.GoTextFace{
 			Source: notoBold,
@@ -43,10 +48,7 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 			Source: notoRegular,
 			Size:   24,
 		},
-		regularFace: &text.GoTextFace{
-			Source: notoRegular,
-			Size:   16,
-		},
+		regularFace: newMultiFaceSimple(16, notoRegular, notoEmoji),
 		headingFace: &text.GoTextFace{
 			Source: notoBold,
 			Size:   18,
@@ -56,6 +58,23 @@ func newFonts(ctx *context.Context) (*fonts, error) {
 			Size:   16,
 		},
 	}, nil
+}
+
+func newMultiFaceSimple(size float64, srcs ...*text.GoTextFaceSource) *text.MultiFace {
+	var faces []text.Face
+	for _, src := range srcs {
+		faces = append(faces, &text.GoTextFace{
+			Source: src,
+			Size:   size,
+		})
+	}
+
+	mf, err := text.NewMultiFace(faces...)
+	if err != nil {
+		panic(err)
+	}
+
+	return mf
 }
 
 func loadFont(ctx *context.Context, path string) (*text.GoTextFaceSource, error) {
