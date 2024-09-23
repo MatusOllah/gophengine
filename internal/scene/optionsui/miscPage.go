@@ -3,6 +3,7 @@ package optionsui
 import (
 	"io/fs"
 	"log/slog"
+	"maps"
 	"strings"
 
 	"github.com/BurntSushi/toml"
@@ -95,7 +96,11 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config import button")
-				//TODO: this
+				if err := importOptionsConfig(ctx); err != nil {
+					slog.Error("failed to import options config", "err", err)
+					zenity.Error("failed to import options config: "+err.Error(), zenity.Title("GophEngine error"))
+				}
+				maps.Copy(cfg, ctx.OptionsConfig.Data()) // update the temporary map so that the changes don't reset when the user clicks "Apply"
 			}),
 		),
 		widget.NewButton(
@@ -116,7 +121,6 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config wipe button")
-				//TODO: this
 			}),
 		),
 	))
@@ -197,10 +201,9 @@ func exportOptionsConfig(ctx *context.Context) error {
 		zenity.ConfirmOverwrite(),
 		zenity.FileFilters{
 			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
-			//{"Gob-encoded File (must be a map[string]any!)", []string{"*.gob"}, false},
 		},
 	)
-	slog.Info("export options config", "path", path)
+	slog.Info("exporting options config", "path", path)
 
 	if err == zenity.ErrCanceled {
 		return nil
@@ -220,6 +223,40 @@ func exportOptionsConfig(ctx *context.Context) error {
 	}
 
 	slog.Info("export OK")
+
+	return nil
+}
+
+func importOptionsConfig(ctx *context.Context) error {
+	path, err := zenity.SelectFile(
+		zenity.Title(i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig")),
+		zenity.Filename("options.gecfg"),
+		zenity.FileFilters{
+			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
+		},
+	)
+	slog.Info("importing options config", "path", path)
+
+	if err == zenity.ErrCanceled {
+		return nil
+	} else if err != nil {
+		return err
+	}
+
+	cfg, err := config.New(path, false)
+	if err != nil {
+		return err
+	}
+
+	m := cfg.Data()
+	slog.Debug("got config", "m", m)
+	ctx.OptionsConfig.Append(m)
+
+	if err := cfg.Close(); err != nil {
+		return err
+	}
+
+	slog.Info("import OK")
 
 	return nil
 }
