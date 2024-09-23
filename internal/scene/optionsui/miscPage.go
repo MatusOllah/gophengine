@@ -191,7 +191,7 @@ func getCurLocale(ctx *context.Context) (*locale, error) {
 }
 
 func exportOptionsConfig(ctx *context.Context) error {
-	path, _ := zenity.SelectFileSave(
+	path, err := zenity.SelectFileSave(
 		zenity.Title("Export options config"),
 		zenity.Filename("options.gecfg"),
 		zenity.ConfirmOverwrite(),
@@ -201,6 +201,12 @@ func exportOptionsConfig(ctx *context.Context) error {
 		},
 	)
 	slog.Info("export options config", "path", path)
+
+	if err == zenity.ErrCanceled {
+		return nil
+	} else if err != nil {
+		return err
+	}
 
 	cfg, err := config.New(path, false)
 	if err != nil {
