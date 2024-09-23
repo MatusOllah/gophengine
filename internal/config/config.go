@@ -114,16 +114,15 @@ func Open(path string) (*Config, error) {
 func (cfg *Config) Data() map[string]interface{} {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
-	data := make(map[string]interface{})
-	maps.Copy(data, cfg.data)
-	return data
+	return maps.Clone(cfg.data)
 }
 
 // SetData overwrites the map.
 func (cfg *Config) SetData(m map[string]interface{}) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
-	cfg.data = m
+	clear(cfg.data)
+	maps.Copy(cfg.data, m)
 }
 
 // Append appends m to the map.
