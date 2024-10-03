@@ -15,5 +15,5 @@ func NewStripANSIWriter(w io.Writer) *StripANSIWriter {
 }
 
 func (saw *StripANSIWriter) Write(p []byte) (n int, err error) {
-	return saw.w.Write(saw.re.ReplaceAll(p, []byte{}))
+	return saw.w.Write(saw.re.ReplaceAll(p, nil))
 }
