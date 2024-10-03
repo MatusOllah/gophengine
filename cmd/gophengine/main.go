@@ -144,7 +144,7 @@ func main() {
 	if err := os.MkdirAll(filepath.Dir(logfilePath), 0666); err != nil {
 		panic(err)
 	}
-	logfile, err := os.OpenFile(logfilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	logfile, err := os.Create(logfilePath)
 	if err != nil {
 		panic(err)
 	}
