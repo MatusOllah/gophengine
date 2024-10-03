@@ -69,7 +69,7 @@ func getLogFilePath() string {
 }
 
 // Actual main func here
-func _main() error {
+func mainE() error {
 	slog.Info(fmt.Sprintf("GophEngine version %s", version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
@@ -158,7 +158,7 @@ func main() {
 
 	// moved main func to _main and handle error here
 	// learned this from Melkey
-	if err := _main(); err != nil {
+	if err := mainE(); err != nil {
 		slog.Error(err.Error())
 		if flagutil.MustGetBool(flagSet, "gui") {
 			zenity.Error(err.Error())
