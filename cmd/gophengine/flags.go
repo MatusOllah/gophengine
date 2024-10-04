@@ -13,7 +13,6 @@ var (
 	extractAssetsFlag bool
 	configFlag        string
 	progressFlag      string
-	guiFlag           bool
 	logLevelFlag      string
 	justInitFlag      bool
 	portableFlag      bool
@@ -36,7 +35,6 @@ func initFlags() error {
 	flagSet.BoolVar(&extractAssetsFlag, "extract-assets", false, "Extract embedded assets")
 	flagSet.StringVar(&configFlag, "config", filepath.Join(configDir, "GophEngine/config.gecfg"), "Path to config.gecfg config file")
 	flagSet.StringVar(&progressFlag, "progress", filepath.Join(configDir, "GophEngine/progress.gecfg"), "Path to progress.gecfg progress file")
-	flagSet.BoolVarP(&guiFlag, "gui", "g", true, "Enable GUI & dialogs")
 	flagSet.StringVar(&logLevelFlag, "log-level", "info", "Log level (\"debug\", \"info\", \"warn\", \"error\")")
 	flagSet.BoolVar(&justInitFlag, "just-init", false, "Initialize game and exit")
 	flagSet.BoolVar(&portableFlag, "portable", false, "Save everything in the current directory (aka portable mode)")

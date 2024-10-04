@@ -6,8 +6,6 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
-
-	"github.com/ncruces/zenity"
 )
 
 // NumFiles counts all the files in the filesystem and returns the number of files.
@@ -32,26 +30,7 @@ func NumFiles(fsys fs.FS) (int, error) {
 }
 
 // Extract extracts the filesystem to dst and shows progress dialog using zenity.ProgressDialog if gui is true.
-func Extract(fsys fs.FS, dst string, gui bool) error {
-	var value int = 0             // progress bar value
-	var dlg zenity.ProgressDialog // the progress bar dialog
-
-	// initialize progress bar dialog
-	if gui {
-		numFiles, err := NumFiles(fsys)
-		if err != nil {
-			return err
-		}
-
-		_dlg, err := zenity.Progress(zenity.Title("Extracting assets"), zenity.MaxValue(numFiles))
-		if err != nil {
-			return err
-		}
-		defer _dlg.Close()
-		dlg = _dlg
-
-		dlg.Text("Extracting...")
-	}
+func Extract(fsys fs.FS, dst string) error {
 
 	// create destination directory
 	if err := os.Mkdir(dst, fs.ModePerm); err != nil {
@@ -67,10 +46,6 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 		if d.IsDir() {
 			dirPath := filepath.Join(dst, path)
 
-			if gui {
-				dlg.Text("Creating directory " + dirPath)
-			}
-
 			slog.Info("creating directory", "path", dirPath)
 			if err := os.MkdirAll(dirPath, fs.ModePerm); err != nil {
 				return err
@@ -81,12 +56,6 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 
 		// create file
 		dstPath := filepath.Join(dst, path)
-
-		if gui {
-			value++
-			dlg.Value(value)
-			dlg.Text("Extracting " + path)
-		}
 
 		slog.Info("extracting", "src", path, "dst", dstPath)
 
@@ -110,10 +79,6 @@ func Extract(fsys fs.FS, dst string, gui bool) error {
 	})
 	if err != nil {
 		return err
-	}
-
-	if gui {
-		dlg.Complete()
 	}
 
 	return nil

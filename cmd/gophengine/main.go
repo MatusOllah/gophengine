@@ -75,7 +75,7 @@ func mainE() error {
 	slog.Info("ahoj!")
 
 	if extractAssetsFlag {
-		if err := fsutil.Extract(assets.FS, "assets", guiFlag); err != nil {
+		if err := fsutil.Extract(assets.FS, "assets"); err != nil {
 			return err
 		}
 
@@ -159,9 +159,7 @@ func main() {
 	// learned this from Melkey
 	if err := mainE(); err != nil {
 		slog.Error(err.Error())
-		if guiFlag {
-			zenity.Error(err.Error())
-		}
+		zenity.Error(err.Error())
 		panic(err)
 	}
 }
