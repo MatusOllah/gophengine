@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	_ "image/png"
 	"io"
 	"io/fs"
 	"log/slog"
