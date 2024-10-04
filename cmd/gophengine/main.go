@@ -19,6 +19,7 @@ import (
 	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/fsutil"
 	"github.com/MatusOllah/slogcolor"
+	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/ncruces/zenity"
 )
@@ -154,7 +155,7 @@ func main() {
 	opts := slogcolor.DefaultOptions
 	opts.Level = getLogLevel()
 	opts.SrcFileLength = 32
-	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, NewStripANSIWriter(logfile)), opts)))
+	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(logfile)), opts)))
 
 	// moved main func to _main and handle error here
 	// learned this from Melkey
