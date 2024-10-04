@@ -16,7 +16,6 @@ import (
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
-	"github.com/MatusOllah/gophengine/internal/flagutil"
 	"github.com/MatusOllah/gophengine/internal/fsutil"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -42,7 +41,7 @@ func setIcon() error {
 
 // getLogLevel gets the log level from command-line flags.
 func getLogLevel() slog.Leveler {
-	switch s := strings.ToLower(flagutil.MustGetString(flagSet, "log-level")); s {
+	switch s := strings.ToLower(logLevelFlag); s {
 	case "":
 		return slog.LevelInfo
 	case "debug":
@@ -61,7 +60,7 @@ func getLogLevel() slog.Leveler {
 // getLogFilePath get the logfile path from the temporary directory and current time.
 func getLogFilePath() string {
 	tempDir := os.TempDir()
-	if flagutil.MustGetBool(flagSet, "portable") {
+	if portableFlag {
 		tempDir = "."
 	}
 
@@ -75,8 +74,8 @@ func mainE() error {
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
 	slog.Info("ahoj!")
 
-	if flagutil.MustGetBool(flagSet, "extract-assets") {
-		if err := fsutil.Extract(assets.FS, "assets", flagutil.MustGetBool(flagSet, "gui")); err != nil {
+	if extractAssetsFlag {
+		if err := fsutil.Extract(assets.FS, "assets", guiFlag); err != nil {
 			return err
 		}
 
@@ -94,13 +93,13 @@ func mainE() error {
 
 	cfg := &context.NewContextConfig{
 		AssetsFS:           assets.FS,
-		OptionsConfigPath:  flagutil.MustGetString(flagSet, "config"),
-		ProgressConfigPath: flagutil.MustGetString(flagSet, "progress"),
+		OptionsConfigPath:  configFlag,
+		ProgressConfigPath: progressFlag,
 		Version:            version,
 		FNFVersion:         fnfVersion,
-		Locale:             flagutil.MustGetString(flagSet, "force-locale"),
+		Locale:             forceLocaleFlag,
 	}
-	if flagutil.MustGetBool(flagSet, "portable") {
+	if portableFlag {
 		cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
 		cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
 	}
@@ -111,7 +110,7 @@ func mainE() error {
 
 	// Game init
 	slog.Info("initializing game")
-	g, err := fnfgame.New(ctx) // TODO: portable mode
+	g, err := fnfgame.New(ctx)
 	if err != nil {
 		return err
 	}
@@ -120,7 +119,7 @@ func mainE() error {
 	slog.Info("initializing ebitengine")
 	g.InitEbiten()
 
-	if flagutil.MustGetBool(flagSet, "just-init") {
+	if justInitFlag {
 		return nil
 	}
 
@@ -160,7 +159,7 @@ func main() {
 	// learned this from Melkey
 	if err := mainE(); err != nil {
 		slog.Error(err.Error())
-		if flagutil.MustGetBool(flagSet, "gui") {
+		if guiFlag {
 			zenity.Error(err.Error())
 		}
 		panic(err)
