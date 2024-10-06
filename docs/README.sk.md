@@ -17,7 +17,7 @@
 
 GophEngine som vytvoril z niekoľkých dôvodov:
 
-* Pre vytvorenie jednoducho použitelného Go moddingového API pre Friday Night Funkin', podobné MinecraftForge, ale pre FNF.
+* Pre vytvorenie jednoducho použitelného Go moddingového MDK pre Friday Night Funkin', podobné MinecraftForge, ale pre FNF.
 * Pre opravenie chýb v pôvodnom FNF enginu a pridať nové funkcie a vylepšenia.
 * Pre podporu pozitívnej a netoxickej komunity okolo hry bez toxickej komunity a vývojárov.
 * Pre odstránenie násilného NSFL (Not Safe For Life) obsahu zavedené v FNF v0.3.2 a pre vytvorenie čistejšej verzie hry.
@@ -35,7 +35,7 @@ Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe
 * Drobné úpravy a optimalizácie pre lepší a príjemnejší zážitok
 * Nižšia spotreba RAM a celkovo menšia veľkosť
 * Riadne menu možností pre lepšie prispôsobenie
-* Robustné Go moddingové API pre jednoduché modifikácie
+* Robustné Go moddingové MDK pre jednoduché modifikácie
 * Rýchlejšie časy kompilácie
 
 ## Hardvérové požiadavky
