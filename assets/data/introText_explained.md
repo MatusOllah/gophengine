@@ -8,7 +8,7 @@
 * `"jingle bells","dd smells"` - Fun play on "Jingle Bells" song and Daddy Dearest, tweaking the lyrics humorously
 * `"dd is overrated","bf deserves more love"` - Fun rivalry between Daddy Dearest (DD) and Boyfriend (BF), favoring Boyfriend
 * `"Golang","extraordinaire"` - Another Go programming language reference
-* `"Kylian Mbappé","biggest inspiration"` - A fun reference to Kylian Mbappé's blue hair, likening him to Boyfriend.
+* `"Kylian Mbappé","biggest inspiration"` - A fun reference to Kylian Mbappé's blue hair, likening him to Boyfriend
 * `"boyfriend","forever"` - Boyfriend is the main character of FNF, showing loyalty
 * `"kajsmentke","forever"` - "Kajšmentke" is an inside joke & regional reference: [link](https://www1.pluska.sk/soubiznis/domaci-soubiznis/pamatate-beatu-kajsmentke-to-je-premena-drazdive-foto-postele-odhalenymi-prsiami)
 * `"borovicka","connecting people"` - "Borovička" is a Slovak alcoholic spirit, popular in Slovakia, with a humorous twist
