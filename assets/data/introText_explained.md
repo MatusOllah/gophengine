@@ -1,8 +1,9 @@
 # `introText.csv` Explained
 
+* `"shoutouts to rob pike","lmao"` - Shoutouts to Rob Pike, creator of the Go programming language (since GophEngine uses Go)
 * `"slovenskooooo","slovenskooooo"` - "Slovenskooooo" is Slovak for "Slovakia", showing national pride
 * `"na orave dobre","na orave zdravo"` - Slovak saying "Na Orave dobre, na Orave zdravo" (It is good and healthy in Orava, a region of Slovakia)
-* `"dont code in rust","we only golang"` - Joke about Rust (programming language) vs Go (since GophEngine uses Go)
+* `"dont code in rust","we only golang"` - Joke about Rust (another programming language) vs Go
 * `"package main","import fmt"` - Go programming syntax, referring to the basic structure of a Go program
 * `"segmentation fault","core dumped"` - Typical error message in programming (humor for C/C++ devs), commonly seen during crashes and memory violations
 * `"jingle bells","dd smells"` - Fun play on "Jingle Bells" song and Daddy Dearest, tweaking the lyrics humorously
