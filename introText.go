@@ -18,24 +18,24 @@ type IntroText struct {
 }
 
 func NewIntroText(fsys fs.FS) (*IntroText, error) {
-	f1, err := fsys.Open("fonts/phantom-full.ttf")
+	fullFile, err := fsys.Open("fonts/phantom-full.ttf")
 	if err != nil {
 		return nil, err
 	}
-	defer f1.Close()
+	defer fullFile.Close()
 
-	fullFaceSrc, err := text.NewGoTextFaceSource(f1)
+	fullFaceSrc, err := text.NewGoTextFaceSource(fullFile)
 	if err != nil {
 		return nil, err
 	}
 
-	f2, err := fsys.Open("fonts/phantom-outline.ttf")
+	outlineFile, err := fsys.Open("fonts/phantom-outline.ttf")
 	if err != nil {
 		return nil, err
 	}
-	defer f2.Close()
+	defer outlineFile.Close()
 
-	outlineFaceSrc, err := text.NewGoTextFaceSource(f2)
+	outlineFaceSrc, err := text.NewGoTextFaceSource(outlineFile)
 	if err != nil {
 		return nil, err
 	}
