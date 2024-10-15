@@ -21,4 +21,4 @@
 * `"Boyfriend's the boss","don't @ me"` - Another boast about Boyfriend being the best FNF character, also the creator's favorite
 * `"from Go with love <3","no Haxe allowed!"` - Go language reference again, with a playful rejection of Haxe (Vanilla FNF & most FNF engines use Haxe)
 * `"Boyfriend's beats","forever fire"` - Boyfriend's rap skills are hyped up as unbeatable
-* `"better than project sekai","fight me SEGA"` - Fun, competitive jab at Project Sekai, another rhythm game, and SEGA, its developer
+* `"better than project sekai","fight me SEGA"` - Fun, competitive jab at Project SEKAI, another rhythm game, and SEGA, its developer
