@@ -64,7 +64,7 @@ Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CO
 
 ## 💲 Darujte
 
-Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu [Baldovskej pitahaye](https://baldovska.sk))
+Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu [Kofoly](https://kofola.sk))
 
 Môžete darovať prostredníctvom nasledujúcich platforiem:
 
