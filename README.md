@@ -65,7 +65,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusO
 
 ## 💲 Donate
 
-If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Kofola](https://kofola.sk))
+If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Kofola](https://kofola.cz/en))
 
 You can donate through the following platforms:
 
