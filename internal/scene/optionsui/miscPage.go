@@ -2,7 +2,6 @@ package optionsui
 
 import (
 	"image"
-	"image/color"
 	"io/fs"
 	"log/slog"
 	"maps"
@@ -306,9 +305,11 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 		}),
 	))
 
-	container.AddChild(widget.NewText(
-		widget.TextOpts.Text(i18nutil.Localize(ctx.Localizer, "WipeOptionsDialogText"), res.fonts.regularFace, color.NRGBA{255, 255, 255, 255}),
-		widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
+	container.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "WipeOptionsDialogText"), res.fonts.regularFace, res.labelColor),
+		widget.LabelOpts.TextOpts(
+			widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
+		),
 	))
 
 	titleBarContainer := widget.NewContainer(
