@@ -18,6 +18,7 @@
 * `"Horalky delight","sweet and crunchy beats"` - Horalky is a popular wafer snack in Slovakia and the Czech Republic, mixing beats with treats
 * `"Nad Tatrou sa blýska","our beat will rise"` - Slovak national anthem line, representing pride ("Nad Tatrou sa blýska" = "Lightning over the Tatras")
 * `"Slovensko pride","we keep it real"` - More Slovak pride, tying it to the authenticity of the project
+* `"from Tatry to Dunaj","we all funk together"` - A reference to the High Tatras (*Vysoké Tatry*) and the Danube river (*Dunaj*)
 * `"Boyfriend's the boss","don't @ me"` - Another boast about Boyfriend being the best FNF character, also the creator's favorite
 * `"from Go with love <3","no Haxe allowed!"` - Go language reference again, with a playful rejection of Haxe (Vanilla FNF & most FNF engines use Haxe)
 * `"Boyfriend's beats","forever fire"` - Boyfriend's rap skills are hyped up as unbeatable
