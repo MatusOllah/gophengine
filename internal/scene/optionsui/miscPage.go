@@ -1,6 +1,8 @@
 package optionsui
 
 import (
+	"image"
+	"image/color"
 	"io/fs"
 	"log/slog"
 	"maps"
@@ -25,7 +27,7 @@ func (l *locale) String() string {
 	return l.name + " (" + l.locale + ")"
 }
 
-func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}) *page {
+func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}, ui *ebitenui.UI) *page {
 	c := newPageContentContainer()
 
 	// Locale
@@ -122,6 +124,8 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config wipe button")
+				wipeOptionsConfig(ctx, res, ui)
+				maps.Copy(cfg, ctx.OptionsConfig.Data())
 			}),
 		),
 	))
@@ -200,9 +204,7 @@ func exportOptionsConfig(ctx *context.Context) error {
 		zenity.Title(i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig")),
 		zenity.Filename("options.gecfg"),
 		zenity.ConfirmOverwrite(),
-		zenity.FileFilters{
-			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
-		},
+		zenity.FileFilter{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
 	)
 	if err == zenity.ErrCanceled {
 		return nil
@@ -232,9 +234,7 @@ func importOptionsConfig(ctx *context.Context) error {
 	path, err := zenity.SelectFile(
 		zenity.Title(i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig")),
 		zenity.Filename("options.gecfg"),
-		zenity.FileFilters{
-			{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
-		},
+		zenity.FileFilter{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
 	)
 	if err == zenity.ErrCanceled {
 		return nil
@@ -262,6 +262,81 @@ func importOptionsConfig(ctx *context.Context) error {
 	return nil
 }
 
-func wipeOptionsConfig(ctx *context.Context, ui *ebitenui.UI) {
-	//TODO: this
+func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) {
+	var confirmDialog *widget.Window
+
+	container := widget.NewContainer(
+		widget.ContainerOpts.BackgroundImage(res.bgImage),
+		widget.ContainerOpts.Layout(widget.NewAnchorLayout(
+			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(20)),
+		)),
+	)
+
+	container.AddChild(widget.NewButton(
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+				HorizontalPosition: widget.AnchorLayoutPositionStart,
+				VerticalPosition:   widget.AnchorLayoutPositionEnd,
+			}),
+		),
+		widget.ButtonOpts.Image(res.dangerButtonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("[wipeOptionsConfig] clicked wipe button")
+
+			ctx.OptionsConfig.Wipe()
+			config.LoadDefaultOptions(ctx.OptionsConfig)
+		}),
+	))
+
+	container.AddChild(widget.NewButton(
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+				HorizontalPosition: widget.AnchorLayoutPositionEnd,
+				VerticalPosition:   widget.AnchorLayoutPositionEnd,
+			}),
+		),
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsCancelButton"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			slog.Info("[wipeOptionsConfig] clicked cancel button")
+			confirmDialog.Close()
+		}),
+	))
+
+	container.AddChild(widget.NewText(
+		widget.TextOpts.Text(i18nutil.Localize(ctx.Localizer, "WipeOptionsDialogText"), res.fonts.regularFace, color.NRGBA{255, 255, 255, 255}),
+		widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
+	))
+
+	titleBarContainer := widget.NewContainer(
+		widget.ContainerOpts.BackgroundImage(res.titleBarBGImage),
+		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
+	)
+	titleBarContainer.AddChild(widget.NewLabel(
+		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.TextOpts(
+			widget.TextOpts.WidgetOpts(
+				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+					HorizontalPosition: widget.AnchorLayoutPositionCenter,
+					VerticalPosition:   widget.AnchorLayoutPositionCenter,
+				}),
+			),
+		),
+	))
+
+	confirmDialog = widget.NewWindow(
+		widget.WindowOpts.Contents(container),
+		widget.WindowOpts.TitleBar(titleBarContainer, 25),
+		widget.WindowOpts.Draggable(),
+		widget.WindowOpts.CloseMode(widget.NONE),
+		widget.WindowOpts.MinSize(400, 200),
+	)
+
+	// Spawn window
+	x, y := confirmDialog.Contents.PreferredSize()
+	confirmDialog.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-200), int(float64(ctx.Height/2)-100))))
+	ui.AddWindow(confirmDialog)
 }
