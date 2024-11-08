@@ -24,6 +24,7 @@ GO_FLAGS = -v
 ifeq ($(IS_RELEASE),true)
 	GO_GCFLAGS += -dwarf=false
 	GO_LDFLAGS += -s -w
+	GO_FLAGS += -trimpath
 	ifeq ($(GOOS),windows)
 	GO_LDFLAGS += -H windowsgui
 	endif
