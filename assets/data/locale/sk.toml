@@ -2,8 +2,7 @@ _Name = "Slovenčina" # The display name of the locale
 
 FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}\nTPS: {{printf \"%.2f\" .TPS}}"
 IntroTextPresent = "uvádzajú"
-IntroTextInAssoc = "V asociácií"
-IntroTextWith = "s"
+IntroTextMadeWith = "Vyrobené s"
 ExitDialogTitle = "Ukončiť"
 ExitDialogText = "Naozaj si praješ ukončiť hru?"
 ExitDialogExitButton = "Ukončiť"

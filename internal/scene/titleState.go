@@ -30,7 +30,8 @@ var _ ge.Scene = (*TitleScene)(nil)
 // TitleScene is the intro and "press enter to begin" screen.
 type TitleScene struct {
 	ctx                *context.Context
-	ng                 *ge.Sprite
+	goLogo             *ge.Sprite
+	ebitenLogo         *ge.Sprite
 	mb                 *ge.MusicBeat
 	once               *sync.Once
 	randIntroText      []string
@@ -87,14 +88,21 @@ func (s *TitleScene) Init() error {
 	}
 	s.randIntroText = it
 
-	ng := ge.NewSprite(int((float64(s.ctx.Width)/2)-150), int(float64(s.ctx.Height)*0.52))
-	ngImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/newgrounds_logo.png")
+	s.goLogo = ge.NewSprite(int((float64(s.ctx.Width)/2)-300), int(float64(s.ctx.Height)*0.33))
+	goLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/go_logo.png")
 	if err != nil {
 		return err
 	}
-	ng.Img = ngImg
-	ng.Visible = false
-	s.ng = ng
+	s.goLogo.Img = goLogoImg
+	s.goLogo.Visible = false
+
+	s.ebitenLogo = ge.NewSprite(int((float64(s.ctx.Width) / 2)), int(float64(s.ctx.Height)*0.33))
+	ebitenLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ebiten_logo.png")
+	if err != nil {
+		return err
+	}
+	s.ebitenLogo.Img = ebitenLogoImg
+	s.ebitenLogo.Visible = false
 
 	logoBl := ge.NewSprite(-150, -100)
 	ac, err := animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
@@ -245,7 +253,8 @@ func (s *TitleScene) Draw(screen *ebiten.Image) {
 
 	if !s.skippedIntro {
 		s.introText.Draw(screen)
-		s.ng.Draw(screen)
+		s.goLogo.Draw(screen)
+		s.ebitenLogo.Draw(screen)
 	}
 
 	s.flasher.Draw(screen)
@@ -258,7 +267,8 @@ func (s *TitleScene) skipIntro() {
 	s.skippedIntro = true
 	slog.Info("skipIntro")
 	s.blackScreenVisible = false
-	s.ng.Img.Deallocate()
+	s.goLogo.Img.Deallocate()
+	s.ebitenLogo.Img.Deallocate()
 	s.flasher.Flash()
 }
 
@@ -286,12 +296,15 @@ func titleState_BeatHit(curBeat int) {
 	case 4:
 		titleSceneInstance.introText.DeleteText()
 	case 5:
-		titleSceneInstance.introText.CreateText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextInAssoc"), i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextWith"))
+		titleSceneInstance.introText.CreateText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "IntroTextMadeWith"))
 	case 7:
-		titleSceneInstance.introText.AddText("newgrounds")
-		titleSceneInstance.ng.Visible = true
+		titleSceneInstance.introText.AddText("")
+		titleSceneInstance.introText.AddText("+")
+		titleSceneInstance.goLogo.Visible = true
+		titleSceneInstance.ebitenLogo.Visible = true
 	case 8:
-		titleSceneInstance.ng.Visible = false
+		titleSceneInstance.goLogo.Visible = false
+		titleSceneInstance.ebitenLogo.Visible = false
 		titleSceneInstance.introText.DeleteText()
 	case 9:
 		titleSceneInstance.introText.CreateText(titleSceneInstance.randIntroText[0])
