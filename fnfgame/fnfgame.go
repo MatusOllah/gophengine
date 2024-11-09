@@ -83,11 +83,22 @@ func (g *FNFGame) InitEbiten() {
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 }
 
-func (g *FNFGame) Start() error {
-	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
-		return fmt.Errorf("fnfgame Start: error initializing speaker: %w", err)
+func (g *FNFGame) initSound() error {
+	bufSize := 4096
+	if runtime.GOARCH == "wasm" {
+		bufSize = 8194
+	}
+	if err := speaker.Init(g.ctx.SampleRate, bufSize); err != nil {
+		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
 	}
 	speaker.Play(g.ctx.AudioMixer)
+	return nil
+}
+
+func (g *FNFGame) Start() error {
+	if err := g.initSound(); err != nil {
+		return err
+	}
 	if err := ebiten.RunGame(g); err != nil {
 		return fmt.Errorf("fnfgame Start: error running game: %w", err)
 	}
@@ -95,10 +106,9 @@ func (g *FNFGame) Start() error {
 }
 
 func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
-	if err := speaker.Init(g.ctx.SampleRate, g.ctx.SampleRate.N(time.Second/10)); err != nil {
-		return fmt.Errorf("fnfgame StartWithOptions: error initializing speaker: %w", err)
+	if err := g.initSound(); err != nil {
+		return err
 	}
-	speaker.Play(g.ctx.AudioMixer)
 	if err := ebiten.RunGameWithOptions(g, opts); err != nil {
 		return fmt.Errorf("fnfgame StartWithOptions: error running game: %w", err)
 	}
