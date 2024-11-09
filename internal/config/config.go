@@ -9,6 +9,7 @@ import (
 	"maps"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sync"
 )
 
@@ -37,7 +38,7 @@ func Register(value interface{}) {
 
 // New creates / opens and decodes a new Config.
 func New(path string, loadDefaults bool) (*Config, error) {
-	if exists(path) {
+	if fileExists(path) {
 		cfg, err := Open(path)
 		if err != nil {
 			return nil, err
@@ -59,14 +60,19 @@ func New(path string, loadDefaults bool) (*Config, error) {
 func Create(path string, loadDefaults bool) (*Config, error) {
 	cfg := new(Config)
 
-	// creates file
-	// vytvori subor
-	os.Mkdir(filepath.Dir(path), os.ModePerm)
+	if runtime.GOARCH == "wasm" {
+		cfg.file = nil
+	} else {
+		os.Mkdir(filepath.Dir(path), os.ModePerm)
 
-	file, _ := os.Create(path)
+		file, err := os.Create(path)
+		if err != nil {
+			return nil, err
+		}
+		cfg.file = file
+	}
 
 	cfg.data = make(map[string]interface{})
-	cfg.file = file
 	cfg.buf = new(bytes.Buffer)
 	cfg.encoder = gob.NewEncoder(cfg.buf)
 	cfg.decoder = gob.NewDecoder(cfg.buf)
@@ -82,21 +88,22 @@ func Create(path string, loadDefaults bool) (*Config, error) {
 func Open(path string) (*Config, error) {
 	cfg := new(Config)
 
-	// opens file
-	// otvori subor
-	file, err := os.OpenFile(path, os.O_RDWR, 0644)
-	if err != nil {
-		return nil, err
+	if runtime.GOARCH == "wasm" {
+		cfg.file = nil
+	} else {
+		file, err := os.OpenFile(path, os.O_RDWR, 0644)
+		if err != nil {
+			return nil, err
+		}
+
+		cfg.file = file
 	}
 
-	cfg.file = file
 	cfg.buf = new(bytes.Buffer)
 	cfg.encoder = gob.NewEncoder(cfg.buf)
 	cfg.decoder = gob.NewDecoder(cfg.buf)
 
-	// decodes raw data
-	// dekoduje surove data
-	_, err = io.Copy(cfg.buf, cfg.file)
+	_, err := io.Copy(cfg.buf, cfg.file)
 	if err != nil {
 		return nil, err
 	}
