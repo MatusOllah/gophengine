@@ -29,7 +29,7 @@ func NumFiles(fsys fs.FS) (int, error) {
 	return num, nil
 }
 
-// Extract extracts the filesystem to dst and shows progress dialog using zenity.ProgressDialog if gui is true.
+// Extract extracts the filesystem to dst.
 func Extract(fsys fs.FS, dst string) error {
 
 	// create destination directory
