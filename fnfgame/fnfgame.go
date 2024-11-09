@@ -3,6 +3,7 @@ package fnfgame
 import (
 	"fmt"
 	"log/slog"
+	"runtime"
 	"time"
 
 	ge "github.com/MatusOllah/gophengine"
@@ -32,8 +33,10 @@ func New(ctx *context.Context) (*FNFGame, error) {
 		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
 	}
 
-	if err := clipboard.Init(); err != nil {
-		return nil, fmt.Errorf("fnfgame New: failed to initialize clipboard: %w", err)
+	if runtime.GOARCH != "wasm" {
+		if err := clipboard.Init(); err != nil {
+			return nil, fmt.Errorf("fnfgame New: failed to initialize clipboard: %w", err)
+		}
 	}
 
 	return g, nil

@@ -134,7 +134,11 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[showBuildInfoWindow] clicked copy build info button")
-			clipboard.Write(clipboard.FmtText, []byte(textArea.GetText()))
+			if runtime.GOARCH != "wasm" {
+				clipboard.Write(clipboard.FmtText, []byte(textArea.GetText()))
+			} else {
+				slog.Warn("cannot write to clipboard on wasm")
+			}
 		}),
 	))
 
