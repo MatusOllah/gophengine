@@ -220,6 +220,10 @@ func (cfg *Config) Wipe() {
 
 // Flush gob encodes and writes data to the file.
 func (cfg *Config) Flush() error {
+	if cfg.file == nil {
+		return nil
+	}
+
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 
@@ -241,6 +245,10 @@ func (cfg *Config) Flush() error {
 
 // Close flushes and closes the file.
 func (cfg *Config) Close() error {
+	if cfg.file == nil {
+		return nil
+	}
+
 	if err := cfg.Flush(); err != nil {
 		return err
 	}
