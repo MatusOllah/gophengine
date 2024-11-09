@@ -12,7 +12,11 @@ UPX = upx
 # output
 BINARY = ./bin/$(GOOS)-$(GOARCH)
 
-EXE = $(BINARY)/gophengine$(shell go env GOEXE)
+EXE_EXT = $(shell go env GOEXE)
+ifeq ($(GOARCH),wasm)
+	EXE_EXT = .wasm
+endif
+EXE = $(BINARY)/gophengine$(EXE_EXT)
 
 # flags
 UPX_FLAGS = --best --lzma
@@ -52,7 +56,9 @@ endif
 .PHONY: upx
 upx: build
 ifeq ($(IS_RELEASE),true)
-	$(UPX) $(UPX_FLAGS) $(EXE)
+	ifneq ($(GOARCH),wasm)
+		$(UPX) $(UPX_FLAGS) $(EXE)
+	endif
 endif
 
 .PHONY: clean
