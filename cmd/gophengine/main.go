@@ -141,21 +141,29 @@ func main() {
 	}
 
 	// Logfile
-	logfilePath := getLogFilePath()
-	if err := os.MkdirAll(filepath.Dir(logfilePath), 0666); err != nil {
-		panic(err)
+	var logfile *os.File
+	if runtime.GOARCH != "wasm" {
+		logfilePath := getLogFilePath()
+		if err := os.MkdirAll(filepath.Dir(logfilePath), 0666); err != nil {
+			panic(err)
+		}
+		logfile, err := os.Create(logfilePath)
+		if err != nil {
+			panic(err)
+		}
+		defer logfile.Close()
 	}
-	logfile, err := os.Create(logfilePath)
-	if err != nil {
-		panic(err)
-	}
-	defer logfile.Close()
 
 	// Logger (using slogcolor: https://github.com/MatusOllah/slogcolor)
 	opts := slogcolor.DefaultOptions
 	opts.Level = getLogLevel()
 	opts.SrcFileLength = 32
-	slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(logfile)), opts)))
+
+	if logfile != nil {
+		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(logfile)), opts)))
+	} else {
+		slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
+	}
 
 	// moved main func to _main and handle error here
 	// learned this from Melkey
