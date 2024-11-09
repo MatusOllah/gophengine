@@ -6,12 +6,12 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
+	"github.com/MatusOllah/gophengine/internal/browser"
 	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/jeandeaual/go-locale"
-	"github.com/pkg/browser"
 )
 
 var mainMenuSceneInstance *MainMenuScene
