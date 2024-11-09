@@ -10,10 +10,10 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
+	"github.com/MatusOllah/gophengine/internal/dialog"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
-	"github.com/ncruces/zenity"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
@@ -100,7 +100,7 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 				slog.Info("[miscPage] clicked options config import button")
 				if err := importOptionsConfig(ctx); err != nil {
 					slog.Error("failed to import options config", "err", err)
-					zenity.Error("failed to import options config: "+err.Error(), zenity.Title("GophEngine error"))
+					dialog.Error("failed to import options config: " + err.Error())
 				}
 				maps.Copy(cfg, ctx.OptionsConfig.Data()) // update the temporary map so that the changes don't reset when the user clicks "Apply"
 			}),
@@ -113,7 +113,7 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 				slog.Info("[miscPage] clicked options config export button")
 				if err := exportOptionsConfig(ctx); err != nil {
 					slog.Error("failed to export options config", "err", err)
-					zenity.Error("failed to export options config: "+err.Error(), zenity.Title("GophEngine error"))
+					dialog.Error("failed to export options config: " + err.Error())
 				}
 			}),
 		),
@@ -199,15 +199,12 @@ func getCurLocale(ctx *context.Context) (*locale, error) {
 }
 
 func exportOptionsConfig(ctx *context.Context) error {
-	path, err := zenity.SelectFileSave(
-		zenity.Title(i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig")),
-		zenity.Filename("options.gecfg"),
-		zenity.ConfirmOverwrite(),
-		zenity.FileFilter{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
+	path, err := dialog.SelectFileSave(
+		i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig"),
+		"options.gecfg",
+		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
 	)
-	if err == zenity.ErrCanceled {
-		return nil
-	} else if err != nil {
+	if err != nil {
 		return err
 	}
 
@@ -230,14 +227,12 @@ func exportOptionsConfig(ctx *context.Context) error {
 }
 
 func importOptionsConfig(ctx *context.Context) error {
-	path, err := zenity.SelectFile(
-		zenity.Title(i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig")),
-		zenity.Filename("options.gecfg"),
-		zenity.FileFilter{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false},
+	path, err := dialog.SelectFileOpen(
+		i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig"),
+		"options.gecfg",
+		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
 	)
-	if err == zenity.ErrCanceled {
-		return nil
-	} else if err != nil {
+	if err != nil {
 		return err
 	}
 

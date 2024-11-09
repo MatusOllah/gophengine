@@ -17,11 +17,11 @@ import (
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
+	"github.com/MatusOllah/gophengine/internal/dialog"
 	"github.com/MatusOllah/gophengine/internal/fsutil"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/ncruces/zenity"
 )
 
 // setIcon sets the window icon.
@@ -161,7 +161,7 @@ func main() {
 	// learned this from Melkey
 	if err := mainE(); err != nil {
 		slog.Error(err.Error())
-		zenity.Error(err.Error())
+		dialog.Error(err.Error())
 		panic(err)
 	}
 }
