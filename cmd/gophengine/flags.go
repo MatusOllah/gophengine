@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/spf13/pflag"
 )
@@ -22,19 +21,14 @@ var (
 var flagSet *pflag.FlagSet
 
 func initFlags() error {
-	configDir, err := os.UserConfigDir()
-	if err != nil {
-		return err
-	}
-
 	flagSet = pflag.NewFlagSet(os.Args[0], pflag.ExitOnError)
 
 	// help flag
 	flagSet.BoolVarP(&helpFlag, "help", "h", false, "Shows this help message")
 
 	flagSet.BoolVar(&extractAssetsFlag, "extract-assets", false, "Extract embedded assets")
-	flagSet.StringVar(&configFlag, "config", filepath.Join(configDir, "GophEngine/config.gecfg"), "Path to config.gecfg config file")
-	flagSet.StringVar(&progressFlag, "progress", filepath.Join(configDir, "GophEngine/progress.gecfg"), "Path to progress.gecfg progress file")
+	flagSet.StringVar(&configFlag, "config", "", "Path to config.gecfg config file")
+	flagSet.StringVar(&progressFlag, "progress", "", "Path to progress.gecfg progress file")
 	flagSet.StringVar(&logLevelFlag, "log-level", "info", "Log level (\"debug\", \"info\", \"warn\", \"error\")")
 	flagSet.BoolVar(&justInitFlag, "just-init", false, "Initialize game and exit")
 	flagSet.BoolVar(&portableFlag, "portable", false, "Save everything in the current directory (aka portable mode)")

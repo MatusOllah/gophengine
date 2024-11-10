@@ -101,9 +101,27 @@ func mainE() error {
 		FNFVersion:         fnfVersion,
 		Locale:             forceLocaleFlag,
 	}
-	if portableFlag {
-		cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
-		cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
+	if runtime.GOARCH != "wasm" {
+		if configFlag == "" {
+			configDir, err := os.UserConfigDir()
+			if err != nil {
+				return err
+			}
+
+			cfg.OptionsConfigPath = filepath.Join(configDir, "GophEngine/options.gecfg")
+		}
+		if progressFlag == "" {
+			configDir, err := os.UserConfigDir()
+			if err != nil {
+				return err
+			}
+
+			cfg.ProgressConfigPath = filepath.Join(configDir, "GophEngine/progress.gecfg")
+		}
+		if portableFlag {
+			cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
+			cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
+		}
 	}
 	ctx, err := context.New(cfg)
 	if err != nil {
