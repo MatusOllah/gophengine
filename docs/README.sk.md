@@ -62,6 +62,17 @@ Pôsobí to prirodzenejšie a lepšie zapadá do tohto projektu než "funkin-go.
 
 Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/CONTRIBUTING.md).
 
+## Licencia
+
+Licencované podľa Apache License 2.0 (pozri [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
+
+### Poďakovanie
+
+* **The Funkin' Crew** - Pôvodná hra
+* **Hajime Hoshi** - Ebitengine
+* [Logo Ebitengine](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) od Hajime Hoshi je licencované podľa [the Creative Commons Attribution-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
+* Maskot Go Gopher bol vytvorený Renee French a je licencovaný podľa [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
+
 ## 💲 Darujte
 
 Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte možnosť darovania. Každá podpora je veľmi cenená! (pls potrebujem peniaze na kúpu [Kofoly](https://kofola.sk))

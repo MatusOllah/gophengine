@@ -63,6 +63,17 @@ The name "GophEngine" combines "Goph" (representing Gopher, the Go programming l
 
 We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/CONTRIBUTING.md) for details on how to get started.
 
+## License
+
+Licensed under the Apache License 2.0 (see [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
+
+### Credits
+
+* **The Funkin' Crew** - Original game
+* **Hajime Hoshi** - Ebitengine
+* [The Ebitengine logo](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) by Hajime Hoshi is licensed under [the Creative Commons Attribution-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
+* The Go Gopher mascot was created by Renee French and is licensed under the [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
+
 ## 💲 Donate
 
 If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Kofola](https://kofola.cz/en))
