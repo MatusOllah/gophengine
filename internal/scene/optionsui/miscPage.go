@@ -281,6 +281,8 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 
 			ctx.OptionsConfig.Wipe()
 			config.LoadDefaultOptions(ctx.OptionsConfig)
+
+			confirmDialog.Close()
 		}),
 	))
 
