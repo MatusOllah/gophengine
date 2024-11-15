@@ -24,6 +24,10 @@ import (
 
 // setIcon sets the window icon.
 func setIcon() error {
+	if runtime.GOARCH == "wasm" {
+		return nil
+	}
+
 	f, err := assets.FS.Open("icon.png")
 	if err != nil {
 		return fmt.Errorf("failed to open icon image file: %w", err)
