@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"image"
 	_ "image/png"
 	"io"
-	"io/fs"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -26,14 +24,15 @@ import (
 
 // setIcon sets the window icon.
 func setIcon() error {
-	data, err := fs.ReadFile(assets.FS, "icon.png")
+	f, err := assets.FS.Open("icon.png")
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to open icon image file: %w", err)
 	}
+	defer f.Close()
 
-	img, _, err := image.Decode(bytes.NewReader(data))
+	img, _, err := image.Decode(f)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to decode icon image file: %w", err)
 	}
 
 	ebiten.SetWindowIcon([]image.Image{img})
