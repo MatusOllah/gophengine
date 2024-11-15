@@ -188,6 +188,6 @@ func main() {
 	if err := mainE(); err != nil {
 		slog.Error(err.Error())
 		dialog.Error(err.Error())
-		panic(err)
+		os.Exit(1)
 	}
 }
