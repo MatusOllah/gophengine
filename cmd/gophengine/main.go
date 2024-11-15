@@ -81,7 +81,7 @@ func mainE() error {
 
 	if extractAssetsFlag {
 		if err := fsutil.Extract(assets.FS, "assets"); err != nil {
-			return err
+			return fmt.Errorf("failed to extract assets: %w", err)
 		}
 
 		return nil
@@ -90,7 +90,7 @@ func mainE() error {
 	// Window icon
 	slog.Info("setting window icon")
 	if err := setIcon(); err != nil {
-		return err
+		return fmt.Errorf("failed to set window icon: %w", err)
 	}
 
 	// Context
@@ -108,7 +108,7 @@ func mainE() error {
 		if configFlag == "" {
 			configDir, err := os.UserConfigDir()
 			if err != nil {
-				return err
+				return fmt.Errorf("failed to fetch user config dir: %w", err)
 			}
 
 			cfg.OptionsConfigPath = filepath.Join(configDir, "GophEngine/options.gecfg")
@@ -116,7 +116,7 @@ func mainE() error {
 		if progressFlag == "" {
 			configDir, err := os.UserConfigDir()
 			if err != nil {
-				return err
+				return fmt.Errorf("failed to fetch user config dir: %w", err)
 			}
 
 			cfg.ProgressConfigPath = filepath.Join(configDir, "GophEngine/progress.gecfg")
@@ -128,14 +128,14 @@ func mainE() error {
 	}
 	ctx, err := context.New(cfg)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to initialize context: %w", err)
 	}
 
 	// Game init
 	slog.Info("initializing game")
 	g, err := fnfgame.New(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to initialize game: %w", err)
 	}
 
 	// Ebiten init
@@ -149,7 +149,7 @@ func mainE() error {
 	// Start
 	slog.Info("starting game")
 	if err := g.Start(); err != nil {
-		return err
+		return fmt.Errorf("failed to run game: %w", err)
 	}
 
 	return g.Close()
