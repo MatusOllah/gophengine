@@ -162,7 +162,7 @@ func main() {
 	var logfile *os.File
 	if runtime.GOARCH != "wasm" {
 		logfilePath := getLogFilePath()
-		if err := os.MkdirAll(filepath.Dir(logfilePath), 0666); err != nil {
+		if err := os.MkdirAll(filepath.Dir(logfilePath), 0755); err != nil {
 			panic(err)
 		}
 		logfile, err := os.Create(logfilePath)
