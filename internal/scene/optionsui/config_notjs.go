@@ -18,7 +18,7 @@ func exportOptionsConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileSave(
 		i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig"),
 		"options.gecfg",
-		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
+		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
@@ -46,7 +46,7 @@ func importOptionsConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileOpen(
 		i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig"),
 		"options.gecfg",
-		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
+		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
