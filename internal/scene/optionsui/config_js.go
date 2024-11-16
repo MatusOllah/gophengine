@@ -1,8 +1,12 @@
+//go:build js
+
 package optionsui
 
 import (
+	"bytes"
 	"image"
 	"log/slog"
+	"syscall/js"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
@@ -12,60 +16,47 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 )
 
-func exportOptionsConfig(ctx *context.Context) error {
-	path, err := dialog.SelectFileSave(
-		i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig"),
-		"options.gecfg",
-		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
+func download(buf *bytes.Buffer, mime string, path string) {
+	global := js.Global()
+
+	jsData := global.Get("Uint8Array").New(buf.Len())
+	js.CopyBytesToJS(jsData, buf.Bytes())
+
+	a := global.Get("document").Call("createElement", "a")
+	blob := global.Get("Blob").New(
+		[]any{jsData},
+		map[string]any{"type": mime},
 	)
-	if err != nil {
-		return err
-	}
+	a.Set("href", global.Get("URL").Call("createObjectURL", blob))
+	a.Set("download", path)
+	a.Call("click")
+}
 
-	slog.Info("exporting options config", "path", path)
+func exportOptionsConfig(ctx *context.Context) error {
+	slog.Info("exporting options config")
 
-	cfg, err := config.New(path, false)
+	cfg, err := config.New("", false)
 	if err != nil {
 		return err
 	}
 
 	cfg.SetData(ctx.OptionsConfig.Data())
 
-	if err := cfg.Close(); err != nil {
+	if err := cfg.Flush(); err != nil {
 		return err
 	}
+
+	b := cfg.GobBytes()
+	download(bytes.NewBuffer(b), "application/x-gob", "options.gecfg")
 
 	slog.Info("export OK")
 
 	return nil
 }
 
-func importOptionsConfig(ctx *context.Context) error {
-	path, err := dialog.SelectFileOpen(
-		i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig"),
-		"options.gecfg",
-		[]dialog.FileFilter{{i18nutil.Localize(ctx.Localizer, "GEConfigFile"), []string{"*.gecfg"}, false}},
-	)
-	if err != nil {
-		return err
-	}
-
-	slog.Info("importing options config", "path", path)
-
-	cfg, err := config.New(path, false)
-	if err != nil {
-		return err
-	}
-
-	m := cfg.Data()
-	slog.Debug("got config", "m", m)
-	ctx.OptionsConfig.Append(m)
-
-	if err := cfg.Close(); err != nil {
-		return err
-	}
-
-	slog.Info("import OK")
+func importOptionsConfig(_ *context.Context) error {
+	slog.Warn("import config unsupported on js/wasm")
+	dialog.Warning("import config unsupported on js/wasm")
 
 	return nil
 }

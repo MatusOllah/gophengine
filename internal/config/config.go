@@ -218,17 +218,22 @@ func (cfg *Config) Wipe() {
 	clear(cfg.data)
 }
 
+// GobBytes returns the actual gob-encoded data.
+func (cfg *Config) GobBytes() []byte {
+	return cfg.buf.Bytes()
+}
+
 // Flush gob encodes and writes data to the file.
 func (cfg *Config) Flush() error {
-	if cfg.file == nil {
-		return nil
-	}
-
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 
 	if err := cfg.encoder.Encode(cfg.data); err != nil {
 		return err
+	}
+
+	if cfg.file == nil {
+		return nil
 	}
 
 	_, err := cfg.file.WriteAt(cfg.buf.Bytes(), 0)
@@ -245,12 +250,12 @@ func (cfg *Config) Flush() error {
 
 // Close flushes and closes the file.
 func (cfg *Config) Close() error {
-	if cfg.file == nil {
-		return nil
-	}
-
 	if err := cfg.Flush(); err != nil {
 		return err
+	}
+
+	if cfg.file == nil {
+		return nil
 	}
 
 	return cfg.file.Close()
