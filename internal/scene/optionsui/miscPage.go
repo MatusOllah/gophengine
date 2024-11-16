@@ -114,6 +114,8 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 		),
 	))
 
+	//TODO: progress config buttons
+
 	/*
 		c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", res.fonts.regularFace, res.labelColor)))
 
