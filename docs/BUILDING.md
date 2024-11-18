@@ -5,7 +5,7 @@ Instead of painstakingly installing dependencies and debugging broken Haxe code,
 
 ## Prerequisites
 
-GophEngine requires 3 basic elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler** and a **system graphics driver**.
+GophEngine requires 4 key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
 
 A C Compiler is required as GophEngine uses not only Go, but also C.
 
@@ -74,6 +74,6 @@ go install -v github.com/MatusOllah/gophengine@latest
     * `cd ./gophengine/`
 3. Run the script:
     * for a debug build: `scripts/build-debug.sh`
-    * for a release build: `scripts/build-release.sh`
+    * for a release build (with `-ldflags="-s -w"` and UPX compression): `scripts/build-release.sh`
 
 For more details, visit the [Ebitengine installation guide](https://ebitengine.org/en/documents/install.html).

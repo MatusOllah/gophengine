@@ -5,7 +5,7 @@ Namiesto námahy s inštaláciou závislostí a ladením nefunkčného Haxe kód
 
 ## Závislosti
 
-GophEngine vyžaduje, aby boli prítomné 3 základné prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor** a **grafický ovládač systému**.
+GophEngine vyžaduje, aby boli prítomné 4 kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
 
 C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazyk C.
 
@@ -74,6 +74,6 @@ go install -v github.com/MatusOllah/gophengine@latest
     * `cd ./gophengine/`
 3. Spustite skript:
     * pre vývojovú verziu (debug): `scripts/build-debug.sh`
-    * pre finálnu verziu (release): `scripts/build-release.sh`
+    * pre finálnu verziu (release) (s `-ldflags="-s -w"` a UPX kompresiou): `scripts/build-release.sh`
 
 Pre viac informácií navštívte [sprievodcu inštalácie Ebitengine](https://ebitengine.org/en/documents/install.html).
