@@ -207,9 +207,9 @@ func (s *TitleScene) Update(dt float64) error {
 
 	// Title screen
 	if s.skippedIntro {
-		s.gfDance.AnimController.UpdateWithDelta(dt)
-		s.logoBl.AnimController.UpdateWithDelta(dt)
-		s.titleText.AnimController.UpdateWithDelta(dt)
+		s.gfDance.AnimController.Update()
+		s.logoBl.AnimController.Update()
+		s.titleText.AnimController.Update()
 	}
 
 	s.flasher.Update(dt)

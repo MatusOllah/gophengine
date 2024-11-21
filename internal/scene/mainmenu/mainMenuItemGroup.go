@@ -48,7 +48,7 @@ func (g *MainMenuItemGroup) Update(dt float64) error {
 	g.items[g.curSelected].Sprite.AnimController.Play("selected")
 
 	for _, item := range g.items {
-		item.Sprite.AnimController.UpdateWithDelta(dt)
+		item.Sprite.AnimController.Update()
 	}
 
 	if err := g.flicker.Update(); err != nil {
