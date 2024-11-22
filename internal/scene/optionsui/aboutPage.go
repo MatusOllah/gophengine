@@ -22,14 +22,14 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	// The labels
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageGEVersion", map[string]interface{}{"Version": ctx.Version}),
+			i18nutil.LocalizeTmpl(ctx.Localizer, "GEVersion", map[string]interface{}{"Version": ctx.Version}),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageGoVersion", map[string]interface{}{
+			i18nutil.LocalizeTmpl(ctx.Localizer, "GoVersion", map[string]interface{}{
 				"GoVersion": runtime.Version(),
 				"GOOS":      runtime.GOOS,
 				"GOARCH":    runtime.GOARCH,
@@ -40,7 +40,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LocalizeTmpl(ctx.Localizer, "AboutPageFNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
+			i18nutil.LocalizeTmpl(ctx.Localizer, "FNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
@@ -50,21 +50,21 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.Localize(ctx.Localizer, "AboutPageCredits"),
+			i18nutil.Localize(ctx.Localizer, "Credits"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.Localize(ctx.Localizer, "AboutPageLicense"),
+			i18nutil.Localize(ctx.Localizer, "License"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.Localize(ctx.Localizer, "AboutPageCreators"),
+			i18nutil.Localize(ctx.Localizer, "Creators"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
@@ -76,7 +76,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	// The buttons
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageShowBuildInfo"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "ShowBuildInfo"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -88,7 +88,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "AboutPageGitHubButton"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "GitHubButton"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -99,7 +99,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
-				i18nutil.Localize(ctx.Localizer, "AboutPageGitHubButtonTooltip"),
+				i18nutil.Localize(ctx.Localizer, "GitHubButtonTooltip"),
 				res.fonts.regularFace,
 				color.Black,
 				res.tooltipBGImage,
@@ -108,7 +108,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "OptionsAboutPage"),
+		name:    i18nutil.Localize(ctx.Localizer, "About"),
 		content: c,
 	}
 }

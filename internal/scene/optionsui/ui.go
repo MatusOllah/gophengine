@@ -100,7 +100,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// OK button (saves config & exits)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsOKButton"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OK"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
@@ -128,7 +128,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// Cancel button (exits)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsCancelButton"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Cancel"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -150,7 +150,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// Apply button (saves config)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsApplyButton"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Apply"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -179,7 +179,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsTitle"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Options"), res.fonts.titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

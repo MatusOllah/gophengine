@@ -110,7 +110,7 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 			}),
 		),
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "OptionsCancelButton"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Cancel"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeOptionsConfig] clicked cancel button")
