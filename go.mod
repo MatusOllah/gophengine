@@ -7,7 +7,7 @@ require (
 	github.com/MatusOllah/slogcolor v1.4.0
 	github.com/MatusOllah/stripansi v1.1.0
 	github.com/ebitenui/ebitenui v0.6.0
-	github.com/gopxl/beep v1.4.1
+	github.com/gopxl/beep/v2 v2.1.0
 	github.com/hajimehoshi/ebiten/v2 v2.7.9
 	github.com/hashicorp/hcl/v2 v2.22.0
 	github.com/jeandeaual/go-locale v0.0.0-20240223122105-ce5225dcaa49

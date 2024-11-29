@@ -4,9 +4,9 @@ import (
 	"io/fs"
 
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/gopxl/beep"
-	"github.com/gopxl/beep/effects"
-	"github.com/gopxl/beep/vorbis"
+	"github.com/gopxl/beep/v2"
+	"github.com/gopxl/beep/v2/effects"
+	"github.com/gopxl/beep/v2/vorbis"
 )
 
 func PlaySoundFromFS(ctx *context.Context, fsys fs.FS, path string, vol float64) error {

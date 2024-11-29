@@ -10,7 +10,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/MatusOllah/gophengine/internal/scene"
-	"github.com/gopxl/beep/speaker"
+	"github.com/gopxl/beep/v2/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"golang.design/x/clipboard"

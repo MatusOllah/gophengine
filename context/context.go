@@ -10,7 +10,7 @@ import (
 	"github.com/BurntSushi/toml"
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/internal/config"
-	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/v2"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	input "github.com/quasilyte/ebitengine-input"
 	"golang.org/x/text/language"
