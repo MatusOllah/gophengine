@@ -20,6 +20,8 @@ func LoadDefaultOptions(cfg *Config) {
 		"Locale":     userLocale,
 		"Fullscreen": false,
 
+		"Audio.MasterVolume": float64(0),
+
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},
 		"Controls.Left":       []string{input.KeyLeft.String(), input.KeyA.String()},
