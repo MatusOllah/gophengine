@@ -27,6 +27,7 @@ type uiResources struct {
 	listSliderTrackImage         *widget.SliderTrackImage
 	listScrollContainerImage     *widget.ScrollContainerImage
 	listEntryColor               *widget.ListEntryColor
+	sliderTrackImage             *widget.SliderTrackImage
 	separatorImage               *eui_image.NineSlice
 }
 
@@ -60,7 +61,7 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledSelectedBackground: color.NRGBA{R: 0x2E, G: 0x2E, B: 0x2E, A: 0xFF}, // Background color for the disabled selected entry
 		},
 
-		// Button background color inspired by Boyfriend's hair color (#50a5eb).
+		// Button background color = Boyfriend's hair color (#50a5eb).
 		// This choice adds a fun, thematic touch to the GUI and serves as a little easter egg
 		// for fans of the game, aligning with the playful spirit of Friday Night Funkin'.
 		// Also, it just looks good.
@@ -110,6 +111,10 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledUnselected:         color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled unselected entry
 			DisabledSelected:           color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled selected entry
 			DisabledSelectedBackground: color.NRGBA{100, 100, 100, 255},                //Background color for the disabled selected entry
+		},
+		sliderTrackImage: &widget.SliderTrackImage{
+			Idle:  eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
+			Hover: eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
 		separatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
 	}, nil

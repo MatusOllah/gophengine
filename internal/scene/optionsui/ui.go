@@ -48,7 +48,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	pages := []any{
 		newGameplayPage(ctx),
 		newControlsPage(ctx),
-		newAudioPage(ctx),
+		newAudioPage(ctx, res),
 		newGraphicsPage(ctx),
 		// TODO: Network tab; coming soon
 		newMiscellaneousPage(ctx, res, cfg, ui),

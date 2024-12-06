@@ -14,6 +14,7 @@ OptionsRestartWarningTooltip = "Restart the game for your changes to take effect
 Gameplay = "Gameplay"
 Controls = "Controls"
 Audio = "Audio"
+MasterVolume = "Master volume"
 Graphics = "Graphics"
 Miscellaneous = "Miscellaneous"
 Locale = "Locale:"
