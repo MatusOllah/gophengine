@@ -18,10 +18,7 @@ func newAudioPage(ctx *context.Context, res *uiResources) *page {
 			widget.SliderOpts.Direction(widget.DirectionHorizontal),
 			widget.SliderOpts.MinMax(0, 100),
 			widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-			widget.SliderOpts.Images(
-				res.sliderTrackImage,
-				res.buttonImage,
-			),
+			widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
 			widget.SliderOpts.FixedHandleSize(10),
 			widget.SliderOpts.TrackOffset(0),
 			widget.SliderOpts.PageSizeFunc(func() int {
