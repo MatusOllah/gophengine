@@ -48,6 +48,11 @@ run:
 	$(GO) get
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine
 
+.PHONY: run-debug
+run-debug:
+	$(GO) get
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine --log-level=debug
+
 .PHONY: build
 build: clean
 	mkdir -p $(BINARY)
