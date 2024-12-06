@@ -43,6 +43,11 @@ endif
 .PHONY: all
 all: build upx
 
+.PHONY: run
+run:
+	$(GO) get
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine
+
 .PHONY: build
 build: clean
 	mkdir -p $(BINARY)
