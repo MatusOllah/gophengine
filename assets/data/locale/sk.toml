@@ -30,7 +30,6 @@ ImportOptionsConfig = "Importovať konfiguráciu nastavení"
 ExportProgressConfig = "Exportovať konfiguráciu pokroku"
 ImportProgressConfig = "Importovať konfiguráciu pokroku"
 Mods = "Módy"
-Advanced = "Pokročilé"
 About = "O Hre" # "O Hre" here instead of just "O" as that wouldn't make sense
 GEVersion = "GophEngine verzia {{.Version}}"
 GoVersion = "Go verzia {{.GoVersion}} ({{.GOOS}}/{{.GOARCH}})"

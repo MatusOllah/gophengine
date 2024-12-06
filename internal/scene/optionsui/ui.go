@@ -53,7 +53,6 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		// TODO: Network tab; coming soon
 		newMiscellaneousPage(ctx, res, cfg, ui),
 		newModsPage(ctx),
-		newAdvancedPage(ctx),
 		newAboutPage(ctx, res, ui),
 	}
 
