@@ -104,6 +104,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.SampleRate = beep.SampleRate(44100)
 	ctx.AudioMixer = audio.NewMixer()
 	ctx.AudioMixer.Master.SetVolume(ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64))
+	ctx.AudioMixer.Music.SetVolume(ctx.OptionsConfig.MustGet("Audio.MusicVolume").(float64))
 	ctx.AudioResampleQuality = 4
 
 	ctx.Version = cfg.Version

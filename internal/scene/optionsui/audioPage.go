@@ -36,7 +36,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
 
-			slog.Debug("[audioPage] setting volume", "volume", volume)
+			slog.Debug("[audioPage] setting master volume", "volume", volume)
 			speaker.Lock()
 			ctx.AudioMixer.Master.SetVolume(volume)
 			cfg["Audio.MasterVolume"] = volume
@@ -52,6 +52,43 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 		masterVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
 		masterVolumeValueLabel,
+	))
+
+	// Music volume
+	musicVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+
+	musicVolumeSlider := widget.NewSlider(
+		widget.SliderOpts.Direction(widget.DirectionHorizontal),
+		widget.SliderOpts.MinMax(0, 100),
+		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
+		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.FixedHandleSize(10),
+		widget.SliderOpts.TrackOffset(0),
+		widget.SliderOpts.PageSizeFunc(func() int {
+			return 1
+		}),
+		widget.SliderOpts.ChangedHandler(func(args *widget.SliderChangedEventArgs) {
+			slog.Debug("[audioPage] dragging music volume slider", "current", args.Current, "dragging", args.Dragging)
+			musicVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
+
+			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
+
+			slog.Debug("[audioPage] setting music volume", "volume", volume)
+			speaker.Lock()
+			ctx.AudioMixer.Music.SetVolume(volume)
+			cfg["Audio.MusicVolume"] = volume
+			speaker.Unlock()
+		}),
+	)
+
+	musicVolumeSlider.Current = int(mapRange(cfg["Audio.MusicVolume"].(float64), -10, 0, 0, 100))
+	musicVolumeValueLabel.Label = fmt.Sprint(musicVolumeSlider.Current) + "%"
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "MusicVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		musicVolumeSlider,
+		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		musicVolumeValueLabel,
 	))
 
 	return &page{
