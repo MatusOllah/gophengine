@@ -128,6 +128,9 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 		sfxVolumeValueLabel,
 	))
 
+	// Separator
+	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
+
 	return &page{
 		name:    i18nutil.Localize(ctx.Localizer, "Audio"),
 		content: c,
