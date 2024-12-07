@@ -11,7 +11,7 @@
 **GophEngine** je Go implementácia hry **Friday Night Funkin' v0.2.7.1** s vylepšeniami a alternatíva k vanilla FNF.
 
 > [!NOTE]
-> Toto je mód. Toto není originálna verzia a mal by byť považovaný za modifikáciu.
+> Toto je mód. Toto nie je originálna hra a mal by byť považovaný za modifikáciu.
 
 ## Prečo?
 
