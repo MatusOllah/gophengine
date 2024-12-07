@@ -91,6 +91,43 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 		musicVolumeValueLabel,
 	))
 
+	// SFX volume
+	sfxVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+
+	sfxVolumeSlider := widget.NewSlider(
+		widget.SliderOpts.Direction(widget.DirectionHorizontal),
+		widget.SliderOpts.MinMax(0, 100),
+		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
+		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.FixedHandleSize(10),
+		widget.SliderOpts.TrackOffset(0),
+		widget.SliderOpts.PageSizeFunc(func() int {
+			return 1
+		}),
+		widget.SliderOpts.ChangedHandler(func(args *widget.SliderChangedEventArgs) {
+			slog.Debug("[audioPage] dragging sfx volume slider", "current", args.Current, "dragging", args.Dragging)
+			sfxVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
+
+			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
+
+			slog.Debug("[audioPage] setting sfx volume", "volume", volume)
+			speaker.Lock()
+			ctx.AudioMixer.SFX.SetVolume(volume)
+			cfg["Audio.SFXVolume"] = volume
+			speaker.Unlock()
+		}),
+	)
+
+	sfxVolumeSlider.Current = int(mapRange(cfg["Audio.SFXVolume"].(float64), -10, 0, 0, 100))
+	sfxVolumeValueLabel.Label = fmt.Sprint(sfxVolumeSlider.Current) + "%"
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		sfxVolumeSlider,
+		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		sfxVolumeValueLabel,
+	))
+
 	return &page{
 		name:    i18nutil.Localize(ctx.Localizer, "Audio"),
 		content: c,
