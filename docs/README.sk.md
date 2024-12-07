@@ -79,9 +79,7 @@ Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, zvážte m
 
 Môžete darovať prostredníctvom nasledujúcich platforiem:
 
-* **Bitcoin (BTC):** `bc1quvhzs4qkvcnpsg3dv8l82gy2egsh0e0zd5y3le`
-* **Litecoin (LTC):** `ltc1qxpe3vz2cmt3k66h89nhyk34dc5mun4rcdhjrjh`
-* **Dogecoin (DOGE):** `A7G3rDzXifHzuekVHwupaQ6hmzdFgVXLoY`
+* **Bitcoin (BTC):** `bc1qtykrhm2ar9jreha5rnqve72lutw02jzpu6lcgs`
 * **Duino-Coin (DUCO):** `SladkyCitron`
 * **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` alebo `SladkyCitron`
 
