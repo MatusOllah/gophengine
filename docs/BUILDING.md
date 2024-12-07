@@ -56,7 +56,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 Run the following command:
 
 ```sh
-go install -v github.com/MatusOllah/gophengine@latest
+go install -v github.com/MatusOllah/gophengine/cmd/gophengine@latest
 ```
 
 ### Using Makefile

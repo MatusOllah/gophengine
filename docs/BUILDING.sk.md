@@ -56,7 +56,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 Spustite nasledujúci príkaz:
 
 ```sh
-go install -v github.com/MatusOllah/gophengine@latest
+go install -v github.com/MatusOllah/gophengine/cmd/gophengine@latest
 ```
 
 ### Pomocou Makefile
