@@ -49,7 +49,7 @@ Go is my favorite programming language, and I prefer it over learning Haxe.
 | Graphics Card     | Intel HD Graphics 4000 / NVIDIA GeForce GTX 600 Series / AMD Radeon HD 7000 Series | Intel HD Graphics 5000 / NVIDIA GeForce GTX 750 Ti / AMD Radeon RX 560  |
 | DirectX / OpenGL  | DirectX 11 / OpenGL 3.0                                                            | DirectX 12 / OpenGL 4.5                                                 |
 | Storage           | 256 MB                                                                             | 512 MB                                                                  |
-| Operating System  | Windows 7 / macOS 10.12 / Linux 2.6.32                                             | Windows 10 / macOS 10.15 / Linux 5.x.x                                  |
+| Operating System  | Windows 7 / macOS 10.12 / Linux 2.6.32                                             | Windows 11 / macOS 10.15 / Linux 5.x.x                                  |
 
 ## Building & installing (from source)
 
