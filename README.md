@@ -23,7 +23,7 @@ I created GophEngine for several reasons:
 * To fix issues in the vanilla FNF engine and add new features and improvements.
 * To foster a positive and non-toxic community around the game without the toxic community.
 * To remove violent NSFL (Not Safe For Life) content introduced in FNF v0.3.2, and create a cleaner version of the game.
-* To rewrite Friday Night Funkin' in Go, my favorite programming language.
+* To rewrite the game in Go, my favorite programming language.
 
 ### Why Go?
 
