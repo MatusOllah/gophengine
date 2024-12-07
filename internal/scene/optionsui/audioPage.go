@@ -38,13 +38,8 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 			slog.Debug("[audioPage] setting volume", "volume", volume)
 			speaker.Lock()
-			ctx.AudioMasterVolume.Volume = volume
+			ctx.AudioMixer.Master.SetVolume(volume)
 			cfg["Audio.MasterVolume"] = volume
-			if volume == -10 {
-				ctx.AudioMasterVolume.Silent = true
-			} else {
-				ctx.AudioMasterVolume.Silent = false
-			}
 			speaker.Unlock()
 		}),
 	)

@@ -181,7 +181,7 @@ func (s *TitleScene) Close() error {
 func (s *TitleScene) Update(dt float64) error {
 	s.once.Do(func() {
 		slog.Info("(*sync.Once).Do")
-		s.ctx.AudioMixer.Add(s.freakyMenu)
+		s.ctx.AudioMixer.Music.BeepMixer.Add(s.freakyMenu)
 
 		s.ctx.Conductor.ChangeBPM(102)
 	})

@@ -90,7 +90,7 @@ func (g *FNFGame) initSound() error {
 	if err := speaker.Init(g.ctx.SampleRate, bufSize); err != nil {
 		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
 	}
-	speaker.Play(g.ctx.AudioMasterVolume)
+	speaker.Play(g.ctx.AudioMixer)
 	return nil
 }
 

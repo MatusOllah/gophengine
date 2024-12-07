@@ -9,9 +9,9 @@ import (
 
 	"github.com/BurntSushi/toml"
 	ge "github.com/MatusOllah/gophengine"
+	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/gopxl/beep/v2"
-	"github.com/gopxl/beep/v2/effects"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	input "github.com/quasilyte/ebitengine-input"
 	"golang.org/x/text/language"
@@ -33,8 +33,7 @@ type Context struct {
 	Localizer            *i18n.Localizer
 	Conductor            *ge.Conductor
 	SampleRate           beep.SampleRate
-	AudioMixer           *beep.Mixer
-	AudioMasterVolume    *effects.Volume
+	AudioMixer           *audio.Mixer
 	AudioResampleQuality int
 	Version              string
 	FNFVersion           string
@@ -103,20 +102,9 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	//Audio
 	ctx.Conductor = ge.NewConductor(100)
 	ctx.SampleRate = beep.SampleRate(44100)
-	ctx.AudioMixer = &beep.Mixer{}
-	ctx.AudioMasterVolume = &effects.Volume{
-		Streamer: ctx.AudioMixer,
-		Base:     2,
-		Volume:   ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64),
-		Silent:   false,
-	}
+	ctx.AudioMixer = audio.NewMixer()
+	ctx.AudioMixer.Master.SetVolume(ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64))
 	ctx.AudioResampleQuality = 4
-
-	if ctx.AudioMasterVolume.Volume == -10 {
-		ctx.AudioMasterVolume.Silent = true
-	} else {
-		ctx.AudioMasterVolume.Silent = false
-	}
 
 	ctx.Version = cfg.Version
 	ctx.FNFVersion = cfg.FNFVersion
