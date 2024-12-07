@@ -70,7 +70,7 @@ Licencované podľa Apache License 2.0 (pozri [LICENSE](https://github.com/Matus
 
 * **The Funkin' Crew** - Pôvodná hra
 * **Hajime Hoshi** - Ebitengine
-* [Logo Ebitengine](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) od Hajime Hoshi je licencované podľa [the Creative Commons Attribution-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
+* [Logo Ebitengine](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) od Hajime Hoshi je licencované podľa [Creative Commons Attribution-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
 * Maskot Go Gopher bol vytvorený Renee French a je licencovaný podľa [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
 
 ## 💲 Darujte
