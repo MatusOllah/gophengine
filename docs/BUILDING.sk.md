@@ -23,9 +23,9 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 1. Nainštalujte [MSYS2](https://www.msys2.org/).
 2. Po inštalácii neotvárajte terminál MSYS.
 3. Otvorte "MSYS2 MinGW 64-bit" z ponuky štartovacieho menu.
-4. Spustite nasledujúce príkazy (ak vás systém požiada o možnosti inštalácie, vyberte "all"):
+4. Spustite nasledujúce príkazy:
     * `pacman -Syu`
-    * `pacman -S git mingw-w64-x86_64-toolchain`
+    * `pacman -S git mingw-w64-x86_64-gcc`
 5. Budete musieť pridať `/c/Program\ Files/Go/bin` a `~/Go/bin` do vášho `$PATH`, pre MSYS2 môžete použiť nasledujúci príkaz:
     * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
 
