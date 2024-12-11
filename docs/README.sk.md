@@ -64,7 +64,7 @@ Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CO
 
 ## Licencia
 
-Licencované podľa Apache License 2.0 (pozri [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
+Licencované podľa **Apache License 2.0** (pozri [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
 
 ### Poďakovanie
 

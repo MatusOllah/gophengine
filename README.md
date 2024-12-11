@@ -65,7 +65,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/MatusO
 
 ## License
 
-Licensed under the Apache License 2.0 (see [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
+Licensed under **Apache License 2.0** (see [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
 
 ### Credits
 
