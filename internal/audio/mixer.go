@@ -1,9 +1,14 @@
 package audio
 
 import (
+	"log/slog"
+
 	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
 )
+
+// SilentThreshold defines the volume below which the channel is muted.
+const SilentThreshold float64 = -10
 
 // MixerChannel is a mixer channel with adjustable volume.
 // It is a wrapper around *beep.Mixer and *effects.Volume.
@@ -61,14 +66,13 @@ func (ch *MixerChannel) Volume() float64 {
 	return ch.volume.Volume
 }
 
-// SetVolume sets the volume level. If the volume is lower or equal to -10, the channel is muted (set to silent).
+// SetVolume sets the volume level. If the volume is lower or equal to [SilentThreshold], the channel is muted (set to silent).
 func (ch *MixerChannel) SetVolume(vol float64) {
-	ch.volume.Volume = vol
-	if vol <= -10 {
-		ch.volume.Silent = true
-	} else {
-		ch.volume.Silent = false
+	if vol < SilentThreshold || vol > 0 {
+		slog.Warn("[MixerChannel] volume is outside of recommended range", "vol", vol)
 	}
+	ch.volume.Volume = vol
+	ch.volume.Silent = vol <= SilentThreshold
 }
 
 /*
