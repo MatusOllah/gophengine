@@ -71,25 +71,51 @@ func (ch *MixerChannel) SetVolume(vol float64) {
 	}
 }
 
-// Mixer is a collection of mixer channels, including a master, music and SFX channel.
+/*
+Mixer is a collection of mixer channels, organized in a hierarchical structure.
+
+The hierarchy goes like this:
+
+  - Master: The top-level channel that controls all audio.
+  - SFX: Sound effects (e.g., menu clicks, hit sounds).
+  - Music: Music-related audio.
+  - Music_Instrumental: The instrumental (Inst) track of the song.
+  - Music_Voices: The vocal track (Voices) of the song.
+  - Voices_Opponent: The opponent's vocal track.
+  - Voices_Boyfriend: The player's vocal track.
+*/
 type Mixer struct {
-	Master *MixerChannel
-	SFX    *MixerChannel
-	Music  *MixerChannel
-	Extra  map[string]*MixerChannel
+	Master             *MixerChannel
+	SFX                *MixerChannel
+	Music              *MixerChannel
+	Music_Instrumental *MixerChannel
+	Music_Voices       *MixerChannel
+	Voices_Opponent    *MixerChannel
+	Voices_Boyfriend   *MixerChannel
+	Extra              map[string]*MixerChannel
 }
 
 // NewMixer creates a new [Mixer].
 func NewMixer() *Mixer {
 	m := &Mixer{
-		Master: NewMixerChannel(),
-		SFX:    NewMixerChannel(),
-		Music:  NewMixerChannel(),
-		Extra:  make(map[string]*MixerChannel),
+		Master:             NewMixerChannel(),
+		SFX:                NewMixerChannel(),
+		Music:              NewMixerChannel(),
+		Music_Instrumental: NewMixerChannel(),
+		Music_Voices:       NewMixerChannel(),
+		Voices_Opponent:    NewMixerChannel(),
+		Voices_Boyfriend:   NewMixerChannel(),
+		Extra:              make(map[string]*MixerChannel),
 	}
 
 	m.Master.Add(m.SFX)
 	m.Master.Add(m.Music)
+
+	m.Music.Add(m.Music_Instrumental)
+	m.Music.Add(m.Music_Voices)
+
+	m.Music_Voices.Add(m.Voices_Opponent)
+	m.Music_Voices.Add(m.Voices_Boyfriend)
 
 	return m
 }
