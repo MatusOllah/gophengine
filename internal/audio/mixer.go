@@ -53,8 +53,8 @@ func (ch *MixerChannel) SetVolume(vol float64) {
 // Mixer is a collection of mixer channels, including a master, music and SFX channel.
 type Mixer struct {
 	Master *MixerChannel
-	Music  *MixerChannel
 	SFX    *MixerChannel
+	Music  *MixerChannel
 	Extra  map[string]*MixerChannel
 }
 
@@ -62,13 +62,13 @@ type Mixer struct {
 func NewMixer() *Mixer {
 	m := &Mixer{
 		Master: NewMixerChannel(),
-		Music:  NewMixerChannel(),
 		SFX:    NewMixerChannel(),
+		Music:  NewMixerChannel(),
 		Extra:  make(map[string]*MixerChannel),
 	}
 
-	m.Master.BeepMixer.Add(m.Music)
 	m.Master.BeepMixer.Add(m.SFX)
+	m.Master.BeepMixer.Add(m.Music)
 
 	return m
 }
