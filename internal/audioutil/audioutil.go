@@ -21,7 +21,7 @@ func PlaySoundFromFS(ctx *context.Context, fsys fs.FS, path string, vol float64)
 		return err
 	}
 
-	ctx.AudioMixer.SFX.BeepMixer.Add(&effects.Volume{
+	ctx.AudioMixer.SFX.Add(&effects.Volume{
 		Streamer: beep.Resample(ctx.AudioResampleQuality, format.SampleRate, ctx.SampleRate, streamer),
 		Base:     2,
 		Volume:   vol,

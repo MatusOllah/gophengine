@@ -8,21 +8,42 @@ import (
 // MixerChannel is a mixer channel with adjustable volume.
 // It is a wrapper around *beep.Mixer and *effects.Volume.
 type MixerChannel struct {
-	BeepMixer *beep.Mixer
+	beepMixer *beep.Mixer
 	volume    *effects.Volume
 }
 
 // NewMixerChannel creates a new [MixerChannel].
 func NewMixerChannel() *MixerChannel {
 	ch := &MixerChannel{}
-	ch.BeepMixer = &beep.Mixer{}
+	ch.beepMixer = &beep.Mixer{}
 	ch.volume = &effects.Volume{
-		Streamer: ch.BeepMixer,
+		Streamer: ch.beepMixer,
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
 	}
 	return ch
+}
+
+// Add adds Streamers to the wrapped Mixer.
+func (ch *MixerChannel) Add(s ...beep.Streamer) {
+	ch.beepMixer.Add(s...)
+}
+
+// Clear clears all Streamers from the wrapped Mixer.
+func (ch *MixerChannel) Clear() {
+	ch.beepMixer.Clear()
+}
+
+// KeepAlive configures the wrapped Mixer to either keep playing silence when all its Streamers have
+// drained (keepAlive == true) or stop playing (keepAlive == false).
+func (ch *MixerChannel) KeepAlive(keepAlive bool) {
+	ch.beepMixer.KeepAlive(keepAlive)
+}
+
+// Len returns the number of Streamers currently playing in the wrapped Mixer.
+func (ch *MixerChannel) Len() int {
+	return ch.beepMixer.Len()
 }
 
 // Stream streams the wrapped Volume.
@@ -67,8 +88,8 @@ func NewMixer() *Mixer {
 		Extra:  make(map[string]*MixerChannel),
 	}
 
-	m.Master.BeepMixer.Add(m.SFX)
-	m.Master.BeepMixer.Add(m.Music)
+	m.Master.Add(m.SFX)
+	m.Master.Add(m.Music)
 
 	return m
 }
@@ -76,7 +97,7 @@ func NewMixer() *Mixer {
 // AddChannel adds an extra channel to the mixer and assigns it to the master channel.
 func (m *Mixer) AddChannel(name string, ch *MixerChannel) {
 	m.Extra[name] = ch
-	m.Master.BeepMixer.Add(ch)
+	m.Master.Add(ch)
 }
 
 // Stream streams the master channel.
