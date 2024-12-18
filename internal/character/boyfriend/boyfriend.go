@@ -6,7 +6,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/character"
 )
 
-// Self-explanatory.
+// Boyfriend represents Boyfriend, the main player character.
 type Boyfriend struct {
 	*character.Character
 	IsStunned bool
