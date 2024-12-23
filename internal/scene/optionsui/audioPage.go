@@ -48,7 +48,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	masterVolumeValueLabel.Label = fmt.Sprint(masterVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "MasterVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "MasterVolume")+"  ", res.fonts.regularFace, res.labelColor)),
 		masterVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
 		masterVolumeValueLabel,
@@ -85,7 +85,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	musicVolumeValueLabel.Label = fmt.Sprint(musicVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "MusicVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "MusicVolume")+"  ", res.fonts.regularFace, res.labelColor)),
 		musicVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
 		musicVolumeValueLabel,
@@ -122,7 +122,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	sfxVolumeValueLabel.Label = fmt.Sprint(sfxVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
 		sfxVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
 		sfxVolumeValueLabel,
@@ -132,7 +132,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "Audio"),
+		name:    i18nutil.L(ctx.Localizer, "Audio"),
 		content: c,
 	}
 }

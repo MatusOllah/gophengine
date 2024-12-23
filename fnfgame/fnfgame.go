@@ -64,7 +64,7 @@ func (g *FNFGame) Update() error {
 func (g *FNFGame) Draw(screen *ebiten.Image) {
 	g.ctx.SceneCtrl.Draw(screen)
 
-	ebitenutil.DebugPrint(screen, i18nutil.LocalizeTmpl(g.ctx.Localizer, "FPSCounter", map[string]interface{}{
+	ebitenutil.DebugPrint(screen, i18nutil.LT(g.ctx.Localizer, "FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),
 		"TPS": ebiten.ActualTPS(),
 	}))

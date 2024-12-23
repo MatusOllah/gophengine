@@ -9,7 +9,7 @@ func newControlsPage(ctx *context.Context) *page {
 	c := newPageContentContainer()
 
 	return &page{
-		name:    i18nutil.Localize(ctx.Localizer, "Controls"),
+		name:    i18nutil.L(ctx.Localizer, "Controls"),
 		content: c,
 	}
 }

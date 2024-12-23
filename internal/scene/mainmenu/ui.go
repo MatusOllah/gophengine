@@ -73,7 +73,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x24, 0x24, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x40, 0x40, 0xFF}),
 		}),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Exit"), regularFace, &widget.ButtonTextColor{
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Exit"), regularFace, &widget.ButtonTextColor{
 			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
 			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
 			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
@@ -104,7 +104,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0x24, 0xFF, 0x24, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0x40, 0xFF, 0x40, 0xFF}),
 		}),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Stay"), regularFace, &widget.ButtonTextColor{
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Stay"), regularFace, &widget.ButtonTextColor{
 			color.NRGBA{0, 0, 0, 0xFF},
 			color.NRGBA{0, 0, 0, 0xFF},
 			color.NRGBA{0, 0, 0, 0xFF},
@@ -124,7 +124,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// The text
 	exitDialogContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "ExitDialogText"), regularFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "ExitDialogText"), regularFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
 	))
 
 	titleBarContainer := widget.NewContainer(
@@ -132,7 +132,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Exit"), titleFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "Exit"), titleFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

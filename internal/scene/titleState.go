@@ -292,11 +292,11 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleSceneInstance.introText.AddText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "Present"))
+		titleSceneInstance.introText.AddText(i18nutil.L(titleSceneInstance.ctx.Localizer, "Present"))
 	case 4:
 		titleSceneInstance.introText.DeleteText()
 	case 5:
-		titleSceneInstance.introText.CreateText(i18nutil.Localize(titleSceneInstance.ctx.Localizer, "MadeWith"))
+		titleSceneInstance.introText.CreateText(i18nutil.L(titleSceneInstance.ctx.Localizer, "MadeWith"))
 	case 7:
 		titleSceneInstance.introText.AddText("")
 		titleSceneInstance.introText.AddText("+")

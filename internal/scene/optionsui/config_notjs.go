@@ -16,9 +16,9 @@ import (
 
 func exportOptionsConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileSave(
-		i18nutil.Localize(ctx.Localizer, "ExportOptionsConfig"),
+		i18nutil.L(ctx.Localizer, "ExportOptionsConfig"),
 		"options.gecfg",
-		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
+		[]dialog.FileFilter{{Name: i18nutil.L(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
@@ -44,9 +44,9 @@ func exportOptionsConfig(ctx *context.Context) error {
 
 func importOptionsConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileOpen(
-		i18nutil.Localize(ctx.Localizer, "ImportOptionsConfig"),
+		i18nutil.L(ctx.Localizer, "ImportOptionsConfig"),
 		"options.gecfg",
-		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
+		[]dialog.FileFilter{{Name: i18nutil.L(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
@@ -90,7 +90,7 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 			}),
 		),
 		widget.ButtonOpts.Image(res.dangerButtonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeOptionsConfig] clicked wipe button")
@@ -110,7 +110,7 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 			}),
 		),
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Cancel"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Cancel"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeOptionsConfig] clicked cancel button")
@@ -119,7 +119,7 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 	))
 
 	container.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "WipeOptionsDialogText"), res.fonts.regularFace, res.labelColor),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "WipeOptionsDialogText"), res.fonts.regularFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
 		),
@@ -130,7 +130,7 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "Wipe"), res.fonts.titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
@@ -157,9 +157,9 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 
 func exportProgressConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileSave(
-		i18nutil.Localize(ctx.Localizer, "ExportProgressConfig"),
+		i18nutil.L(ctx.Localizer, "ExportProgressConfig"),
 		"progress.gecfg",
-		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
+		[]dialog.FileFilter{{Name: i18nutil.L(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
@@ -185,9 +185,9 @@ func exportProgressConfig(ctx *context.Context) error {
 
 func importProgressConfig(ctx *context.Context) error {
 	path, err := dialog.SelectFileOpen(
-		i18nutil.Localize(ctx.Localizer, "ImportProgressConfig"),
+		i18nutil.L(ctx.Localizer, "ImportProgressConfig"),
 		"progress.gecfg",
-		[]dialog.FileFilter{{Name: i18nutil.Localize(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
+		[]dialog.FileFilter{{Name: i18nutil.L(ctx.Localizer, "GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
 	)
 	if err != nil {
 		return err
@@ -231,7 +231,7 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 			}),
 		),
 		widget.ButtonOpts.Image(res.dangerButtonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeProgressConfig] clicked wipe button")
@@ -251,7 +251,7 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 			}),
 		),
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.Localize(ctx.Localizer, "Cancel"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Cancel"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeProgressConfig] clicked cancel button")
@@ -260,7 +260,7 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 	))
 
 	container.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "WipeProgressDialogText"), res.fonts.regularFace, res.labelColor),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "WipeProgressDialogText"), res.fonts.regularFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
 		),
@@ -271,7 +271,7 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.Localize(ctx.Localizer, "Wipe"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "Wipe"), res.fonts.titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
