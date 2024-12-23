@@ -85,8 +85,6 @@ The hierarchy goes like this:
   - Music: Music-related audio.
   - Music_Instrumental: The instrumental (Inst) track of the song.
   - Music_Voices: The vocal track (Voices) of the song.
-  - Voices_Opponent: The opponent's vocal track.
-  - Voices_Boyfriend: The player's vocal track.
 */
 type Mixer struct {
 	Master             *MixerChannel
@@ -94,8 +92,6 @@ type Mixer struct {
 	Music              *MixerChannel
 	Music_Instrumental *MixerChannel
 	Music_Voices       *MixerChannel
-	Voices_Opponent    *MixerChannel
-	Voices_Boyfriend   *MixerChannel
 	Extra              map[string]*MixerChannel
 }
 
@@ -107,8 +103,6 @@ func NewMixer() *Mixer {
 		Music:              NewMixerChannel(),
 		Music_Instrumental: NewMixerChannel(),
 		Music_Voices:       NewMixerChannel(),
-		Voices_Opponent:    NewMixerChannel(),
-		Voices_Boyfriend:   NewMixerChannel(),
 		Extra:              make(map[string]*MixerChannel),
 	}
 
@@ -117,9 +111,6 @@ func NewMixer() *Mixer {
 
 	m.Music.Add(m.Music_Instrumental)
 	m.Music.Add(m.Music_Voices)
-
-	m.Music_Voices.Add(m.Voices_Opponent)
-	m.Music_Voices.Add(m.Voices_Boyfriend)
 
 	return m
 }
