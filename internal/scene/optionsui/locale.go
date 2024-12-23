@@ -20,7 +20,7 @@ func (l *locale) String() string {
 
 func getLocales(ctx *context.Context) (locales []any, cur *locale, err error) {
 	// Get all locales
-	paths, err := fs.Glob(ctx.AssetsFS, "data/locale/*.toml")
+	paths, err := fs.Glob(ctx.AssetsFS, "data/i18n/*.toml")
 	if err != nil {
 		return nil, nil, err
 	}
@@ -38,7 +38,7 @@ func getLocales(ctx *context.Context) (locales []any, cur *locale, err error) {
 			return nil, nil, err
 		}
 
-		loc := strings.ReplaceAll(strings.ReplaceAll(path, "data/locale/", ""), ".toml", "")
+		loc := strings.ReplaceAll(strings.ReplaceAll(path, "data/i18n/", ""), ".toml", "")
 
 		locales = append(locales, &locale{
 			name:   v.Name,

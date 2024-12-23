@@ -115,7 +115,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 }
 
 func loadLocales(bundle *i18n.Bundle, fsys fs.FS) error {
-	files, err := fs.Glob(fsys, "data/locale/*.toml")
+	files, err := fs.Glob(fsys, "data/i18n/*.toml")
 	if err != nil {
 		return err
 	}
