@@ -1,6 +1,6 @@
 _Name = "English" # The display name of the locale
 
-FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}\nTPS: {{printf \"%.2f\" .TPS}}"
+FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}; TPS: {{printf \"%.2f\" .TPS}}"
 Present = "present"
 MadeWith = "Made with"
 ExitDialogText = "Are you sure you want to exit the game?"
