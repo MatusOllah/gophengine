@@ -21,6 +21,8 @@ EXE = $(BINARY)/gophengine$(EXE_EXT)
 # flags
 UPX_FLAGS = --best --lzma
 
+GE_FLAGS ?=
+
 GO_GCFLAGS =
 GO_LDFLAGS =
 GO_FLAGS = -v
@@ -46,12 +48,12 @@ all: build upx
 .PHONY: run
 run:
 	$(GO) get
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine $(GE_FLAGS)
 
 .PHONY: run-debug
 run-debug:
 	$(GO) get
-	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine --log-level=debug
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine --log-level=debug $(GE_FLAGS)
 
 .PHONY: build
 build: clean
