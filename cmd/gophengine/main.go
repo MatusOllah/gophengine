@@ -46,7 +46,7 @@ func setIcon() error {
 
 // getLogLevel gets the log level from command-line flags.
 func getLogLevel() slog.Leveler {
-	switch s := strings.ToLower(logLevelFlag); s {
+	switch s := strings.ToLower(*logLevelFlag); s {
 	case "":
 		return slog.LevelInfo
 	case "debug":
@@ -65,7 +65,7 @@ func getLogLevel() slog.Leveler {
 // getLogFilePath get the logfile path from the temporary directory and current time.
 func getLogFilePath() string {
 	tempDir := os.TempDir()
-	if portableFlag {
+	if *portableFlag {
 		tempDir = "."
 	}
 
@@ -79,7 +79,7 @@ func mainE() error {
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
 	slog.Info("ahoj!")
 
-	if extractAssetsFlag {
+	if *extractAssetsFlag {
 		if err := fsutil.Extract(assets.FS, "assets"); err != nil {
 			return fmt.Errorf("failed to extract assets: %w", err)
 		}
@@ -98,14 +98,14 @@ func mainE() error {
 
 	cfg := &context.NewContextConfig{
 		AssetsFS:           assets.FS,
-		OptionsConfigPath:  configFlag,
-		ProgressConfigPath: progressFlag,
+		OptionsConfigPath:  *configFlag,
+		ProgressConfigPath: *progressFlag,
 		Version:            version,
 		FNFVersion:         fnfVersion,
-		Locale:             forceLocaleFlag,
+		Locale:             *forceLocaleFlag,
 	}
 	if runtime.GOARCH != "wasm" {
-		if configFlag == "" {
+		if *configFlag == "" {
 			configDir, err := os.UserConfigDir()
 			if err != nil {
 				return fmt.Errorf("failed to fetch user config dir: %w", err)
@@ -113,7 +113,7 @@ func mainE() error {
 
 			cfg.OptionsConfigPath = filepath.Join(configDir, "GophEngine/options.gecfg")
 		}
-		if progressFlag == "" {
+		if *progressFlag == "" {
 			configDir, err := os.UserConfigDir()
 			if err != nil {
 				return fmt.Errorf("failed to fetch user config dir: %w", err)
@@ -121,7 +121,7 @@ func mainE() error {
 
 			cfg.ProgressConfigPath = filepath.Join(configDir, "GophEngine/progress.gecfg")
 		}
-		if portableFlag {
+		if *portableFlag {
 			cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
 			cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
 		}
@@ -142,7 +142,7 @@ func mainE() error {
 	slog.Info("initializing ebitengine")
 	g.InitEbiten()
 
-	if justInitFlag {
+	if *justInitFlag {
 		return nil
 	}
 
