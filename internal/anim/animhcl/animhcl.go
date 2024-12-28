@@ -42,7 +42,7 @@ func refineNonNull(b *cty.RefinementBuilder) *cty.RefinementBuilder {
 }
 
 func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimController, error) {
-	slog.Debug("loading *.anim.hcl", "_path", _path, "name", name)
+	slog.Debug("loading animation file", "_path", _path, "name", name)
 
 	src, err := fs.ReadFile(fsys, _path)
 	if err != nil {
