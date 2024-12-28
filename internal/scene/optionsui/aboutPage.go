@@ -9,10 +9,10 @@ import (
 	"strings"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/browser"
 	"github.com/MatusOllah/gophengine/internal/i18nutil"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
-	"github.com/pkg/browser"
 	"golang.design/x/clipboard"
 )
 
