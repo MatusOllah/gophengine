@@ -131,8 +131,6 @@ func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimControlle
 		},
 	}, &v)
 
-	slog.Debug("done parsing", "v", fmt.Sprintf("%+v", v))
-
 	ac := anim.NewAnimController()
 	for _, _ac := range v.AnimControllers {
 		if _ac.Name != name {
@@ -163,8 +161,6 @@ func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimControlle
 	if diags.HasErrors() {
 		return nil, diags
 	}
-
-	slog.Debug("done loading *.anim.hcl")
 
 	return ac, nil
 }
