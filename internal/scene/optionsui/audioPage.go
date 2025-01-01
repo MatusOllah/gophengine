@@ -9,6 +9,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/gopxl/beep/v2"
+	"github.com/gopxl/beep/v2/effects"
 	"github.com/gopxl/beep/v2/speaker"
 	"github.com/gopxl/beep/v2/vorbis"
 )
@@ -230,7 +231,7 @@ func testAudio(ctx *context.Context) {
 	slog.Info("[audioPage] testing audio")
 
 	path := "sounds/test_beep.ogg"
-	if ctx.Rand.Float64() < 0.1 { // 10% chance
+	if ctx.Rand.Float64() < 0.05 { // 5% chance
 		path = "sounds/bf_test_beep.ogg"
 	}
 
@@ -247,5 +248,9 @@ func testAudio(ctx *context.Context) {
 		dialog.Error("failed to test audio: " + err.Error())
 	}
 
-	ctx.AudioMixer.Master.Add(beep.Resample(ctx.AudioResampleQuality, format.SampleRate, ctx.SampleRate, streamer))
+	ctx.AudioMixer.Master.Add(&effects.Volume{
+		Streamer: beep.Resample(ctx.AudioResampleQuality, format.SampleRate, ctx.SampleRate, streamer),
+		Base:     2,
+		Volume:   -1.5,
+	})
 }
