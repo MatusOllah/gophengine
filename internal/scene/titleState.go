@@ -11,6 +11,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
+	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/gopxl/beep/v2"
@@ -143,7 +144,7 @@ func (s *TitleScene) Init() error {
 	s.freakyMenuFormat = freakyMenuFormat
 
 	s.freakyMenu = &effects.Volume{
-		Streamer: beep.Resample(s.ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, s.ctx.SampleRate, beep.Loop(-1, freakyMenuStreamer)),
+		Streamer: beep.Resample(s.ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, s.ctx.SampleRate, audio.MustLoop2(freakyMenuStreamer)),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
