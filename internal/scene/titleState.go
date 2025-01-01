@@ -12,7 +12,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
-	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
 	"github.com/gopxl/beep/v2/speaker"
@@ -292,11 +292,11 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleSceneInstance.introText.AddText(i18nutil.L(titleSceneInstance.ctx.Localizer, "Present"))
+		titleSceneInstance.introText.AddText(i18n.L("Present"))
 	case 4:
 		titleSceneInstance.introText.DeleteText()
 	case 5:
-		titleSceneInstance.introText.CreateText(i18nutil.L(titleSceneInstance.ctx.Localizer, "MadeWith"))
+		titleSceneInstance.introText.CreateText(i18n.L("MadeWith"))
 	case 7:
 		titleSceneInstance.introText.AddText("")
 		titleSceneInstance.introText.AddText("+")

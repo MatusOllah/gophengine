@@ -6,7 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 )
 
 type locale struct {
@@ -56,18 +56,13 @@ func getLocales(ctx *context.Context) (locales []any, cur *locale, err error) {
 }
 
 func getCurLocale(ctx *context.Context) (*locale, error) {
-	name, err := ctx.Localizer.Localize(&i18n.LocalizeConfig{MessageID: "_Name"})
-	if err != nil {
-		return nil, err
-	}
-
 	loc, err := ctx.OptionsConfig.Get("Locale")
 	if err != nil {
 		return nil, err
 	}
 
 	return &locale{
-		name:   name,
+		name:   i18n.L("_Name"),
 		locale: loc.(string),
 	}, nil
 }

@@ -10,7 +10,7 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/browser"
-	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 	"golang.design/x/clipboard"
@@ -22,14 +22,14 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	// The labels
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LT(ctx.Localizer, "GEVersion", map[string]interface{}{"Version": ctx.Version}),
+			i18n.LT("GEVersion", map[string]interface{}{"Version": ctx.Version}),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LT(ctx.Localizer, "GoVersion", map[string]interface{}{
+			i18n.LT("GoVersion", map[string]interface{}{
 				"GoVersion": runtime.Version(),
 				"GOOS":      runtime.GOOS,
 				"GOARCH":    runtime.GOARCH,
@@ -40,7 +40,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.LT(ctx.Localizer, "FNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
+			i18n.LT("FNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
@@ -50,21 +50,21 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.L(ctx.Localizer, "Credits"),
+			i18n.L("Credits"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.L(ctx.Localizer, "License"),
+			i18n.L("License"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18nutil.L(ctx.Localizer, "Creators"),
+			i18n.L("Creators"),
 			res.fonts.regularFace,
 			res.labelColor,
 		),
@@ -76,7 +76,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	// The buttons
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "ShowBuildInfo"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("ShowBuildInfo"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -88,7 +88,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "GitHubButton"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("GitHubButton"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -99,7 +99,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
-				i18nutil.L(ctx.Localizer, "GitHubButtonTooltip"),
+				i18n.L("GitHubButtonTooltip"),
 				res.fonts.regularFace,
 				color.Black,
 				res.tooltipBGImage,
@@ -108,7 +108,7 @@ func newAboutPage(ctx *context.Context, res *uiResources, ui *ebitenui.UI) *page
 	))
 
 	return &page{
-		name:    i18nutil.L(ctx.Localizer, "About"),
+		name:    i18n.L("About"),
 		content: c,
 	}
 }
@@ -130,7 +130,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 	)
 	contextMenu.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Copy"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("Copy"), res.fonts.regularFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[showBuildInfoWindow] clicked copy build info button")
@@ -185,7 +185,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "BuildInfo"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("BuildInfo"), res.fonts.titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

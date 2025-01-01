@@ -7,14 +7,12 @@ import (
 	"log/slog"
 	"math/rand/v2"
 
-	"github.com/BurntSushi/toml"
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/gopxl/beep/v2"
-	"github.com/nicksnyder/go-i18n/v2/i18n"
 	input "github.com/quasilyte/ebitengine-input"
-	"golang.org/x/text/language"
 )
 
 // Context holds global variables and shared game state.
@@ -30,7 +28,6 @@ type Context struct {
 	Rand                 *rand.Rand
 	OptionsConfig        *config.Config
 	ProgressConfig       *config.Config
-	Localizer            *i18n.Localizer
 	Conductor            *ge.Conductor
 	SampleRate           beep.SampleRate
 	AudioMixer           *audio.Mixer
@@ -83,20 +80,13 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.InputHandler = ctx.InputSystem.NewHandler(0, keymap)
 
 	// Localizer
-	bundle := i18n.NewBundle(language.English)
-	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-
-	if err := loadLocales(bundle, ctx.AssetsFS); err != nil {
-		return nil, err
+	locale := cfg.Locale
+	if locale == "" {
+		locale = optionsConfig.MustGet("Locale").(string)
 	}
-
-	if cfg.Locale != "" {
-		slog.Info("using locale", "locale", cfg.Locale)
-		ctx.Localizer = i18n.NewLocalizer(bundle, cfg.Locale)
-	} else {
-		locale := optionsConfig.MustGet("Locale").(string)
-		slog.Info("using locale", "locale", locale)
-		ctx.Localizer = i18n.NewLocalizer(bundle, locale, "en")
+	slog.Info("using locale", "locale", locale)
+	if err := i18n.Init(cfg.AssetsFS, locale); err != nil {
+		return nil, err
 	}
 
 	//Audio
@@ -112,20 +102,4 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.FNFVersion = cfg.FNFVersion
 
 	return ctx, nil
-}
-
-func loadLocales(bundle *i18n.Bundle, fsys fs.FS) error {
-	files, err := fs.Glob(fsys, "data/i18n/*.toml")
-	if err != nil {
-		return err
-	}
-
-	for _, file := range files {
-		slog.Info("loading locale", "file", file)
-		if _, err := bundle.LoadMessageFileFS(fsys, file); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }

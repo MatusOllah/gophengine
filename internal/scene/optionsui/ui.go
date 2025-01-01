@@ -6,7 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 )
@@ -99,7 +99,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// OK button (saves config & exits)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "OK"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("OK"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
@@ -116,7 +116,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
-				i18nutil.L(ctx.Localizer, "OptionsRestartWarningTooltip"),
+				i18n.L("OptionsRestartWarningTooltip"),
 				res.fonts.regularFace,
 				color.Black,
 				res.tooltipBGImage,
@@ -127,7 +127,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// Cancel button (exits)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Cancel"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("Cancel"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -138,7 +138,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
-				i18nutil.L(ctx.Localizer, "OptionsRestartWarningTooltip"),
+				i18n.L("OptionsRestartWarningTooltip"),
 				res.fonts.regularFace,
 				color.Black,
 				res.tooltipBGImage,
@@ -149,7 +149,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	// Apply button (saves config)
 	footerContainer.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18nutil.L(ctx.Localizer, "Apply"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Text(i18n.L("Apply"), res.fonts.footerButtonFace, res.buttonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -162,7 +162,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
-				i18nutil.L(ctx.Localizer, "OptionsRestartWarningTooltip"),
+				i18n.L("OptionsRestartWarningTooltip"),
 				res.fonts.regularFace,
 				color.Black,
 				res.tooltipBGImage,
@@ -178,7 +178,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18nutil.L(ctx.Localizer, "Options"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("Options"), res.fonts.titleFace, res.labelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

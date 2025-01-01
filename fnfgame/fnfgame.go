@@ -8,7 +8,7 @@ import (
 
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/MatusOllah/gophengine/internal/i18nutil"
+	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene"
 	"github.com/gopxl/beep/v2/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -64,7 +64,7 @@ func (g *FNFGame) Update() error {
 func (g *FNFGame) Draw(screen *ebiten.Image) {
 	g.ctx.SceneCtrl.Draw(screen)
 
-	ebitenutil.DebugPrint(screen, i18nutil.LT(g.ctx.Localizer, "FPSCounter", map[string]interface{}{
+	ebitenutil.DebugPrint(screen, i18n.LT("FPSCounter", map[string]interface{}{
 		"FPS": ebiten.ActualFPS(),
 		"TPS": ebiten.ActualTPS(),
 	}))
