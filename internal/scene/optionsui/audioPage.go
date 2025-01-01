@@ -17,6 +17,8 @@ func mapRange(value, inMin, inMax, outMin, outMax float64) float64 {
 func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}) *page {
 	c := newPageContentContainer()
 
+	//TODO: make the volume sliders aligned
+
 	// Master volume
 	masterVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
 
@@ -52,6 +54,43 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 		masterVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
 		masterVolumeValueLabel,
+	))
+
+	// SFX volume
+	sfxVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+
+	sfxVolumeSlider := widget.NewSlider(
+		widget.SliderOpts.Direction(widget.DirectionHorizontal),
+		widget.SliderOpts.MinMax(0, 100),
+		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
+		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.FixedHandleSize(10),
+		widget.SliderOpts.TrackOffset(0),
+		widget.SliderOpts.PageSizeFunc(func() int {
+			return 1
+		}),
+		widget.SliderOpts.ChangedHandler(func(args *widget.SliderChangedEventArgs) {
+			slog.Debug("[audioPage] dragging sfx volume slider", "current", args.Current, "dragging", args.Dragging)
+			sfxVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
+
+			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
+
+			slog.Debug("[audioPage] setting sfx volume", "volume", volume)
+			speaker.Lock()
+			ctx.AudioMixer.SFX.SetVolume(volume)
+			cfg["Audio.SFXVolume"] = volume
+			speaker.Unlock()
+		}),
+	)
+
+	sfxVolumeSlider.Current = int(mapRange(cfg["Audio.SFXVolume"].(float64), -10, 0, 0, 100))
+	sfxVolumeValueLabel.Label = fmt.Sprint(sfxVolumeSlider.Current) + "%"
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		sfxVolumeSlider,
+		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		sfxVolumeValueLabel,
 	))
 
 	// Music volume
@@ -91,10 +130,10 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 		musicVolumeValueLabel,
 	))
 
-	// SFX volume
-	sfxVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	// Instrumental track volume
+	instVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
 
-	sfxVolumeSlider := widget.NewSlider(
+	instVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
@@ -105,27 +144,64 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 			return 1
 		}),
 		widget.SliderOpts.ChangedHandler(func(args *widget.SliderChangedEventArgs) {
-			slog.Debug("[audioPage] dragging sfx volume slider", "current", args.Current, "dragging", args.Dragging)
-			sfxVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
+			slog.Debug("[audioPage] dragging inst volume slider", "current", args.Current, "dragging", args.Dragging)
+			instVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
 
 			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
 
-			slog.Debug("[audioPage] setting sfx volume", "volume", volume)
+			slog.Debug("[audioPage] setting inst volume", "volume", volume)
 			speaker.Lock()
-			ctx.AudioMixer.SFX.SetVolume(volume)
-			cfg["Audio.SFXVolume"] = volume
+			ctx.AudioMixer.Music_Instrumental.SetVolume(volume)
+			cfg["Audio.InstVolume"] = volume
 			speaker.Unlock()
 		}),
 	)
 
-	sfxVolumeSlider.Current = int(mapRange(cfg["Audio.SFXVolume"].(float64), -10, 0, 0, 100))
-	sfxVolumeValueLabel.Label = fmt.Sprint(sfxVolumeSlider.Current) + "%"
+	instVolumeSlider.Current = int(mapRange(cfg["Audio.InstVolume"].(float64), -10, 0, 0, 100))
+	instVolumeValueLabel.Label = fmt.Sprint(instVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
-		sfxVolumeSlider,
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("InstVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		instVolumeSlider,
 		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
-		sfxVolumeValueLabel,
+		instVolumeValueLabel,
+	))
+
+	// Voices track volume
+	voicesVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+
+	voicesVolumeSlider := widget.NewSlider(
+		widget.SliderOpts.Direction(widget.DirectionHorizontal),
+		widget.SliderOpts.MinMax(0, 100),
+		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
+		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.FixedHandleSize(10),
+		widget.SliderOpts.TrackOffset(0),
+		widget.SliderOpts.PageSizeFunc(func() int {
+			return 1
+		}),
+		widget.SliderOpts.ChangedHandler(func(args *widget.SliderChangedEventArgs) {
+			slog.Debug("[audioPage] dragging voices volume slider", "current", args.Current, "dragging", args.Dragging)
+			voicesVolumeValueLabel.Label = fmt.Sprint(args.Current) + "%"
+
+			volume := mapRange(float64(args.Current), 0, 100, -10, 0)
+
+			slog.Debug("[audioPage] setting voices volume", "volume", volume)
+			speaker.Lock()
+			ctx.AudioMixer.Music_Voices.SetVolume(volume)
+			cfg["Audio.VoicesVolume"] = volume
+			speaker.Unlock()
+		}),
+	)
+
+	voicesVolumeSlider.Current = int(mapRange(cfg["Audio.VoicesVolume"].(float64), -10, 0, 0, 100))
+	voicesVolumeValueLabel.Label = fmt.Sprint(voicesVolumeSlider.Current) + "%"
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("VoicesVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		voicesVolumeSlider,
+		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		voicesVolumeValueLabel,
 	))
 
 	// Separator

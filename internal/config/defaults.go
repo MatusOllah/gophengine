@@ -8,7 +8,7 @@ import (
 )
 
 func LoadDefaultOptions(cfg *Config) {
-	slog.Info("[Config] loading defaults")
+	slog.Info("[config] loading defaults")
 
 	userLocale, err := locale.GetLocale()
 	if err != nil {
@@ -21,8 +21,10 @@ func LoadDefaultOptions(cfg *Config) {
 		"Fullscreen": false,
 
 		"Audio.MasterVolume": float64(0),
-		"Audio.MusicVolume":  float64(0),
 		"Audio.SFXVolume":    float64(0),
+		"Audio.MusicVolume":  float64(0),
+		"Audio.InstVolume":   float64(0),
+		"Audio.VoicesVolume": float64(0),
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},
