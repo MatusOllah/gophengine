@@ -9,9 +9,6 @@ GophEngine vyžaduje, aby boli prítomné 4 kľúčové prvky: **nástroje pre G
 
 C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazyk C.
 
-> [!NOTE]
-> Toto je potrebné iba pre vývoj. Vaše GophEngine FNF modifikácie nebudú vyžadovať žiadne nastavenie alebo inštaláciu závislostí pre koncových používateľov.
-
 ### 🪟 Windows
 
 1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
