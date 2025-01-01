@@ -5,9 +5,12 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/dialog"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui/widget"
+	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/speaker"
+	"github.com/gopxl/beep/v2/vorbis"
 )
 
 func mapRange(value, inMin, inMax, outMin, outMax float64) float64 {
@@ -207,8 +210,42 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	// Separator
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
+	// Test button
+	c.AddChild(widget.NewButton(
+		widget.ButtonOpts.Image(res.buttonImage),
+		widget.ButtonOpts.Text(i18n.L("TestAudio"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
+		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
+			testAudio(ctx)
+		}),
+	))
+
 	return &page{
 		name:    i18n.L("Audio"),
 		content: c,
 	}
+}
+
+func testAudio(ctx *context.Context) {
+	slog.Info("[audioPage] testing audio")
+
+	path := "sounds/test_beep.ogg"
+	if ctx.Rand.Float64() < 0.1 { // 10% chance
+		path = "sounds/bf_test_beep.ogg"
+	}
+
+	file, err := ctx.AssetsFS.Open(path)
+	if err != nil {
+		slog.Error("[audioPage] failed to test audio", "err", err)
+		dialog.Error("failed to test audio: " + err.Error())
+	}
+	defer file.Close()
+
+	streamer, format, err := vorbis.Decode(file)
+	if err != nil {
+		slog.Error("[audioPage] failed to test audio", "err", err)
+		dialog.Error("failed to test audio: " + err.Error())
+	}
+
+	ctx.AudioMixer.Master.Add(beep.Resample(ctx.AudioResampleQuality, format.SampleRate, ctx.SampleRate, streamer))
 }
