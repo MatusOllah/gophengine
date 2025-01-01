@@ -43,7 +43,7 @@ ifneq ($(GOARCH),wasm)
 endif
 
 .PHONY: all
-all: $(EXE) upx
+all: clean $(EXE) upx
 
 .PHONY: run
 run:
@@ -55,7 +55,7 @@ run-debug:
 	$(GO) get
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine --log-level=debug $(GE_FLAGS)
 
-$(EXE): clean
+$(EXE):
 	mkdir -p $(BINARY)
 
 	$(GO) get
