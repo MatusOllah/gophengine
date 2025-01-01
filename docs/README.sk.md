@@ -27,7 +27,7 @@ GophEngine som vytvoril z niekoľkých dôvodov:
 
 Go je môj obľúbený programovací jazyk a preferujem ho pred učením sa Haxe.
 
-## Funkcie
+## (plánované) Funkcie
 
 * Zvýšené súkromie bez integrácie Newgrounds
 * Úplne napísané v Go so žiadnym použitím Haxe

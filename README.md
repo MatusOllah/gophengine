@@ -29,7 +29,7 @@ I created GophEngine for several reasons:
 
 Go is my favorite programming language, and I prefer it over learning Haxe.
 
-## Features
+## (planned) Features
 
 * Enhanced privacy with no Newgrounds integration
 * Entirely written in Go with no Haxe
