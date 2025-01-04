@@ -211,6 +211,11 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	// Separator
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
+	//TODO: advanced audio options
+
+	// Separator
+	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
+
 	// Test button
 	c.AddChild(widget.NewButton(
 		widget.ButtonOpts.Image(res.buttonImage),
@@ -223,7 +228,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 	return &page{
 		name:    i18n.L("Audio"),
-		content: c,
+		content: newScrollContainer(res, c),
 	}
 }
 

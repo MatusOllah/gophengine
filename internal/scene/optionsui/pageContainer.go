@@ -18,7 +18,7 @@ func newPageContainer(res *uiResources) *pageContainer {
 		),
 		widget.ContainerOpts.Layout(widget.NewRowLayout(
 			widget.RowLayoutOpts.Direction(widget.DirectionVertical),
-			widget.RowLayoutOpts.Padding(widget.NewInsetsSimple(10)),
+			widget.RowLayoutOpts.Padding(widget.NewInsetsSimple(5)),
 			widget.RowLayoutOpts.Spacing(5)),
 		),
 	)

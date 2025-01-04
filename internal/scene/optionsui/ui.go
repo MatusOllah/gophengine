@@ -39,7 +39,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ContainerOpts.Layout(widget.NewGridLayout(
 			widget.GridLayoutOpts.Columns(2),
 			widget.GridLayoutOpts.Stretch([]bool{false, true}, []bool{true}),
-			widget.GridLayoutOpts.Spacing(20, 0),
+			widget.GridLayoutOpts.Spacing(10, 0),
 		)),
 	)
 	windowContainer.AddChild(mainContainer)
