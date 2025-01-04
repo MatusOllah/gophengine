@@ -212,6 +212,11 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
 
 	//TODO: advanced audio options
+	/*
+	* downmix stereo to mono
+	* sample rate
+	* resample quality
+	 */
 
 	// Separator
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
