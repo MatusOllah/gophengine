@@ -20,11 +20,12 @@ func LoadDefaultOptions(cfg *Config) {
 		"Locale":     userLocale,
 		"Fullscreen": false,
 
-		"Audio.MasterVolume": float64(0),
-		"Audio.SFXVolume":    float64(0),
-		"Audio.MusicVolume":  float64(0),
-		"Audio.InstVolume":   float64(0),
-		"Audio.VoicesVolume": float64(0),
+		"Audio.MasterVolume":  float64(0),
+		"Audio.SFXVolume":     float64(0),
+		"Audio.MusicVolume":   float64(0),
+		"Audio.InstVolume":    float64(0),
+		"Audio.VoicesVolume":  float64(0),
+		"Audio.DownmixToMono": false,
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},

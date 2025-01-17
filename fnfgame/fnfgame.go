@@ -10,6 +10,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene"
+	"github.com/gopxl/beep/v2/effects"
 	"github.com/gopxl/beep/v2/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -90,7 +91,13 @@ func (g *FNFGame) initSound() error {
 	if err := speaker.Init(g.ctx.SampleRate, bufSize); err != nil {
 		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
 	}
-	speaker.Play(g.ctx.AudioMixer)
+
+	if g.ctx.OptionsConfig.MustGet("Audio.DownmixToMono").(bool) {
+		speaker.Play(effects.Mono(g.ctx.AudioMixer))
+	} else {
+		speaker.Play(g.ctx.AudioMixer)
+	}
+
 	return nil
 }
 

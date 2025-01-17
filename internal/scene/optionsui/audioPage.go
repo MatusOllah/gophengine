@@ -213,7 +213,6 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 	//TODO: advanced audio options
 	/*
-	* downmix stereo to mono
 	* sample rate
 	* resample quality
 	 */
@@ -226,6 +225,16 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 				widget.ButtonOpts.Image(res.checkboxButtonImage),
 			),
 			widget.CheckboxOpts.Image(res.checkboxGraphic),
+			widget.CheckboxOpts.StateChangedHandler(func(args *widget.CheckboxChangedEventArgs) {
+				slog.Info("clicked downmix to mono checkbox", "state", args.State)
+				cfg["Audio.DownmixToMono"] = args.State == widget.WidgetChecked
+			}),
+			widget.CheckboxOpts.InitialState(func() widget.WidgetState {
+				if cfg["Audio.DownmixToMono"].(bool) {
+					return widget.WidgetChecked
+				}
+				return widget.WidgetUnchecked
+			}()),
 		),
 	))
 
