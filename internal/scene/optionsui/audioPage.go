@@ -217,6 +217,14 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	* sample rate
 	* resample quality
 	 */
+	c.AddChild(widget.NewLabeledCheckbox(
+		widget.LabeledCheckboxOpts.LabelOpts(
+			widget.LabelOpts.Text(i18n.L("DownmixToMono"), res.fonts.regularFace, res.labelColor),
+		),
+		widget.LabeledCheckboxOpts.CheckboxOpts(
+			widget.CheckboxOpts.Image(res.checkboxGraphic),
+		),
+	))
 
 	// Separator
 	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))

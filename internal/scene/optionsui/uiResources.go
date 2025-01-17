@@ -29,6 +29,7 @@ type uiResources struct {
 	listEntryColor               *widget.ListEntryColor
 	sliderTrackImage             *widget.SliderTrackImage
 	separatorImage               *eui_image.NineSlice
+	checkboxGraphic              *widget.CheckboxGraphicImage
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
