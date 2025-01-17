@@ -67,9 +67,9 @@ endif
 .PHONY: upx
 upx: $(EXE)
 ifeq ($(IS_RELEASE),true)
-	ifneq ($(GOARCH),wasm)
+ifneq ($(GOARCH),wasm)
 		$(UPX) $(UPX_FLAGS) $(EXE)
-	endif
+endif
 endif
 
 .PHONY: clean
