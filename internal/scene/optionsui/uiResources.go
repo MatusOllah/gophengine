@@ -6,6 +6,8 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type uiResources struct {
@@ -30,10 +32,16 @@ type uiResources struct {
 	sliderTrackImage             *widget.SliderTrackImage
 	separatorImage               *eui_image.NineSlice
 	checkboxGraphic              *widget.CheckboxGraphicImage
+	checkboxButtonImage          *widget.ButtonImage
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
 	f, err := newFonts(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	checkImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/ui/checkmark.png")
 	if err != nil {
 		return nil, err
 	}
@@ -118,5 +126,15 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			Hover: eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
 		separatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
+		checkboxGraphic: &widget.CheckboxGraphicImage{
+			Unchecked: &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
+			Checked:   &widget.ButtonImageImage{Idle: checkImg},
+			Greyed:    &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
+		},
+		checkboxButtonImage: &widget.ButtonImage{
+			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 100, G: 100, B: 100, A: 0xFF}),
+			Hover:   eui_image.NewNineSliceColor(color.NRGBA{R: 75, G: 75, B: 75, A: 0xFF}),
+			Pressed: eui_image.NewNineSliceColor(color.NRGBA{R: 50, G: 50, B: 50, A: 0xFF}),
+		},
 	}, nil
 }

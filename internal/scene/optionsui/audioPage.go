@@ -222,6 +222,9 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 			widget.LabelOpts.Text(i18n.L("DownmixToMono"), res.fonts.regularFace, res.labelColor),
 		),
 		widget.LabeledCheckboxOpts.CheckboxOpts(
+			widget.CheckboxOpts.ButtonOpts(
+				widget.ButtonOpts.Image(res.checkboxButtonImage),
+			),
 			widget.CheckboxOpts.Image(res.checkboxGraphic),
 		),
 	))
