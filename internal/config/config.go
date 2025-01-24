@@ -20,8 +20,8 @@ type MapFunc func(string, interface{}) interface{}
 
 // Self-explanatory.
 type Config struct {
-	dataLock sync.RWMutex
 	data     map[string]interface{}
+	dataLock sync.RWMutex
 
 	file    *os.File
 	buf     *bytes.Buffer
