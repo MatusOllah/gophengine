@@ -8,7 +8,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
 
-**GophEngine** je Go implementácia hry **Friday Night Funkin' v0.2.7.1** s vylepšeniami a alternatíva k vanilla FNF.
+**GophEngine** je Go implementácia hry **Friday Night Funkin' v0.2.7.1** s vylepšeniami.
 
 > [!NOTE]
 > Toto je mód. Toto nie je originálna hra a mal by byť považovaný za modifikáciu.

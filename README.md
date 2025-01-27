@@ -10,7 +10,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
 
-**GophEngine** is a Go implementation of **Friday Night Funkin' v0.2.7.1** with improvements and an alternative to vanilla FNF.
+**GophEngine** is a Go implementation of **Friday Night Funkin' v0.2.7.1** with improvements.
 
 > [!NOTE]
 > This is a mod. This is not the vanilla game and should be treated as a modification.
