@@ -154,7 +154,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	root := widget.NewContainer(widget.ContainerOpts.Layout(widget.NewAnchorLayout()))
 
-	exitImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/exit.png")
+	exitImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/ui/exit.png")
 	if err != nil {
 		return nil, err
 	}
