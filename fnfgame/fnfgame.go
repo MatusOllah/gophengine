@@ -3,6 +3,7 @@ package fnfgame
 import (
 	"fmt"
 	"log/slog"
+	"math"
 	"runtime"
 	"time"
 
@@ -71,8 +72,15 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 	}))
 }
 
-func (g *FNFGame) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return g.ctx.Width, g.ctx.Height
+func (g *FNFGame) Layout(_, _ int) (int, int) {
+	panic("FNFGame Layout: use Ebitengine >=v2.5.0")
+}
+
+func (g *FNFGame) LayoutF(logicWinWidth, logicWinHeight float64) (float64, float64) {
+	scale := ebiten.Monitor().DeviceScaleFactor()
+	canvasWidth := math.Ceil(logicWinWidth * scale)
+	canvasHeight := math.Ceil(logicWinHeight * scale)
+	return canvasWidth, canvasHeight
 }
 
 func (g *FNFGame) InitEbiten() {
