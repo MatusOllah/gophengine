@@ -214,7 +214,6 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 	//TODO: advanced audio options
 	/*
-	* sample rate
 	* resample quality
 	 */
 	c.AddChild(widget.NewLabeledCheckbox(
