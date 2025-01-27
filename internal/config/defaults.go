@@ -26,6 +26,7 @@ func LoadDefaultOptions(cfg *Config) {
 		"Audio.InstVolume":    float64(0),
 		"Audio.VoicesVolume":  float64(0),
 		"Audio.DownmixToMono": false,
+		"Audio.SampleRate":    int(44100),
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},

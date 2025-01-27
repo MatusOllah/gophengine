@@ -33,6 +33,8 @@ type uiResources struct {
 	separatorImage               *eui_image.NineSlice
 	checkboxGraphic              *widget.CheckboxGraphicImage
 	checkboxButtonImage          *widget.ButtonImage
+	textInputImage               *widget.TextInputImage
+	textInputColor               *widget.TextInputColor
 }
 
 func newUIResources(ctx *context.Context) (*uiResources, error) {
@@ -135,6 +137,16 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 100, G: 100, B: 100, A: 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{R: 75, G: 75, B: 75, A: 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{R: 50, G: 50, B: 50, A: 0xFF}),
+		},
+		textInputImage: &widget.TextInputImage{
+			Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
+			Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
+		},
+		textInputColor: &widget.TextInputColor{
+			Idle:          color.NRGBA{254, 255, 255, 255},
+			Disabled:      color.NRGBA{R: 200, G: 200, B: 200, A: 255},
+			Caret:         color.NRGBA{254, 255, 255, 255},
+			DisabledCaret: color.NRGBA{R: 200, G: 200, B: 200, A: 255},
 		},
 	}, nil
 }

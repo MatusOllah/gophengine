@@ -3,6 +3,7 @@ package optionsui
 import (
 	"fmt"
 	"log/slog"
+	"strconv"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/dialog"
@@ -236,6 +237,40 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 				return widget.WidgetUnchecked
 			}()),
 		),
+	))
+
+	sampleRateTextInput := widget.NewTextInput(
+		widget.TextInputOpts.MobileInputMode("numeric"),
+		widget.TextInputOpts.Image(res.textInputImage),
+		widget.TextInputOpts.Face(res.fonts.regularFace),
+		widget.TextInputOpts.Color(res.textInputColor),
+		widget.TextInputOpts.Padding(widget.NewInsetsSimple(5)),
+		widget.TextInputOpts.WidgetOpts(
+			widget.WidgetOpts.MinSize(50, 10),
+		),
+		widget.TextInputOpts.CaretOpts(widget.CaretOpts.Size(res.fonts.regularFace, 2)),
+		widget.TextInputOpts.Validation(func(newInputText string) (bool, *string) {
+			if _, err := strconv.Atoi(newInputText); err != nil {
+				return false, nil
+			}
+			return true, nil
+		}),
+		widget.TextInputOpts.SubmitHandler(func(args *widget.TextInputChangedEventArgs) {
+			slog.Info("[audioPage] submitted sample rate text", "InputText", args.InputText)
+			sr, err := strconv.Atoi(args.InputText)
+			if err != nil { // really?!
+				slog.Error("failed to parse sample rate text", "err", err)
+				return
+			}
+			cfg["Audio.SampleRate"] = sr
+		}),
+	)
+	sampleRateTextInput.SetText(strconv.Itoa(cfg["Audio.SampleRate"].(int)))
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("SampleRate"), res.fonts.regularFace, res.labelColor)),
+		sampleRateTextInput,
+		widget.NewLabel(widget.LabelOpts.Text("Hz", res.fonts.regularFace, res.labelColor)),
 	))
 
 	// Separator

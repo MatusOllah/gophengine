@@ -91,7 +91,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	//Audio
 	ctx.Conductor = ge.NewConductor(100)
-	ctx.SampleRate = beep.SampleRate(44100)
+	ctx.SampleRate = beep.SampleRate(ctx.OptionsConfig.MustGet("Audio.SampleRate").(int))
 	ctx.AudioMixer = audio.NewMixer()
 	ctx.AudioMixer.Master.SetVolume(ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64))
 	ctx.AudioMixer.SFX.SetVolume(ctx.OptionsConfig.MustGet("Audio.SFXVolume").(float64))
