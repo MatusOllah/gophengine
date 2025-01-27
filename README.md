@@ -6,14 +6,14 @@
 
 **English 🇺🇸** | **[Slovenčina 🇸🇰](https://github.com/MatusOllah/gophengine/blob/main/docs/README.sk.md)**
 
-**Status:** work-in-progress
+**Status:** In development
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
 
-**GophEngine** is a Go implementation / port of **Friday Night Funkin' v0.2.7.1** with improvements.
+**GophEngine** is a Go implementation of **Friday Night Funkin'** (a popular FOSS rhythm game) with improvements, bringing new features, performance enhancements, and a cleaner experience. Built from the ground up in **Go and Ebitengine**, GophEngine aims to provide an easy-to-use modding framework and foster a supportive community for FNF fans.
 
 > [!NOTE]
-> This is a mod. This is not the vanilla game and should be treated as a modification.
+> This is not the vanilla game. This is a modification of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
 
 ## Why?
 
@@ -21,24 +21,26 @@ I created GophEngine for several reasons:
 
 * To develop an easy-to-use Go modding MDK for Friday Night Funkin', similar to MinecraftForge but for FNF.
 * To fix issues in the vanilla FNF engine and add new features and improvements.
-* To foster a positive and non-toxic community around the game without the toxic community.
-* To remove violent NSFL (Not Safe For Life) content introduced in FNF v0.3.2, and create a cleaner version of the game.
+* To foster a positive and supportive community around the game, free from the toxicity often seen in other modding circles.
+* To remove inappropriate or overly graphic content introduced in later FNF versions and create a cleaner, more accessible version of the game.
 * To rewrite the game in Go, my favorite programming language.
 
 ### Why Go?
 
 Go is my favorite programming language, and I prefer it over learning Haxe.
+It also offers better performance, simpler concurrency, and faster compile times compared to Haxe, making it ideal for building a high-octane rhythm game like FNF.
 
-## (planned) Features
+## Planned Features
 
 * Enhanced privacy with no Newgrounds integration
 * Entirely written in Go with no Haxe
-* Family-friendly (no NSFW/L content)
+* Family-friendly
 * Small tweaks and optimizations for a smoother and more enjoyable experience
 * Lower RAM consumption and overall smaller footprint
 * A proper options menu for better customization
 * Robust Go modding MDK for easy modification
 * Faster compile times
+* ...and much more! 😉
 
 ## Hardware Requirements
 
@@ -53,11 +55,12 @@ Go is my favorite programming language, and I prefer it over learning Haxe.
 
 ## Building & installing (from source)
 
-Build instructions for GophEngine are available in [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md).
+For detailed build instructions, refer to [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md).
+You'll need Go installed and basic command-line knowledge to get started.
 
 ## Naming
 
-The name "GophEngine" combines "Goph" (representing Gopher, the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more natural and fitting for this project than "funkin-go."
+The name "GophEngine" combines "Goph" (representing Gopher, the Go programming language mascot) and "Engine" (representing the FNF engine). It felt more fitting and natural for this project than the alternative proposed name "funkin-go".
 
 ## Contributing
 
@@ -76,7 +79,7 @@ Licensed under **Apache License 2.0** (see [LICENSE](https://github.com/MatusOll
 
 ## 💲 Donate
 
-If you enjoy playing GophEngine and would like to support its development, consider making a donation. Every bit of support is greatly appreciated! (pls I need money to buy [Kofola](https://kofola.cz/en))
+If you enjoy playing GophEngine and would like to support its development, consider making a donation. Your contributions and donations help support the development of GophEngine (and my love for [Kofola](https://kofola.cz/en)!). Every bit of support is greatly appreciated!
 
 You can donate through the following platforms:
 
@@ -84,8 +87,4 @@ You can donate through the following platforms:
 * **Duino-Coin (DUCO):** `SladkyCitron`
 * **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` or `SladkyCitron`
 
-Thank you for your support! 😊
-
-<p align="center">
-    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/homeless.png" alt="Homeless man holding cup">
-</p>
+Thank you for your support - it means the world! 😊
