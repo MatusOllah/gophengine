@@ -123,26 +123,7 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		)),
 	)
 
-	var textArea *widget.TextArea
-
-	contextMenu := widget.NewContainer(
-		widget.ContainerOpts.Layout(widget.NewRowLayout(widget.RowLayoutOpts.Direction(widget.DirectionVertical))),
-	)
-	contextMenu.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("Copy"), res.fonts.regularFace, res.buttonTextColor),
-		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
-		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
-			slog.Info("[showBuildInfoWindow] clicked copy build info button")
-			if runtime.GOARCH != "wasm" {
-				clipboard.Write(clipboard.FmtText, []byte(textArea.GetText()))
-			} else {
-				slog.Warn("cannot write to clipboard on wasm")
-			}
-		}),
-	))
-
-	textArea = widget.NewTextArea(
+	textArea := widget.NewTextArea(
 		widget.TextAreaOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(
 			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
 				HorizontalPosition: widget.AnchorLayoutPositionCenter,
@@ -150,7 +131,6 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 				StretchHorizontal:  true,
 				StretchVertical:    true,
 			}),
-			widget.WidgetOpts.ContextMenu(contextMenu),
 		)),
 		widget.TextAreaOpts.ControlWidgetSpacing(2),
 		widget.TextAreaOpts.FontColor(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
@@ -175,6 +155,13 @@ func showBuildInfoWindow(ctx *context.Context, res *uiResources, ui *ebitenui.UI
 		s := bi.String()
 		s = strings.ReplaceAll(s, "\t", "    ") // replace tabs with 4 spaces because *widget.TextArea for some reason can't render tabs???
 		textArea.SetText(s)
+
+		if runtime.GOARCH != "wasm" {
+			clipboard.Write(clipboard.FmtText, []byte(s))
+			slog.Info("copied build info to clipboard")
+		} else {
+			slog.Warn("cannot write to clipboard on wasm")
+		}
 	}
 
 	windowContainer.AddChild(textArea)
