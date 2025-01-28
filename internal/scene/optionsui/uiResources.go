@@ -10,6 +10,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
+// TODO: refactor this struct so that I can style using CSS later
+// something like a map for each widget (e.g. map[string]*ButtonStyle for buttons and ButtonStyle containing all info and colors and styles for buttons)
+// when I set style for Button it sets for all buttons but when I set style for Button#default or Button#danger it just sets for default and danger buttons
 type uiResources struct {
 	fonts *fonts
 
