@@ -186,7 +186,7 @@ func main() {
 		slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 	}
 
-	// moved main func to _main and handle error here
+	// moved main func to mainE and handle error here
 	// learned this from Melkey
 	if err := mainE(); err != nil {
 		slog.Error(err.Error())
