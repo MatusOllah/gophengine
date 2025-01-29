@@ -11,29 +11,26 @@ import (
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/i18n"
-	"github.com/gopxl/beep/v2"
 	input "github.com/quasilyte/ebitengine-input"
 )
 
 // Context holds global variables and shared game state.
 type Context struct {
-	WindowWidth          int
-	WindowHeight         int
-	Width                int
-	Height               int
-	AssetsFS             fs.FS
-	SceneCtrl            *ge.SceneController
-	InputSystem          input.System
-	InputHandler         *input.Handler
-	Rand                 *rand.Rand
-	OptionsConfig        *config.Config
-	ProgressConfig       *config.Config
-	Conductor            *ge.Conductor
-	SampleRate           beep.SampleRate
-	AudioMixer           *audio.Mixer
-	AudioResampleQuality int
-	Version              string
-	FNFVersion           string
+	WindowWidth    int
+	WindowHeight   int
+	Width          int
+	Height         int
+	AssetsFS       fs.FS
+	SceneCtrl      *ge.SceneController
+	InputSystem    input.System
+	InputHandler   *input.Handler
+	Rand           *rand.Rand
+	OptionsConfig  *config.Config
+	ProgressConfig *config.Config
+	Conductor      *ge.Conductor
+	AudioMixer     *audio.Mixer
+	Version        string
+	FNFVersion     string
 }
 
 func New(cfg *NewContextConfig) (*Context, error) {
@@ -91,14 +88,12 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	//Audio
 	ctx.Conductor = ge.NewConductor(100)
-	ctx.SampleRate = beep.SampleRate(ctx.OptionsConfig.MustGet("Audio.SampleRate").(int))
 	ctx.AudioMixer = audio.NewMixer()
 	ctx.AudioMixer.Master.SetVolume(ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64))
 	ctx.AudioMixer.SFX.SetVolume(ctx.OptionsConfig.MustGet("Audio.SFXVolume").(float64))
 	ctx.AudioMixer.Music.SetVolume(ctx.OptionsConfig.MustGet("Audio.MusicVolume").(float64))
 	ctx.AudioMixer.Music_Instrumental.SetVolume(ctx.OptionsConfig.MustGet("Audio.InstVolume").(float64))
 	ctx.AudioMixer.Music_Voices.SetVolume(ctx.OptionsConfig.MustGet("Audio.VoicesVolume").(float64))
-	ctx.AudioResampleQuality = 4
 
 	ctx.Version = cfg.Version
 	ctx.FNFVersion = cfg.FNFVersion

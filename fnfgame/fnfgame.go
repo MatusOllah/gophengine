@@ -10,6 +10,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene"
+	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
 	"github.com/gopxl/beep/v2/speaker"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -84,12 +85,14 @@ func (g *FNFGame) InitEbiten() {
 }
 
 func (g *FNFGame) initAudio() error {
+	sr := beep.SampleRate(44100)
 	bufSize := 4096
 	if runtime.GOARCH == "wasm" {
 		bufSize = 8194
 	}
-	slog.Info("initializing audio", "sampleRate", g.ctx.SampleRate, "bufferSize", bufSize)
-	if err := speaker.Init(g.ctx.SampleRate, bufSize); err != nil {
+
+	slog.Info("initializing audio", "sampleRate", sr, "bufferSize", bufSize)
+	if err := speaker.Init(sr, bufSize); err != nil {
 		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
 	}
 

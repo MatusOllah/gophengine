@@ -136,15 +136,13 @@ func (s *TitleScene) Init() error {
 	}
 	defer freakyMenuFile.Close()
 
-	freakyMenuStreamer, freakyMenuFormat, err := vorbis.Decode(freakyMenuFile)
+	s.freakyMenuStreamer, s.freakyMenuFormat, err = vorbis.Decode(freakyMenuFile)
 	if err != nil {
 		return err
 	}
-	s.freakyMenuStreamer = freakyMenuStreamer
-	s.freakyMenuFormat = freakyMenuFormat
 
 	s.freakyMenu = &effects.Volume{
-		Streamer: beep.Resample(s.ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, s.ctx.SampleRate, audio.MustLoop2(freakyMenuStreamer)),
+		Streamer: audio.MustLoop2(s.freakyMenuStreamer),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
@@ -180,13 +178,6 @@ func (s *TitleScene) Close() error {
 }
 
 func (s *TitleScene) Update(dt float64) error {
-	s.once.Do(func() {
-		slog.Info("(*sync.Once).Do")
-		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
-
-		s.ctx.Conductor.ChangeBPM(102)
-	})
-
 	select {
 	case err := <-s.errCh:
 		if err != nil {
@@ -195,6 +186,13 @@ func (s *TitleScene) Update(dt float64) error {
 	default:
 		// Continue with update routine
 	}
+
+	s.once.Do(func() {
+		slog.Debug("s.once.Do")
+		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
+
+		s.ctx.Conductor.ChangeBPM(102)
+	})
 
 	// Conductor & MusicBeat (MusicBeatState)
 	s.ctx.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
