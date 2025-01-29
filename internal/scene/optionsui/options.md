@@ -3,8 +3,6 @@
 - Audio
     - Enable game over music (checkbox)
 
-    - Downmix stereo audio to mono (checkbox)
-    - Sample Rate (combo box / number entry?)
     - Resample quality (combo box / number entry?)
 - Video
     - Window resolution (combo box / entry?)
