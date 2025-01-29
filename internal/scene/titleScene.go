@@ -30,25 +30,26 @@ var _ ge.Scene = (*TitleScene)(nil)
 
 // TitleScene is the intro and "press enter to begin" screen.
 type TitleScene struct {
-	ctx                 *context.Context
-	goLogo              *ge.Sprite
-	ebitenLogo          *ge.Sprite
-	mb                  *ge.MusicBeat
-	once                *sync.Once
-	randIntroText       []string
-	introText           *ge.IntroText
-	logoBl              *ge.Sprite
-	gfDance             *ge.Sprite
-	titleText           *ge.Sprite
-	freakyMenu          *effects.Volume
-	freakyMenuStartTime time.Time
-	freakyMenuTween     *gween.Tween
-	danceLeft           bool
-	flasher             *ge.Flasher
-	blackScreenVisible  bool
-	skippedIntro        bool
-	transitioning       bool
-	errCh               chan error
+	ctx                *context.Context
+	goLogo             *ge.Sprite
+	ebitenLogo         *ge.Sprite
+	mb                 *ge.MusicBeat
+	once               *sync.Once
+	randIntroText      []string
+	introText          *ge.IntroText
+	logoBl             *ge.Sprite
+	gfDance            *ge.Sprite
+	titleText          *ge.Sprite
+	freakyMenuStreamer beep.StreamSeekCloser
+	freakyMenuFormat   beep.Format
+	freakyMenu         *effects.Volume
+	freakyMenuTween    *gween.Tween
+	danceLeft          bool
+	flasher            *ge.Flasher
+	blackScreenVisible bool
+	skippedIntro       bool
+	transitioning      bool
+	errCh              chan error
 }
 
 func getRandIntroText(ctx *context.Context) ([]string, error) {
@@ -129,19 +130,21 @@ func (s *TitleScene) Init() error {
 	s.titleText = titleText
 
 	// FreakyMenu
-	fmfile, err := s.ctx.AssetsFS.Open("music/freakyMenu.ogg")
+	freakyMenuFile, err := s.ctx.AssetsFS.Open("music/freakyMenu.ogg")
 	if err != nil {
 		return err
 	}
-	defer fmfile.Close()
+	defer freakyMenuFile.Close()
 
-	fmstreamer, fmformat, err := vorbis.Decode(fmfile)
+	freakyMenuStreamer, freakyMenuFormat, err := vorbis.Decode(freakyMenuFile)
 	if err != nil {
 		return err
 	}
+	s.freakyMenuStreamer = freakyMenuStreamer
+	s.freakyMenuFormat = freakyMenuFormat
 
 	s.freakyMenu = &effects.Volume{
-		Streamer: beep.Resample(s.ctx.AudioResampleQuality, fmformat.SampleRate, s.ctx.SampleRate, audio.MustLoop2(fmstreamer)),
+		Streamer: beep.Resample(s.ctx.AudioResampleQuality, freakyMenuFormat.SampleRate, s.ctx.SampleRate, audio.MustLoop2(freakyMenuStreamer)),
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
@@ -177,6 +180,13 @@ func (s *TitleScene) Close() error {
 }
 
 func (s *TitleScene) Update(dt float64) error {
+	s.once.Do(func() {
+		slog.Info("(*sync.Once).Do")
+		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
+
+		s.ctx.Conductor.ChangeBPM(102)
+	})
+
 	select {
 	case err := <-s.errCh:
 		if err != nil {
@@ -186,16 +196,8 @@ func (s *TitleScene) Update(dt float64) error {
 		// Continue with update routine
 	}
 
-	s.once.Do(func() {
-		slog.Debug("s.once.Do")
-		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
-		s.freakyMenuStartTime = time.Now()
-
-		s.ctx.Conductor.ChangeBPM(102)
-	})
-
 	// Conductor & MusicBeat (MusicBeatState)
-	s.ctx.Conductor.SongPosition = float64(time.Since(s.freakyMenuStartTime).Milliseconds())
+	s.ctx.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
 	s.mb.Update()
 
 	// freakyMenu Volume
