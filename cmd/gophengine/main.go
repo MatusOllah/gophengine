@@ -180,7 +180,7 @@ func main() {
 	opts.Level = getLogLevel()
 	opts.SrcFileLength = 32
 
-	if logfile != nil {
+	if runtime.GOARCH != "wasm" {
 		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(logfile)), opts)))
 	} else {
 		slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
