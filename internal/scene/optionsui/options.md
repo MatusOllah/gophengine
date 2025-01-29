@@ -2,8 +2,6 @@
 
 - Audio
     - Enable game over music (checkbox)
-
-    - Resample quality (combo box / number entry?)
 - Video
     - Window resolution (combo box / entry?)
     - Enable FPS Counter (checkbox)
