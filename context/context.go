@@ -69,7 +69,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.ProgressConfig = progressConfig
 
 	// Controls
-	ctx.InputSystem.Init(input.SystemConfig{input.AnyDevice})
+	ctx.InputSystem.Init(input.SystemConfig{DevicesEnabled: input.AnyDevice})
 	keymap, err := ge.LoadKeymapFromConfig(ctx.OptionsConfig)
 	if err != nil {
 		return nil, err
