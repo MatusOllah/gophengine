@@ -13,7 +13,8 @@
 **GophEngine** is a Go implementation of **Friday Night Funkin'** (a popular FOSS rhythm game) with improvements, bringing new features, performance enhancements, and a cleaner experience. Built from the ground up in **Go and Ebitengine**, GophEngine aims to provide an easy-to-use modding framework and foster a supportive community for FNF fans.
 
 > [!NOTE]
-> This is not the vanilla game. This is a modification of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
+> This is not the vanilla game. This is a fan-made reimplementation of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
+> Think of GophEngine as to FNF what Black Mesa is to Half-Life - a fan-made remake and improvement, built from the ground up.
 
 ## Why?
 
@@ -51,7 +52,7 @@ It also offers better performance, simpler concurrency, and faster compile times
 | Graphics Card     | Intel HD Graphics 4000 / NVIDIA GeForce GTX 600 Series / AMD Radeon HD 7000 Series | Intel HD Graphics 5000 / NVIDIA GeForce GTX 750 Ti / AMD Radeon RX 560  |
 | DirectX / OpenGL  | DirectX 11 / OpenGL 3.0                                                            | DirectX 12 / OpenGL 4.5                                                 |
 | Storage           | 256 MB                                                                             | 512 MB                                                                  |
-| Operating System  | Windows 7 / macOS 10.12 / Linux 2.6.32                                             | Windows 11 / macOS 10.15 / Linux 5.x.x                                  |
+| Operating System  | Windows 7 / macOS 10.12 / Linux Kernel 3.x.x                                       | Windows 11 / macOS 10.15 / Linux Kernel 5.x.x                           |
 
 ## Building & installing (from source)
 

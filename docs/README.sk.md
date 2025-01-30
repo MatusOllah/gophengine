@@ -13,7 +13,8 @@
 **GophEngine** je Go implementácia hry **Friday Night Funkin'** (populárnej FOSS hudobnej hry) s vylepšeniami, ktoré prinášajú nové funkcie, lepší výkon a čistejší zážitok. GophEngine je vytvorený od základov v **Go a Ebitengine** s cieľom poskytnúť ľahko použiteľný framework na modifikáciu a podporovať komunitu fanúšikov FNF.
 
 > [!NOTE]
-> Toto nie je originálna hra. Ide o modifikáciu pôvodnej hry, ktorá nie je nijako spojená alebo schválená tímom Funkin' Crew alebo Newgrounds.
+> Toto nie je originálna hra. Ide o fanúšikovskú prerobenú verziu pôvodnej hry, ktorá nie je nijako spojená alebo schválená tímom Funkin' Crew alebo Newgrounds.
+> Predstavte si GophEngine vo vzťahu k FNF tak, ako je Black Mesa k Half-Life – fanúšikovský remake a vylepšenie, vybudované od základu.
 
 ## Prečo?
 
@@ -51,7 +52,7 @@ Ponúka lepší výkon, jednoduchšiu prácu s paralelizmom a rýchlejšie časy
 | Grafická karta   | Intel HD Graphics 4000 / NVIDIA GeForce GTX 600 Series / AMD Radeon HD 7000 Series | Intel HD Graphics 5000 / NVIDIA GeForce GTX 750 Ti / AMD Radeon RX 560 |
 | DirectX / OpenGL | DirectX 11 / OpenGL 3.0                                                            | DirectX 12 / OpenGL 4.5                                                |
 | Úložisko         | 256 MB                                                                             | 512 MB                                                                 |
-| Operačný systém  | Windows 7 / macOS 10.12 / Linux 2.6.32                                             | Windows 11 / macOS 10.15 / Linux 5.x.x                                 |
+| Operačný systém  | Windows 7 / macOS 10.12 / Linux Kernel 3.x.x                                       | Windows 11 / macOS 10.15 / Linux Kernel 5.x.x                          |
 
 ## Kompilovanie & inštalovanie (zo zdrojového kódu)
 
