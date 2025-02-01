@@ -14,7 +14,7 @@
 
 > [!NOTE]
 > Toto nie je originálna hra. Ide o fanúšikovskú prerobenú verziu pôvodnej hry, ktorá nie je nijako spojená alebo schválená tímom Funkin' Crew alebo Newgrounds.
-> Predstavte si GophEngine vo vzťahu k FNF tak, ako je Black Mesa k Half-Life – fanúšikovský remake a vylepšenie, vybudované od základu.
+> Predstavte si GophEngine vo vzťahu k FNF tak, ako je Black Mesa k Half-Life - fanúšikovský remake a vylepšenie, vybudované od základu.
 
 ## Prečo?
 
