@@ -247,7 +247,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 
 	return &page{
 		name:    i18n.L("Audio"),
-		content: newScrollContainer(res, c),
+		content: c,
 	}
 }
 
