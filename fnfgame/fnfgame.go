@@ -21,7 +21,7 @@ import (
 type FNFGame struct {
 	ctx  *context.Context
 	last time.Time
-	dt   float64
+	dt   float64 // FIXME: I should probably get rid of this...
 }
 
 func New(ctx *context.Context) (*FNFGame, error) {
@@ -66,10 +66,12 @@ func (g *FNFGame) Update() error {
 func (g *FNFGame) Draw(screen *ebiten.Image) {
 	g.ctx.SceneCtrl.Draw(screen)
 
-	ebitenutil.DebugPrint(screen, i18n.LT("FPSCounter", map[string]interface{}{
-		"FPS": ebiten.ActualFPS(),
-		"TPS": ebiten.ActualTPS(),
-	}))
+	if g.ctx.OptionsConfig.MustGet("Graphics.EnableFPSCounter").(bool) {
+		ebitenutil.DebugPrint(screen, i18n.LT("FPSCounter", map[string]interface{}{
+			"FPS": ebiten.ActualFPS(),
+			"TPS": ebiten.ActualTPS(),
+		}))
+	}
 }
 
 func (g *FNFGame) Layout(_, _ int) (int, int) {

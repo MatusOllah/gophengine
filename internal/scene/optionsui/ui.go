@@ -49,7 +49,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		newGameplayPage(ctx),
 		newControlsPage(ctx),
 		newAudioPage(ctx, res, cfg),
-		newGraphicsPage(ctx),
+		newGraphicsPage(ctx, res, cfg),
 		// TODO: Network tab; coming soon
 		newMiscellaneousPage(ctx, res, cfg, ui),
 		newModsPage(ctx),
