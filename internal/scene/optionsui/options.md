@@ -3,7 +3,6 @@
 - Audio
     - Enable game over music (checkbox)
 - Video
-    - Window resolution (combo box / entry?)
     - Enable FPS Counter (checkbox)
     - Antialiasing (combo box)
     - Antialiasing scale factor (number entry)

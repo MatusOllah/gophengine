@@ -82,6 +82,7 @@ func (g *FNFGame) InitEbiten() {
 	slog.Info("creating window")
 	ebiten.SetWindowSize(g.ctx.WindowWidth, g.ctx.WindowHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
+	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 }
 
 func (g *FNFGame) initAudio() error {
