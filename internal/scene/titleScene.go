@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"image/color"
 	_ "image/png"
+	"io/fs"
 	"log/slog"
 	"sync"
 	"time"
@@ -20,6 +21,7 @@ import (
 	"github.com/gopxl/beep/v2/vorbis"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hashicorp/hcl/v2/hclsimple"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 )
@@ -44,6 +46,7 @@ type TitleScene struct {
 	freakyMenuFormat   beep.Format
 	freakyMenu         *effects.Volume
 	freakyMenuTween    *gween.Tween
+	freakyMenuBPM      int
 	danceLeft          bool
 	flasher            *ge.Flasher
 	blackScreenVisible bool
@@ -76,6 +79,28 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 	slog.Info("got intro text", "introText", introText)
 
 	return introText, nil
+}
+
+func getFreakyMenuMeta(ctx *context.Context) (bpm int, tween *gween.Tween, err error) {
+	path := "music/freakyMenu.meta.hcl"
+	b, err := fs.ReadFile(ctx.AssetsFS, path)
+	if err != nil {
+		return
+	}
+
+	var v struct {
+		BPM   int `hcl:"BPM"`
+		Tween struct {
+			Begin    float32 `hcl:"Begin"`
+			End      float32 `hcl:"End"`
+			Duration float32 `hcl:"Duration"`
+		} `hcl:"Tween,block"`
+	}
+	if err = hclsimple.Decode(path, b, nil, &v); err != nil {
+		return
+	}
+
+	return v.BPM, gween.New(v.Tween.Begin, v.Tween.End, v.Tween.Duration, ease.Linear), nil
 }
 
 func NewTitleScene(ctx *context.Context) *TitleScene {
@@ -148,6 +173,11 @@ func (s *TitleScene) Init() error {
 		Silent:   false,
 	}
 
+	s.freakyMenuBPM, s.freakyMenuTween, err = getFreakyMenuMeta(s.ctx)
+	if err != nil {
+		return err
+	}
+
 	mb := ge.NewMusicBeat(s.ctx.Conductor)
 	mb.BeatHitFunc = titleState_BeatHit
 	s.mb = mb
@@ -161,7 +191,6 @@ func (s *TitleScene) Init() error {
 	s.introText = introText
 
 	s.once = &sync.Once{}
-	s.freakyMenuTween = gween.New(-10, -0.3, 4, ease.Linear)
 	s.danceLeft = false
 	s.blackScreenVisible = true
 	s.skippedIntro = false
@@ -191,7 +220,7 @@ func (s *TitleScene) Update(dt float64) error {
 		slog.Debug("s.once.Do")
 		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
 
-		s.ctx.Conductor.ChangeBPM(102)
+		s.ctx.Conductor.ChangeBPM(s.freakyMenuBPM)
 	})
 
 	// Conductor & MusicBeat (MusicBeatState)
