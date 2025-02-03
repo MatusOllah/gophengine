@@ -12,7 +12,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 ### 🪟 Windows
 
 1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
-2. Nainštalujte C kompilátor. Najjednoduchší spôsob, ako nainštalovať C kompilátor na Windowse, je použiť niečo ako [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) alebo [w64devkit](https://github.com/skeeto/w64devkit). MSVC nie je podporovaný, pozrite [Go issue #20982](https://github.com/golang/go/issues/20982).
+2. Nainštalujte C kompilátor. Najjednoduchší spôsob, ako nainštalovať C kompilátor na Windowse, je použiť niečo ako [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) alebo [w64devkit](https://github.com/skeeto/w64devkit). MSVC nie je podporovaný, viď [Go issue #20982](https://github.com/golang/go/issues/20982).
 3. Na Windowse bude grafický ovládač už nainštalovaný, ale odporúča sa overiť, či je aktuálny.
 
 #### Postup pre inštaláciu cez MSYS2 (odporúčané)
