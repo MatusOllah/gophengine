@@ -254,12 +254,7 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 func testAudio(ctx *context.Context) {
 	slog.Info("[audioPage] testing audio")
 
-	path := "sounds/test_beep.ogg"
-	if ctx.Rand.Float64() < 0.05 { // 5% chance
-		path = "sounds/bf_test_beep.ogg"
-	}
-
-	file, err := ctx.AssetsFS.Open(path)
+	file, err := ctx.AssetsFS.Open("sounds/test_beep.ogg")
 	if err != nil {
 		slog.Error("[audioPage] failed to test audio", "err", err)
 		dialog.Error("failed to test audio: " + err.Error())
