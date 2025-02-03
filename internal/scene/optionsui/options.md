@@ -4,8 +4,7 @@
     - Enable game over music (checkbox)
 - Video
     - Enable FPS Counter (checkbox)
-    - Antialiasing (combo box)
-    - Antialiasing scale factor (number entry)
+    - Upscaling method (combo box)
     - Graphics backend (combo box)
     - Enable shaders (checkbox)
     - Colorblind filter (combo box)
@@ -18,8 +17,9 @@
     - Enable cutscenes (checkbox)
     - Default chart editor (button, label & open file dialog)
 - Controls
-    - *insert controls*
+    - *controls*
 - Mods
     - NSFW mod behavior (combo box)
     - Modloader error behavior (combo box)
-    - *insert categories for installed mods*
+    - Yaegi config
+    - *categories for installed mods*
