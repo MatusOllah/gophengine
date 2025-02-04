@@ -1,7 +1,6 @@
 package gophengine
 
 import (
-	"log/slog"
 	"time"
 )
 
@@ -26,7 +25,6 @@ func NewFlicker(spr *Sprite, dur time.Duration, interval time.Duration) *Flicker
 }
 
 func (f *Flicker) Flicker() {
-	slog.Debug("[Flicker] starting flicker")
 	f.flicker = true
 	f.startTime = time.Now()
 	f.flickerTimer = time.Now()
@@ -41,7 +39,6 @@ func (f *Flicker) Update() error {
 	if time.Since(f.startTime) < f.dur {
 		// Handle the flicker logic
 		if time.Since(f.flickerTimer) > f.interval {
-			slog.Debug("[Flicker] flickering", "visible", f.Sprite.Visible)
 			f.Sprite.Visible = !f.Sprite.Visible
 			f.flickerTimer = time.Now()
 		}
