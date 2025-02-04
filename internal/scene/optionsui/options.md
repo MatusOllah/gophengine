@@ -3,7 +3,6 @@
 - Audio
     - Enable game over music (checkbox)
 - Video
-    - Enable FPS Counter (checkbox)
     - Upscaling method (combo box)
     - Graphics backend (combo box)
     - Enable shaders (checkbox)
