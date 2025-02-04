@@ -1,4 +1,4 @@
-package gophengine
+package effects
 
 import (
 	"image/color"

@@ -14,6 +14,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
+	gefx "github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
@@ -48,7 +49,7 @@ type TitleScene struct {
 	freakyMenuTween    *gween.Tween
 	freakyMenuBPM      int
 	danceLeft          bool
-	flasher            *ge.Flasher
+	flasher            *gefx.Flasher
 	blackScreenVisible bool
 	skippedIntro       bool
 	transitioning      bool
@@ -182,7 +183,7 @@ func (s *TitleScene) Init() error {
 	mb.BeatHitFunc = titleState_BeatHit
 	s.mb = mb
 
-	s.flasher = ge.NewFlasher(s.ctx.Width, s.ctx.Height, 1)
+	s.flasher = gefx.NewFlasher(s.ctx.Width, s.ctx.Height, 1)
 
 	introText, err := ge.NewIntroText(s.ctx.AssetsFS)
 	if err != nil {

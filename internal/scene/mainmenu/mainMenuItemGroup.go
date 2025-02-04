@@ -7,6 +7,7 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -14,8 +15,8 @@ type MainMenuItemGroup struct {
 	items       []*MainMenuItem
 	curSelected int
 	isSelected  bool
-	flicker     *ge.Flicker
-	itemFlicker *ge.Flicker
+	flicker     *effects.Flicker
+	itemFlicker *effects.Flicker
 	magenta     *ge.Sprite
 	ctx         *context.Context
 }
@@ -29,8 +30,8 @@ func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *
 		items:       items,
 		curSelected: 0,
 		isSelected:  false,
-		flicker:     ge.NewFlicker(magenta, 1100*time.Millisecond, 150*time.Millisecond),
-		itemFlicker: ge.NewFlicker(nil, time.Second, 60*time.Millisecond),
+		flicker:     effects.NewFlicker(magenta, 1100*time.Millisecond, 150*time.Millisecond),
+		itemFlicker: effects.NewFlicker(nil, time.Second, 60*time.Millisecond),
 		magenta:     magenta,
 		ctx:         ctx,
 	}
