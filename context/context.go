@@ -7,11 +7,11 @@ import (
 	"log/slog"
 	"math/rand/v2"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
+	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	input "github.com/quasilyte/ebitengine-input"
 )
@@ -29,7 +29,7 @@ type Context struct {
 	Rand           *rand.Rand
 	OptionsConfig  *config.Config
 	ProgressConfig *config.Config
-	Conductor      *ge.Conductor
+	Conductor      *funkin.Conductor
 	AudioMixer     *audio.Mixer
 	Version        string
 	FNFVersion     string
@@ -89,7 +89,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	}
 
 	//Audio
-	ctx.Conductor = ge.NewConductor(100)
+	ctx.Conductor = funkin.NewConductor(100)
 	ctx.AudioMixer = audio.NewMixer()
 	ctx.AudioMixer.Master.SetVolume(ctx.OptionsConfig.MustGet("Audio.MasterVolume").(float64))
 	ctx.AudioMixer.SFX.SetVolume(ctx.OptionsConfig.MustGet("Audio.SFXVolume").(float64))

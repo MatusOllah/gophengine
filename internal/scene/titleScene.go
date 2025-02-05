@@ -9,7 +9,6 @@ import (
 	"sync"
 	"time"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audio"
@@ -17,6 +16,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/controls"
 	gefx "github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
+	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene/title"
 	"github.com/gopxl/beep/v2"
@@ -39,7 +39,7 @@ type TitleScene struct {
 	ctx                *context.Context
 	goLogo             *engine.Sprite
 	ebitenLogo         *engine.Sprite
-	mb                 *ge.MusicBeat
+	mb                 *funkin.MusicBeat
 	once               *sync.Once
 	randIntroText      []string
 	introText          *title.IntroText
@@ -182,7 +182,7 @@ func (s *TitleScene) Init() error {
 		return err
 	}
 
-	mb := ge.NewMusicBeat(s.ctx.Conductor)
+	mb := funkin.NewMusicBeat(s.ctx.Conductor)
 	mb.BeatHitFunc = titleState_BeatHit
 	s.mb = mb
 

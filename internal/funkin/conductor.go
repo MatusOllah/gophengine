@@ -1,6 +1,10 @@
-package gophengine
+package funkin
 
-import "log/slog"
+import (
+	"log/slog"
+
+	"github.com/MatusOllah/gophengine/internal/funkin/chart"
+)
 
 type Conductor struct {
 	Bpm            int
@@ -27,7 +31,7 @@ func NewConductor(bpm int) *Conductor {
 	return c
 }
 
-func (c *Conductor) MapBPMChanges(song *Song) {
+func (c *Conductor) MapBPMChanges(song *chart.Song) {
 	c.BPMChangeMap = []BPMChangeEvent{}
 
 	var curBPM int = song.Bpm

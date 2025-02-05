@@ -1,4 +1,4 @@
-package gophengine
+package chart
 
 import (
 	"encoding/json"

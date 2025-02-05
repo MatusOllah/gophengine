@@ -1,4 +1,4 @@
-package gophengine
+package funkin
 
 import (
 	"log/slog"

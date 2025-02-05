@@ -1,4 +1,4 @@
-package gophengine
+package chart
 
 type Section struct {
 	SectionNotes   [][]interface{} `json:"sectionNotes"`
