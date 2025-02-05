@@ -12,6 +12,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/funkin"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	input "github.com/quasilyte/ebitengine-input"
 )
@@ -85,6 +86,11 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	}
 	slog.Info("using locale", "locale", locale)
 	if err := i18n.Init(cfg.AssetsFS, locale); err != nil {
+		return nil, err
+	}
+
+	// GUI
+	if err := gui.Init(ctx.AssetsFS); err != nil {
 		return nil, err
 	}
 

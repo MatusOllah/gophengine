@@ -1,20 +1,9 @@
 package optionsui
 
 import (
-	"image/color"
-
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/ebitenui/ebitenui/widget"
 )
-
-// newLabelColorSimple is short for &widget.LabelColor{clr, clr}.
-func newLabelColorSimple(clr color.Color) *widget.LabelColor {
-	return &widget.LabelColor{Idle: clr, Disabled: clr}
-}
-
-// newButtonTextColorSimple is short for &widget.ButtonTextColor{clr, clr, clr, clr}.
-func newButtonTextColorSimple(clr color.Color) *widget.ButtonTextColor {
-	return &widget.ButtonTextColor{Idle: clr, Disabled: clr, Hover: clr, Pressed: clr}
-}
 
 // newHorizontalContainer creates a Container with horizontal row layout.
 func newHorizontalContainer(w ...widget.PreferredSizeLocateableWidget) *widget.Container {
@@ -29,7 +18,7 @@ func newHorizontalContainer(w ...widget.PreferredSizeLocateableWidget) *widget.C
 	return c
 }
 
-func newSeparator(res *uiResources, ld interface{}) widget.PreferredSizeLocateableWidget {
+func newSeparator(ld interface{}) widget.PreferredSizeLocateableWidget {
 	c := widget.NewContainer(
 		widget.ContainerOpts.Layout(widget.NewRowLayout(
 			widget.RowLayoutOpts.Direction(widget.DirectionVertical),
@@ -45,7 +34,7 @@ func newSeparator(res *uiResources, ld interface{}) widget.PreferredSizeLocateab
 			Stretch:   true,
 			MaxHeight: 2,
 		})),
-		widget.GraphicOpts.ImageNineSlice(res.separatorImage),
+		widget.GraphicOpts.ImageNineSlice(gui.UIRes.SeparatorImage),
 	))
 
 	return c

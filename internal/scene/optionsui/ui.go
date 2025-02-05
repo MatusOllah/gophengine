@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
@@ -18,14 +19,9 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	cfg := ctx.OptionsConfig.Data()
 
-	res, err := newUIResources(ctx)
-	if err != nil {
-		return nil, err
-	}
-
 	// The main window container
 	windowContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.bgImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.BGImage),
 		widget.ContainerOpts.Layout(widget.NewGridLayout(
 			widget.GridLayoutOpts.Columns(1),
 			widget.GridLayoutOpts.Stretch([]bool{true}, []bool{true, false}),
@@ -48,15 +44,15 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	pages := []any{
 		newGameplayPage(ctx),
 		newControlsPage(ctx),
-		newAudioPage(ctx, res, cfg),
-		newGraphicsPage(ctx, res, cfg),
+		newAudioPage(ctx, cfg),
+		newGraphicsPage(ctx, cfg),
 		// TODO: Network tab; coming soon
-		newMiscellaneousPage(ctx, res, cfg, ui),
+		newMiscellaneousPage(ctx, cfg, ui),
 		newModsPage(ctx),
-		newAboutPage(ctx, res, ui),
+		newAboutPage(ctx, ui),
 	}
 
-	pageContainer := newPageContainer(res)
+	pageContainer := newPageContainer()
 
 	// The page select list
 	mainContainer.AddChild(widget.NewList(
@@ -77,12 +73,12 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(0)),
 		),
 		widget.ListOpts.ScrollContainerOpts(
-			widget.ScrollContainerOpts.Image(res.pageListScrollContainerImage),
+			widget.ScrollContainerOpts.Image(gui.UIRes.PageListScrollContainerImage),
 		),
 		widget.ListOpts.HideHorizontalSlider(),
 		widget.ListOpts.HideVerticalSlider(),
-		widget.ListOpts.EntryFontFace(res.fonts.pageListEntryFace),
-		widget.ListOpts.EntryColor(res.pageListEntryColor),
+		widget.ListOpts.EntryFontFace(gui.UIRes.Fonts.PageListEntryFace),
+		widget.ListOpts.EntryColor(gui.UIRes.PageListEntryColor),
 		widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
 		widget.ListOpts.EntryTextPosition(widget.TextPositionStart, widget.TextPositionCenter),
 	))
@@ -98,8 +94,8 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// OK button (saves config & exits)
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("OK"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("OK"), gui.UIRes.Fonts.FooterButtonFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 30,
@@ -117,17 +113,17 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
 				i18n.L("OptionsRestartWarningTooltip"),
-				res.fonts.regularFace,
+				gui.UIRes.Fonts.RegularFace,
 				color.Black,
-				res.tooltipBGImage,
+				gui.UIRes.TooltipBGImage,
 			)),
 		),
 	))
 
 	// Cancel button (exits)
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("Cancel"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Cancel"), gui.UIRes.Fonts.FooterButtonFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -139,17 +135,17 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
 				i18n.L("OptionsRestartWarningTooltip"),
-				res.fonts.regularFace,
+				gui.UIRes.Fonts.RegularFace,
 				color.Black,
-				res.tooltipBGImage,
+				gui.UIRes.TooltipBGImage,
 			)),
 		),
 	))
 
 	// Apply button (saves config)
 	footerContainer.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("Apply"), res.fonts.footerButtonFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Apply"), gui.UIRes.Fonts.FooterButtonFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:  10,
 			Right: 10,
@@ -163,9 +159,9 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(
 				i18n.L("OptionsRestartWarningTooltip"),
-				res.fonts.regularFace,
+				gui.UIRes.Fonts.RegularFace,
 				color.Black,
-				res.tooltipBGImage,
+				gui.UIRes.TooltipBGImage,
 			)),
 		),
 	))
@@ -174,11 +170,11 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// The title bar container
 	titleBarContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.titleBarBGImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.TitleBarBGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("Options"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("Options"), gui.UIRes.Fonts.TitleFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

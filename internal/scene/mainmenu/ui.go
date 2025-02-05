@@ -7,54 +7,22 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
 func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	ui := &ebitenui.UI{}
 
-	// Title font
-	titleFontFile, err := ctx.AssetsFS.Open("fonts/NotoSans-Bold.ttf")
-	if err != nil {
-		return nil, err
-	}
-
-	titleFaceSource, err := text.NewGoTextFaceSource(titleFontFile)
-	if err != nil {
-		return nil, err
-	}
-
-	titleFace := &text.GoTextFace{
-		Source: titleFaceSource,
-		Size:   24,
-	}
-
-	// Regular font
-	regularFontFile, err := ctx.AssetsFS.Open("fonts/NotoSans-Regular.ttf")
-	if err != nil {
-		return nil, err
-	}
-
-	regularFaceSource, err := text.NewGoTextFaceSource(regularFontFile)
-	if err != nil {
-		return nil, err
-	}
-
-	regularFace := &text.GoTextFace{
-		Source: regularFaceSource,
-		Size:   16,
-	}
-
 	var exitDialog *widget.Window
 
 	// exit dialog container
 	exitDialogContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF})),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.BGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout(
 			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(20)),
 		)),
@@ -68,17 +36,8 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(&widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x00, 0x00, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x24, 0x24, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x40, 0x40, 0xFF}),
-		}),
-		widget.ButtonOpts.Text(i18n.L("Exit"), regularFace, &widget.ButtonTextColor{
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-			color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF},
-		}),
+		widget.ButtonOpts.Image(gui.UIRes.DangerButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Exit"), gui.UIRes.Fonts.RegularFace, gui.UIRes.DangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:   10,
 			Right:  20,
@@ -99,17 +58,8 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(&widget.ButtonImage{
-			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0x00, 0xFF, 0x00, 0xFF}),
-			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0x24, 0xFF, 0x24, 0xFF}),
-			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0x40, 0xFF, 0x40, 0xFF}),
-		}),
-		widget.ButtonOpts.Text(i18n.L("Stay"), regularFace, &widget.ButtonTextColor{
-			color.NRGBA{0, 0, 0, 0xFF},
-			color.NRGBA{0, 0, 0, 0xFF},
-			color.NRGBA{0, 0, 0, 0xFF},
-			color.NRGBA{0, 0, 0, 0xFF},
-		}),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Stay"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.Insets{
 			Left:   10,
 			Right:  10,
@@ -124,15 +74,15 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// The text
 	exitDialogContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("ExitDialogText"), regularFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
+		widget.LabelOpts.Text(i18n.L("ExitDialogText"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
 	))
 
 	titleBarContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF})),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.TitleBarBGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("Exit"), titleFace, &widget.LabelColor{color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}, color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}}),
+		widget.LabelOpts.Text(i18n.L("Exit"), gui.UIRes.Fonts.TitleFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
@@ -168,11 +118,11 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		),
 
 		widget.ButtonOpts.Image(&widget.ButtonImage{
-			eui_image.NewNineSliceColor(color.Transparent),
-			eui_image.NewNineSliceColor(color.Transparent),
-			eui_image.NewNineSliceColor(color.Transparent),
-			eui_image.NewNineSliceColor(color.Transparent),
-			eui_image.NewNineSliceColor(color.Transparent),
+			Idle:         eui_image.NewNineSliceColor(color.Transparent),
+			Hover:        eui_image.NewNineSliceColor(color.Transparent),
+			Pressed:      eui_image.NewNineSliceColor(color.Transparent),
+			PressedHover: eui_image.NewNineSliceColor(color.Transparent),
+			Disabled:     eui_image.NewNineSliceColor(color.Transparent),
 		}),
 
 		widget.ButtonOpts.Graphic(exitImg),

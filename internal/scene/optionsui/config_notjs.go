@@ -9,6 +9,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
@@ -72,11 +73,11 @@ func importOptionsConfig(ctx *context.Context) error {
 	return nil
 }
 
-func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) {
+func wipeOptionsConfig(ctx *context.Context, ui *ebitenui.UI) {
 	var confirmDialog *widget.Window
 
 	container := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.bgImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.BGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout(
 			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(20)),
 		)),
@@ -89,8 +90,8 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(res.dangerButtonImage),
-		widget.ButtonOpts.Text(i18n.L("Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.DangerButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.RegularFace, gui.UIRes.DangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeOptionsConfig] clicked wipe button")
@@ -109,8 +110,8 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("Cancel"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Cancel"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeOptionsConfig] clicked cancel button")
@@ -119,18 +120,18 @@ func wipeOptionsConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) 
 	))
 
 	container.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("WipeOptionsDialogText"), res.fonts.regularFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("WipeOptionsDialogText"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
 		),
 	))
 
 	titleBarContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.titleBarBGImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.TitleBarBGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("Wipe"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.TitleFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
@@ -213,11 +214,11 @@ func importProgressConfig(ctx *context.Context) error {
 	return nil
 }
 
-func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI) {
+func wipeProgressConfig(ctx *context.Context, ui *ebitenui.UI) {
 	var confirmDialog *widget.Window
 
 	container := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.bgImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.BGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout(
 			widget.AnchorLayoutOpts.Padding(widget.NewInsetsSimple(20)),
 		)),
@@ -230,8 +231,8 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(res.dangerButtonImage),
-		widget.ButtonOpts.Text(i18n.L("Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.DangerButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.RegularFace, gui.UIRes.DangerButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeProgressConfig] clicked wipe button")
@@ -250,8 +251,8 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 				VerticalPosition:   widget.AnchorLayoutPositionEnd,
 			}),
 		),
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("Cancel"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("Cancel"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("[wipeProgressConfig] clicked cancel button")
@@ -260,18 +261,18 @@ func wipeProgressConfig(ctx *context.Context, res *uiResources, ui *ebitenui.UI)
 	))
 
 	container.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("WipeProgressDialogText"), res.fonts.regularFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("WipeProgressDialogText"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.MaxWidth(360), // this is for word wrap, 400-(20*2)=360 px
 		),
 	))
 
 	titleBarContainer := widget.NewContainer(
-		widget.ContainerOpts.BackgroundImage(res.titleBarBGImage),
+		widget.ContainerOpts.BackgroundImage(gui.UIRes.TitleBarBGImage),
 		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
 	)
 	titleBarContainer.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("Wipe"), res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.TitleFace, gui.UIRes.LabelColor),
 		widget.LabelOpts.TextOpts(
 			widget.TextOpts.WidgetOpts(
 				widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{

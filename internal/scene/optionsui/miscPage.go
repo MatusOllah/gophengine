@@ -6,12 +6,13 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 )
 
-func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}, ui *ebitenui.UI) *page {
+func newMiscellaneousPage(ctx *context.Context, cfg map[string]interface{}, ui *ebitenui.UI) *page {
 	c := newPageContentContainer()
 
 	// Locale
@@ -29,9 +30,9 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			widget.SelectComboButtonOpts.ComboButtonOpts(
 				widget.ComboButtonOpts.MaxContentHeight(200),
 				widget.ComboButtonOpts.ButtonOpts(
-					widget.ButtonOpts.Image(res.buttonImage),
+					widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
 					widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
-					widget.ButtonOpts.Text("", res.fonts.regularFace, res.buttonTextColor),
+					widget.ButtonOpts.Text("", gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 					widget.ButtonOpts.WidgetOpts(
 						widget.WidgetOpts.MinSize(150, 0),
 					),
@@ -41,14 +42,14 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 		widget.ListComboButtonOpts.ListOpts(
 			widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(widget.WidgetOpts.MinSize(150, 0))),
 			widget.ListOpts.Entries(l),
-			widget.ListOpts.ScrollContainerOpts(widget.ScrollContainerOpts.Image(res.listScrollContainerImage)),
+			widget.ListOpts.ScrollContainerOpts(widget.ScrollContainerOpts.Image(gui.UIRes.ListScrollContainerImage)),
 			widget.ListOpts.SliderOpts(
-				widget.SliderOpts.Images(res.listSliderTrackImage, res.buttonImage),
+				widget.SliderOpts.Images(gui.UIRes.ListSliderTrackImage, gui.UIRes.ButtonImage),
 				widget.SliderOpts.MinHandleSize(5),
 				widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(2)),
 			),
-			widget.ListOpts.EntryFontFace(res.fonts.regularFace),
-			widget.ListOpts.EntryColor(res.listEntryColor),
+			widget.ListOpts.EntryFontFace(gui.UIRes.Fonts.RegularFace),
+			widget.ListOpts.EntryColor(gui.UIRes.ListEntryColor),
 			widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
 			widget.ListOpts.HideHorizontalSlider(),
 		),
@@ -63,23 +64,23 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 
 	c.AddChild(newHorizontalContainer(
 		widget.NewLabel(
-			widget.LabelOpts.Text(i18n.L("Locale"), res.fonts.regularFace, res.labelColor),
+			widget.LabelOpts.Text(i18n.L("Locale"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
 		),
 		comboBox,
 	))
 
 	// Separator
-	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
+	c.AddChild(newSeparator(widget.RowLayoutData{Stretch: true}))
 
 	// Options config
 	c.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("OptionsConfig"), res.fonts.headingFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("OptionsConfig"), gui.UIRes.Fonts.HeadingFace, gui.UIRes.LabelColor),
 	))
 
 	c.AddChild(newHorizontalContainer(
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.buttonImage),
-			widget.ButtonOpts.Text(i18n.L("Import"), res.fonts.regularFace, res.buttonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Import"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config import button")
@@ -91,8 +92,8 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			}),
 		),
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.buttonImage),
-			widget.ButtonOpts.Text(i18n.L("Export"), res.fonts.regularFace, res.buttonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Export"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config export button")
@@ -103,28 +104,28 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			}),
 		),
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.dangerButtonImage),
-			widget.ButtonOpts.Text(i18n.L("Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.DangerButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.RegularFace, gui.UIRes.DangerButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked options config wipe button")
-				wipeOptionsConfig(ctx, res, ui)
+				wipeOptionsConfig(ctx, ui)
 				maps.Copy(cfg, ctx.OptionsConfig.Data())
 			}),
 		),
 	))
 
-	c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", res.fonts.regularFace, res.labelColor)))
+	c.AddChild(widget.NewLabel(widget.LabelOpts.Text("", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)))
 
 	// Progress config
 	c.AddChild(widget.NewLabel(
-		widget.LabelOpts.Text(i18n.L("ProgressConfig"), res.fonts.headingFace, res.labelColor),
+		widget.LabelOpts.Text(i18n.L("ProgressConfig"), gui.UIRes.Fonts.HeadingFace, gui.UIRes.LabelColor),
 	))
 
 	c.AddChild(newHorizontalContainer(
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.buttonImage),
-			widget.ButtonOpts.Text(i18n.L("Import"), res.fonts.regularFace, res.buttonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Import"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked progress config import button")
@@ -135,8 +136,8 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			}),
 		),
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.buttonImage),
-			widget.ButtonOpts.Text(i18n.L("Export"), res.fonts.regularFace, res.buttonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Export"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked progress config export button")
@@ -147,12 +148,12 @@ func newMiscellaneousPage(ctx *context.Context, res *uiResources, cfg map[string
 			}),
 		),
 		widget.NewButton(
-			widget.ButtonOpts.Image(res.dangerButtonImage),
-			widget.ButtonOpts.Text(i18n.L("Wipe"), res.fonts.regularFace, res.dangerButtonTextColor),
+			widget.ButtonOpts.Image(gui.UIRes.DangerButtonImage),
+			widget.ButtonOpts.Text(i18n.L("Wipe"), gui.UIRes.Fonts.RegularFace, gui.UIRes.DangerButtonTextColor),
 			widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 			widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 				slog.Info("[miscPage] clicked progress config wipe button")
-				wipeProgressConfig(ctx, res, ui)
+				wipeProgressConfig(ctx, ui)
 			}),
 		),
 	))

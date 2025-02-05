@@ -6,6 +6,7 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/gopxl/beep/v2/effects"
@@ -17,19 +18,19 @@ func mapRange(value, inMin, inMax, outMin, outMax float64) float64 {
 	return outMin + (value-inMin)*(outMax-outMin)/(inMax-inMin)
 }
 
-func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interface{}) *page {
+func newAudioPage(ctx *context.Context, cfg map[string]interface{}) *page {
 	c := newPageContentContainer()
 
 	//TODO: make the volume sliders aligned
 
 	// Master volume
-	masterVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	masterVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor))
 
 	masterVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.Images(gui.UIRes.SliderTrackImage, gui.UIRes.ButtonImage),
 		widget.SliderOpts.FixedHandleSize(10),
 		widget.SliderOpts.TrackOffset(0),
 		widget.SliderOpts.PageSizeFunc(func() int {
@@ -53,20 +54,20 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	masterVolumeValueLabel.Label = fmt.Sprint(masterVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("MasterVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("MasterVolume")+"  ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		masterVolumeSlider,
-		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(" ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		masterVolumeValueLabel,
 	))
 
 	// SFX volume
-	sfxVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	sfxVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor))
 
 	sfxVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.Images(gui.UIRes.SliderTrackImage, gui.UIRes.ButtonImage),
 		widget.SliderOpts.FixedHandleSize(10),
 		widget.SliderOpts.TrackOffset(0),
 		widget.SliderOpts.PageSizeFunc(func() int {
@@ -90,20 +91,20 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	sfxVolumeValueLabel.Label = fmt.Sprint(sfxVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("SFXVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("SFXVolume")+"  ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		sfxVolumeSlider,
-		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(" ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		sfxVolumeValueLabel,
 	))
 
 	// Music volume
-	musicVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	musicVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor))
 
 	musicVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.Images(gui.UIRes.SliderTrackImage, gui.UIRes.ButtonImage),
 		widget.SliderOpts.FixedHandleSize(10),
 		widget.SliderOpts.TrackOffset(0),
 		widget.SliderOpts.PageSizeFunc(func() int {
@@ -127,20 +128,20 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	musicVolumeValueLabel.Label = fmt.Sprint(musicVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("MusicVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("MusicVolume")+"  ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		musicVolumeSlider,
-		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(" ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		musicVolumeValueLabel,
 	))
 
 	// Instrumental track volume
-	instVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	instVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor))
 
 	instVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.Images(gui.UIRes.SliderTrackImage, gui.UIRes.ButtonImage),
 		widget.SliderOpts.FixedHandleSize(10),
 		widget.SliderOpts.TrackOffset(0),
 		widget.SliderOpts.PageSizeFunc(func() int {
@@ -164,20 +165,20 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	instVolumeValueLabel.Label = fmt.Sprint(instVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("InstVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("InstVolume")+"  ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		instVolumeSlider,
-		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(" ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		instVolumeValueLabel,
 	))
 
 	// Voices track volume
-	voicesVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", res.fonts.regularFace, res.labelColor))
+	voicesVolumeValueLabel := widget.NewLabel(widget.LabelOpts.Text("0%", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor))
 
 	voicesVolumeSlider := widget.NewSlider(
 		widget.SliderOpts.Direction(widget.DirectionHorizontal),
 		widget.SliderOpts.MinMax(0, 100),
 		widget.SliderOpts.WidgetOpts(widget.WidgetOpts.MinSize(200, 10)),
-		widget.SliderOpts.Images(res.sliderTrackImage, res.buttonImage),
+		widget.SliderOpts.Images(gui.UIRes.SliderTrackImage, gui.UIRes.ButtonImage),
 		widget.SliderOpts.FixedHandleSize(10),
 		widget.SliderOpts.TrackOffset(0),
 		widget.SliderOpts.PageSizeFunc(func() int {
@@ -201,24 +202,24 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	voicesVolumeValueLabel.Label = fmt.Sprint(voicesVolumeSlider.Current) + "%"
 
 	c.AddChild(newHorizontalContainer(
-		widget.NewLabel(widget.LabelOpts.Text(i18n.L("VoicesVolume")+"  ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("VoicesVolume")+"  ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		voicesVolumeSlider,
-		widget.NewLabel(widget.LabelOpts.Text(" ", res.fonts.regularFace, res.labelColor)),
+		widget.NewLabel(widget.LabelOpts.Text(" ", gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		voicesVolumeValueLabel,
 	))
 
 	// Separator
-	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
+	c.AddChild(newSeparator(widget.RowLayoutData{Stretch: true}))
 
 	c.AddChild(widget.NewLabeledCheckbox(
 		widget.LabeledCheckboxOpts.LabelOpts(
-			widget.LabelOpts.Text(i18n.L("DownmixToMono"), res.fonts.regularFace, res.labelColor),
+			widget.LabelOpts.Text(i18n.L("DownmixToMono"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
 		),
 		widget.LabeledCheckboxOpts.CheckboxOpts(
 			widget.CheckboxOpts.ButtonOpts(
-				widget.ButtonOpts.Image(res.checkboxButtonImage),
+				widget.ButtonOpts.Image(gui.UIRes.CheckboxButtonImage),
 			),
-			widget.CheckboxOpts.Image(res.checkboxGraphic),
+			widget.CheckboxOpts.Image(gui.UIRes.CheckboxGraphic),
 			widget.CheckboxOpts.StateChangedHandler(func(args *widget.CheckboxChangedEventArgs) {
 				slog.Info("[audioPage] clicked downmix to mono checkbox", "state", args.State)
 				cfg["Audio.DownmixToMono"] = args.State == widget.WidgetChecked
@@ -233,12 +234,12 @@ func newAudioPage(ctx *context.Context, res *uiResources, cfg map[string]interfa
 	))
 
 	// Separator
-	c.AddChild(newSeparator(res, widget.RowLayoutData{Stretch: true}))
+	c.AddChild(newSeparator(widget.RowLayoutData{Stretch: true}))
 
 	// Test button
 	c.AddChild(widget.NewButton(
-		widget.ButtonOpts.Image(res.buttonImage),
-		widget.ButtonOpts.Text(i18n.L("TestAudio"), res.fonts.regularFace, res.buttonTextColor),
+		widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+		widget.ButtonOpts.Text(i18n.L("TestAudio"), gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
 		widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			testAudio(ctx)

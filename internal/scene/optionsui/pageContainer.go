@@ -1,6 +1,7 @@
 package optionsui
 
 import (
+	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/ebitenui/ebitenui/widget"
 )
 
@@ -11,7 +12,7 @@ type pageContainer struct {
 }
 
 // TODO: use AnchorLayout instead of RowLayout
-func newPageContainer(res *uiResources) *pageContainer {
+func newPageContainer() *pageContainer {
 	c := widget.NewContainer(
 		widget.ContainerOpts.WidgetOpts(
 			widget.WidgetOpts.TrackHover(false),
@@ -29,7 +30,7 @@ func newPageContainer(res *uiResources) *pageContainer {
 				Stretch: true,
 			})),
 		),
-		widget.LabelOpts.Text("", res.fonts.titleFace, res.labelColor),
+		widget.LabelOpts.Text("", gui.UIRes.Fonts.TitleFace, gui.UIRes.LabelColor),
 	)
 	c.AddChild(lbl)
 

@@ -1,65 +1,81 @@
-package optionsui
+package gui
 
 import (
 	"image/color"
+	"io/fs"
 
-	"github.com/MatusOllah/gophengine/context"
 	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-type uiResources struct {
-	fonts *fonts
+// UIRes is the main [UIResources] instance.
+var UIRes *UIResources
 
-	bgImage                      *eui_image.NineSlice
-	titleBarBGImage              *eui_image.NineSlice
-	labelColor                   *widget.LabelColor
-	pageListScrollContainerImage *widget.ScrollContainerImage
-	pageListEntryColor           *widget.ListEntryColor
-	buttonImage                  *widget.ButtonImage
-	buttonTextColor              *widget.ButtonTextColor
-	dangerButtonImage            *widget.ButtonImage
-	dangerButtonTextColor        *widget.ButtonTextColor
-	textAreaScrollContainerImage *widget.ScrollContainerImage
-	scrollSliderTrackImage       *widget.SliderTrackImage
-	scrollButtonImage            *widget.ButtonImage
-	tooltipBGImage               *eui_image.NineSlice
-	listSliderTrackImage         *widget.SliderTrackImage
-	listScrollContainerImage     *widget.ScrollContainerImage
-	listEntryColor               *widget.ListEntryColor
-	sliderTrackImage             *widget.SliderTrackImage
-	separatorImage               *eui_image.NineSlice
-	checkboxGraphic              *widget.CheckboxGraphicImage
-	checkboxButtonImage          *widget.ButtonImage
-	textInputImage               *widget.TextInputImage
-	textInputColor               *widget.TextInputColor
+func Init(fsys fs.FS) error {
+	if UIRes != nil {
+		return nil
+	}
+	res, err := NewUIResources(fsys)
+	if err != nil {
+		return err
+	}
+	UIRes = res
+	return nil
 }
 
-func newUIResources(ctx *context.Context) (*uiResources, error) {
-	f, err := newFonts(ctx)
+type UIResources struct {
+	Fonts *Fonts
+
+	BGImage                      *eui_image.NineSlice
+	TitleBarBGImage              *eui_image.NineSlice
+	LabelColor                   *widget.LabelColor
+	PageListScrollContainerImage *widget.ScrollContainerImage
+	PageListEntryColor           *widget.ListEntryColor
+	ButtonImage                  *widget.ButtonImage
+	ButtonTextColor              *widget.ButtonTextColor
+	DangerButtonImage            *widget.ButtonImage
+	DangerButtonTextColor        *widget.ButtonTextColor
+	TextAreaScrollContainerImage *widget.ScrollContainerImage
+	ScrollSliderTrackImage       *widget.SliderTrackImage
+	ScrollButtonImage            *widget.ButtonImage
+	TooltipBGImage               *eui_image.NineSlice
+	ListSliderTrackImage         *widget.SliderTrackImage
+	ListScrollContainerImage     *widget.ScrollContainerImage
+	ListEntryColor               *widget.ListEntryColor
+	SliderTrackImage             *widget.SliderTrackImage
+	SeparatorImage               *eui_image.NineSlice
+	CheckboxGraphic              *widget.CheckboxGraphicImage
+	CheckboxButtonImage          *widget.ButtonImage
+	TextInputImage               *widget.TextInputImage
+	TextInputColor               *widget.TextInputColor
+}
+
+// NewUIResources creates a new [UIResources].
+func NewUIResources(fsys fs.FS) (*UIResources, error) {
+	f, err := newFonts(fsys)
 	if err != nil {
 		return nil, err
 	}
 
-	checkImg, _, err := ebitenutil.NewImageFromFileSystem(ctx.AssetsFS, "images/ui/checkmark.png")
+	checkImg, _, err := ebitenutil.NewImageFromFileSystem(fsys, "images/ui/checkmark.png")
 	if err != nil {
 		return nil, err
 	}
 
-	return &uiResources{
-		fonts: f,
+	return &UIResources{
+		Fonts: f,
 
-		bgImage:         eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
-		titleBarBGImage: eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF}),
-		labelColor:      newLabelColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
-		pageListScrollContainerImage: &widget.ScrollContainerImage{
+		BGImage:         eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
+		TitleBarBGImage: eui_image.NewNineSliceColor(color.NRGBA{0x0F, 0x0F, 0x0F, 0xFF}),
+		LabelColor:      newLabelColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
+		PageListScrollContainerImage: &widget.ScrollContainerImage{
 			Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
 			Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
 			Mask:     eui_image.NewNineSliceColor(color.NRGBA{0x1E, 0x1E, 0x1E, 0xFF}),
 		},
-		pageListEntryColor: &widget.ListEntryColor{
+		PageListEntryColor: &widget.ListEntryColor{
 			Selected:                   color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused selected entry
 			Unselected:                 color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, // Foreground color for the unfocused unselected entry
 			SelectedBackground:         color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}, // Background color for the unfocused selected entry
@@ -76,44 +92,44 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 		// This choice adds a fun, thematic touch to the GUI and serves as a little easter egg
 		// for fans of the game, aligning with the playful spirit of Friday Night Funkin'.
 		// Also, it just looks good.
-		buttonImage: &widget.ButtonImage{
+		ButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 0x50, G: 0xA5, B: 0xEB, A: 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{R: 0x29, G: 0x91, B: 0xEC, A: 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{R: 0x18, G: 0x7A, B: 0xCA, A: 0xFF}),
 		},
-		buttonTextColor: newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255}),
+		ButtonTextColor: newButtonTextColorSimple(color.NRGBA{0, 0, 0, 255}),
 
-		dangerButtonImage: &widget.ButtonImage{
+		DangerButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x00, 0x00, 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x24, 0x24, 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0xFF, 0x40, 0x40, 0xFF}),
 		},
-		dangerButtonTextColor: newButtonTextColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
-		textAreaScrollContainerImage: &widget.ScrollContainerImage{
+		DangerButtonTextColor: newButtonTextColorSimple(color.NRGBA{0xFF, 0xFF, 0xFF, 0xFF}),
+		TextAreaScrollContainerImage: &widget.ScrollContainerImage{
 			Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 			Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 			Mask:     eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 		},
-		scrollSliderTrackImage: &widget.SliderTrackImage{
+		ScrollSliderTrackImage: &widget.SliderTrackImage{
 			Idle:  eui_image.NewNineSliceColor(color.NRGBA{0, 0, 0, 25}),
 			Hover: eui_image.NewNineSliceColor(color.NRGBA{0, 0, 0, 25}),
 		},
-		scrollButtonImage: &widget.ButtonImage{
+		ScrollButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{0x4E, 0x4E, 0x4E, 128}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{0x5E, 0x5E, 0x5E, 128}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{0x6E, 0x6E, 0x6E, 128}),
 		},
-		tooltipBGImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x6E, G: 0x6E, B: 0x6E, A: 0xFF}),
-		listSliderTrackImage: &widget.SliderTrackImage{
+		TooltipBGImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x6E, G: 0x6E, B: 0x6E, A: 0xFF}),
+		ListSliderTrackImage: &widget.SliderTrackImage{
 			Idle:  eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 			Hover: eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
-		listScrollContainerImage: &widget.ScrollContainerImage{
+		ListScrollContainerImage: &widget.ScrollContainerImage{
 			Idle:     eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 			Disabled: eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 			Mask:     eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
-		listEntryColor: &widget.ListEntryColor{
+		ListEntryColor: &widget.ListEntryColor{
 			Selected:                   color.NRGBA{255, 255, 255, 255},                //Foreground color for the unfocused selected entry
 			Unselected:                 color.NRGBA{255, 255, 255, 255},                //Foreground color for the unfocused unselected entry
 			SelectedBackground:         color.NRGBA{R: 0x54, G: 0x98, B: 0xD0, A: 255}, //Background color for the unfocused selected entry
@@ -123,26 +139,26 @@ func newUIResources(ctx *context.Context) (*uiResources, error) {
 			DisabledSelected:           color.NRGBA{100, 100, 100, 255},                //Foreground color for the disabled selected entry
 			DisabledSelectedBackground: color.NRGBA{100, 100, 100, 255},                //Background color for the disabled selected entry
 		},
-		sliderTrackImage: &widget.SliderTrackImage{
+		SliderTrackImage: &widget.SliderTrackImage{
 			Idle:  eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 			Hover: eui_image.NewNineSliceColor(color.NRGBA{100, 100, 100, 255}),
 		},
-		separatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
-		checkboxGraphic: &widget.CheckboxGraphicImage{
+		SeparatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
+		CheckboxGraphic: &widget.CheckboxGraphicImage{
 			Unchecked: &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
 			Checked:   &widget.ButtonImageImage{Idle: checkImg},
 			Greyed:    &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
 		},
-		checkboxButtonImage: &widget.ButtonImage{
+		CheckboxButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 100, G: 100, B: 100, A: 0xFF}),
 			Hover:   eui_image.NewNineSliceColor(color.NRGBA{R: 75, G: 75, B: 75, A: 0xFF}),
 			Pressed: eui_image.NewNineSliceColor(color.NRGBA{R: 50, G: 50, B: 50, A: 0xFF}),
 		},
-		textInputImage: &widget.TextInputImage{
+		TextInputImage: &widget.TextInputImage{
 			Idle:     eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 			Disabled: eui_image.NewNineSliceColor(color.NRGBA{0x0E, 0x0E, 0x0E, 0xFF}),
 		},
-		textInputColor: &widget.TextInputColor{
+		TextInputColor: &widget.TextInputColor{
 			Idle:          color.NRGBA{254, 255, 255, 255},
 			Disabled:      color.NRGBA{R: 200, G: 200, B: 200, A: 255},
 			Caret:         color.NRGBA{254, 255, 255, 255},
