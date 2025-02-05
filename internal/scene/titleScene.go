@@ -18,6 +18,7 @@ import (
 	gefx "github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/internal/scene/title"
 	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
 	"github.com/gopxl/beep/v2/speaker"
@@ -41,7 +42,7 @@ type TitleScene struct {
 	mb                 *ge.MusicBeat
 	once               *sync.Once
 	randIntroText      []string
-	introText          *ge.IntroText
+	introText          *title.IntroText
 	logoBl             *engine.Sprite
 	gfDance            *engine.Sprite
 	titleText          *engine.Sprite
@@ -187,7 +188,7 @@ func (s *TitleScene) Init() error {
 
 	s.flasher = gefx.NewFlasher(s.ctx.Width, s.ctx.Height, 1)
 
-	introText, err := ge.NewIntroText(s.ctx.AssetsFS)
+	introText, err := title.NewIntroText(s.ctx.AssetsFS)
 	if err != nil {
 		return err
 	}
