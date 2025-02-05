@@ -1,4 +1,4 @@
-package gophengine
+package engine
 
 import (
 	"image"

@@ -10,6 +10,8 @@ import (
 	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
+	"github.com/MatusOllah/gophengine/internal/controls"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	input "github.com/quasilyte/ebitengine-input"
 )
@@ -21,7 +23,7 @@ type Context struct {
 	Width          int
 	Height         int
 	AssetsFS       fs.FS
-	SceneCtrl      *ge.SceneController
+	SceneCtrl      *engine.SceneController
 	InputSystem    input.System
 	InputHandler   *input.Handler
 	Rand           *rand.Rand
@@ -42,7 +44,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	ctx.AssetsFS = cfg.AssetsFS
 
-	ctx.SceneCtrl = ge.NewStateController(nil)
+	ctx.SceneCtrl = engine.NewStateController(nil)
 
 	// Rand
 	var seed1, seed2 uint64
@@ -70,7 +72,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	// Controls
 	ctx.InputSystem.Init(input.SystemConfig{DevicesEnabled: input.AnyDevice})
-	keymap, err := ge.LoadKeymapFromConfig(ctx.OptionsConfig)
+	keymap, err := controls.LoadKeymapFromConfig(ctx.OptionsConfig)
 	if err != nil {
 		return nil, err
 	}

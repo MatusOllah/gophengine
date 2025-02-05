@@ -3,13 +3,13 @@ package mainmenu
 import (
 	"log/slog"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/engine"
 )
 
 type MainMenuItem struct {
 	Name     string
-	Sprite   *ge.Sprite
+	Sprite   *engine.Sprite
 	OnSelect func(*MainMenuItem) error
 }
 

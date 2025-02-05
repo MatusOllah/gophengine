@@ -3,10 +3,10 @@ package scene
 import (
 	_ "image/png"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/browser"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -19,14 +19,14 @@ var mainMenuSceneInstance *MainMenuScene
 type MainMenuScene struct {
 	ctx        *context.Context
 	menuItems  *mainmenu.MainMenuItemGroup
-	bg         *ge.Sprite
-	magenta    *ge.Sprite
+	bg         *engine.Sprite
+	magenta    *engine.Sprite
 	ui         *ebitenui.UI
 	shouldExit bool
 	bgOffsetY  int // TODO: offset background when selecting menu items
 }
 
-var _ ge.Scene = (*MainMenuScene)(nil)
+var _ engine.Scene = (*MainMenuScene)(nil)
 
 func NewMainMenuScene(ctx *context.Context) *MainMenuScene {
 	return &MainMenuScene{ctx: ctx}
@@ -40,7 +40,7 @@ func (s *MainMenuScene) Init() error {
 	if err != nil {
 		return err
 	}
-	bg := ge.NewSprite(0, 0)
+	bg := engine.NewSprite(0, 0)
 	bg.Img = bgImg
 	s.bg = bg
 
@@ -48,30 +48,30 @@ func (s *MainMenuScene) Init() error {
 	if err != nil {
 		return err
 	}
-	magenta := ge.NewSprite(0, 0)
+	magenta := engine.NewSprite(0, 0)
 	magenta.Img = magentaImg
 	magenta.Visible = false
 	s.magenta = magenta
 
-	storyModeSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
+	storyModeSprite := engine.NewSprite(int(float64(s.ctx.Width/2)-615/2), 0) // Y coordinate handled by mainMenuItemGroup
 	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "story mode")
 	if err != nil {
 		return err
 	}
 
-	freeplaySprite := ge.NewSprite(int(float64(s.ctx.Width/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
+	freeplaySprite := engine.NewSprite(int(float64(s.ctx.Width/2)-484/2), 0) // Y coordinate handled by mainMenuItemGroup
 	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "freeplay")
 	if err != nil {
 		return err
 	}
 
-	donateSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
+	donateSprite := engine.NewSprite(int(float64(s.ctx.Width/2)-444/2), 0) // Y coordinate handled by mainMenuItemGroup
 	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "donate")
 	if err != nil {
 		return err
 	}
 
-	optionsSprite := ge.NewSprite(int(float64(s.ctx.Width/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
+	optionsSprite := engine.NewSprite(int(float64(s.ctx.Width/2)-487/2), 0) // Y coordinate handled by mainMenuItemGroup
 	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/FNF_main_menu_assets.anim.hcl", "options")
 	if err != nil {
 		return err

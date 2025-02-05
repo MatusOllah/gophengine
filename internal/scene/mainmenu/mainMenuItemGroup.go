@@ -4,10 +4,11 @@ import (
 	"log/slog"
 	"time"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/effects"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -17,11 +18,11 @@ type MainMenuItemGroup struct {
 	isSelected  bool
 	flicker     *effects.Flicker
 	itemFlicker *effects.Flicker
-	magenta     *ge.Sprite
+	magenta     *engine.Sprite
 	ctx         *context.Context
 }
 
-func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *ge.Sprite) *MainMenuItemGroup {
+func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *engine.Sprite) *MainMenuItemGroup {
 	for i, item := range items {
 		item.Sprite.Position.Y = 60 + (i * 160)
 	}
@@ -65,7 +66,7 @@ func (g *MainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle keyboard input for up navigation
-	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionUp) {
+	if g.ctx.InputHandler.ActionIsJustPressed(controls.ActionUp) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected > 0 {
@@ -80,7 +81,7 @@ func (g *MainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle keyboard input for down navigation
-	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionDown) {
+	if g.ctx.InputHandler.ActionIsJustPressed(controls.ActionDown) {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected < len(g.items)-1 {
@@ -115,7 +116,7 @@ func (g *MainMenuItemGroup) Update(dt float64) error {
 	}
 
 	// Handle item selection (keyboard)
-	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) {
+	if g.ctx.InputHandler.ActionIsJustPressed(controls.ActionAccept) {
 		slog.Info("selected menu item", "item", g.items[g.curSelected].Name, "i", g.curSelected)
 
 		if g.items[g.curSelected].Name == "donate" {

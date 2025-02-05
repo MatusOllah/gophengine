@@ -1,8 +1,8 @@
 package scene
 
 import (
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/optionsui"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -20,7 +20,7 @@ func NewOptionsScene(ctx *context.Context) *OptionsScene {
 	return &OptionsScene{ctx: ctx}
 }
 
-var _ ge.Scene = (*OptionsScene)(nil)
+var _ engine.Scene = (*OptionsScene)(nil)
 
 func (s *OptionsScene) Init() error {
 	s.shouldExit = false

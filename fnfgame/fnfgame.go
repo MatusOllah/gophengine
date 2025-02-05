@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"time"
 
-	ge "github.com/MatusOllah/gophengine"
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene"
 	"github.com/gopxl/beep/v2"
@@ -54,7 +54,7 @@ func (g *FNFGame) Update() error {
 		return fmt.Errorf("error updating state: %w", err)
 	}
 
-	if g.ctx.InputHandler.ActionIsJustPressed(ge.ActionFullscreen) {
+	if g.ctx.InputHandler.ActionIsJustPressed(controls.ActionFullscreen) {
 		g.ctx.OptionsConfig.Toggle("Fullscreen")
 		ebiten.SetFullscreen(g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))
 		slog.Info("toggled fullscreen", "Fullscreen", g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))

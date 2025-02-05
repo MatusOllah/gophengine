@@ -3,11 +3,11 @@ package effects
 import (
 	"time"
 
-	ge "github.com/MatusOllah/gophengine"
+	"github.com/MatusOllah/gophengine/internal/engine"
 )
 
 type Flicker struct {
-	Sprite             *ge.Sprite
+	Sprite             *engine.Sprite
 	dur                time.Duration
 	interval           time.Duration
 	startTime          time.Time
@@ -16,7 +16,7 @@ type Flicker struct {
 	OnCompleteCallback func() error
 }
 
-func NewFlicker(spr *ge.Sprite, dur time.Duration, interval time.Duration) *Flicker {
+func NewFlicker(spr *engine.Sprite, dur time.Duration, interval time.Duration) *Flicker {
 	return &Flicker{
 		Sprite:             spr,
 		dur:                dur,

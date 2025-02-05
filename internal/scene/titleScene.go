@@ -14,7 +14,9 @@ import (
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/controls"
 	gefx "github.com/MatusOllah/gophengine/internal/effects"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/gopxl/beep/v2"
 	"github.com/gopxl/beep/v2/effects"
@@ -29,20 +31,20 @@ import (
 
 var titleSceneInstance *TitleScene
 
-var _ ge.Scene = (*TitleScene)(nil)
+var _ engine.Scene = (*TitleScene)(nil)
 
 // TitleScene is the intro and "press enter to begin" screen.
 type TitleScene struct {
 	ctx                *context.Context
-	goLogo             *ge.Sprite
-	ebitenLogo         *ge.Sprite
+	goLogo             *engine.Sprite
+	ebitenLogo         *engine.Sprite
 	mb                 *ge.MusicBeat
 	once               *sync.Once
 	randIntroText      []string
 	introText          *ge.IntroText
-	logoBl             *ge.Sprite
-	gfDance            *ge.Sprite
-	titleText          *ge.Sprite
+	logoBl             *engine.Sprite
+	gfDance            *engine.Sprite
+	titleText          *engine.Sprite
 	freakyMenuStreamer beep.StreamSeekCloser
 	freakyMenuFormat   beep.Format
 	freakyMenu         *effects.Volume
@@ -115,7 +117,7 @@ func (s *TitleScene) Init() error {
 	}
 	s.randIntroText = it
 
-	s.goLogo = ge.NewSprite(int((float64(s.ctx.Width)/2)-300), int(float64(s.ctx.Height)*0.33))
+	s.goLogo = engine.NewSprite(int((float64(s.ctx.Width)/2)-300), int(float64(s.ctx.Height)*0.33))
 	goLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/go_logo.png")
 	if err != nil {
 		return err
@@ -123,7 +125,7 @@ func (s *TitleScene) Init() error {
 	s.goLogo.Img = goLogoImg
 	s.goLogo.Visible = false
 
-	s.ebitenLogo = ge.NewSprite(int((float64(s.ctx.Width) / 2)), int(float64(s.ctx.Height)*0.33))
+	s.ebitenLogo = engine.NewSprite(int((float64(s.ctx.Width) / 2)), int(float64(s.ctx.Height)*0.33))
 	ebitenLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ebiten_logo.png")
 	if err != nil {
 		return err
@@ -131,7 +133,7 @@ func (s *TitleScene) Init() error {
 	s.ebitenLogo.Img = ebitenLogoImg
 	s.ebitenLogo.Visible = false
 
-	logoBl := ge.NewSprite(-150, -100)
+	logoBl := engine.NewSprite(-150, -100)
 	ac, err := animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
 	if err != nil {
 		return err
@@ -139,7 +141,7 @@ func (s *TitleScene) Init() error {
 	logoBl.AnimController = ac
 	s.logoBl = logoBl
 
-	gfDance := ge.NewSprite(int(float64(s.ctx.Width)*0.4), int(float64(s.ctx.Height)*0.07))
+	gfDance := engine.NewSprite(int(float64(s.ctx.Width)*0.4), int(float64(s.ctx.Height)*0.07))
 	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
 	if err != nil {
 		return err
@@ -147,7 +149,7 @@ func (s *TitleScene) Init() error {
 	gfDance.AnimController = ac
 	s.gfDance = gfDance
 
-	titleText := ge.NewSprite(100, int(float64(s.ctx.Height)*0.8))
+	titleText := engine.NewSprite(100, int(float64(s.ctx.Height)*0.8))
 	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
 	if err != nil {
 		return err
@@ -243,7 +245,7 @@ func (s *TitleScene) Update(dt float64) error {
 
 	s.flasher.Update(dt)
 
-	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.transitioning && s.skippedIntro {
+	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionAccept) && !s.transitioning && s.skippedIntro {
 		s.titleText.AnimController.Play("press")
 		s.flasher.Flash()
 
@@ -260,7 +262,7 @@ func (s *TitleScene) Update(dt float64) error {
 		})
 	}
 
-	if s.ctx.InputHandler.ActionIsJustPressed(ge.ActionAccept) && !s.skippedIntro {
+	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionAccept) && !s.skippedIntro {
 		s.skipIntro()
 	}
 

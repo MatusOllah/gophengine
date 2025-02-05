@@ -1,13 +1,13 @@
 package scene
 
 import (
-	ge "github.com/MatusOllah/gophengine"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type NopScene struct{}
 
-var _ ge.Scene = (*NopScene)(nil)
+var _ engine.Scene = (*NopScene)(nil)
 
 func (s *NopScene) Init() error {
 	return nil
