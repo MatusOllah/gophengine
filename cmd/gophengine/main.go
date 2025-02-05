@@ -19,6 +19,7 @@ import (
 	"image"
 	_ "image/png"
 	"io"
+	"io/fs"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -30,11 +31,64 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/dialog"
-	"github.com/MatusOllah/gophengine/internal/fsutil"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
 )
+
+// extractFS extracts the filesystem to dst.
+func extractFS(fsys fs.FS, dst string) error {
+	// create destination directory
+	if err := os.Mkdir(dst, fs.ModePerm); err != nil {
+		return err
+	}
+
+	err := fs.WalkDir(fsys, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// create directory
+		if d.IsDir() {
+			dirPath := filepath.Join(dst, path)
+
+			slog.Info("creating directory", "path", dirPath)
+			if err := os.MkdirAll(dirPath, fs.ModePerm); err != nil {
+				return err
+			}
+
+			return nil
+		}
+
+		// create file
+		dstPath := filepath.Join(dst, path)
+
+		slog.Info("extracting", "src", path, "dst", dstPath)
+
+		srcFile, err := fsys.Open(path)
+		if err != nil {
+			return err
+		}
+		defer srcFile.Close()
+
+		dstFile, err := os.Create(dstPath)
+		if err != nil {
+			return err
+		}
+		defer dstFile.Close()
+
+		if _, err := io.Copy(dstFile, srcFile); err != nil {
+			return err
+		}
+
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 // setIcon sets the window icon.
 func setIcon() error {
@@ -94,7 +148,7 @@ func mainE() error {
 	slog.Info("ahoj!")
 
 	if *extractAssetsFlag {
-		if err := fsutil.Extract(assets.FS, "assets"); err != nil {
+		if err := extractFS(assets.FS, "assets"); err != nil {
 			return fmt.Errorf("failed to extract assets: %w", err)
 		}
 
