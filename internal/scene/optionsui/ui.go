@@ -185,6 +185,9 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		),
 	))
 
+	winwidth := 800
+	winheight := 600
+
 	// The window
 	window := widget.NewWindow(
 		widget.WindowOpts.Contents(windowContainer),
@@ -192,7 +195,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 		widget.WindowOpts.Draggable(),
 		widget.WindowOpts.Modal(),
 		widget.WindowOpts.CloseMode(widget.NONE),
-		widget.WindowOpts.MinSize(640, 480),
+		widget.WindowOpts.MinSize(winwidth, winheight),
 		widget.WindowOpts.Resizeable(),
 	)
 
@@ -200,7 +203,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// Spawn window
 	x, y := window.Contents.PreferredSize()
-	window.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-640/2), int(float64(ctx.Height/2)-480/2))))
+	window.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-float64(winwidth)/2), int(float64(ctx.Height/2)-float64(winheight)/2))))
 	ui.AddWindow(window)
 
 	return ui, nil
