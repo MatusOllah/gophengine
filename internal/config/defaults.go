@@ -28,6 +28,7 @@ func LoadDefaultOptions(cfg *Config) {
 		"Audio.DownmixToMono": false,
 
 		"Graphics.EnableFPSCounter": false,
+		"Graphics.EnableVSync":      true,
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},

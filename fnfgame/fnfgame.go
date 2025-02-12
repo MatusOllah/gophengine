@@ -80,7 +80,7 @@ func (g *FNFGame) Layout(_, _ int) (int, int) {
 }
 
 func (g *FNFGame) InitEbiten() {
-	ebiten.SetVsyncEnabled(false) // TODO: get vsync from config
+	ebiten.SetVsyncEnabled(g.ctx.OptionsConfig.MustGet("Graphics.EnableVSync").(bool))
 	ebiten.SetFullscreen(g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))
 	slog.Info("creating window")
 	ebiten.SetWindowSize(g.ctx.WindowWidth, g.ctx.WindowHeight)
