@@ -24,6 +24,7 @@ type FNFGame struct {
 	dt   float64 // FIXME: I should probably get rid of this...
 }
 
+// New creates a new [FNFGame].
 func New(ctx *context.Context) (*FNFGame, error) {
 	g := new(FNFGame)
 	g.ctx = ctx
@@ -108,6 +109,7 @@ func (g *FNFGame) initAudio() error {
 	return nil
 }
 
+// Start starts the game.
 func (g *FNFGame) Start() error {
 	if err := g.initAudio(); err != nil {
 		return err
@@ -128,6 +130,7 @@ func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
 	return nil
 }
 
+// Close cleans up resources and closes the game.
 func (g *FNFGame) Close() error {
 	slog.Info("cleaning up")
 
