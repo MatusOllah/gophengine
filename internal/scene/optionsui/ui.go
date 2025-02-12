@@ -12,8 +12,6 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 )
 
-//TODO: maybe move uiResources and cfg to a uiContext struct?
-
 func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 	ui := &ebitenui.UI{}
 
