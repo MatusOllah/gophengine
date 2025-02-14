@@ -5,8 +5,6 @@ type Upscaling int
 const (
 	UpscaleNearest Upscaling = iota
 	UpscaleLinear
-	UpscaleBicubic
-	UpscaleFSR
 )
 
 func (u Upscaling) String() string {
@@ -15,10 +13,6 @@ func (u Upscaling) String() string {
 		return "UpscaleNearest"
 	case UpscaleLinear:
 		return "UpscaleLinear"
-	case UpscaleBicubic:
-		return "UpscaleBicubic"
-	case UpscaleFSR:
-		return "UpscaleFSR"
 	default:
 		panic("invalid upscaling")
 	}

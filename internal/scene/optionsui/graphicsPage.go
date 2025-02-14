@@ -64,8 +64,6 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 	upscaleMethods := []any{
 		engine.UpscaleNearest,
 		engine.UpscaleLinear,
-		engine.UpscaleBicubic,
-		engine.UpscaleFSR,
 	}
 
 	upscaleComboBox := widget.NewListComboButton(
