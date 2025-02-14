@@ -2,6 +2,7 @@ package fnfgame
 
 import (
 	"fmt"
+	"io/fs"
 	"log/slog"
 	"runtime"
 	"time"
@@ -20,9 +21,10 @@ import (
 )
 
 type FNFGame struct {
-	ctx  *context.Context
-	last time.Time
-	dt   float64 // FIXME: I should probably get rid of this...
+	ctx           *context.Context
+	last          time.Time
+	dt            float64 // FIXME: I should probably get rid of this...
+	bicubicShader *ebiten.Shader
 }
 
 // New creates a new [FNFGame].
@@ -40,6 +42,19 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	if runtime.GOARCH != "wasm" {
 		if err := clipboard.Init(); err != nil {
 			return nil, fmt.Errorf("fnfgame New: failed to initialize clipboard: %w", err)
+		}
+	}
+
+	// Upscaling shaders
+	if engine.Upscaling(g.ctx.OptionsConfig.MustGet("Graphics.UpscaleMethod").(int)) == engine.UpscaleBicubic {
+		b, err := fs.ReadFile(ctx.AssetsFS, "shaders/upscale/bicubic.kage")
+		if err != nil {
+			return nil, fmt.Errorf("fnfgame New: failed to read bicubic upscaling shader bytes: %w", err)
+		}
+
+		g.bicubicShader, err = ebiten.NewShader(b)
+		if err != nil {
+			return nil, fmt.Errorf("fnfgame New: failed to compile bicubic upscaling shader: %w", err)
 		}
 	}
 
@@ -91,10 +106,9 @@ func (g *FNFGame) DrawFinalScreen(screen ebiten.FinalScreen, offscreen *ebiten.I
 			GeoM:   geoM,
 		})
 	case engine.UpscaleBicubic:
-		//TODO: WIP...
-		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
+		screen.DrawRectShader(screen.Bounds().Dx(), screen.Bounds().Dy(), g.bicubicShader, &ebiten.DrawRectShaderOptions{
+			Images: [4]*ebiten.Image{offscreen, nil, nil, nil},
 			Blend:  ebiten.BlendCopy,
-			Filter: ebiten.FilterLinear,
 			GeoM:   geoM,
 		})
 	case engine.UpscaleFSR:
