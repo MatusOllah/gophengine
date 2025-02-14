@@ -68,7 +68,7 @@ func (g *FNFGame) Update() error {
 	g.ctx.InputSystem.UpdateWithDelta(g.dt)
 
 	if err := g.ctx.SceneCtrl.Update(g.dt); err != nil {
-		return fmt.Errorf("error updating state: %w", err)
+		return fmt.Errorf("fnfgame Update: error updating state: %w", err)
 	}
 
 	if g.ctx.InputHandler.ActionIsJustPressed(controls.ActionFullscreen) {
@@ -143,7 +143,7 @@ func (g *FNFGame) initAudio() error {
 
 	slog.Info("initializing audio", "sampleRate", sr, "bufferSize", bufSize)
 	if err := speaker.Init(sr, bufSize); err != nil {
-		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
+		return fmt.Errorf("fnfgame initAudio: error initializing audio: %w", err)
 	}
 
 	if g.ctx.OptionsConfig.MustGet("Audio.DownmixToMono").(bool) {
