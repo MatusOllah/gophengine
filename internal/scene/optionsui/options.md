@@ -3,8 +3,6 @@
 - Audio
     - Enable game over music (checkbox)
 - Video
-    - Upscaling method (combo box)
-    - Graphics backend (combo box)
     - Enable shaders (checkbox)
     - Colorblind filter (combo box)
 - Gameplay
