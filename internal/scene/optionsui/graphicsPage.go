@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui/widget"
@@ -54,6 +55,58 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 				return widget.WidgetUnchecked
 			}()),
 		),
+	))
+
+	upscaleStringFunc := func(v any) string {
+		return i18n.L(v.(engine.Upscaling).String())
+	}
+
+	upscaleMethods := []any{
+		engine.UpscaleNearest,
+		engine.UpscaleLinear,
+		engine.UpscaleBicubic,
+		engine.UpscaleFSR,
+	}
+
+	upscaleComboBox := widget.NewListComboButton(
+		widget.ListComboButtonOpts.SelectComboButtonOpts(
+			widget.SelectComboButtonOpts.ComboButtonOpts(
+				widget.ComboButtonOpts.MaxContentHeight(200),
+				widget.ComboButtonOpts.ButtonOpts(
+					widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+					widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
+					widget.ButtonOpts.Text("", gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
+					widget.ButtonOpts.WidgetOpts(
+						widget.WidgetOpts.MinSize(150, 0),
+					),
+				),
+			),
+		),
+		widget.ListComboButtonOpts.ListOpts(
+			widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(widget.WidgetOpts.MinSize(150, 0))),
+			widget.ListOpts.Entries(upscaleMethods),
+			widget.ListOpts.ScrollContainerOpts(widget.ScrollContainerOpts.Image(gui.UIRes.ListScrollContainerImage)),
+			widget.ListOpts.SliderOpts(
+				widget.SliderOpts.Images(gui.UIRes.ListSliderTrackImage, gui.UIRes.ButtonImage),
+				widget.SliderOpts.MinHandleSize(5),
+				widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(2)),
+			),
+			widget.ListOpts.EntryFontFace(gui.UIRes.Fonts.RegularFace),
+			widget.ListOpts.EntryColor(gui.UIRes.ListEntryColor),
+			widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
+			widget.ListOpts.HideHorizontalSlider(),
+		),
+		widget.ListComboButtonOpts.EntryLabelFunc(upscaleStringFunc, upscaleStringFunc),
+		widget.ListComboButtonOpts.EntrySelectedHandler(func(args *widget.ListComboButtonEntrySelectedEventArgs) {
+			slog.Info("[graphicsPage] selected upscaling method entry", "entry", args.Entry)
+			cfg["Graphics.UpscaleMethod"] = int(args.Entry.(engine.Upscaling))
+		}),
+	)
+	upscaleComboBox.SetSelectedEntry(engine.Upscaling(cfg["Graphics.UpscaleMethod"].(int)))
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("UpscaleMethod"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
+		upscaleComboBox,
 	))
 
 	return &page{

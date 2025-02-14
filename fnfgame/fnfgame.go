@@ -8,6 +8,7 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/controls"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene"
 	"github.com/gopxl/beep/v2"
@@ -72,6 +73,37 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 			"FPS": ebiten.ActualFPS(),
 			"TPS": ebiten.ActualTPS(),
 		}))
+	}
+}
+
+func (g *FNFGame) DrawFinalScreen(screen ebiten.FinalScreen, offscreen *ebiten.Image, geoM ebiten.GeoM) {
+	switch engine.Upscaling(g.ctx.OptionsConfig.MustGet("Graphics.UpscaleMethod").(int)) {
+	case engine.UpscaleNearest:
+		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
+			Blend:  ebiten.BlendCopy,
+			Filter: ebiten.FilterNearest,
+			GeoM:   geoM,
+		})
+	case engine.UpscaleLinear:
+		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
+			Blend:  ebiten.BlendCopy,
+			Filter: ebiten.FilterLinear,
+			GeoM:   geoM,
+		})
+	case engine.UpscaleBicubic:
+		//TODO: WIP...
+		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
+			Blend:  ebiten.BlendCopy,
+			Filter: ebiten.FilterLinear,
+			GeoM:   geoM,
+		})
+	case engine.UpscaleFSR:
+		//TODO: WIP...
+		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
+			Blend:  ebiten.BlendCopy,
+			Filter: ebiten.FilterLinear,
+			GeoM:   geoM,
+		})
 	}
 }
 

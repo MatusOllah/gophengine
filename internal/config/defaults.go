@@ -3,6 +3,7 @@ package config
 import (
 	"log/slog"
 
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/jeandeaual/go-locale"
 	input "github.com/quasilyte/ebitengine-input"
 )
@@ -29,6 +30,7 @@ func LoadDefaultOptions(cfg *Config) {
 
 		"Graphics.EnableFPSCounter": false,
 		"Graphics.EnableVSync":      true,
+		"Graphics.UpscaleMethod":    int(engine.UpscaleLinear),
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},
