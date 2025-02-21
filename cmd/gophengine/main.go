@@ -230,7 +230,7 @@ func main() {
 			tempDir = "."
 		}
 
-		roller, err := lumberjack.NewRoller(filepath.Join(tempDir, "GophEngine", "logs", "game.log"), 500*1024*1024, &lumberjack.Options{
+		roller, err := lumberjack.NewRoller(filepath.Join(tempDir, "GophEngine", "logs", "game.log"), 10*1024*1024, &lumberjack.Options{
 			MaxBackups: 5,
 			Compress:   true,
 		})
