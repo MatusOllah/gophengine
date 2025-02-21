@@ -91,7 +91,7 @@ func Open(path string) (*Config, error) {
 	if runtime.GOARCH == "wasm" {
 		cfg.file = nil
 	} else {
-		file, err := os.Create(path)
+		file, err := os.OpenFile(path, os.O_RDWR, 0644)
 		if err != nil {
 			return nil, err
 		}
@@ -236,12 +236,22 @@ func (cfg *Config) Flush() error {
 		return nil
 	}
 
+	if err := cfg.file.Truncate(0); err != nil {
+		return err
+	}
+
+	if _, err := cfg.file.Seek(0, 0); err != nil {
+		return err
+	}
+
 	_, err := io.Copy(cfg.file, cfg.buf)
 	if err != nil {
 		return err
 	}
 
-	cfg.file.Sync()
+	if err := cfg.file.Sync(); err != nil {
+		return err
+	}
 
 	cfg.buf.Reset()
 
