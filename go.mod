@@ -11,6 +11,7 @@ require (
 	github.com/hajimehoshi/ebiten/v2 v2.8.6
 	github.com/hashicorp/hcl/v2 v2.22.0
 	github.com/jeandeaual/go-locale v0.0.0-20241217141322-fcc2cadd6f08
+	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/ncruces/zenity v0.10.14
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
@@ -20,7 +21,6 @@ require (
 	github.com/zclconf/go-cty v1.15.0
 	golang.design/x/clipboard v0.7.0
 	golang.org/x/text v0.21.0
-	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (

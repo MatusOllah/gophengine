@@ -33,7 +33,7 @@ import (
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
-	"gopkg.in/natefinch/lumberjack.v2"
+	"github.com/natefinch/lumberjack/v3"
 )
 
 // extractFS extracts the filesystem to dst.
@@ -230,13 +230,15 @@ func main() {
 			tempDir = "."
 		}
 
-		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(&lumberjack.Logger{
-			Filename:   filepath.Join(tempDir, "GophEngine", "logs", "game.log"),
-			MaxSize:    500, // megabytes
+		roller, err := lumberjack.NewRoller(filepath.Join(tempDir, "GophEngine", "logs", "game.log"), 500*1024*1024, &lumberjack.Options{
 			MaxBackups: 5,
-			MaxAge:     28, // days
 			Compress:   true,
-		})), opts)))
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(roller)), opts)))
 	} else {
 		slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 	}
