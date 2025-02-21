@@ -25,7 +25,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/MatusOllah/gophengine/assets"
 	"github.com/MatusOllah/gophengine/context"
@@ -34,6 +33,7 @@ import (
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 // extractFS extracts the filesystem to dst.
@@ -130,16 +130,6 @@ func getLogLevel() slog.Leveler {
 	}
 }
 
-// getLogFilePath get the logfile path from the temporary directory and current time.
-func getLogFilePath() string {
-	tempDir := os.TempDir()
-	if *portableFlag {
-		tempDir = "."
-	}
-
-	return filepath.Join(tempDir, "GophEngine", "logs", time.Now().Format("2006-01-02_15-04-05.log"))
-}
-
 // Actual main func here
 func mainE() error {
 	slog.Info(fmt.Sprintf("GophEngine version %s", version))
@@ -229,27 +219,24 @@ func main() {
 		panic(err)
 	}
 
-	// Logfile
-	var logfile *os.File
-	if runtime.GOARCH != "wasm" {
-		logfilePath := getLogFilePath()
-		if err := os.MkdirAll(filepath.Dir(logfilePath), 0755); err != nil {
-			panic(err)
-		}
-		logfile, err := os.Create(logfilePath)
-		if err != nil {
-			panic(err)
-		}
-		defer logfile.Close()
-	}
-
 	// Logger (using slogcolor: https://github.com/MatusOllah/slogcolor)
 	opts := slogcolor.DefaultOptions
 	opts.Level = getLogLevel()
 	opts.SrcFileLength = 32
 
 	if runtime.GOARCH != "wasm" {
-		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(logfile)), opts)))
+		tempDir := os.TempDir()
+		if *portableFlag {
+			tempDir = "."
+		}
+
+		slog.SetDefault(slog.New(slogcolor.NewHandler(io.MultiWriter(os.Stderr, stripansi.NewWriter(&lumberjack.Logger{
+			Filename:   filepath.Join(tempDir, "GophEngine", "logs", "game.log"),
+			MaxSize:    500, // megabytes
+			MaxBackups: 5,
+			MaxAge:     28, // days
+			Compress:   true,
+		})), opts)))
 	} else {
 		slog.SetDefault(slog.New(slogcolor.NewHandler(os.Stderr, opts)))
 	}
