@@ -37,6 +37,7 @@ type Context struct {
 	FNFVersion     string
 }
 
+// New creates a new [Context].
 func New(cfg *NewContextConfig) (*Context, error) {
 	ctx := &Context{}
 	ctx.WindowWidth = 1280
