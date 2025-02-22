@@ -11,7 +11,7 @@ type SceneController struct {
 	curScene Scene
 }
 
-func NewStateController(state Scene) *SceneController {
+func NewSceneController(state Scene) *SceneController {
 	return &SceneController{state}
 }
 

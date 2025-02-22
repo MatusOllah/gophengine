@@ -46,7 +46,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 
 	ctx.AssetsFS = cfg.AssetsFS
 
-	ctx.SceneCtrl = engine.NewStateController(nil)
+	ctx.SceneCtrl = engine.NewSceneController(nil)
 
 	// Rand
 	var seed1, seed2 uint64
