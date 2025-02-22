@@ -115,7 +115,7 @@ func (g *FNFGame) initAudio() error {
 
 	slog.Info("initializing audio", "sampleRate", sr, "bufferSize", bufSize)
 	if err := speaker.Init(sr, bufSize); err != nil {
-		return fmt.Errorf("fnfgame initAudio: error initializing audio: %w", err)
+		return fmt.Errorf("error initializing speaker: %w", err)
 	}
 
 	if g.ctx.OptionsConfig.MustGet("Audio.DownmixToMono").(bool) {
@@ -130,7 +130,7 @@ func (g *FNFGame) initAudio() error {
 // Start starts the game.
 func (g *FNFGame) Start() error {
 	if err := g.initAudio(); err != nil {
-		return err
+		return fmt.Errorf("fnfgame Start: error initializing audio: %w", err)
 	}
 	if err := ebiten.RunGame(g); err != nil {
 		return fmt.Errorf("fnfgame Start: error running game: %w", err)
@@ -140,7 +140,7 @@ func (g *FNFGame) Start() error {
 
 func (g *FNFGame) StartWithOptions(opts *ebiten.RunGameOptions) error {
 	if err := g.initAudio(); err != nil {
-		return err
+		return fmt.Errorf("fnfgame StartWithOptions: error initializing audio: %w", err)
 	}
 	if err := ebiten.RunGameWithOptions(g, opts); err != nil {
 		return fmt.Errorf("fnfgame StartWithOptions: error running game: %w", err)
