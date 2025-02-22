@@ -3,6 +3,7 @@ package context
 import (
 	crand "crypto/rand"
 	"encoding/binary"
+	"fmt"
 	"io/fs"
 	"log/slog"
 	"math/rand/v2"
@@ -50,24 +51,24 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	// Rand
 	var seed1, seed2 uint64
 	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed1); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read random seed 1: %w", err)
 	}
 	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed2); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read random seed 2: %w", err)
 	}
 	ctx.Rand = rand.New(rand.NewPCG(seed1, seed2))
 
-	// Options config (config.gecfg)
+	// Options config
 	optionsConfig, err := config.New(cfg.OptionsConfigPath, true)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to load options config: %w", err)
 	}
 	ctx.OptionsConfig = optionsConfig
 
-	// Progress config (progress.gecfg)
+	// Progress config
 	progressConfig, err := config.New(cfg.ProgressConfigPath, false)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to load progress config: %w", err)
 	}
 	ctx.ProgressConfig = progressConfig
 
@@ -75,7 +76,7 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.InputSystem.Init(input.SystemConfig{DevicesEnabled: input.AnyDevice})
 	keymap, err := controls.LoadKeymapFromConfig(ctx.OptionsConfig)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to load keymap: %w", err)
 	}
 	ctx.InputHandler = ctx.InputSystem.NewHandler(0, keymap)
 
@@ -86,12 +87,12 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	}
 	slog.Info("using locale", "locale", locale)
 	if err := i18n.Init(cfg.AssetsFS, locale); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to initialize i18n: %w", err)
 	}
 
 	// GUI
 	if err := gui.Init(ctx.AssetsFS); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to initialize gui resources: %w", err)
 	}
 
 	//Audio
