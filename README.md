@@ -88,4 +88,4 @@ You can donate through the following platforms:
 * **Duino-Coin (DUCO):** `SladkyCitron`
 * **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` or `SladkyCitron`
 
-Thank you for your support - it means the world! 😊
+Thank you for your support - it means the world! 😊❤️

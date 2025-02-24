@@ -89,4 +89,4 @@ Môžete darovať prostredníctvom nasledujúcich platforiem:
 * **Duino-Coin (DUCO):** `SladkyCitron`
 * **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` alebo `SladkyCitron`
 
-Ďakujem za vašu podporu – znamená to pre mňa veľa! 😊
+Ďakujem za vašu podporu – znamená to pre mňa veľa! 😊❤️
