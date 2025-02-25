@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/gob"
 	"errors"
+	"fmt"
 	"io"
 	"log/slog"
 	"maps"
@@ -41,7 +42,7 @@ func New(path string, loadDefaults bool) (*Config, error) {
 	if fileExists(path) {
 		cfg, err := Open(path)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to open config: %w", err)
 		}
 
 		return cfg, nil
@@ -49,7 +50,7 @@ func New(path string, loadDefaults bool) (*Config, error) {
 		slog.Warn("config not found, creating new config", "path", path)
 		cfg, err := Create(path, loadDefaults)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to create config: %w", err)
 		}
 
 		return cfg, nil
@@ -67,7 +68,7 @@ func Create(path string, loadDefaults bool) (*Config, error) {
 
 		file, err := os.Create(path)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to create file: %w", err)
 		}
 		cfg.file = file
 	}
@@ -93,7 +94,7 @@ func Open(path string) (*Config, error) {
 	} else {
 		file, err := os.OpenFile(path, os.O_RDWR, 0644)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to open file: %w", err)
 		}
 
 		cfg.file = file
@@ -105,12 +106,12 @@ func Open(path string) (*Config, error) {
 
 	_, err := io.Copy(cfg.buf, cfg.file)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read file to buffer: %w", err)
 	}
 
 	cfg.dataLock.Lock()
 	if err := cfg.decoder.Decode(&cfg.data); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to decode gob: %w", err)
 	}
 	cfg.dataLock.Unlock()
 
@@ -202,7 +203,7 @@ func (cfg *Config) Exists(key string) bool {
 	return ok
 }
 
-// Map iterates over the map and applies the MapFunc to every item.
+// Map iterates over the map and applies the [MapFunc] to every item.
 func (cfg *Config) Map(fn MapFunc) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
@@ -229,7 +230,7 @@ func (cfg *Config) Flush() error {
 	defer cfg.dataLock.Unlock()
 
 	if err := cfg.encoder.Encode(cfg.data); err != nil {
-		return err
+		return fmt.Errorf("failed to encode gob: %w", err)
 	}
 
 	if cfg.file == nil {
@@ -237,20 +238,20 @@ func (cfg *Config) Flush() error {
 	}
 
 	if err := cfg.file.Truncate(0); err != nil {
-		return err
+		return fmt.Errorf("failed to truncate file: %w", err)
 	}
 
 	if _, err := cfg.file.Seek(0, 0); err != nil {
-		return err
+		return fmt.Errorf("failed to seek file: %w", err)
 	}
 
 	_, err := io.Copy(cfg.file, cfg.buf)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to write to file from buffer: %w", err)
 	}
 
 	if err := cfg.file.Sync(); err != nil {
-		return err
+		return fmt.Errorf("failed to sync file: %w", err)
 	}
 
 	cfg.buf.Reset()
