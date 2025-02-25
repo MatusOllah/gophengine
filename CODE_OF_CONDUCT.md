@@ -29,10 +29,10 @@ Examples of unacceptable behavior include:
 
 * The use of sexualized language or imagery, and sexual attention or advances of
   any kind
-* Shipping Friday Night Funkin' characters
+* The use of graphic imagery or gore, and graphic advances of any kind
 * Trolling, insulting or derogatory comments, and personal or political attacks
 * Public or private harassment
-* Publishing others' private information, such as a physical or email address,
+* Publishing others' private information, such as a physical or electronic address,
   without their explicit permission
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
