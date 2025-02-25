@@ -22,8 +22,6 @@ import (
 type Context struct {
 	WindowWidth    int
 	WindowHeight   int
-	Width          int
-	Height         int
 	AssetsFS       fs.FS
 	SceneCtrl      *engine.SceneController
 	InputSystem    input.System
@@ -42,8 +40,6 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx := &Context{}
 	ctx.WindowWidth = 1280
 	ctx.WindowHeight = 720
-	ctx.Width = 1280
-	ctx.Height = 720
 
 	ctx.AssetsFS = cfg.AssetsFS
 

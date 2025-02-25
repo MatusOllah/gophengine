@@ -9,6 +9,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
@@ -152,7 +153,7 @@ func wipeOptionsConfig(ctx *context.Context, ui *ebitenui.UI) {
 
 	// Spawn window
 	x, y := confirmDialog.Contents.PreferredSize()
-	confirmDialog.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-200), int(float64(ctx.Height/2)-100))))
+	confirmDialog.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(engine.GameWidth/2)-200), int(float64(engine.GameHeight/2)-100))))
 	ui.AddWindow(confirmDialog)
 }
 
@@ -293,6 +294,6 @@ func wipeProgressConfig(ctx *context.Context, ui *ebitenui.UI) {
 
 	// Spawn window
 	x, y := confirmDialog.Contents.PreferredSize()
-	confirmDialog.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-200), int(float64(ctx.Height/2)-100))))
+	confirmDialog.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(engine.GameWidth/2)-200), int(float64(engine.GameHeight/2)-100))))
 	ui.AddWindow(confirmDialog)
 }

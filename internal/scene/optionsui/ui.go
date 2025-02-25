@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
@@ -201,7 +202,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 
 	// Spawn window
 	x, y := window.Contents.PreferredSize()
-	window.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-float64(winwidth)/2), int(float64(ctx.Height/2)-float64(winheight)/2))))
+	window.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(engine.GameWidth/2)-float64(winwidth)/2), int(float64(engine.GameHeight/2)-float64(winheight)/2))))
 	ui.AddWindow(window)
 
 	return ui, nil

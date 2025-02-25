@@ -118,7 +118,7 @@ func (s *TitleScene) Init() error {
 	}
 	s.randIntroText = it
 
-	s.goLogo = engine.NewSprite(int((float64(s.ctx.Width)/2)-300), int(float64(s.ctx.Height)*0.33))
+	s.goLogo = engine.NewSprite(int((float64(engine.GameWidth)/2)-300), int(float64(engine.GameHeight)*0.33))
 	goLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/go_logo.png")
 	if err != nil {
 		return err
@@ -126,7 +126,7 @@ func (s *TitleScene) Init() error {
 	s.goLogo.Img = goLogoImg
 	s.goLogo.Visible = false
 
-	s.ebitenLogo = engine.NewSprite(int((float64(s.ctx.Width) / 2)), int(float64(s.ctx.Height)*0.33))
+	s.ebitenLogo = engine.NewSprite(int((float64(engine.GameWidth) / 2)), int(float64(engine.GameHeight)*0.33))
 	ebitenLogoImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ebiten_logo.png")
 	if err != nil {
 		return err
@@ -142,7 +142,7 @@ func (s *TitleScene) Init() error {
 	logoBl.AnimController = ac
 	s.logoBl = logoBl
 
-	gfDance := engine.NewSprite(int(float64(s.ctx.Width)*0.4), int(float64(s.ctx.Height)*0.07))
+	gfDance := engine.NewSprite(int(float64(engine.GameWidth)*0.4), int(float64(engine.GameHeight)*0.07))
 	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
 	if err != nil {
 		return err
@@ -150,7 +150,7 @@ func (s *TitleScene) Init() error {
 	gfDance.AnimController = ac
 	s.gfDance = gfDance
 
-	titleText := engine.NewSprite(100, int(float64(s.ctx.Height)*0.8))
+	titleText := engine.NewSprite(100, int(float64(engine.GameHeight)*0.8))
 	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
 	if err != nil {
 		return err
@@ -186,7 +186,7 @@ func (s *TitleScene) Init() error {
 	mb.BeatHitFunc = titleState_BeatHit
 	s.mb = mb
 
-	s.flasher = gefx.NewFlasher(s.ctx.Width, s.ctx.Height, 1)
+	s.flasher = gefx.NewFlasher(engine.GameWidth, engine.GameHeight, 1)
 
 	introText, err := title.NewIntroText(s.ctx.AssetsFS)
 	if err != nil {

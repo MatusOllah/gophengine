@@ -94,7 +94,7 @@ func (g *FNFGame) DrawFinalScreen(screen ebiten.FinalScreen, offscreen *ebiten.I
 }
 
 func (g *FNFGame) Layout(_, _ int) (int, int) {
-	return g.ctx.Width, g.ctx.Height
+	return engine.GameWidth, engine.GameHeight
 }
 
 func (g *FNFGame) InitEbiten() {

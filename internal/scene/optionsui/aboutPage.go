@@ -10,6 +10,7 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/browser"
+	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/ebitenui/ebitenui"
@@ -215,6 +216,6 @@ func showBuildInfoWindow(ctx *context.Context, ui *ebitenui.UI) {
 	)
 
 	x, y := w.Contents.PreferredSize()
-	w.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(ctx.Width/2)-320), int(float64(ctx.Height/2)-240))))
+	w.SetLocation(image.Rect(0, 0, x, y).Add(image.Pt(int(float64(engine.GameWidth/2)-320), int(float64(engine.GameHeight/2)-240))))
 	ui.AddWindow(w)
 }
