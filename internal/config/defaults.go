@@ -28,9 +28,10 @@ func LoadDefaultOptions(cfg *Config) {
 		"Audio.VoicesVolume":  float64(0),
 		"Audio.DownmixToMono": false,
 
-		"Graphics.EnableFPSCounter": false,
-		"Graphics.EnableVSync":      true,
-		"Graphics.UpscaleMethod":    int(engine.UpscaleLinear),
+		"Graphics.EnableFPSCounter":    false,
+		"Graphics.EnableVSync":         true,
+		"Graphics.UpscaleMethod":       int(engine.UpscaleLinear),
+		"Graphics.EnableCustomShaders": false,
 
 		"Controls.Up":         []string{input.KeyUp.String(), input.KeyW.String()},
 		"Controls.Down":       []string{input.KeyDown.String(), input.KeyS.String()},

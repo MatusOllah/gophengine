@@ -13,6 +13,7 @@ import (
 func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 	c := newPageContentContainer()
 
+	// FPS counter
 	c.AddChild(widget.NewLabeledCheckbox(
 		widget.LabeledCheckboxOpts.LabelOpts(
 			widget.LabelOpts.Text(i18n.L("EnableFPSCounter"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
@@ -35,6 +36,7 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 		),
 	))
 
+	// VSync
 	c.AddChild(widget.NewLabeledCheckbox(
 		widget.LabeledCheckboxOpts.LabelOpts(
 			widget.LabelOpts.Text(i18n.L("EnableVSync"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
@@ -57,6 +59,7 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 		),
 	))
 
+	// Upscaling
 	upscaleStringFunc := func(v any) string {
 		return i18n.L(v.(engine.Upscaling).String())
 	}
@@ -105,6 +108,29 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 	c.AddChild(newHorizontalContainer(
 		widget.NewLabel(widget.LabelOpts.Text(i18n.L("UpscaleMethod"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
 		upscaleComboBox,
+	))
+
+	// Shaders
+	c.AddChild(widget.NewLabeledCheckbox(
+		widget.LabeledCheckboxOpts.LabelOpts(
+			widget.LabelOpts.Text(i18n.L("EnableCustomShaders"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
+		),
+		widget.LabeledCheckboxOpts.CheckboxOpts(
+			widget.CheckboxOpts.ButtonOpts(
+				widget.ButtonOpts.Image(gui.UIRes.CheckboxButtonImage),
+			),
+			widget.CheckboxOpts.Image(gui.UIRes.CheckboxGraphic),
+			widget.CheckboxOpts.StateChangedHandler(func(args *widget.CheckboxChangedEventArgs) {
+				slog.Info("[graphicsPage] clicked enable custom shaders checkbox", "state", args.State)
+				cfg["Graphics.EnableCustomShaders"] = args.State == widget.WidgetChecked
+			}),
+			widget.CheckboxOpts.InitialState(func() widget.WidgetState {
+				if cfg["Graphics.EnableCustomShaders"].(bool) {
+					return widget.WidgetChecked
+				}
+				return widget.WidgetUnchecked
+			}()),
+		),
 	))
 
 	return &page{
