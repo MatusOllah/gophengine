@@ -55,10 +55,6 @@ func NewIntroText(fsys fs.FS) (*IntroText, error) {
 	}, nil
 }
 
-func (it *IntroText) Update(dt float64) error {
-	return nil
-}
-
 func (it *IntroText) Draw(img *ebiten.Image) {
 	it.textLock.RLock()
 	for i, s := range it.text {

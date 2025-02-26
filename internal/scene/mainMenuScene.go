@@ -145,12 +145,12 @@ func (s *MainMenuScene) Draw(screen *ebiten.Image) {
 	s.ui.Draw(screen)
 }
 
-func (s *MainMenuScene) Update(dt float64) error {
+func (s *MainMenuScene) Update() error {
 	if s.shouldExit {
 		return ebiten.Termination
 	}
 
 	s.ui.Update()
 
-	return s.menuItems.Update(dt)
+	return s.menuItems.Update()
 }

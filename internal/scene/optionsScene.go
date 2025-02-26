@@ -52,7 +52,7 @@ func (s *OptionsScene) Draw(screen *ebiten.Image) {
 	s.ui.Draw(screen)
 }
 
-func (s *OptionsScene) Update(_ float64) error {
+func (s *OptionsScene) Update() error {
 	if s.shouldExit {
 		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
 	}

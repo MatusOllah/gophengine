@@ -23,8 +23,8 @@ func (sc *SceneController) Draw(screen *ebiten.Image) {
 	sc.curScene.Draw(screen)
 }
 
-func (sc *SceneController) Update(dt float64) error {
-	return sc.curScene.Update(dt)
+func (sc *SceneController) Update() error {
+	return sc.curScene.Update()
 }
 
 func (sc *SceneController) SwitchScene(newScene Scene) error {

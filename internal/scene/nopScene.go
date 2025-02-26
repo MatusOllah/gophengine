@@ -20,6 +20,6 @@ func (s *NopScene) Close() error {
 func (s *NopScene) Draw(_ *ebiten.Image) {
 }
 
-func (s *NopScene) Update(_ float64) error {
+func (s *NopScene) Update() error {
 	return nil
 }

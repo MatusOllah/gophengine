@@ -41,7 +41,7 @@ func (f *Flasher) Draw(img *ebiten.Image) {
 	}
 }
 
-func (f *Flasher) Update(dt float64) {
+func (f *Flasher) Update() {
 	if f.done {
 		f.flash = false
 		f.done = false
@@ -50,7 +50,7 @@ func (f *Flasher) Update(dt float64) {
 	}
 
 	if f.flash && !f.done {
-		f.alpha, f.done = f.tween.Update(float32(dt))
+		f.alpha, f.done = f.tween.Update(1 / float32(ebiten.TPS()))
 	}
 }
 

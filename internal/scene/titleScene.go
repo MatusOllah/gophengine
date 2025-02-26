@@ -210,7 +210,7 @@ func (s *TitleScene) Close() error {
 	return nil
 }
 
-func (s *TitleScene) Update(dt float64) error {
+func (s *TitleScene) Update() error {
 	select {
 	case err := <-s.errCh:
 		if err != nil {
@@ -232,7 +232,7 @@ func (s *TitleScene) Update(dt float64) error {
 	s.mb.Update()
 
 	// freakyMenu Volume
-	freakyMenuVolume, _ := s.freakyMenuTween.Update(float32(dt))
+	freakyMenuVolume, _ := s.freakyMenuTween.Update(1 / float32(ebiten.TPS()))
 	speaker.Lock()
 	s.freakyMenu.Volume = float64(freakyMenuVolume)
 	speaker.Unlock()
@@ -244,7 +244,7 @@ func (s *TitleScene) Update(dt float64) error {
 		s.titleText.AnimController.Update()
 	}
 
-	s.flasher.Update(dt)
+	s.flasher.Update()
 
 	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionAccept) && !s.transitioning && s.skippedIntro {
 		s.titleText.AnimController.Play("press")

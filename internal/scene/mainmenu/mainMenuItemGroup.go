@@ -46,7 +46,7 @@ func (g *MainMenuItemGroup) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (g *MainMenuItemGroup) Update(dt float64) error {
+func (g *MainMenuItemGroup) Update() error {
 	g.items[g.curSelected].Sprite.AnimController.Play("selected")
 
 	for _, item := range g.items {

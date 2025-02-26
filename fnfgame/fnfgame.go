@@ -5,7 +5,6 @@ import (
 	"io/fs"
 	"log/slog"
 	"runtime"
-	"time"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/controls"
@@ -21,9 +20,7 @@ import (
 )
 
 type FNFGame struct {
-	ctx  *context.Context
-	last time.Time
-	dt   float64 // FIXME: I should probably get rid of this...
+	ctx *context.Context
 
 	protanShader    *ebiten.Shader
 	deuteranShader  *ebiten.Shader
@@ -37,8 +34,6 @@ type FNFGame struct {
 func New(ctx *context.Context) (*FNFGame, error) {
 	g := new(FNFGame)
 	g.ctx = ctx
-
-	g.last = time.Now()
 
 	// State
 	if err := g.ctx.SceneCtrl.SwitchScene(scene.NewTitleScene(ctx)); err != nil {
@@ -57,12 +52,9 @@ func New(ctx *context.Context) (*FNFGame, error) {
 }
 
 func (g *FNFGame) Update() error {
-	g.dt = time.Since(g.last).Seconds()
-	g.last = time.Now()
+	g.ctx.InputSystem.Update()
 
-	g.ctx.InputSystem.UpdateWithDelta(g.dt)
-
-	if err := g.ctx.SceneCtrl.Update(g.dt); err != nil {
+	if err := g.ctx.SceneCtrl.Update(); err != nil {
 		return fmt.Errorf("fnfgame Update: error updating state: %w", err)
 	}
 
