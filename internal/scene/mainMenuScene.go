@@ -91,7 +91,7 @@ func (s *MainMenuScene) Init() error {
 		{
 			Name:   "donate",
 			Sprite: donateSprite,
-			OnSelect: func(i *mainmenu.MainMenuItem) error {
+			OnSelect: func(_ *mainmenu.MainMenuItem) error {
 				l, err := locale.GetLocale()
 				if err != nil {
 					return err
