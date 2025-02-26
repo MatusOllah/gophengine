@@ -79,14 +79,19 @@ Licencované podľa **Apache License 2.0** (viď [LICENSE](https://github.com/Ma
 * [Logo Ebitengine](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) od Hajime Hoshi je licencované podľa [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
 * Maskot Go Gopher bol vytvorený Renee French a je licencovaný podľa [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
 
-## 💲 Darujte
+## ❤️ Darujte
 
-Ak vás baví hrať GophEngine a chcete podporiť jeho vývoj, zvážte darovanie. Vaše príspevky a podpora pomáhajú vývoju GophEngine (a mojej láske ku [Kofole](https://kofola.sk)!). Každá podpora je veľmi cenená!
+Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, tu je niekoľko spôsobov, ako môžete prispieť:
 
-Môžete darovať prostredníctvom nasledujúcich platforiem:
-
-* **Bitcoin (BTC):** `bc1qtykrhm2ar9jreha5rnqve72lutw02jzpu6lcgs`
-* **Duino-Coin (DUCO):** `SladkyCitron`
-* **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` alebo `SladkyCitron`
+1. ⭐ Udeľte hviezdu repozitáru
+    Hviezdy sú skvelý spôsob, ako prejaviť podporu! Ak sa vám GophEngine páči, zvážte udelenie hviezdy tomuto repozitáru. Vaše hviezdy pomáhajú prilákať viac prispievateľov a zlepšiť projekt!
+2. 🤝 Prispievajte
+    Problémy a pull requesty sú vítané! Či už opravujete chyby, pridávate nové funkcie, alebo vylepšujete dokumentáciu, vždy je priestor na pomoc. Pozrite si [CONTRIBUTING.md](CONTRIBUTING.md) pre viac informácií o tom, ako sa môžete zapojiť. Ak ste v projekte noví, pozrite sa na problémy označené ako "good first issue", aby ste sa mohli pustiť do práce!
+3. 💲 Darujte
+    Ak preferujete finančnú podporu, môžete prispieť pomocou nasledujúcich možností. Každý príspevok pomáha udržať vývoj nažive (a moju lásku ku [Kofola](https://kofola.sk))!
+    Môžete darovať prostredníctvom nasledujúcich platforiem:
+    * **Bitcoin (BTC):** `bc1qtykrhm2ar9jreha5rnqve72lutw02jzpu6lcgs`
+    * **Duino-Coin (DUCO):** `SladkyCitron`
+    * **Magi (XMG):** `9K8GrfCGEvTK7qjDMVtkGE18UfRyUkv5QT` alebo `SladkyCitron`
 
 Ďakujem za vašu podporu - znamená to pre mňa veľa! 😊❤️
