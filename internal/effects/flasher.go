@@ -2,7 +2,6 @@ package effects
 
 import (
 	"image/color"
-	"log/slog"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/colorm"
@@ -33,8 +32,6 @@ func NewFlasher(width, height int, dur float32) *Flasher {
 
 func (f *Flasher) Draw(img *ebiten.Image) {
 	if f.flash && !f.done {
-		slog.Debug("drawing", "flash", f.flash, "done", f.done, "alpha", f.alpha)
-
 		cm := colorm.ColorM{}
 		cm.Scale(255, 255, 255, float64(f.alpha))
 		colorm.DrawImage(img, f.whiteImg, cm, &colorm.DrawImageOptions{})
