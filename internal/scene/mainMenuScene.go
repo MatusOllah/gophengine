@@ -79,9 +79,11 @@ func (s *MainMenuScene) Init() error {
 
 	menuItems := []*mainmenu.MainMenuItem{
 		{
-			Name:     "story mode",
-			Sprite:   storyModeSprite,
-			OnSelect: mainmenu.NopOnSelectFunc,
+			Name:   "story mode",
+			Sprite: storyModeSprite,
+			OnSelect: func(_ *mainmenu.MainMenuItem) error {
+				return s.ctx.SceneCtrl.SwitchScene(NewStoryMenuScene(s.ctx))
+			},
 		},
 		{
 			Name:     "freeplay",
@@ -108,7 +110,7 @@ func (s *MainMenuScene) Init() error {
 			Name:   "options",
 			Sprite: optionsSprite,
 			OnSelect: func(_ *mainmenu.MainMenuItem) error {
-				return mainMenuSceneInstance.ctx.SceneCtrl.SwitchScene(NewOptionsScene(mainMenuSceneInstance.ctx))
+				return s.ctx.SceneCtrl.SwitchScene(NewOptionsScene(s.ctx))
 			},
 		},
 	}
