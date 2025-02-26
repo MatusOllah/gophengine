@@ -1,12 +1,9 @@
 package context
 
 import (
-	crand "crypto/rand"
-	"encoding/binary"
 	"fmt"
 	"io/fs"
 	"log/slog"
-	"math/rand/v2"
 
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/config"
@@ -26,7 +23,6 @@ type Context struct {
 	SceneCtrl      *engine.SceneController
 	InputSystem    input.System
 	InputHandler   *input.Handler
-	Rand           *rand.Rand
 	OptionsConfig  *config.Config
 	ProgressConfig *config.Config
 	Conductor      *funkin.Conductor
@@ -44,16 +40,6 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.AssetsFS = cfg.AssetsFS
 
 	ctx.SceneCtrl = engine.NewSceneController(nil)
-
-	// Rand
-	var seed1, seed2 uint64
-	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed1); err != nil {
-		return nil, fmt.Errorf("failed to read random seed 1: %w", err)
-	}
-	if err := binary.Read(crand.Reader, binary.LittleEndian, &seed2); err != nil {
-		return nil, fmt.Errorf("failed to read random seed 2: %w", err)
-	}
-	ctx.Rand = rand.New(rand.NewPCG(seed1, seed2))
 
 	// Options config
 	optionsConfig, err := config.New(cfg.OptionsConfigPath, true)

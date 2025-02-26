@@ -6,6 +6,7 @@ import (
 	_ "image/png"
 	"io/fs"
 	"log/slog"
+	"math/rand/v2"
 	"sync"
 	"time"
 
@@ -79,7 +80,7 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 		return nil, err
 	}
 
-	introText := records[ctx.Rand.IntN(len(records))]
+	introText := records[rand.IntN(len(records))]
 	slog.Info("got intro text", "introText", introText)
 
 	return introText, nil

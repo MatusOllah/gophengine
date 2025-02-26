@@ -3,8 +3,6 @@
 - Audio
     - Enable game over music (checkbox)
 - Video
-    - Enable shaders (checkbox)
-    - Colorblind filter (combo box)
 - Gameplay
     - Note assist (checkbox)
     - View bobbing / idle animation (combobox)
