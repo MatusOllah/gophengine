@@ -8,7 +8,7 @@ func Fragment(_ vec4, srcPos vec2, _ vec4) vec4 {
 	M := (3.45565 * tex.r) + (27.1554 * tex.g) + (3.86714 * tex.b)
 	S := (0.0299566 * tex.r) + (0.184309 * tex.g) + (1.46709 * tex.b)
 
-	// Deutranopia
+	// Deuteranopia
 	l := 1.0 * L + 0.0 * M + 0.0 * S
 	m := 0.494207 * L + 0.0 * M + 1.24827 * S
 	s := 0.0 * L + 0.0 * M + 1.0 * S

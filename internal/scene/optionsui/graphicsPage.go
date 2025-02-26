@@ -110,27 +110,58 @@ func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
 		upscaleComboBox,
 	))
 
-	// Shaders
-	c.AddChild(widget.NewLabeledCheckbox(
-		widget.LabeledCheckboxOpts.LabelOpts(
-			widget.LabelOpts.Text(i18n.L("EnableCustomShaders"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor),
-		),
-		widget.LabeledCheckboxOpts.CheckboxOpts(
-			widget.CheckboxOpts.ButtonOpts(
-				widget.ButtonOpts.Image(gui.UIRes.CheckboxButtonImage),
+	// Colorblind filter
+	colorblindStringFunc := func(v any) string {
+		return i18n.L(v.(engine.ColorblindFilter).String())
+	}
+
+	colorblindFilters := []any{
+		engine.ColorblindNone,
+		engine.ColorblindProtanopia,
+		engine.ColorblindDeuteranopia,
+		engine.ColorblindTritanopia,
+		engine.ColorblindGrayscale,
+	}
+
+	colorblindComboBox := widget.NewListComboButton(
+		widget.ListComboButtonOpts.SelectComboButtonOpts(
+			widget.SelectComboButtonOpts.ComboButtonOpts(
+				widget.ComboButtonOpts.MaxContentHeight(200),
+				widget.ComboButtonOpts.ButtonOpts(
+					widget.ButtonOpts.Image(gui.UIRes.ButtonImage),
+					widget.ButtonOpts.TextPadding(widget.NewInsetsSimple(5)),
+					widget.ButtonOpts.Text("", gui.UIRes.Fonts.RegularFace, gui.UIRes.ButtonTextColor),
+					widget.ButtonOpts.WidgetOpts(
+						widget.WidgetOpts.MinSize(150, 0),
+					),
+				),
 			),
-			widget.CheckboxOpts.Image(gui.UIRes.CheckboxGraphic),
-			widget.CheckboxOpts.StateChangedHandler(func(args *widget.CheckboxChangedEventArgs) {
-				slog.Info("[graphicsPage] clicked enable custom shaders checkbox", "state", args.State)
-				cfg["Graphics.EnableCustomShaders"] = args.State == widget.WidgetChecked
-			}),
-			widget.CheckboxOpts.InitialState(func() widget.WidgetState {
-				if cfg["Graphics.EnableCustomShaders"].(bool) {
-					return widget.WidgetChecked
-				}
-				return widget.WidgetUnchecked
-			}()),
 		),
+		widget.ListComboButtonOpts.ListOpts(
+			widget.ListOpts.ContainerOpts(widget.ContainerOpts.WidgetOpts(widget.WidgetOpts.MinSize(150, 0))),
+			widget.ListOpts.Entries(colorblindFilters),
+			widget.ListOpts.ScrollContainerOpts(widget.ScrollContainerOpts.Image(gui.UIRes.ListScrollContainerImage)),
+			widget.ListOpts.SliderOpts(
+				widget.SliderOpts.Images(gui.UIRes.ListSliderTrackImage, gui.UIRes.ButtonImage),
+				widget.SliderOpts.MinHandleSize(5),
+				widget.SliderOpts.TrackPadding(widget.NewInsetsSimple(2)),
+			),
+			widget.ListOpts.EntryFontFace(gui.UIRes.Fonts.RegularFace),
+			widget.ListOpts.EntryColor(gui.UIRes.ListEntryColor),
+			widget.ListOpts.EntryTextPadding(widget.NewInsetsSimple(5)),
+			widget.ListOpts.HideHorizontalSlider(),
+		),
+		widget.ListComboButtonOpts.EntryLabelFunc(colorblindStringFunc, colorblindStringFunc),
+		widget.ListComboButtonOpts.EntrySelectedHandler(func(args *widget.ListComboButtonEntrySelectedEventArgs) {
+			slog.Info("[graphicsPage] selected colorblind filter entry", "entry", args.Entry)
+			cfg["Graphics.ColorblindFilter"] = int(args.Entry.(engine.ColorblindFilter))
+		}),
+	)
+	colorblindComboBox.SetSelectedEntry(engine.ColorblindFilter(cfg["Graphics.ColorblindFilter"].(int)))
+
+	c.AddChild(newHorizontalContainer(
+		widget.NewLabel(widget.LabelOpts.Text(i18n.L("ColorblindFilter"), gui.UIRes.Fonts.RegularFace, gui.UIRes.LabelColor)),
+		colorblindComboBox,
 	))
 
 	return &page{

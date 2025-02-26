@@ -21,10 +21,16 @@ import (
 )
 
 type FNFGame struct {
-	ctx     *context.Context
-	last    time.Time
-	dt      float64 // FIXME: I should probably get rid of this...
-	shaders []*ebiten.Shader
+	ctx  *context.Context
+	last time.Time
+	dt   float64 // FIXME: I should probably get rid of this...
+
+	protanShader    *ebiten.Shader
+	deuteranShader  *ebiten.Shader
+	tritanShader    *ebiten.Shader
+	grayscaleShader *ebiten.Shader
+
+	colorblindImage *ebiten.Image
 }
 
 // New creates a new [FNFGame].
@@ -45,25 +51,7 @@ func New(ctx *context.Context) (*FNFGame, error) {
 		}
 	}
 
-	if ctx.OptionsConfig.MustGet("Graphics.EnableCustomShaders").(bool) {
-		paths, err := fs.Glob(ctx.AssetsFS, "shaders/custom/*.kage")
-		if err != nil {
-			return nil, fmt.Errorf("fnfgame New: failed to glob custom shaders: %w", err)
-		}
-
-		for _, path := range paths {
-			b, err := fs.ReadFile(ctx.AssetsFS, path)
-			if err != nil {
-				return nil, fmt.Errorf("fnfgame New: failed to read custom shader bytes: %w", err)
-			}
-
-			shader, err := ebiten.NewShader(b)
-			if err != nil {
-				return nil, fmt.Errorf("fnfgame New: failed to compile custom shader: %w", err)
-			}
-			g.shaders = append(g.shaders, shader)
-		}
-	}
+	g.colorblindImage = ebiten.NewImage(engine.GameWidth, engine.GameHeight)
 
 	return g, nil
 }
@@ -98,21 +86,75 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (g *FNFGame) DrawFinalScreen(screen ebiten.FinalScreen, offscreen *ebiten.Image, geoM ebiten.GeoM) {
-	for _, shader := range g.shaders {
-		cx, cy := ebiten.CursorPosition()
-
-		offscreen.DrawRectShader(offscreen.Bounds().Dx(), offscreen.Bounds().Dy(), shader, &ebiten.DrawRectShaderOptions{
-			Blend:  ebiten.BlendCopy,
-			Images: [4]*ebiten.Image{offscreen},
-			Uniforms: map[string]any{
-				"UnixTime":       time.Now().Unix(),
-				"CursorPosition": []float32{float32(cx), float32(cy)},
-				"Random":         g.ctx.Rand.Float32(),
-			},
-		})
+func (g *FNFGame) loadShader(path string) (*ebiten.Shader, error) {
+	b, err := fs.ReadFile(g.ctx.AssetsFS, path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read shader bytes: %w", err)
 	}
 
+	shader, err := ebiten.NewShader(b)
+	if err != nil {
+		return nil, fmt.Errorf("failed to compile shader: %w", err)
+	}
+
+	return shader, nil
+}
+
+func (g *FNFGame) DrawFinalScreen(screen ebiten.FinalScreen, offscreen *ebiten.Image, geoM ebiten.GeoM) {
+	// Colorblind filter
+	g.colorblindImage.DrawImage(offscreen, nil)
+	var err error
+	switch engine.ColorblindFilter(g.ctx.OptionsConfig.MustGet("Graphics.ColorblindFilter").(int)) {
+	case engine.ColorblindNone:
+		break
+	case engine.ColorblindProtanopia:
+		if g.protanShader == nil {
+			g.protanShader, err = g.loadShader("shaders/colorblind/protanopia.kage")
+			if err != nil {
+				panic(fmt.Errorf("failed to load protanopia shader: %w", err))
+			}
+		}
+		offscreen.DrawRectShader(offscreen.Bounds().Dx(), offscreen.Bounds().Dy(), g.protanShader, &ebiten.DrawRectShaderOptions{
+			Blend:  ebiten.BlendCopy,
+			Images: [4]*ebiten.Image{g.colorblindImage},
+		})
+	case engine.ColorblindDeuteranopia:
+		if g.deuteranShader == nil {
+			g.deuteranShader, err = g.loadShader("shaders/colorblind/deuteranopia.kage")
+			if err != nil {
+				panic(fmt.Errorf("failed to load deuteranopia shader: %w", err))
+			}
+		}
+		offscreen.DrawRectShader(offscreen.Bounds().Dx(), offscreen.Bounds().Dy(), g.deuteranShader, &ebiten.DrawRectShaderOptions{
+			Blend:  ebiten.BlendCopy,
+			Images: [4]*ebiten.Image{g.colorblindImage},
+		})
+	case engine.ColorblindTritanopia:
+		if g.tritanShader == nil {
+			g.tritanShader, err = g.loadShader("shaders/colorblind/tritanopia.kage")
+			if err != nil {
+				panic(fmt.Errorf("failed to load tritanopia shader: %w", err))
+			}
+		}
+		offscreen.DrawRectShader(offscreen.Bounds().Dx(), offscreen.Bounds().Dy(), g.tritanShader, &ebiten.DrawRectShaderOptions{
+			Blend:  ebiten.BlendCopy,
+			Images: [4]*ebiten.Image{g.colorblindImage},
+		})
+	case engine.ColorblindGrayscale:
+		if g.grayscaleShader == nil {
+			g.grayscaleShader, err = g.loadShader("shaders/colorblind/grayscale.kage")
+			if err != nil {
+				panic(fmt.Errorf("failed to load grayscale shader: %w", err))
+			}
+		}
+		offscreen.DrawRectShader(offscreen.Bounds().Dx(), offscreen.Bounds().Dy(), g.grayscaleShader, &ebiten.DrawRectShaderOptions{
+			Blend:  ebiten.BlendCopy,
+			Images: [4]*ebiten.Image{g.colorblindImage},
+		})
+	}
+	g.colorblindImage.Clear()
+
+	// Upscaling
 	switch engine.Upscaling(g.ctx.OptionsConfig.MustGet("Graphics.UpscaleMethod").(int)) {
 	case engine.UpscaleNearest:
 		screen.DrawImage(offscreen, &ebiten.DrawImageOptions{
