@@ -1,6 +1,8 @@
 package scene
 
 import (
+	"image/color"
+
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -60,6 +62,7 @@ func (s *StoryMenuScene) Close() error {
 }
 
 func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
+	screen.Fill(color.Black)
 	{
 		op := &text.DrawOptions{}
 		op.GeoM.Translate(10, 10)
