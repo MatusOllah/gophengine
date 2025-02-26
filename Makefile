@@ -19,7 +19,7 @@ endif
 EXE = $(BINARY)/gophengine$(EXE_EXT)
 
 # flags
-UPX_FLAGS = --best --lzma --force
+UPX_FLAGS = -f --best --lzma
 
 GE_FLAGS ?=
 
