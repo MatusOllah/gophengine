@@ -88,7 +88,7 @@ Ak vás baví hrať GophEngine a chceli by ste podporiť jeho vývoj, tu je niek
 2. 🤝 Prispievajte
     Problémy a pull requesty sú vítané! Či už opravujete chyby, pridávate nové funkcie, alebo vylepšujete dokumentáciu, vždy je priestor na pomoc. Pozrite si [CONTRIBUTING.md](CONTRIBUTING.md) pre viac informácií o tom, ako sa môžete zapojiť. Ak ste v projekte noví, pozrite sa na problémy označené ako "good first issue", aby ste sa mohli pustiť do práce!
 3. 💲 Darujte
-    Ak preferujete finančnú podporu, môžete prispieť pomocou nasledujúcich možností. Každý príspevok pomáha udržať vývoj nažive (a moju lásku ku [Kofola](https://kofola.sk))!
+    Ak preferujete finančnú podporu, môžete prispieť pomocou nasledujúcich možností. Každý príspevok pomáha udržať vývoj nažive (a moju lásku ku [Kofole](https://kofola.sk))!
     Môžete darovať prostredníctvom nasledujúcich platforiem:
     * **Bitcoin (BTC):** `bc1qtykrhm2ar9jreha5rnqve72lutw02jzpu6lcgs`
     * **Duino-Coin (DUCO):** `SladkyCitron`
