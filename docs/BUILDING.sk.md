@@ -5,7 +5,7 @@ Namiesto námahy s inštaláciou závislostí a ladením nefunkčného Haxe kód
 
 ## Závislosti
 
-GophEngine vyžaduje, aby boli prítomné tieto kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
+GophEngine vyžaduje, aby boli prítomné tieto kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **Make**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
 
 C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazyk C.
 
@@ -22,9 +22,9 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 3. Otvorte "MSYS2 MinGW 64-bit" z ponuky štartovacieho menu.
 4. Spustite nasledujúce príkazy:
     * `pacman -Syu`
-    * `pacman -S git mingw-w64-x86_64-gcc`
-5. Budete musieť pridať `/c/Program\ Files/Go/bin` a `~/Go/bin` do vášho `$PATH`, pre MSYS2 môžete použiť nasledujúci príkaz:
-    * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
+    * `pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-make`
+5. Budete musieť pridať `/c/Program\ Files/Go/bin` a `~/go/bin` do vášho `$PATH`, pre MSYS2 môžete použiť nasledujúci príkaz:
+    * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/go/bin" >> ~/.bashrc`
 
 ### 🍎 macOS
 
@@ -37,8 +37,8 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 ### 🐧 GNU/Linux
 
 1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
-2. Nainštalujte C kompilátor pomocou správcu balíkov vašej distribúcie. Napríklad Ubuntu (alebo iné distribúcie založené na Debiane) používa `apt`.
-    * `sudo apt install gcc`
+2. Nainštalujte C kompilátor a Make pomocou správcu balíkov vašej distribúcie. Napríklad Ubuntu (alebo iné distribúcie založené na Debiane) používa `apt`.
+    * `sudo apt install gcc make`
 3. Nainštalujte hlavičkové súbory grafickej knižnice pomocou správcu balíkov vašej distribúcie. Použite príslušný príkaz pre vašu distribúciu:
     * **Debian / Ubuntu / Linux Mint:** `sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config`
     * **Fedora / RHEL:** `sudo dnf install mesa-libGL-devel mesa-libGLES-devel libXrandr-devel libXcursor-devel libXinerama-devel libXi-devel libXxf86vm-devel alsa-lib-devel pkg-config`

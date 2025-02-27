@@ -5,7 +5,7 @@ Instead of painstakingly installing dependencies and debugging broken Haxe code,
 
 ## Prerequisites
 
-GophEngine requires these key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
+GophEngine requires these key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, **Make**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
 
 A C Compiler is required as GophEngine uses not only Go, but also C.
 
@@ -22,9 +22,9 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 3. Open "MSYS2 MinGW 64-bit" from the start menu.
 4. Run the following commands:
     * `pacman -Syu`
-    * `pacman -S git mingw-w64-x86_64-gcc`
-5. You will need to add `/c/Program\ Files/Go/bin` and `~/Go/bin` to your `$PATH`, for MSYS2 you can run the following command:
-    * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/Go/bin" >> ~/.bashrc`
+    * `pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-make`
+5. You will need to add `/c/Program\ Files/Go/bin` and `~/go/bin` to your `$PATH`, for MSYS2 you can run the following command:
+    * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/go/bin" >> ~/.bashrc`
 
 ### 🍎 macOS
 
@@ -37,8 +37,8 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 ### 🐧 GNU/Linux
 
 1. Install [Go](https://go.dev) (version go1.22.0 or later).
-2. Install a C Compiler using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
-    * `sudo apt install gcc`
+2. Install a C Compiler and Make using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
+    * `sudo apt install gcc make`
 3. Install the graphics library header files using your distribution's package manager. Use the appropriate command for your distro:
     * **Debian / Ubuntu / Linux Mint:** `sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config`
     * **Fedora / RHEL:** `sudo dnf install mesa-libGL-devel mesa-libGLES-devel libXrandr-devel libXcursor-devel libXinerama-devel libXi-devel libXxf86vm-devel alsa-lib-devel pkg-config`
