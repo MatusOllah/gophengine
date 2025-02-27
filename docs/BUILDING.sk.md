@@ -5,7 +5,7 @@ Namiesto námahy s inštaláciou závislostí a ladením nefunkčného Haxe kód
 
 ## Závislosti
 
-GophEngine vyžaduje, aby boli prítomné 4 kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
+GophEngine vyžaduje, aby boli prítomné tieto kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
 
 C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazyk C.
 

@@ -5,7 +5,7 @@ Instead of painstakingly installing dependencies and debugging broken Haxe code,
 
 ## Prerequisites
 
-GophEngine requires 4 key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
+GophEngine requires these key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
 
 A C Compiler is required as GophEngine uses not only Go, but also C.
 
