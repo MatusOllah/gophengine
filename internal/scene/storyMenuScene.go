@@ -4,6 +4,8 @@ import (
 	"image/color"
 
 	"github.com/MatusOllah/gophengine/context"
+	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
@@ -89,5 +91,12 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *StoryMenuScene) Update() error {
+	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionBack) {
+		if err := audioutil.PlaySoundFromFS(s.ctx, s.ctx.AssetsFS, "sounds/cancelMenu.ogg", 0); err != nil {
+			return err
+		}
+		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
+	}
+
 	return nil
 }
