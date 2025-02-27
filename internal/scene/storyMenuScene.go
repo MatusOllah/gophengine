@@ -24,6 +24,8 @@ type StoryMenuScene struct {
 	// TODO: move freakyMenu music to some MusicManager struct
 	scoreTextFace    *text.GoTextFace
 	txtWeekTitleFace *text.GoTextFace
+	yellowBG         *ebiten.Image
+	blackBar         *ebiten.Image
 }
 
 var _ engine.Scene = (*StoryMenuScene)(nil)
@@ -54,6 +56,12 @@ func (s *StoryMenuScene) Init() (err error) {
 
 	s.txtWeekTitleFace = s.scoreTextFace // they're the same font and size
 
+	s.yellowBG = ebiten.NewImage(engine.GameWidth, 400)
+	s.yellowBG.Fill(color.NRGBA{0xF9, 0xCF, 0x51, 0xFF})
+
+	s.blackBar = ebiten.NewImage(engine.GameWidth, 56)
+	s.blackBar.Fill(color.Black)
+
 	return nil
 }
 
@@ -63,6 +71,9 @@ func (s *StoryMenuScene) Close() error {
 
 func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
+	screen.DrawImage(s.yellowBG, nil)
+	screen.DrawImage(s.blackBar, nil)
+
 	{
 		op := &text.DrawOptions{}
 		op.GeoM.Translate(10, 10)
