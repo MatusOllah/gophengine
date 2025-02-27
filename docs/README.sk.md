@@ -4,11 +4,11 @@
 
 # 🎤 GophEngine
 
-**[English 🇺🇸](https://github.com/MatusOllah/gophengine/blob/main/README.md)** | **Slovenčina 🇸🇰**
+**[English 🇺🇸](../README.md)** | **Slovenčina 🇸🇰**
 
 **Stav:** Vo vývoji
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![Go](https://github.com/MatusOllah/gophengine/actions/workflows/go.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/go.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](https://github.com/MatusOllah/gophengine/blob/main/LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/MatusOllah/gophengine/blob/main/CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![Go](https://github.com/MatusOllah/gophengine/actions/workflows/go.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/go.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
 
 **GophEngine** (skrátene pre "Gopher Engine") je Go implementácia hry **Friday Night Funkin'** (populárnej FOSS hudobnej hry) s vylepšeniami, ktoré prinášajú nové funkcie, lepší výkon a čistejší zážitok. GophEngine je vytvorený od základov v **Go a Ebitengine** s cieľom poskytnúť ľahko použiteľný framework na modifikáciu a podporovať komunitu fanúšikov FNF.
 
@@ -56,7 +56,7 @@ Ponúka lepší výkon, jednoduchšiu prácu s paralelizmom a rýchlejšie časy
 
 ## Kompilovanie & inštalovanie (zo zdrojového kódu)
 
-Podrobné inštrukcie na buildovanie nájdete v [BUILDING.md](https://github.com/MatusOllah/gophengine/blob/main/docs/BUILDING.md).
+Podrobné inštrukcie na buildovanie nájdete v [BUILDING.md](BUILDING.md).
 Na začiatok budete potrebovať nainštalovaný Go a základné znalosti práce s príkazovým riadkom.
 
 ## Menovanie
@@ -66,17 +66,17 @@ Tento názov sa mi zdal vhodnejší a prirodzenejší pre tento projekt než alt
 
 ## Prispievanie
 
-Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](https://github.com/MatusOllah/gophengine/blob/main/CONTRIBUTING.md).
+Radi privítame vaše príspevky! Podrobnosti o tom, ako začať, nájdete v [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licencia
 
-Licencované podľa **Apache License 2.0** (viď [LICENSE](https://github.com/MatusOllah/gophengine/blob/main/LICENSE))
+Licencované podľa **Apache License 2.0** (viď [LICENSE](LICENSE))
 
 ### Poďakovanie
 
 * **The Funkin' Crew** - Pôvodná hra
 * **Hajime Hoshi** - Ebitengine
-* [Logo Ebitengine](https://github.com/MatusOllah/gophengine/blob/main/assets/images/ebiten_logo.png) od Hajime Hoshi je licencované podľa [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
+* [Logo Ebitengine](https://ebitengine.org/images/logo.png) od Hajime Hoshi je licencované podľa [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
 * Maskot Go Gopher bol vytvorený Renee French a je licencovaný podľa [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
 
 ## ❤️ Darujte
