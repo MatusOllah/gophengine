@@ -72,7 +72,7 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 		op := &text.DrawOptions{}
 		op.GeoM.Translate(float64(engine.GameWidth)*0.7, 10)
 		op.ColorScale.ScaleAlpha(0.7)
-		op.PrimaryAlign = text.AlignEnd
+		op.PrimaryAlign = text.AlignStart
 		text.Draw(screen, "test week name", s.txtWeekTitleFace, op)
 	}
 }
