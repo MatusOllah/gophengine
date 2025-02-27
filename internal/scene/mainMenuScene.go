@@ -100,9 +100,9 @@ func (s *MainMenuScene) Init() error {
 				}
 
 				if l == "sk" || l == "sk-SK" {
-					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/docs/README.sk.md#-darujte")
+					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/docs/README.sk.md#%EF%B8%8F-darujte")
 				} else {
-					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/README.md#-donate")
+					return browser.OpenURL("https://github.com/MatusOllah/gophengine/blob/main/README.md#%EF%B8%8F-donate")
 				}
 			},
 		},
