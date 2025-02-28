@@ -136,7 +136,7 @@ func (s *TitleScene) Init() error {
 	s.ebitenLogo.Visible = false
 
 	logoBl := engine.NewSprite(-150, -100)
-	ac, err := animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/logoBumpin/logoBumpin.anim.hcl", "logoBumpin")
+	ac, err := animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/logoBumpin/anim.hcl", "logoBumpin")
 	if err != nil {
 		return err
 	}
@@ -144,7 +144,7 @@ func (s *TitleScene) Init() error {
 	s.logoBl = logoBl
 
 	gfDance := engine.NewSprite(int(float64(engine.GameWidth)*0.4), int(float64(engine.GameHeight)*0.07))
-	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/gfDanceTitle/gfDanceTitle.anim.hcl", "gfDanceTitle")
+	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/gfDanceTitle/anim.hcl", "gfDanceTitle")
 	if err != nil {
 		return err
 	}
@@ -152,7 +152,7 @@ func (s *TitleScene) Init() error {
 	s.gfDance = gfDance
 
 	titleText := engine.NewSprite(100, int(float64(engine.GameHeight)*0.8))
-	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/titleEnter/titleEnter.anim.hcl", "titleEnter")
+	ac, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/titleEnter/anim.hcl", "titleEnter")
 	if err != nil {
 		return err
 	}
