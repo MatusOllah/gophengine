@@ -1,4 +1,4 @@
-//stole this from ganim8: https://github.com/yohamta/ganim8
+// original: https://github.com/yohamta/ganim8
 
 package anim
 
