@@ -17,8 +17,6 @@ import (
 
 // Context holds global variables and shared game state.
 type Context struct {
-	WindowWidth    int
-	WindowHeight   int
 	AssetsFS       fs.FS
 	SceneCtrl      *engine.SceneController
 	InputSystem    input.System
@@ -34,8 +32,6 @@ type Context struct {
 // New creates a new [Context].
 func New(cfg *NewContextConfig) (*Context, error) {
 	ctx := &Context{}
-	ctx.WindowWidth = 1280
-	ctx.WindowHeight = 720
 
 	ctx.AssetsFS = cfg.AssetsFS
 

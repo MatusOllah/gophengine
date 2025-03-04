@@ -171,7 +171,7 @@ func (g *FNFGame) InitEbiten() {
 	ebiten.SetVsyncEnabled(g.ctx.OptionsConfig.MustGet("Graphics.EnableVSync").(bool))
 	ebiten.SetFullscreen(g.ctx.OptionsConfig.MustGet("Fullscreen").(bool))
 	slog.Info("creating window")
-	ebiten.SetWindowSize(g.ctx.WindowWidth, g.ctx.WindowHeight)
+	ebiten.SetWindowSize(engine.GameWidth, engine.GameHeight)
 	ebiten.SetWindowTitle("Friday Night Funkin': GophEngine")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 }
