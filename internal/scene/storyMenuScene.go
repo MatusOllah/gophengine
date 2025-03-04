@@ -53,7 +53,7 @@ func (s *StoryMenuScene) loadFont(path string, size float64) (*text.GoTextFace, 
 func (s *StoryMenuScene) Init() (err error) {
 	s.scoreTextFace, err = s.loadFont("fonts/better-vcr-tweaked.ttf", 32)
 	if err != nil {
-		return
+		return err
 	}
 
 	s.txtWeekTitleFace = s.scoreTextFace // they're the same font and size

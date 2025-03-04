@@ -27,6 +27,7 @@ type Context struct {
 	AudioMixer     *audio.Mixer
 	Version        string
 	FNFVersion     string
+	Weeks          []funkin.Week
 }
 
 // New creates a new [Context].
