@@ -5,13 +5,13 @@ Namiesto námahy s inštaláciou závislostí a ladením nefunkčného Haxe kód
 
 ## Závislosti
 
-GophEngine vyžaduje, aby boli prítomné tieto kľúčové prvky: **nástroje pre Go (verzia go1.22.0 alebo novšia)**, **C kompilátor**, **Make**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
+GophEngine vyžaduje, aby boli prítomné tieto kľúčové prvky: **nástroje pre Go (verzia go1.23.0 alebo novšia)**, **C kompilátor**, **Make**, **grafický ovládač systému** a **UPX** (voliteľné, povinné iba pre budovanie finálnej verzie).
 
 C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazyk C.
 
 ### 🪟 Windows
 
-1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
+1. Nainštalujte [Go](https://go.dev) (verzia go1.23.0 alebo novšia).
 2. Nainštalujte C kompilátor. Najjednoduchší spôsob, ako nainštalovať C kompilátor na Windowse, je použiť niečo ako [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) alebo [w64devkit](https://github.com/skeeto/w64devkit). MSVC nie je podporovaný, viď [Go issue #20982](https://github.com/golang/go/issues/20982).
 3. Na Windowse bude grafický ovládač už nainštalovaný, ale odporúča sa overiť, či je aktuálny.
 
@@ -28,7 +28,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 
 ### 🍎 macOS
 
-1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
+1. Nainštalujte [Go](https://go.dev) (verzia go1.23.0 alebo novšia).
 2. Nainštalujte Xcode z [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 3. Nastavte Xcode otvorením terminálu a napísaním nasledujúceho:
     * `xcode-select --install`
@@ -36,7 +36,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 
 ### 🐧 GNU/Linux
 
-1. Nainštalujte [Go](https://go.dev) (verzia go1.22.0 alebo novšia).
+1. Nainštalujte [Go](https://go.dev) (verzia go1.23.0 alebo novšia).
 2. Nainštalujte C kompilátor a Make pomocou správcu balíkov vašej distribúcie. Napríklad Ubuntu (alebo iné distribúcie založené na Debiane) používa `apt`.
     * `sudo apt install gcc make`
 3. Nainštalujte hlavičkové súbory grafickej knižnice pomocou správcu balíkov vašej distribúcie. Použite príslušný príkaz pre vašu distribúciu:

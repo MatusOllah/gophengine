@@ -5,13 +5,13 @@ Instead of painstakingly installing dependencies and debugging broken Haxe code,
 
 ## Prerequisites
 
-GophEngine requires these key elements to be present: the **Go toolchain (version go1.22.0 or later)**, a **C Compiler**, **Make**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
+GophEngine requires these key elements to be present: the **Go toolchain (version go1.23.0 or later)**, a **C Compiler**, **Make**, a **system graphics driver**, and **UPX** (optional, required only for building release builds).
 
 A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ### 🪟 Windows
 
-1. Install [Go](https://go.dev) (version go1.22.0 or later).
+1. Install [Go](https://go.dev) (version go1.23.0 or later).
 2. Install a C Compiler. The easiest way to install a C Compiler on Windows is to use something like [MSYS2](https://www.msys2.org/), [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) or [w64devkit](https://github.com/skeeto/w64devkit). MSVC isn't supported, see [Go issue #20982](https://github.com/golang/go/issues/20982).
 3. On Windows the graphics driver will already be installed, but it is recommended to ensure they are up to date.
 
@@ -28,7 +28,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ### 🍎 macOS
 
-1. Install [Go](https://go.dev) (version go1.22.0 or later).
+1. Install [Go](https://go.dev) (version go1.23.0 or later).
 2. Install Xcode from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 3. Set up the Xcode command line tools by opening a Terminal window and typing the following:
     * `xcode-select --install`
@@ -36,7 +36,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 ### 🐧 GNU/Linux
 
-1. Install [Go](https://go.dev) (version go1.22.0 or later).
+1. Install [Go](https://go.dev) (version go1.23.0 or later).
 2. Install a C Compiler and Make using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
     * `sudo apt install gcc make`
 3. Install the graphics library header files using your distribution's package manager. Use the appropriate command for your distro:
