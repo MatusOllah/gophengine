@@ -14,6 +14,7 @@ import (
 
 type MainMenuItemGroup struct {
 	items       []*MainMenuItem
+	group       *engine.Group[*MainMenuItem]
 	curSelected int
 	isSelected  bool
 	flicker     *effects.Flicker
@@ -29,6 +30,7 @@ func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *
 
 	return &MainMenuItemGroup{
 		items:       items,
+		group:       engine.NewGroup(items...),
 		curSelected: 0,
 		isSelected:  false,
 		flicker:     effects.NewFlicker(magenta, 1100*time.Millisecond, 150*time.Millisecond),
@@ -39,19 +41,13 @@ func NewMainMenuItemGroup(ctx *context.Context, items []*MainMenuItem, magenta *
 }
 
 func (g *MainMenuItemGroup) Draw(screen *ebiten.Image) {
-	for _, item := range g.items {
-		if item.Sprite.Visible {
-			item.Sprite.AnimController.Draw(screen, item.Sprite.Position)
-		}
-	}
+	g.group.Draw(screen)
 }
 
 func (g *MainMenuItemGroup) Update() error {
 	g.items[g.curSelected].Sprite.AnimController.Play("selected")
 
-	for _, item := range g.items {
-		item.Sprite.AnimController.Update()
-	}
+	g.group.Update()
 
 	if err := g.flicker.Update(); err != nil {
 		return err
