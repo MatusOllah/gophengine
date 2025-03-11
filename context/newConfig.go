@@ -2,7 +2,7 @@ package context
 
 import "io/fs"
 
-type NewContextConfig struct {
+type Options struct {
 	AssetsFS           fs.FS
 	OptionsConfigPath  string
 	ProgressConfigPath string

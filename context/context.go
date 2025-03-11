@@ -31,22 +31,22 @@ type Context struct {
 }
 
 // New creates a new [Context].
-func New(cfg *NewContextConfig) (*Context, error) {
+func New(opts *Options) (*Context, error) {
 	ctx := &Context{}
 
-	ctx.AssetsFS = cfg.AssetsFS
+	ctx.AssetsFS = opts.AssetsFS
 
 	ctx.SceneCtrl = engine.NewSceneController(nil)
 
 	// Options config
-	optionsConfig, err := config.New(cfg.OptionsConfigPath, true)
+	optionsConfig, err := config.New(opts.OptionsConfigPath, true)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load options config: %w", err)
 	}
 	ctx.OptionsConfig = optionsConfig
 
 	// Progress config
-	progressConfig, err := config.New(cfg.ProgressConfigPath, false)
+	progressConfig, err := config.New(opts.ProgressConfigPath, false)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load progress config: %w", err)
 	}
@@ -61,12 +61,12 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.InputHandler = ctx.InputSystem.NewHandler(0, keymap)
 
 	// Localizer
-	locale := cfg.Locale
+	locale := opts.Locale
 	if locale == "" {
 		locale = optionsConfig.MustGet("Locale").(string)
 	}
 	slog.Info("using locale", "locale", locale)
-	if err := i18n.Init(cfg.AssetsFS, locale); err != nil {
+	if err := i18n.Init(opts.AssetsFS, locale); err != nil {
 		return nil, fmt.Errorf("failed to initialize i18n: %w", err)
 	}
 
@@ -84,8 +84,8 @@ func New(cfg *NewContextConfig) (*Context, error) {
 	ctx.AudioMixer.Music_Instrumental.SetVolume(ctx.OptionsConfig.MustGet("Audio.InstVolume").(float64))
 	ctx.AudioMixer.Music_Voices.SetVolume(ctx.OptionsConfig.MustGet("Audio.VoicesVolume").(float64))
 
-	ctx.Version = cfg.Version
-	ctx.FNFVersion = cfg.FNFVersion
+	ctx.Version = opts.Version
+	ctx.FNFVersion = opts.FNFVersion
 
 	return ctx, nil
 }

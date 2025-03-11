@@ -154,7 +154,7 @@ func mainE() error {
 	// Context
 	slog.Info("initializing context")
 
-	cfg := &context.NewContextConfig{
+	opts := &context.Options{
 		AssetsFS:           assets.FS,
 		OptionsConfigPath:  *configFlag,
 		ProgressConfigPath: *progressFlag,
@@ -169,7 +169,7 @@ func mainE() error {
 				return fmt.Errorf("failed to fetch user config dir: %w", err)
 			}
 
-			cfg.OptionsConfigPath = filepath.Join(configDir, "GophEngine/options.gecfg")
+			opts.OptionsConfigPath = filepath.Join(configDir, "GophEngine/options.gecfg")
 		}
 		if *progressFlag == "" {
 			configDir, err := os.UserConfigDir()
@@ -177,14 +177,14 @@ func mainE() error {
 				return fmt.Errorf("failed to fetch user config dir: %w", err)
 			}
 
-			cfg.ProgressConfigPath = filepath.Join(configDir, "GophEngine/progress.gecfg")
+			opts.ProgressConfigPath = filepath.Join(configDir, "GophEngine/progress.gecfg")
 		}
 		if *portableFlag {
-			cfg.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
-			cfg.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
+			opts.OptionsConfigPath = filepath.Join("GophEngine/options.gecfg")
+			opts.ProgressConfigPath = filepath.Join("GophEngine/progress.gecfg")
 		}
 	}
-	ctx, err := context.New(cfg)
+	ctx, err := context.New(opts)
 	if err != nil {
 		return fmt.Errorf("failed to initialize context: %w", err)
 	}
