@@ -1,12 +1,15 @@
 package scene
 
 import (
+	"fmt"
 	"image/color"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
+	"github.com/MatusOllah/gophengine/internal/funkin"
+	"github.com/MatusOllah/gophengine/internal/scene/storymenu"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
@@ -28,6 +31,7 @@ type StoryMenuScene struct {
 	txtWeekTitleFace *text.GoTextFace
 	yellowBG         *ebiten.Image
 	blackBar         *ebiten.Image
+	grpWeekText      *engine.Group[*storymenu.MenuItem]
 }
 
 var _ engine.Scene = (*StoryMenuScene)(nil)
@@ -51,6 +55,10 @@ func (s *StoryMenuScene) loadFont(path string, size float64) (*text.GoTextFace, 
 }
 
 func (s *StoryMenuScene) Init() (err error) {
+	s.ctx.Weeks = []funkin.Week{
+		{"", "tutorial", []string{}, []string{}},
+	}
+
 	s.scoreTextFace, err = s.loadFont("fonts/better-vcr-tweaked.ttf", 32)
 	if err != nil {
 		return err
@@ -63,6 +71,18 @@ func (s *StoryMenuScene) Init() (err error) {
 
 	s.blackBar = ebiten.NewImage(engine.GameWidth, 56)
 	s.blackBar.Fill(color.Black)
+
+	s.grpWeekText = engine.NewGroup[*storymenu.MenuItem]()
+
+	for i, week := range s.ctx.Weeks {
+		item, err := storymenu.NewMenuItem(s.ctx, 0, s.blackBar.Bounds().Dy()+s.yellowBG.Bounds().Dy()+10, i, week)
+		if err != nil {
+			return fmt.Errorf("StoryModeScene: failed to load menu item for week %s: %w", week.ID, err)
+		}
+		item.Sprite.Position.Y += (item.Bounds.Dy() * i)
+		item.Sprite.Position.X = (engine.GameWidth - item.Bounds.Dx()) / 2 // centers image on x axis
+		s.grpWeekText.Add(item)
+	}
 
 	return nil
 }
@@ -88,6 +108,8 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 		op.PrimaryAlign = text.AlignStart
 		text.Draw(screen, "test week name", s.txtWeekTitleFace, op)
 	}
+
+	s.grpWeekText.Draw(screen)
 }
 
 func (s *StoryMenuScene) Update() error {
@@ -97,6 +119,8 @@ func (s *StoryMenuScene) Update() error {
 		}
 		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
 	}
+
+	s.grpWeekText.Update()
 
 	return nil
 }

@@ -6,6 +6,7 @@ import (
 	"image"
 	"log"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -322,4 +323,9 @@ func (anim *Animation) Draw(screen *ebiten.Image, pt image.Point) {
 	opts := &ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(float64(pt.X), float64(pt.Y))
 	screen.DrawImage(anim.frames[anim.position], opts)
+}
+
+// Frames returns a copy of the frames slice.
+func (anim *Animation) Frames() []*ebiten.Image {
+	return slices.Clone(anim.frames)
 }
