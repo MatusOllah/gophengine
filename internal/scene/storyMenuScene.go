@@ -56,7 +56,7 @@ func (s *StoryMenuScene) loadFont(path string, size float64) (*text.GoTextFace, 
 
 func (s *StoryMenuScene) Init() (err error) {
 	s.ctx.Weeks = []funkin.Week{
-		{"", "tutorial", []string{}, []string{}},
+		{Name: "", ID: "tutorial", Songs: []string{}, MenuCharacters: []string{}}, // TODO: define the rest of the weeks in context
 	}
 
 	s.scoreTextFace, err = s.loadFont("fonts/better-vcr-tweaked.ttf", 32)
