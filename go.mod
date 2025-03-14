@@ -16,6 +16,7 @@ require (
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/quasilyte/ebitengine-input v0.9.1
+	github.com/quasilyte/gmath v0.0.0-20241226070017-2bb2d7046bb1
 	github.com/spf13/pflag v1.0.5
 	github.com/tanema/gween v0.0.0-20221212145351-621cc8a459d1
 	github.com/zclconf/go-cty v1.15.0
@@ -43,7 +44,6 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/quasilyte/gmath v0.0.0-20241226070017-2bb2d7046bb1 // indirect
 	github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844 // indirect
 	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
 	golang.org/x/exp/shiny v0.0.0-20240909161429-701f63a606c0 // indirect
