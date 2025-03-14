@@ -13,7 +13,7 @@
 **GophEngine** (short for "Gopher Engine") is a Go implementation of **Friday Night Funkin'** (a popular FOSS rhythm game) with improvements, bringing new features, performance enhancements, and a cleaner experience. Built from the ground up in **Go and Ebitengine**, GophEngine aims to provide an easy-to-use modding framework and foster a supportive community for FNF fans.
 
 > [!NOTE]
-> This is not the vanilla game. This is a fan-made reimplementation of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
+> This is not the vanilla game. This is a fan-made remake of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
 > Think of GophEngine as to FNF what Black Mesa is to Half-Life - a fan-made remake and improvement, built from the ground up.
 
 ## Why?
