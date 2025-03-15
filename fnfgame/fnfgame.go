@@ -19,6 +19,7 @@ import (
 	"golang.design/x/clipboard"
 )
 
+// FNFGame represents the Friday Night Funkin' game itself.
 type FNFGame struct {
 	ctx *context.Context
 
