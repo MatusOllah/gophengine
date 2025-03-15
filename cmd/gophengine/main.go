@@ -227,11 +227,13 @@ func main() {
 	}
 
 	// pprof HTTP server
-	go func() {
-		if err := http.ListenAndServe("localhost:6060", nil); err != nil {
-			panic(err)
-		}
-	}()
+	if *httpProfileFlag {
+		go func() {
+			if err := http.ListenAndServe("localhost:6060", nil); err != nil {
+				panic(err)
+			}
+		}()
+	}
 
 	// CPU profile
 	if *cpuProfileFlag != "" {
