@@ -29,3 +29,4 @@ bin/
 # profile files
 cpu.prof
 mem.prof
+out.stacks
