@@ -27,7 +27,7 @@ func initFlags() error {
 	}
 
 	if *helpFlag {
-		fmt.Printf("GophEngine is a Go implementation of Friday Night Funkin' with improvements.\n\n")
+		fmt.Printf("GophEngine is a Go port of Friday Night Funkin' with improvements.\n\n")
 		fmt.Printf("Usage: %s [OPTIONS]\n\nOptions:\n", os.Args[0])
 		fmt.Print(flagSet.FlagUsages())
 		os.Exit(0)
