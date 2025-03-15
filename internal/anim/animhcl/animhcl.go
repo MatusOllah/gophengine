@@ -6,11 +6,9 @@ import (
 	"fmt"
 	_ "image/png"
 	"io/fs"
-	"log/slog"
 	"path"
 	"path/filepath"
 	"slices"
-	"sort"
 	"strconv"
 	"time"
 
@@ -18,8 +16,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hashicorp/hcl/v2"
-	"github.com/hashicorp/hcl/v2/gohcl"
-	"github.com/hashicorp/hcl/v2/hclparse"
+	"github.com/hashicorp/hcl/v2/hclsimple"
 	"github.com/zclconf/go-cty/cty"
 	"github.com/zclconf/go-cty/cty/function"
 	"github.com/zclconf/go-cty/cty/gocty"
@@ -42,22 +39,12 @@ func refineNonNull(b *cty.RefinementBuilder) *cty.RefinementBuilder {
 }
 
 func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimController, error) {
-	slog.Debug("loading animation file", "_path", _path, "name", name)
-
 	src, err := fs.ReadFile(fsys, _path)
 	if err != nil {
 		return nil, err
 	}
 
-	hclf, diags := hclparse.NewParser().ParseHCL(src, path.Base(_path))
-	if diags.HasErrors() {
-		return nil, diags
-	}
-
-	var v struct {
-		AnimControllers []animController `hcl:"AnimController,block"`
-	}
-	diags = gohcl.DecodeBody(hclf.Body, &hcl.EvalContext{
+	evalctx := &hcl.EvalContext{
 		Variables: map[string]cty.Value{
 			"PATH":      cty.StringVal(path.Dir(_path)),
 			"DUR_24FPS": cty.StringVal(anim.Dur24FPS.String()),
@@ -129,7 +116,16 @@ func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimControlle
 				},
 			}),
 		},
-	}, &v)
+	}
+
+	var v struct {
+		AnimControllers []animController `hcl:"AnimController,block"`
+	}
+
+	err = hclsimple.Decode(path.Base(_path), src, evalctx, &v)
+	if err != nil {
+		return nil, err
+	}
 
 	ac := anim.NewAnimController()
 	for _, _ac := range v.AnimControllers {
@@ -158,10 +154,6 @@ func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimControlle
 		ac.Play(_ac.DefaultAnim)
 	}
 
-	if diags.HasErrors() {
-		return nil, diags
-	}
-
 	return ac, nil
 }
 
@@ -186,14 +178,10 @@ func getFramesByPrefixFromFS(fsys fs.FS, path string, prefix string) ([]string, 
 		return nil, err
 	}
 
-	sort.Slice(finalFiles, func(i, j int) bool {
-		name1 := finalFiles[i]
-		name2 := finalFiles[j]
-
+	slices.SortFunc(finalFiles, func(name1, name2 string) int {
 		index1, _ := strconv.Atoi(name1[len(name1)-4:])
 		index2, _ := strconv.Atoi(name2[len(name2)-4:])
-
-		return index1 < index2
+		return index1 - index2
 	})
 
 	return finalFiles, nil
