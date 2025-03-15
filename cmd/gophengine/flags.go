@@ -19,6 +19,9 @@ var (
 	justInitFlag      = flagSet.Bool("just-init", false, "Initialize game and exit")
 	portableFlag      = flagSet.Bool("portable", false, "Save everything in the current directory (aka portable mode)")
 	forceLocaleFlag   = flagSet.String("force-locale", "", "Force a specific locale (used for testing locales)")
+	cpuProfileFlag    = flagSet.String("cpu-profile", "", "Write CPU profile to file")
+	memProfileFlag    = flagSet.String("mem-profile", "", "Write memory profile to file")
+	httpProfileFlag   = flagSet.Bool("http-profile", false, "Serve profiling data via HTTP server on port :6060 (see https://pkg.go.dev/net/http/pprof)")
 )
 
 func initFlags() error {

@@ -21,9 +21,12 @@ import (
 	"io"
 	"io/fs"
 	"log/slog"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"path/filepath"
 	"runtime"
+	"runtime/pprof"
 	"strings"
 
 	"github.com/MatusOllah/gophengine/assets"
@@ -210,13 +213,41 @@ func mainE() error {
 		return fmt.Errorf("failed to run game: %w", err)
 	}
 
-	return g.Close()
+	if err := g.Close(); err != nil {
+		return fmt.Errorf("failed to close game: %w", err)
+	}
+
+	return nil
 }
 
 func main() {
 	// Flags
 	if err := initFlags(); err != nil {
 		panic(err)
+	}
+
+	// pprof HTTP server
+	go func() {
+		if err := http.ListenAndServe("localhost:6060", nil); err != nil {
+			panic(err)
+		}
+	}()
+
+	// CPU profile
+	if *cpuProfileFlag != "" {
+		f, err := os.Create(*cpuProfileFlag)
+		if err != nil {
+			panic(fmt.Errorf("could not create CPU profile: %w", err))
+		}
+		defer func() {
+			if err := f.Close(); err != nil {
+				panic(fmt.Errorf("could not close CPU profile: %w", err))
+			}
+		}()
+		if err := pprof.StartCPUProfile(f); err != nil {
+			panic(fmt.Errorf("could not start CPU profile: %w", err))
+		}
+		defer pprof.StopCPUProfile()
 	}
 
 	// Logger (using slogcolor: https://github.com/MatusOllah/slogcolor)
@@ -249,5 +280,25 @@ func main() {
 		slog.Error(err.Error())
 		dialog.Error(err.Error())
 		os.Exit(1)
+	}
+
+	// Memory profile
+	if *memProfileFlag != "" {
+		f, err := os.Create(*memProfileFlag)
+		if err != nil {
+			panic(fmt.Errorf("could not create memory profile: %w", err))
+		}
+		defer func() {
+			if err := f.Close(); err != nil {
+				panic(fmt.Errorf("could not close memory profile: %w", err))
+			}
+		}()
+		runtime.GC() // get up-to-date statistics
+		// Lookup("allocs") creates a profile similar to go test -memprofile.
+		// Alternatively, use Lookup("heap") for a profile
+		// that has inuse_space as the default index.
+		if err := pprof.Lookup("allocs").WriteTo(f, 0); err != nil {
+			panic(fmt.Errorf("could not write memory profile: %w", err))
+		}
 	}
 }
