@@ -73,7 +73,7 @@ Licensed under **Apache License 2.0** (see [LICENSE](LICENSE))
 
 ### Credits
 
-* **The Funkin' Crew** - Original game and assets
+* **The Funkin' Crew** - Original game and assets (see [LICENSE-FNF](LICENSE-FNF) and [LICENSE-FUNKIN-ASSETS](LICENSE-FUNKIN-ASSETS))
 * **Hajime Hoshi** - Ebitengine
 * [The Ebitengine logo](https://ebitengine.org/images/logo.png) by Hajime Hoshi is licensed under [the Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
 * The Go Gopher mascot was created by Renee French and is licensed under the [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
