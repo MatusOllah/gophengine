@@ -196,10 +196,7 @@ func (s *TitleScene) Init() error {
 	s.introText = introText
 
 	s.once = &sync.Once{}
-	s.danceLeft = false
 	s.blackScreenVisible = true
-	s.skippedIntro = false
-	s.transitioning = false
 	s.errCh = make(chan error, 1)
 
 	titleSceneInstance = s
