@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/MatusOllah/gophengine/blob/main/docs/gopher_boyfriend.png" alt="GophEngine logo" width="240" height="320">
+    <img src="gopher_boyfriend.svg" alt="GophEngine logo" width="240" height="320">
 </p>
 
 # 🎤 GophEngine
