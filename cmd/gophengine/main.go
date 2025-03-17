@@ -138,7 +138,6 @@ func mainE() error {
 	slog.Info(fmt.Sprintf("GophEngine version %s", version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
-	slog.Info("ahoj!")
 
 	if *extractAssetsFlag {
 		if err := extractFS(assets.FS, "assets"); err != nil {
@@ -156,7 +155,6 @@ func mainE() error {
 
 	// Context
 	slog.Info("initializing context")
-
 	opts := &context.Options{
 		AssetsFS:           assets.FS,
 		OptionsConfigPath:  *configFlag,
@@ -198,6 +196,11 @@ func mainE() error {
 	if err != nil {
 		return fmt.Errorf("failed to initialize game: %w", err)
 	}
+	defer func() {
+		if err := g.Close(); err != nil {
+			panic(fmt.Errorf("failed to close game: %w", err))
+		}
+	}()
 
 	// Ebiten init
 	slog.Info("initializing ebitengine")
@@ -211,10 +214,6 @@ func mainE() error {
 	slog.Info("starting game")
 	if err := g.Start(); err != nil {
 		return fmt.Errorf("failed to run game: %w", err)
-	}
-
-	if err := g.Close(); err != nil {
-		return fmt.Errorf("failed to close game: %w", err)
 	}
 
 	return nil
