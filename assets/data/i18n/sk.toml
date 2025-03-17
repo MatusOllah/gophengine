@@ -1,6 +1,7 @@
 _Name = "Slovenčina" # The display name of the locale
 
 FPSCounter = "FPS: {{printf \"%.2f\" .FPS}}; TPS: {{printf \"%.2f\" .TPS}}"
+Loading = "Nacítava sa" # "č" omitted due to limitations of phantom font
 Present = "uvádzajú"
 MadeWith = "Vyrobené s"
 ExitDialogText = "Naozaj si praješ ukončiť hru?"

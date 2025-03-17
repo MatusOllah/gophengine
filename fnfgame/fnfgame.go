@@ -37,8 +37,8 @@ func New(ctx *context.Context) (*FNFGame, error) {
 	g.ctx = ctx
 
 	// State
-	if err := g.ctx.SceneCtrl.SwitchScene(scene.NewTitleScene(ctx)); err != nil {
-		return nil, fmt.Errorf("fnfgame New: error initializing TitleState: %w", err)
+	if err := g.ctx.SceneCtrl.SwitchScene(scene.NewLoadingScene(ctx, scene.NewTitleScene(ctx))); err != nil {
+		return nil, fmt.Errorf("fnfgame New: error initializing scene controller: %w", err)
 	}
 
 	if runtime.GOARCH != "wasm" {
