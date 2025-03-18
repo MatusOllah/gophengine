@@ -42,3 +42,11 @@ func (ac *AnimController) Draw(img *ebiten.Image, pt image.Point) {
 func (ac *AnimController) Play(name string) {
 	ac.curAnim = name
 }
+
+func (ac *AnimController) CurAnim() *Animation {
+	return ac.anims[ac.curAnim]
+}
+
+func (ac *AnimController) CurAnimName() string {
+	return ac.curAnim
+}

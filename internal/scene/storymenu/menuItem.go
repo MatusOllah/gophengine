@@ -26,11 +26,9 @@ func NewMenuItem(ctx *context.Context, x, y int, weekNum int, week funkin.Week) 
 		return nil, err
 	}
 
-	item.Sprite.AnimController.Play("select")
-	item.Sprite.AnimController.GetAnim("select").Pause()
-	item.Sprite.AnimController.GetAnim("select")
+	item.Sprite.AnimController.CurAnim().Pause()
 
-	item.Bounds = item.Sprite.AnimController.GetAnim("select").Frames()[0].Bounds()
+	item.Bounds = item.Sprite.AnimController.CurAnim().Frames()[0].Bounds()
 
 	return item, nil
 }
