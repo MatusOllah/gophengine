@@ -43,7 +43,7 @@ ifneq ($(GOARCH),wasm)
 endif
 
 .PHONY: all
-all: clean $(EXE) upx
+all: clean $(EXE)
 
 .PHONY: run
 run:
@@ -64,8 +64,6 @@ ifeq ($(GOOS),windows)
 endif
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build $(GO_FLAGS) -o $(EXE) ./cmd/gophengine
 
-.PHONY: upx
-upx: $(EXE)
 ifeq ($(IS_RELEASE),true)
 ifneq ($(GOARCH),wasm)
 		$(UPX) $(UPX_FLAGS) $(EXE)
