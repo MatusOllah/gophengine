@@ -1,8 +1,8 @@
 AnimController "logoBumpin" {
-    DefaultAnim = "bump"
+	DefaultAnim = "bump"
 
-    Animation "bump" {
-        Frames = fromPrefix(PATH, "logo bumpin")
-        FrameDuration = DUR_24FPS
-    }
+	Animation "bump" {
+		Frames = fromPrefix(PATH, "logo bumpin")
+		FrameDuration = DUR_24FPS
+	}
 }
