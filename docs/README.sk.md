@@ -1,8 +1,6 @@
 <p align="center">
-    <img src="gopher_boyfriend.svg" alt="GophEngine logo" width="240" height="320">
+    <img src="images/gophengine_logo.svg" alt="GophEngine logo">
 </p>
-
-# 🎤 GophEngine
 
 **[English 🇺🇸](../README.md)** | **Slovenčina 🇸🇰**
 
