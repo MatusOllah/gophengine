@@ -87,5 +87,7 @@ func New(opts *Options) (*Context, error) {
 	ctx.Version = opts.Version
 	ctx.FNFVersion = opts.FNFVersion
 
+	ctx.Weeks = initWeeks()
+
 	return ctx, nil
 }

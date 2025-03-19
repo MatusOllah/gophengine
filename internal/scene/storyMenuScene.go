@@ -8,22 +8,11 @@ import (
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
-	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/scene/storymenu"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-/*
-Week Names (some names changed):
-
-  - Week #1 - Daddy Dearest
-  - Week #2 - Spooky Month
-  - Week #3 - Pico
-  - Week #4 - Mommy Mearest
-  - Week #5 - Happy and Merry
-  - Week #6 - dating simulator ft. moawling
-*/
 type StoryMenuScene struct {
 	ctx *context.Context
 	// TODO: move freakyMenu music to some MusicManager struct
@@ -55,10 +44,6 @@ func (s *StoryMenuScene) loadFont(path string, size float64) (*text.GoTextFace, 
 }
 
 func (s *StoryMenuScene) Init() (err error) {
-	s.ctx.Weeks = []funkin.Week{
-		{Name: "", ID: "tutorial", Songs: []string{}, MenuCharacters: []string{}}, // TODO: define the rest of the weeks in context
-	}
-
 	s.scoreTextFace, err = s.loadFont("fonts/better-vcr-tweaked.ttf", 32)
 	if err != nil {
 		return err
