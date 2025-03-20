@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/MatusOllah/gophengine/internal/audio"
+	"github.com/MatusOllah/gophengine/internal/audio/music"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
@@ -25,6 +26,7 @@ type Context struct {
 	ProgressConfig *config.Config
 	Conductor      *funkin.Conductor
 	AudioMixer     *audio.Mixer
+	FreakyMenu     *music.FreakyMenuMusic
 	Version        string
 	FNFVersion     string
 	Weeks          []funkin.Week

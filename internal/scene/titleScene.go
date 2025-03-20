@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"image/color"
 	_ "image/png"
-	"io/fs"
 	"log/slog"
 	"math/rand/v2"
 	"sync"
@@ -12,23 +11,16 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
-	"github.com/MatusOllah/gophengine/internal/audio"
+	"github.com/MatusOllah/gophengine/internal/audio/music"
 	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/controls"
-	gefx "github.com/MatusOllah/gophengine/internal/effects"
+	"github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene/title"
-	"github.com/gopxl/beep/v2"
-	"github.com/gopxl/beep/v2/effects"
-	"github.com/gopxl/beep/v2/speaker"
-	"github.com/gopxl/beep/v2/vorbis"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hashicorp/hcl/v2/hclsimple"
-	"github.com/tanema/gween"
-	"github.com/tanema/gween/ease"
 )
 
 var titleSceneInstance *TitleScene
@@ -47,13 +39,8 @@ type TitleScene struct {
 	logoBl             *engine.Sprite
 	gfDance            *engine.Sprite
 	titleText          *engine.Sprite
-	freakyMenuStreamer beep.StreamSeekCloser
-	freakyMenuFormat   beep.Format
-	freakyMenu         *effects.Volume
-	freakyMenuTween    *gween.Tween
-	freakyMenuBPM      int
 	danceLeft          bool
-	flasher            *gefx.Flasher
+	flasher            *effects.Flasher
 	blackScreenVisible bool
 	skippedIntro       bool
 	transitioning      bool
@@ -84,28 +71,6 @@ func getRandIntroText(ctx *context.Context) ([]string, error) {
 	slog.Info("got intro text", "introText", introText)
 
 	return introText, nil
-}
-
-func getFreakyMenuMeta(ctx *context.Context) (bpm int, tween *gween.Tween, err error) {
-	path := "music/freakyMenu.meta.hcl"
-	b, err := fs.ReadFile(ctx.AssetsFS, path)
-	if err != nil {
-		return
-	}
-
-	var v struct {
-		BPM   int `hcl:"BPM"`
-		Tween struct {
-			Begin    float32 `hcl:"Begin"`
-			End      float32 `hcl:"End"`
-			Duration float32 `hcl:"Duration"`
-		} `hcl:"Tween,block"`
-	}
-	if err = hclsimple.Decode(path, b, nil, &v); err != nil {
-		return
-	}
-
-	return v.BPM, gween.New(v.Tween.Begin, v.Tween.End, v.Tween.Duration, ease.Linear), nil
 }
 
 func NewTitleScene(ctx *context.Context) *TitleScene {
@@ -160,25 +125,7 @@ func (s *TitleScene) Init() error {
 	s.titleText = titleText
 
 	// FreakyMenu
-	freakyMenuFile, err := s.ctx.AssetsFS.Open("music/freakyMenu.ogg")
-	if err != nil {
-		return err
-	}
-	defer freakyMenuFile.Close()
-
-	s.freakyMenuStreamer, s.freakyMenuFormat, err = vorbis.Decode(freakyMenuFile)
-	if err != nil {
-		return err
-	}
-
-	s.freakyMenu = &effects.Volume{
-		Streamer: audio.MustLoop2(s.freakyMenuStreamer),
-		Base:     2,
-		Volume:   0,
-		Silent:   false,
-	}
-
-	s.freakyMenuBPM, s.freakyMenuTween, err = getFreakyMenuMeta(s.ctx)
+	s.ctx.FreakyMenu, err = music.New(s.ctx.AssetsFS)
 	if err != nil {
 		return err
 	}
@@ -187,7 +134,7 @@ func (s *TitleScene) Init() error {
 	mb.BeatHitFunc = titleState_BeatHit
 	s.mb = mb
 
-	s.flasher = gefx.NewFlasher(engine.GameWidth, engine.GameHeight, 1)
+	s.flasher = effects.NewFlasher(engine.GameWidth, engine.GameHeight, 1)
 
 	introText, err := title.NewIntroText(s.ctx.AssetsFS)
 	if err != nil {
@@ -220,20 +167,17 @@ func (s *TitleScene) Update() error {
 
 	s.once.Do(func() {
 		slog.Debug("s.once.Do")
-		s.ctx.AudioMixer.Music.Add(s.freakyMenu)
+		s.ctx.AudioMixer.Music.Add(s.ctx.FreakyMenu)
 
-		s.ctx.Conductor.ChangeBPM(s.freakyMenuBPM)
+		s.ctx.Conductor.ChangeBPM(s.ctx.FreakyMenu.BPM())
 	})
 
 	// Conductor & MusicBeat (MusicBeatState)
-	s.ctx.Conductor.SongPosition = float64(s.freakyMenuFormat.SampleRate.D(s.freakyMenuStreamer.Position()).Milliseconds())
+	s.ctx.Conductor.SongPosition = float64(s.ctx.FreakyMenu.Format().SampleRate.D(s.ctx.FreakyMenu.Position()).Milliseconds())
 	s.mb.Update()
 
 	// freakyMenu Volume
-	freakyMenuVolume, _ := s.freakyMenuTween.Update(1 / float32(ebiten.TPS()))
-	speaker.Lock()
-	s.freakyMenu.Volume = float64(freakyMenuVolume)
-	speaker.Unlock()
+	s.ctx.FreakyMenu.Update()
 
 	// Title screen
 	if s.skippedIntro {
