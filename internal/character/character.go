@@ -1,7 +1,7 @@
 package character
 
 type Character struct {
-	AnimOffsets  map[string]interface{}
+	AnimOffsets  map[string]any
 	IsPlayer     bool
 	CurCharacter string
 	HoldTimer    float64

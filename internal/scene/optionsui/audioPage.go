@@ -18,7 +18,7 @@ func mapRange(value, inMin, inMax, outMin, outMax float64) float64 {
 	return outMin + (value-inMin)*(outMax-outMin)/(inMax-inMin)
 }
 
-func newAudioPage(ctx *context.Context, cfg map[string]interface{}) *page {
+func newAudioPage(ctx *context.Context, cfg map[string]any) *page {
 	c := newPageContentContainer()
 
 	//TODO: make the volume sliders aligned

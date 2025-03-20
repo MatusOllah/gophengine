@@ -17,11 +17,11 @@ import (
 var ErrKeyNotExist error = errors.New("key does not exist")
 
 // MapFunc represents a mapping function. It takes in a key and value and returns a new value.
-type MapFunc func(string, interface{}) interface{}
+type MapFunc func(string, any) any
 
 // Self-explanatory.
 type Config struct {
-	data     map[string]interface{}
+	data     map[string]any
 	dataLock sync.RWMutex
 
 	file    *os.File
@@ -33,7 +33,7 @@ type Config struct {
 // Register simply calls gob.Register.
 // If you are encoding a non-primitive type (like a struct or map) that implements something you should use this.
 // At least that's how I understand it.
-func Register(value interface{}) {
+func Register(value any) {
 	gob.Register(value)
 }
 
@@ -73,7 +73,7 @@ func Create(path string, loadDefaults bool) (*Config, error) {
 		cfg.file = file
 	}
 
-	cfg.data = make(map[string]interface{})
+	cfg.data = make(map[string]any)
 	cfg.buf = new(bytes.Buffer)
 	cfg.encoder = gob.NewEncoder(cfg.buf)
 	cfg.decoder = gob.NewDecoder(cfg.buf)
@@ -119,14 +119,14 @@ func Open(path string) (*Config, error) {
 }
 
 // Data returns a copy of the map.
-func (cfg *Config) Data() map[string]interface{} {
+func (cfg *Config) Data() map[string]any {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
 	return maps.Clone(cfg.data)
 }
 
 // SetData overwrites the map.
-func (cfg *Config) SetData(m map[string]interface{}) {
+func (cfg *Config) SetData(m map[string]any) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 	clear(cfg.data)
@@ -134,14 +134,14 @@ func (cfg *Config) SetData(m map[string]interface{}) {
 }
 
 // Append appends m to the map.
-func (cfg *Config) Append(m map[string]interface{}) {
+func (cfg *Config) Append(m map[string]any) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 	maps.Copy(cfg.data, m)
 }
 
 // Get gets a value from the map. If there is an error, it will be of type *KeyError.
-func (cfg *Config) Get(key string) (interface{}, error) {
+func (cfg *Config) Get(key string) (any, error) {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
 	value, ok := cfg.data[key]
@@ -152,7 +152,7 @@ func (cfg *Config) Get(key string) (interface{}, error) {
 }
 
 // MustGet simply calls Get and returns nil if an error occurred.
-func (cfg *Config) MustGet(key string) interface{} {
+func (cfg *Config) MustGet(key string) any {
 	value, err := cfg.Get(key)
 	if err != nil {
 		slog.Error(err.Error())
@@ -163,7 +163,7 @@ func (cfg *Config) MustGet(key string) interface{} {
 }
 
 // GetWithFallback gets a value from the map and returns the given fallback if not found.
-func (cfg *Config) GetWithFallback(key string, fallback interface{}) interface{} {
+func (cfg *Config) GetWithFallback(key string, fallback any) any {
 	cfg.dataLock.RLock()
 	defer cfg.dataLock.RUnlock()
 	value, ok := cfg.data[key]
@@ -175,7 +175,7 @@ func (cfg *Config) GetWithFallback(key string, fallback interface{}) interface{}
 }
 
 // Set sets key to value.
-func (cfg *Config) Set(key string, value interface{}) {
+func (cfg *Config) Set(key string, value any) {
 	cfg.dataLock.Lock()
 	defer cfg.dataLock.Unlock()
 	cfg.data[key] = value

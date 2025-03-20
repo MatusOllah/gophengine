@@ -59,7 +59,7 @@ func L(msgid string) string {
 }
 
 // LT returns a localized string with template data.
-func LT(msgid string, tmplData map[string]interface{}) string {
+func LT(msgid string, tmplData map[string]any) string {
 	if localizer == nil {
 		slog.Warn("localizer not initalized yet!")
 		return ""

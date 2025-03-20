@@ -10,7 +10,7 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 )
 
-func newGraphicsPage(ctx *context.Context, cfg map[string]interface{}) *page {
+func newGraphicsPage(ctx *context.Context, cfg map[string]any) *page {
 	c := newPageContentContainer()
 
 	// FPS counter

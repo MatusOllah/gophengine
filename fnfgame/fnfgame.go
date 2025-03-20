@@ -72,7 +72,7 @@ func (g *FNFGame) Draw(screen *ebiten.Image) {
 	g.ctx.SceneCtrl.Draw(screen)
 
 	if g.ctx.OptionsConfig.MustGet("Graphics.EnableFPSCounter").(bool) {
-		ebitenutil.DebugPrint(screen, i18n.LT("FPSCounter", map[string]interface{}{
+		ebitenutil.DebugPrint(screen, i18n.LT("FPSCounter", map[string]any{
 			"FPS": ebiten.ActualFPS(),
 			"TPS": ebiten.ActualTPS(),
 		}))

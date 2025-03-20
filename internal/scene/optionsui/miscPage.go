@@ -12,7 +12,7 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 )
 
-func newMiscellaneousPage(ctx *context.Context, cfg map[string]interface{}, ui *ebitenui.UI) *page {
+func newMiscellaneousPage(ctx *context.Context, cfg map[string]any, ui *ebitenui.UI) *page {
 	c := newPageContentContainer()
 
 	// Locale

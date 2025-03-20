@@ -18,7 +18,7 @@ func newHorizontalContainer(w ...widget.PreferredSizeLocateableWidget) *widget.C
 	return c
 }
 
-func newSeparator(ld interface{}) widget.PreferredSizeLocateableWidget {
+func newSeparator(ld any) widget.PreferredSizeLocateableWidget {
 	c := widget.NewContainer(
 		widget.ContainerOpts.Layout(widget.NewRowLayout(
 			widget.RowLayoutOpts.Direction(widget.DirectionVertical),

@@ -18,7 +18,7 @@ const Dur24FPS time.Duration = 41 * time.Millisecond
 
 var intervalMatcher = *regexp.MustCompile("^([0-9]+)-([0-9]+)$")
 
-func parseInterval(val interface{}) (int, int, int) {
+func parseInterval(val any) (int, int, int) {
 	switch v := val.(type) {
 	case int:
 		return v, v, 1
@@ -47,7 +47,7 @@ func parseInterval(val interface{}) (int, int, int) {
 
 var DefaultDelta = time.Millisecond * 16
 
-func parseDurations(durations interface{}, frameCount int) []time.Duration {
+func parseDurations(durations any, frameCount int) []time.Duration {
 	result := make([]time.Duration, frameCount)
 	switch val := durations.(type) {
 	case time.Duration:
@@ -58,7 +58,7 @@ func parseDurations(durations interface{}, frameCount int) []time.Duration {
 		for i := range val {
 			result[i] = val[i]
 		}
-	case []interface{}:
+	case []any:
 		for i := range val {
 			result[i] = parseDurationValue(val[i])
 		}
@@ -69,14 +69,14 @@ func parseDurations(durations interface{}, frameCount int) []time.Duration {
 				result[i-1] = duration
 			}
 		}
-	case map[string]interface{}:
+	case map[string]any:
 		for key, duration := range val {
 			min, max, step := parseInterval(key)
 			for i := min; i <= max; i += step {
 				result[i-1] = parseDurationValue(duration)
 			}
 		}
-	case interface{}:
+	case any:
 		for i := 0; i < frameCount; i++ {
 			result[i] = parseDurationValue(val)
 		}
@@ -86,7 +86,7 @@ func parseDurations(durations interface{}, frameCount int) []time.Duration {
 	return result
 }
 
-func parseDurationValue(value interface{}) time.Duration {
+func parseDurationValue(value any) time.Duration {
 	switch val := value.(type) {
 	case time.Duration:
 		return val
@@ -179,7 +179,7 @@ func PauseAtStart(anim *Animation, loops int) {
 // 100 * time.Millisecond } or you can specify durations for
 // ranges of frames: map[string]time.Duration { "1-2":
 // 100 * time.Millisecond, "3-5": 200 * time.Millisecond }.
-func NewAnimation(frames []*ebiten.Image, durations interface{}, onLoop ...OnLoop) *Animation {
+func NewAnimation(frames []*ebiten.Image, durations any, onLoop ...OnLoop) *Animation {
 	_durations := parseDurations(durations, len(frames))
 	intervals, totalDuration := parseIntervals(_durations)
 	ol := Nop
@@ -252,7 +252,7 @@ func (anim *Animation) UpdateWithDelta(elapsedTime time.Duration) {
 }
 
 // SetDurations sets the durations of the animation.
-func (anim *Animation) SetDurations(durations interface{}) {
+func (anim *Animation) SetDurations(durations any) {
 	_durations := parseDurations(durations, len(anim.frames))
 	anim.durations = _durations
 	anim.intervals, anim.totalDuration = parseIntervals(_durations)

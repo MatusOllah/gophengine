@@ -24,14 +24,14 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 	// The labels
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("GEVersion", map[string]interface{}{"Version": ctx.Version}),
+			i18n.LT("GEVersion", map[string]any{"Version": ctx.Version}),
 			gui.UIRes.Fonts.RegularFace,
 			gui.UIRes.LabelColor,
 		),
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("GoVersion", map[string]interface{}{
+			i18n.LT("GoVersion", map[string]any{
 				"GoVersion": runtime.Version(),
 				"GOOS":      runtime.GOOS,
 				"GOARCH":    runtime.GOARCH,
@@ -42,7 +42,7 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("FNFVersion", map[string]interface{}{"FNFVersion": ctx.FNFVersion}),
+			i18n.LT("FNFVersion", map[string]any{"FNFVersion": ctx.FNFVersion}),
 			gui.UIRes.Fonts.RegularFace,
 			gui.UIRes.LabelColor,
 		),
