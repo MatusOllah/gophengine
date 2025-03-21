@@ -3,6 +3,8 @@ package scene
 import (
 	"fmt"
 	"image/color"
+	"log/slog"
+	"strings"
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audio"
@@ -82,6 +84,8 @@ func (s *StoryMenuScene) Close() error {
 
 func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
+
+	s.grpWeekText.Draw(screen)
 	screen.DrawImage(s.yellowBG, nil)
 	screen.DrawImage(s.blackBar, nil)
 
@@ -91,38 +95,49 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 		text.Draw(screen, "SCORE: 49324858", s.scoreTextFace, op)
 	}
 	{
+		txt := strings.ToUpper(s.ctx.Weeks[s.curWeek].Name)
+
+		width, _ := text.Measure(txt, s.txtWeekTitleFace, 0)
+
 		op := &text.DrawOptions{}
-		op.GeoM.Translate(float64(engine.GameWidth)*0.7, 10)
+		op.GeoM.Translate(float64(engine.GameWidth)-(width+10), 10)
 		op.ColorScale.ScaleAlpha(0.7)
 		op.PrimaryAlign = text.AlignStart
-		text.Draw(screen, "test week name", s.txtWeekTitleFace, op)
-	}
 
-	s.grpWeekText.Draw(screen)
+		text.Draw(screen, txt, s.txtWeekTitleFace, op)
+	}
 }
 
 func (s *StoryMenuScene) Update() error {
-	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionBack) {
-		if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/cancelMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
-			return err
-		}
-		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
-	}
-
 	s.grpWeekText.Update()
 
 	if !s.movedBack {
 		if !s.selectedWeek {
 			if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionUp) {
-				s.changeWeek(-1)
+				if err := s.changeWeek(-1); err != nil {
+					return err
+				}
+			}
+			if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionDown) {
+				if err := s.changeWeek(1); err != nil {
+					return err
+				}
 			}
 		}
+	}
+
+	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionBack) && !s.movedBack && !s.selectedWeek {
+		if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/cancelMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
+			return err
+		}
+		s.movedBack = true
+		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
 	}
 
 	return nil
 }
 
-func (s *StoryMenuScene) changeWeek(delta int) {
+func (s *StoryMenuScene) changeWeek(delta int) error {
 	s.curWeek += delta
 
 	if s.curWeek >= len(s.ctx.Weeks) {
@@ -131,4 +146,22 @@ func (s *StoryMenuScene) changeWeek(delta int) {
 	if s.curWeek < 0 {
 		s.curWeek = len(s.ctx.Weeks) - 1
 	}
+
+	slog.Info("selected week", "i", s.curWeek, "week", s.ctx.Weeks[s.curWeek])
+
+	if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
+		return err
+	}
+
+	for i, item := range s.grpWeekText.Iterate() {
+		item.TargetY = float64(i - s.curWeek)
+	}
+
+	s.updateText()
+
+	return nil
+}
+
+func (s *StoryMenuScene) updateText() {
+	//TODO: update track list and characters
 }
