@@ -14,8 +14,7 @@ import (
 )
 
 type StoryMenuScene struct {
-	ctx *context.Context
-	// TODO: move freakyMenu music to some MusicManager struct
+	ctx              *context.Context
 	scoreTextFace    *text.GoTextFace
 	txtWeekTitleFace *text.GoTextFace
 	yellowBG         *ebiten.Image
