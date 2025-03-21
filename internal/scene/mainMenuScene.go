@@ -14,8 +14,6 @@ import (
 	"github.com/jeandeaual/go-locale"
 )
 
-var mainMenuSceneInstance *MainMenuScene
-
 type MainMenuScene struct {
 	ctx        *context.Context
 	menuItems  *mainmenu.MainMenuItemGroup
@@ -126,8 +124,6 @@ func (s *MainMenuScene) Init() error {
 		return err
 	}
 	s.ui = ui
-
-	mainMenuSceneInstance = s
 
 	return nil
 }
