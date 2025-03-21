@@ -5,7 +5,7 @@ import (
 	"image/color"
 
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/storymenu"
@@ -17,9 +17,14 @@ type StoryMenuScene struct {
 	ctx              *context.Context
 	scoreTextFace    *text.GoTextFace
 	txtWeekTitleFace *text.GoTextFace
-	yellowBG         *ebiten.Image
-	blackBar         *ebiten.Image
-	grpWeekText      *engine.Group[*storymenu.MenuItem]
+	curWeek          int
+	txtTracklistFace *text.GoTextFace
+	//TODO: menu characters
+	movedBack    bool
+	selectedWeek bool
+	yellowBG     *ebiten.Image
+	blackBar     *ebiten.Image
+	grpWeekText  *engine.Group[*storymenu.MenuItem]
 }
 
 var _ engine.Scene = (*StoryMenuScene)(nil)
@@ -98,7 +103,7 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 
 func (s *StoryMenuScene) Update() error {
 	if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionBack) {
-		if err := audioutil.PlaySoundFromFS(s.ctx, s.ctx.AssetsFS, "sounds/cancelMenu.ogg", 0); err != nil {
+		if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/cancelMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
 			return err
 		}
 		return s.ctx.SceneCtrl.SwitchScene(&MainMenuScene{ctx: s.ctx})
@@ -106,5 +111,24 @@ func (s *StoryMenuScene) Update() error {
 
 	s.grpWeekText.Update()
 
+	if !s.movedBack {
+		if !s.selectedWeek {
+			if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionUp) {
+				s.changeWeek(-1)
+			}
+		}
+	}
+
 	return nil
+}
+
+func (s *StoryMenuScene) changeWeek(delta int) {
+	s.curWeek += delta
+
+	if s.curWeek >= len(s.ctx.Weeks) {
+		s.curWeek = 0
+	}
+	if s.curWeek < 0 {
+		s.curWeek = len(s.ctx.Weeks) - 1
+	}
 }

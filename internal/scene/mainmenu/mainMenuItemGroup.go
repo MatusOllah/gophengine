@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/MatusOllah/gophengine/context"
-	"github.com/MatusOllah/gophengine/internal/audioutil"
+	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
@@ -66,7 +66,7 @@ func (g *MainMenuItemGroup) Update() error {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected > 0 {
-			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+			if err := audio.PlaySoundFromFS(g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, g.ctx.AudioMixer.SFX); err != nil {
 				return err
 			}
 
@@ -81,7 +81,7 @@ func (g *MainMenuItemGroup) Update() error {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if g.curSelected < len(g.items)-1 {
-			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+			if err := audio.PlaySoundFromFS(g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, g.ctx.AudioMixer.SFX); err != nil {
 				return err
 			}
 
@@ -97,12 +97,12 @@ func (g *MainMenuItemGroup) Update() error {
 		g.items[g.curSelected].Sprite.AnimController.Play("idle") // deselect old item
 
 		if yOffset < 0 && g.curSelected < len(g.items)-1 {
-			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+			if err := audio.PlaySoundFromFS(g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, g.ctx.AudioMixer.SFX); err != nil {
 				return err
 			}
 			g.curSelected++
 		} else if yOffset > 0 && g.curSelected > 0 {
-			if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0); err != nil {
+			if err := audio.PlaySoundFromFS(g.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, g.ctx.AudioMixer.SFX); err != nil {
 				return err
 			}
 			g.curSelected--
@@ -125,7 +125,7 @@ func (g *MainMenuItemGroup) Update() error {
 
 		g.isSelected = true
 
-		if err := audioutil.PlaySoundFromFS(g.ctx, g.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+		if err := audio.PlaySoundFromFS(g.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3, g.ctx.AudioMixer.SFX); err != nil {
 			return err
 		}
 

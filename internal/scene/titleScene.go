@@ -11,8 +11,8 @@ import (
 
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
+	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audio/music"
-	"github.com/MatusOllah/gophengine/internal/audioutil"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
@@ -192,7 +192,7 @@ func (s *TitleScene) Update() error {
 		s.titleText.AnimController.Play("press")
 		s.flasher.Flash()
 
-		if err := audioutil.PlaySoundFromFS(s.ctx, s.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3); err != nil {
+		if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/confirmMenu.ogg", -0.3, s.ctx.AudioMixer.SFX); err != nil {
 			return err
 		}
 
