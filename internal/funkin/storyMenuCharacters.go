@@ -8,6 +8,6 @@ type StoryMenuCharacters struct {
 	// Boyfriend is the Boyfriend character ID i.e. the player character.
 	Boyfriend string
 
-	// Girlfriend is the Girlfriend character ID i.e. the girl on the speakers.
+	// Girlfriend is the Girlfriend character ID i.e. the spectator character.
 	Girlfriend string
 }
