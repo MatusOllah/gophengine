@@ -22,7 +22,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 3. Otvorte "MSYS2 MinGW 64-bit" z ponuky štartovacieho menu.
 4. Spustite nasledujúce príkazy:
     * `pacman -Syu`
-    * `pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-make`
+    * `pacman -S git mingw-w64-x86_64-toolchain`
 5. Budete musieť pridať `/c/Program\ Files/Go/bin` a `~/go/bin` do vášho `$PATH`, pre MSYS2 môžete použiť nasledujúci príkaz:
     * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/go/bin" >> ~/.bashrc`
 
@@ -38,7 +38,7 @@ C kompilátor je potrebný, pretože GophEngine používa nielen Go, ale aj jazy
 
 1. Nainštalujte [Go](https://go.dev) (verzia go1.23.0 alebo novšia).
 2. Nainštalujte C kompilátor a Make pomocou správcu balíkov vašej distribúcie. Napríklad Ubuntu (alebo iné distribúcie založené na Debiane) používa `apt`.
-    * `sudo apt install gcc make`
+    * `sudo apt install gcc binutils make`
 3. Nainštalujte hlavičkové súbory grafickej knižnice pomocou správcu balíkov vašej distribúcie. Použite príslušný príkaz pre vašu distribúciu:
     * **Debian / Ubuntu / Linux Mint:** `sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config`
     * **Fedora / RHEL:** `sudo dnf install mesa-libGL-devel mesa-libGLES-devel libXrandr-devel libXcursor-devel libXinerama-devel libXi-devel libXxf86vm-devel alsa-lib-devel pkg-config`

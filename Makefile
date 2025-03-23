@@ -66,6 +66,7 @@ endif
 
 ifeq ($(IS_RELEASE),true)
 ifneq ($(GOARCH),wasm)
+		strip $(EXE)
 		$(UPX) $(UPX_FLAGS) $(EXE)
 endif
 endif

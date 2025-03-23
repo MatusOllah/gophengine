@@ -22,7 +22,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 3. Open "MSYS2 MinGW 64-bit" from the start menu.
 4. Run the following commands:
     * `pacman -Syu`
-    * `pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-make`
+    * `pacman -S git mingw-w64-x86_64-toolchain`
 5. You will need to add `/c/Program\ Files/Go/bin` and `~/go/bin` to your `$PATH`, for MSYS2 you can run the following command:
     * `echo "export PATH=\$PATH:/c/Program\ Files/Go/bin:~/go/bin" >> ~/.bashrc`
 
@@ -38,7 +38,7 @@ A C Compiler is required as GophEngine uses not only Go, but also C.
 
 1. Install [Go](https://go.dev) (version go1.23.0 or later).
 2. Install a C Compiler and Make using your distribution's package manager. For example, Ubuntu (or other Debian based distros) uses `apt`.
-    * `sudo apt install gcc make`
+    * `sudo apt install gcc binutils make`
 3. Install the graphics library header files using your distribution's package manager. Use the appropriate command for your distro:
     * **Debian / Ubuntu / Linux Mint:** `sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config`
     * **Fedora / RHEL:** `sudo dnf install mesa-libGL-devel mesa-libGLES-devel libXrandr-devel libXcursor-devel libXinerama-devel libXi-devel libXxf86vm-devel alsa-lib-devel pkg-config`
