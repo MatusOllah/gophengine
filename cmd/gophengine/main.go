@@ -33,6 +33,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/dialog"
+	"github.com/MatusOllah/gophengine/internal/version"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -135,9 +136,9 @@ func getLogLevel() slog.Leveler {
 
 // Actual main func here
 func mainE() error {
-	slog.Info(fmt.Sprintf("GophEngine version %s", version))
+	slog.Info(fmt.Sprintf("GophEngine version %s", version.Version))
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
-	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
+	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", version.FNFVersion))
 
 	if *extractAssetsFlag != "" {
 		if err := extractFS(assets.FS, *extractAssetsFlag); err != nil {
@@ -159,8 +160,6 @@ func mainE() error {
 		AssetsFS:           assets.FS,
 		OptionsConfigPath:  *configFlag,
 		ProgressConfigPath: *progressFlag,
-		Version:            version,
-		FNFVersion:         fnfVersion,
 		Locale:             *forceLocaleFlag,
 	}
 	if runtime.GOARCH != "wasm" {

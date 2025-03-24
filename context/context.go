@@ -27,8 +27,6 @@ type Context struct {
 	Conductor      *funkin.Conductor
 	AudioMixer     *audio.Mixer
 	FreakyMenu     *music.FreakyMenuMusic
-	Version        string
-	FNFVersion     string
 	Weeks          []funkin.Week
 }
 
@@ -85,9 +83,6 @@ func New(opts *Options) (*Context, error) {
 	ctx.AudioMixer.Music.SetVolume(ctx.OptionsConfig.MustGet("Audio.MusicVolume").(float64))
 	ctx.AudioMixer.Music_Instrumental.SetVolume(ctx.OptionsConfig.MustGet("Audio.InstVolume").(float64))
 	ctx.AudioMixer.Music_Voices.SetVolume(ctx.OptionsConfig.MustGet("Audio.VoicesVolume").(float64))
-
-	ctx.Version = opts.Version
-	ctx.FNFVersion = opts.FNFVersion
 
 	ctx.Weeks = initWeeks()
 

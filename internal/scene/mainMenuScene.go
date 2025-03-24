@@ -8,6 +8,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/browser"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
+	"github.com/MatusOllah/gophengine/internal/version"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -142,7 +143,7 @@ func (s *MainMenuScene) Draw(screen *ebiten.Image) {
 
 	s.menuItems.Draw(screen)
 
-	ebitenutil.DebugPrintAt(screen, s.ctx.Version, 0, 700)
+	ebitenutil.DebugPrintAt(screen, version.Version, 0, 700)
 
 	s.ui.Draw(screen)
 }

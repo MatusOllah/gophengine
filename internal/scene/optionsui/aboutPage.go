@@ -13,6 +13,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/internal/version"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 	"golang.design/x/clipboard"
@@ -24,7 +25,7 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 	// The labels
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("GEVersion", map[string]any{"Version": ctx.Version}),
+			i18n.LT("GEVersion", map[string]any{"Version": version.Version}),
 			gui.UIRes.Fonts.RegularFace,
 			gui.UIRes.LabelColor,
 		),
@@ -42,7 +43,7 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("FNFVersion", map[string]any{"FNFVersion": ctx.FNFVersion}),
+			i18n.LT("FNFVersion", map[string]any{"FNFVersion": version.Version}),
 			gui.UIRes.Fonts.RegularFace,
 			gui.UIRes.LabelColor,
 		),
