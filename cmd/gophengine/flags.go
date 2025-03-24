@@ -12,7 +12,7 @@ var flagSet *pflag.FlagSet = pflag.NewFlagSet(os.Args[0], pflag.ExitOnError)
 var (
 	helpFlag = flagSet.BoolP("help", "h", false, "Shows this help message")
 
-	extractAssetsFlag = flagSet.Bool("extract-assets", false, "Extract embedded assets")
+	extractAssetsFlag = flagSet.String("extract-assets", "", "Extract embedded assets")
 	configFlag        = flagSet.String("config", "", "Path to config.gecfg config file")
 	progressFlag      = flagSet.String("progress", "", "Path to progress.gecfg progress file")
 	logLevelFlag      = flagSet.String("log-level", "info", "Log level (\"debug\", \"info\", \"warn\", \"error\")")

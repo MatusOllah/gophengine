@@ -42,7 +42,7 @@ import (
 // extractFS extracts the filesystem to dst.
 func extractFS(fsys fs.FS, dst string) error {
 	// create destination directory
-	if err := os.Mkdir(dst, fs.ModePerm); err != nil {
+	if err := os.MkdirAll(dst, fs.ModePerm); err != nil {
 		return err
 	}
 
@@ -55,7 +55,7 @@ func extractFS(fsys fs.FS, dst string) error {
 		if d.IsDir() {
 			dirPath := filepath.Join(dst, path)
 
-			slog.Info("creating directory", "path", dirPath)
+			slog.Info("creating directory", "src", path, "dst", dirPath)
 			if err := os.MkdirAll(dirPath, fs.ModePerm); err != nil {
 				return err
 			}
@@ -139,8 +139,8 @@ func mainE() error {
 	slog.Info(fmt.Sprintf("Go version %s", runtime.Version()))
 	slog.Info(fmt.Sprintf("Friday Night Funkin' version %s", fnfVersion))
 
-	if *extractAssetsFlag {
-		if err := extractFS(assets.FS, "assets"); err != nil {
+	if *extractAssetsFlag != "" {
+		if err := extractFS(assets.FS, *extractAssetsFlag); err != nil {
 			return fmt.Errorf("failed to extract assets: %w", err)
 		}
 
