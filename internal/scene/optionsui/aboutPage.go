@@ -43,7 +43,7 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 	))
 	c.AddChild(widget.NewLabel(
 		widget.LabelOpts.Text(
-			i18n.LT("FNFVersion", map[string]any{"FNFVersion": version.Version}),
+			i18n.LT("FNFVersion", map[string]any{"FNFVersion": version.FNFVersion}),
 			gui.UIRes.Fonts.RegularFace,
 			gui.UIRes.LabelColor,
 		),
