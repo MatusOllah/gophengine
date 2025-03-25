@@ -27,7 +27,7 @@ type Context struct {
 	Conductor      *funkin.Conductor
 	AudioMixer     *audio.Mixer
 	FreakyMenu     *music.FreakyMenuMusic
-	Weeks          []funkin.Week
+	Weeks          []*funkin.Week
 }
 
 // New creates a new [Context].

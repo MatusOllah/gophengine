@@ -17,7 +17,7 @@ type MenuItem struct {
 	Bounds  image.Rectangle
 }
 
-func NewMenuItem(ctx *context.Context, x, y int, weekNum int, week funkin.Week) (*MenuItem, error) {
+func NewMenuItem(ctx *context.Context, x, y int, weekNum int, week *funkin.Week) (*MenuItem, error) {
 	item := &MenuItem{TargetY: float64(weekNum), Sprite: engine.NewSprite(x, y)}
 
 	var err error
