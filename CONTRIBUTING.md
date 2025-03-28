@@ -14,4 +14,6 @@ Prosím, píšte issues a pull requests buď v **angličtine**, **češtine** al
 
 See [Open Source Guide on How to Contribute](https://opensource.guide/how-to-contribute/) for general guidelines.
 
+We do not accept AI generated code contributions. All submitted code must be written and reviewed by a human to ensure quality, maintainability, and security. If a pull request contains AI generated code, it will be closed.
+
 Thank you for contributing to GophEngine! 😊
