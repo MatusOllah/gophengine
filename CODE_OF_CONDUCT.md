@@ -29,11 +29,13 @@ Examples of unacceptable behavior include:
 
 * The use of sexualized language or imagery, and sexual attention or advances of
   any kind
-* The use of graphic imagery or gore, and graphic advances of any kind
+* The use of graphic imagery or gore
+* Violence, threats of violence or violent language or imagery
 * Trolling, insulting or derogatory comments, and personal or political attacks
 * Public or private harassment
 * Publishing others' private information, such as a physical or electronic address,
-  without their explicit permission
+  without their explicit permission (i.e. "doxxing")
+* Advocating for, or encouraging, any of the above behavior
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
 
@@ -51,8 +53,10 @@ decisions when appropriate.
 
 ## Scope
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
+This Code of Conduct applies within all community spaces,
+all forms of content including but not limited to
+audio, video, images, blog posts, music, memes, fanart, and mods,
+and also applies when an individual is officially representing the community in public spaces.
 Examples of representing our community include using an official email address,
 posting via an official social media account, or acting as an appointed
 representative at an online or offline event.
