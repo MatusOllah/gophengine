@@ -23,15 +23,15 @@ import (
 )
 
 type animation struct {
-	Name          string   `hcl:"Name,label"`
-	Frames        []string `hcl:"Frames"`
-	FrameDuration string   `hcl:"FrameDuration"`
+	Name          string   `hcl:"name,label"`
+	Frames        []string `hcl:"frames"`
+	FrameDuration string   `hcl:"frame_duration"`
 }
 
 type animController struct {
-	Name        string      `hcl:"Name,label"`
-	DefaultAnim string      `hcl:"DefaultAnim,optional"`
-	Animations  []animation `hcl:"Animation,block"`
+	Name        string      `hcl:"name,label"`
+	DefaultAnim string      `hcl:"default_anim,optional"`
+	Animations  []animation `hcl:"animation,block"`
 }
 
 func refineNonNull(b *cty.RefinementBuilder) *cty.RefinementBuilder {
@@ -119,7 +119,7 @@ func LoadAnimsFromFS(fsys fs.FS, _path string, name string) (*anim.AnimControlle
 	}
 
 	var v struct {
-		AnimControllers []animController `hcl:"AnimController,block"`
+		AnimControllers []animController `hcl:"controller,block"`
 	}
 
 	err = hclsimple.Decode(path.Base(_path), src, evalctx, &v)

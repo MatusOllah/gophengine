@@ -1,62 +1,62 @@
-AnimController "tutorial" {
-	DefaultAnim = "select"
+controller "tutorial" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "tutorial selected")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "tutorial selected")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week1" {
-	DefaultAnim = "select"
+controller "week1" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "WEEK1 select")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "WEEK1 select")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week2" {
-	DefaultAnim = "select"
+controller "week2" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "week2 select")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "week2 select")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week3" {
-	DefaultAnim = "select"
+controller "week3" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "Week 3 press")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "Week 3 press")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week4" {
-	DefaultAnim = "select"
+controller "week4" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "Week 4 press")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "Week 4 press")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week5" {
-	DefaultAnim = "select"
+controller "week5" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "week 5")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "week 5")
+		frame_duration = DUR_24FPS
 	}
 }
 
-AnimController "week6" {
-	DefaultAnim = "select"
+controller "week6" {
+	default_anim = "select"
 
-	Animation "select" {
-		Frames = fromPrefix(PATH, "Week 6")
-		FrameDuration = DUR_24FPS
+	animation "select" {
+		frames = fromPrefix(PATH, "Week 6")
+		frame_duration = DUR_24FPS
 	}
 }

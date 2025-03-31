@@ -1,13 +1,13 @@
-AnimController "titleEnter" {
-	DefaultAnim = "idle"
+controller "titleEnter" {
+	default_anim = "idle"
 
-	Animation "idle" {
-		Frames = fromPrefix(PATH, "Press Enter to Begin")
-		FrameDuration = DUR_24FPS
+	animation "idle" {
+		frames = fromPrefix(PATH, "Press Enter to Begin")
+		frame_duration = DUR_24FPS
 	}
 
-	Animation "press" {
-		Frames = fromPrefix(PATH, "ENTER PRESSED")
-		FrameDuration = DUR_24FPS
+	animation "press" {
+		frames = fromPrefix(PATH, "ENTER PRESSED")
+		frame_duration = DUR_24FPS
 	}
 }
