@@ -13,7 +13,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
-	"github.com/MatusOllah/gophengine/internal/version"
+	"github.com/MatusOllah/gophengine/version"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 	"golang.design/x/clipboard"

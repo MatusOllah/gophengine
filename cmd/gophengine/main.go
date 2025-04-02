@@ -33,7 +33,7 @@ import (
 	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/dialog"
-	"github.com/MatusOllah/gophengine/internal/version"
+	"github.com/MatusOllah/gophengine/version"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"

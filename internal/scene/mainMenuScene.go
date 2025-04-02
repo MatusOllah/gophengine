@@ -8,7 +8,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/browser"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
-	"github.com/MatusOllah/gophengine/internal/version"
+	"github.com/MatusOllah/gophengine/version"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
