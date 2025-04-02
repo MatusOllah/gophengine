@@ -19,16 +19,17 @@ import (
 
 // Context holds global variables and shared game state.
 type Context struct {
-	AssetsFS       fs.FS
-	SceneCtrl      *engine.SceneController
-	InputSystem    input.System
-	InputHandler   *input.Handler
-	OptionsConfig  *config.Config
-	ProgressConfig *config.Config
-	Conductor      *funkin.Conductor
-	AudioMixer     *audio.Mixer
-	FreakyMenu     *music.FreakyMenuMusic
-	Weeks          *goreg.OrderedRegistry[*funkin.Week]
+	AssetsFS            fs.FS
+	SceneCtrl           *engine.SceneController
+	InputSystem         input.System
+	InputHandler        *input.Handler
+	OptionsConfig       *config.Config
+	ProgressConfig      *config.Config
+	Conductor           *funkin.Conductor
+	AudioMixer          *audio.Mixer
+	FreakyMenu          *music.FreakyMenuMusic
+	Weeks               *goreg.OrderedRegistry[*funkin.Week]
+	StoryMenuCharacters *goreg.StandardRegistry[*funkin.StoryMenuCharacter]
 }
 
 // New creates a new [Context].

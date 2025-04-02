@@ -11,3 +11,8 @@ type StoryMenuCharacters struct {
 	// Girlfriend is the Girlfriend character ID i.e. the spectator character.
 	Girlfriend string
 }
+
+type StoryMenuCharacter struct {
+	ID string
+	// TODO: this
+}
