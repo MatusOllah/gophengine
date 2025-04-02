@@ -30,6 +30,7 @@ type Context struct {
 	FreakyMenu          *music.FreakyMenuMusic
 	Weeks               *goreg.OrderedRegistry[*funkin.Week]
 	StoryMenuCharacters *goreg.StandardRegistry[*funkin.StoryMenuCharacter]
+	Songs               *goreg.OrderedRegistry[*funkin.Song]
 }
 
 // New creates a new [Context].
