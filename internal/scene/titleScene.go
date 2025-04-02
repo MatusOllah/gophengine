@@ -23,8 +23,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-var titleSceneInstance *TitleScene
-
 var _ engine.Scene = (*TitleScene)(nil)
 
 // TitleScene is the intro and "press enter to begin" screen.
@@ -131,7 +129,9 @@ func (s *TitleScene) Init() error {
 	}
 
 	mb := funkin.NewMusicBeat(s.ctx.Conductor)
-	mb.BeatHitFunc = titleState_BeatHit
+	mb.BeatHitFunc = func(curBeat int) {
+		s.beatHit(curBeat)
+	}
 	s.mb = mb
 
 	s.flasher = effects.NewFlasher(engine.GameWidth, engine.GameHeight, 1)
@@ -145,8 +145,6 @@ func (s *TitleScene) Init() error {
 	s.once = &sync.Once{}
 	s.blackScreenVisible = true
 	s.errCh = make(chan error, 1)
-
-	titleSceneInstance = s
 
 	return nil
 }
@@ -201,7 +199,7 @@ func (s *TitleScene) Update() error {
 
 		// Bit janky solution with the error channel but whatever
 		time.AfterFunc(2*time.Second, func() {
-			titleSceneInstance.errCh <- titleSceneInstance.ctx.SceneCtrl.SwitchScene(NewMainMenuScene(s.ctx))
+			s.errCh <- s.ctx.SceneCtrl.SwitchScene(NewMainMenuScene(s.ctx))
 		})
 	}
 
@@ -246,19 +244,19 @@ func (s *TitleScene) skipIntro() {
 	s.flasher.Flash()
 }
 
-func titleState_BeatHit(curBeat int) {
-	titleSceneInstance.logoBl.AnimController.Play("bump")
-	titleSceneInstance.danceLeft = !titleSceneInstance.danceLeft
+func (s *TitleScene) beatHit(curBeat int) {
+	s.logoBl.AnimController.Play("bump")
+	s.danceLeft = !s.danceLeft
 
-	if titleSceneInstance.danceLeft {
-		titleSceneInstance.gfDance.AnimController.Play("danceRight")
+	if s.danceLeft {
+		s.gfDance.AnimController.Play("danceRight")
 	} else {
-		titleSceneInstance.gfDance.AnimController.Play("danceLeft")
+		s.gfDance.AnimController.Play("danceLeft")
 	}
 
 	switch curBeat {
 	case 1:
-		titleSceneInstance.introText.CreateText(
+		s.introText.CreateText(
 			"ninjamuffin99",
 			"phantomArcade",
 			"kawaisprite",
@@ -266,34 +264,34 @@ func titleState_BeatHit(curBeat int) {
 			"MatusOllah",
 		)
 	case 3:
-		titleSceneInstance.introText.AddText(i18n.L("Present"))
+		s.introText.AddText(i18n.L("Present"))
 	case 4:
-		titleSceneInstance.introText.DeleteText()
+		s.introText.DeleteText()
 	case 5:
-		titleSceneInstance.introText.CreateText(i18n.L("MadeWith"))
+		s.introText.CreateText(i18n.L("MadeWith"))
 	case 7:
-		titleSceneInstance.introText.AddText("")
-		titleSceneInstance.introText.AddText("+")
-		titleSceneInstance.goLogo.Visible = true
-		titleSceneInstance.ebitenLogo.Visible = true
+		s.introText.AddText("")
+		s.introText.AddText("+")
+		s.goLogo.Visible = true
+		s.ebitenLogo.Visible = true
 	case 8:
-		titleSceneInstance.goLogo.Visible = false
-		titleSceneInstance.ebitenLogo.Visible = false
-		titleSceneInstance.introText.DeleteText()
+		s.goLogo.Visible = false
+		s.ebitenLogo.Visible = false
+		s.introText.DeleteText()
 	case 9:
-		titleSceneInstance.introText.CreateText(titleSceneInstance.randIntroText[0])
+		s.introText.CreateText(s.randIntroText[0])
 	case 11:
-		titleSceneInstance.introText.AddText(titleSceneInstance.randIntroText[1])
+		s.introText.AddText(s.randIntroText[1])
 	case 12:
-		titleSceneInstance.introText.DeleteText()
+		s.introText.DeleteText()
 	case 13:
-		titleSceneInstance.introText.AddText("Friday")
+		s.introText.AddText("Friday")
 	case 14:
-		titleSceneInstance.introText.AddText("Night")
+		s.introText.AddText("Night")
 	case 15:
-		titleSceneInstance.introText.AddText("Funkin")
+		s.introText.AddText("Funkin")
 	case 16:
-		titleSceneInstance.introText.DeleteText()
-		titleSceneInstance.skipIntro()
+		s.introText.DeleteText()
+		s.skipIntro()
 	}
 }
