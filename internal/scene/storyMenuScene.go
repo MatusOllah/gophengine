@@ -65,7 +65,8 @@ func (s *StoryMenuScene) Init() (err error) {
 
 	s.grpWeekText = engine.NewGroup[*storymenu.MenuItem]()
 
-	for i, week := range s.ctx.Weeks {
+	i := 0
+	for _, week := range s.ctx.Weeks.Iter() {
 		item, err := storymenu.NewMenuItem(s.ctx, 0, s.blackBar.Bounds().Dy()+s.yellowBG.Bounds().Dy()+10, i, week)
 		if err != nil {
 			return fmt.Errorf("StoryModeScene: failed to load menu item for week %s: %w", week.ID, err)
@@ -73,6 +74,7 @@ func (s *StoryMenuScene) Init() (err error) {
 		item.Sprite.Position.Y += (item.Bounds.Dy() * i)
 		item.Sprite.Position.X = (engine.GameWidth - item.Bounds.Dx()) / 2 // centers image on x axis
 		s.grpWeekText.Add(item)
+		i++
 	}
 
 	return nil
@@ -95,7 +97,8 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 		text.Draw(screen, "SCORE: 49324858", s.scoreTextFace, op)
 	}
 	{
-		txt := strings.ToUpper(s.ctx.Weeks[s.curWeek].Name)
+		week, _ := s.ctx.Weeks.GetIndex(s.curWeek)
+		txt := strings.ToUpper(week.Name)
 
 		width, _ := text.Measure(txt, s.txtWeekTitleFace, 0)
 
@@ -140,14 +143,14 @@ func (s *StoryMenuScene) Update() error {
 func (s *StoryMenuScene) changeWeek(delta int) error {
 	s.curWeek += delta
 
-	if s.curWeek >= len(s.ctx.Weeks) {
+	if s.curWeek >= s.ctx.Weeks.Len() {
 		s.curWeek = 0
 	}
 	if s.curWeek < 0 {
-		s.curWeek = len(s.ctx.Weeks) - 1
+		s.curWeek = s.ctx.Weeks.Len() - 1
 	}
 
-	slog.Info("selected week", "i", s.curWeek, "week", s.ctx.Weeks[s.curWeek])
+	slog.Info("selected week", "i", s.curWeek)
 
 	if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
 		return err

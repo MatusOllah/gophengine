@@ -13,6 +13,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/goreg"
 	input "github.com/quasilyte/ebitengine-input"
 )
 
@@ -27,7 +28,7 @@ type Context struct {
 	Conductor      *funkin.Conductor
 	AudioMixer     *audio.Mixer
 	FreakyMenu     *music.FreakyMenuMusic
-	Weeks          []*funkin.Week
+	Weeks          *goreg.OrderedRegistry[*funkin.Week]
 }
 
 // New creates a new [Context].
