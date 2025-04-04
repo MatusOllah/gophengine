@@ -153,3 +153,7 @@ func (g *MainMenuItemGroup) Update() error {
 
 	return nil
 }
+
+func (g *MainMenuItemGroup) CurSelectedY() int {
+	return g.items[g.curSelected].Sprite.Position.Y
+}

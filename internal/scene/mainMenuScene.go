@@ -13,6 +13,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/jeandeaual/go-locale"
+	"github.com/quasilyte/gmath"
 )
 
 type MainMenuScene struct {
@@ -22,7 +23,7 @@ type MainMenuScene struct {
 	magenta    *engine.Sprite
 	ui         *ebitenui.UI
 	shouldExit bool
-	bgOffsetY  int // TODO: offset background when selecting menu items
+	bgOffsetY  float64
 }
 
 var _ engine.Scene = (*MainMenuScene)(nil)
@@ -136,7 +137,7 @@ func (s *MainMenuScene) Close() error {
 func (s *MainMenuScene) Draw(screen *ebiten.Image) {
 	bgOpts := s.bg.DrawImageOptions()
 	bgOpts.GeoM.Scale(1.1, 1.1)
-	bgOpts.GeoM.Translate(0, float64(s.bgOffsetY))
+	bgOpts.GeoM.Translate(0, s.bgOffsetY)
 
 	s.bg.DrawWithOptions(screen, bgOpts)
 	s.magenta.DrawWithOptions(screen, bgOpts)
@@ -152,6 +153,8 @@ func (s *MainMenuScene) Update() error {
 	if s.shouldExit {
 		return ebiten.Termination
 	}
+
+	s.bgOffsetY = gmath.Lerp(s.bgOffsetY, -float64(s.menuItems.CurSelectedY())/10, 0.06)
 
 	s.ui.Update()
 
