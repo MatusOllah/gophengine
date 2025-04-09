@@ -23,12 +23,12 @@ func getFreakyMenuMeta(fsys fs.FS) (bpm int, tween *gween.Tween, err error) {
 	}
 
 	var v struct {
-		BPM   int `hcl:"BPM"`
+		BPM   int `hcl:"bpm"`
 		Tween struct {
-			Begin    float32 `hcl:"Begin"`
-			End      float32 `hcl:"End"`
-			Duration float32 `hcl:"Duration"`
-		} `hcl:"Tween,block"`
+			Begin    float32 `hcl:"begin"`
+			End      float32 `hcl:"end"`
+			Duration float32 `hcl:"duration"`
+		} `hcl:"tween,block"`
 	}
 	if err = hclsimple.Decode(path, b, nil, &v); err != nil {
 		return

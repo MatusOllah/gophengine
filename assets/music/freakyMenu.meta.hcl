@@ -1,16 +1,16 @@
 # freakyMenu song metadata
 
-# BPM is the song's tempo in beats per minute (BPM).
-BPM = 102
+# bpm is the song's tempo in beats per minute (BPM).
+bpm = 102
 
-# Tween represents the volume tween at the start of the intro.
-Tween {
-    # Begin is the starting volume.
-    Begin = -10
+# tween represents the volume tween at the start of the intro.
+tween {
+    # begin is the starting volume.
+    begin = -10
 
-    # End is the final volume.
-    End = -0.3
+    # end is the final volume.
+    end = -0.3
 
-    # Duration is the tween duration in seconds.
-    Duration = 4
+    # duration is the tween duration in seconds.
+    duration = 4
 }
