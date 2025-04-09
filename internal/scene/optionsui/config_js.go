@@ -147,16 +147,7 @@ func wipeOptionsConfig(ctx *context.Context, ui *ebitenui.UI) {
 }
 
 func exportProgressConfig(ctx *context.Context) error {
-	path, err := dialog.SelectFileSave(
-		i18n.L("ExportProgressConfig"),
-		"progress.gecfg",
-		[]dialog.FileFilter{{Name: i18n.L("GEConfigFile"), Patterns: []string{"*.gecfg"}, CaseFold: false}},
-	)
-	if err != nil {
-		return err
-	}
-
-	slog.Info("exporting progress config", "path", path)
+	slog.Info("exporting progress config")
 
 	cfg, err := config.New("", false)
 	if err != nil {
