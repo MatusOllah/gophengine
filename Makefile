@@ -46,6 +46,7 @@ ifneq ($(GOARCH),wasm)
 	GO_FLAGS += -buildmode=pie
 endif
 
+
 .PHONY: all
 all: clean build
 
@@ -60,9 +61,9 @@ run-debug:
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) run $(GO_FLAGS) ./cmd/gophengine --log-level=debug $(GE_FLAGS)
 
 .PHONY: build
-build: $(EXE)
+build: $(BINARY)
 
-$(EXE):
+$(BINARY):
 	mkdir -p $(BINARY)
 
 	$(GO) get
@@ -73,19 +74,26 @@ endif
 
 ifeq ($(IS_RELEASE),true)
 ifneq ($(GOARCH),wasm)
-		strip $(EXE)
-		$(UPX) $(UPX_FLAGS) $(EXE)
+	strip $(EXE)
+	$(UPX) $(UPX_FLAGS) $(EXE)
 endif
 ifeq ($(GOARCH),wasm)
-		$(WASM_OPT) $(WASM_OPT_FLAGS) -o $(WASM_OPT_OUT) $(EXE)
-		rm $(EXE)
-		mv $(WASM_OPT_OUT) $(EXE)
+	$(WASM_OPT) $(WASM_OPT_FLAGS) -o $(WASM_OPT_OUT) $(EXE)
+	rm $(EXE)
+	mv $(WASM_OPT_OUT) $(EXE)
 endif
 endif
 
 .PHONY: clean
 clean:
 	rm -rf $(BINARY)
+ifeq ($(GOOS),windows)
+	rm -f ./cmd/gophengine/rsrc_windows_*.syso
+endif
+
+.PHONY: clean-all
+clean-all:
+	rm -rf ./bin/
 ifeq ($(GOOS),windows)
 	rm -f ./cmd/gophengine/rsrc_windows_*.syso
 endif
