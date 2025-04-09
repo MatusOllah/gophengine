@@ -43,15 +43,6 @@ controller "week4" {
 	}
 }
 
-controller "week5" {
-	default_anim = "select"
-
-	animation "select" {
-		frames = fromPrefix(PATH, "week 5")
-		frame_duration = DUR_24FPS
-	}
-}
-
 controller "week6" {
 	default_anim = "select"
 
