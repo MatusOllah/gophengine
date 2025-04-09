@@ -3,7 +3,7 @@ package controls
 import (
 	"log/slog"
 
-	"github.com/MatusOllah/gophengine/internal/config"
+	"github.com/MatusOllah/gophengine/pkg/config"
 	input "github.com/quasilyte/ebitengine-input"
 )
 

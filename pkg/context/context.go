@@ -7,12 +7,12 @@ import (
 
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audio/music"
-	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/pkg/config"
 	"github.com/MatusOllah/goreg"
 	input "github.com/quasilyte/ebitengine-input"
 )
