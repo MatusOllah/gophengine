@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene/title"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

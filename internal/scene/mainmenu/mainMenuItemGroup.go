@@ -4,11 +4,11 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/effects"
 	"github.com/MatusOllah/gophengine/internal/engine"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

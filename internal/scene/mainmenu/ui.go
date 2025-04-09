@@ -6,10 +6,10 @@ import (
 	_ "image/png"
 	"log/slog"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/ebitenui/ebitenui"
 	eui_image "github.com/ebitenui/ebitenui/image"
 	"github.com/ebitenui/ebitenui/widget"

@@ -1,9 +1,9 @@
 package scene
 
 import (
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/optionsui"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"

@@ -3,12 +3,12 @@ package scene
 import (
 	_ "image/png"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/browser"
 	"github.com/MatusOllah/gophengine/internal/engine"
 	"github.com/MatusOllah/gophengine/internal/scene/mainmenu"
-	"github.com/MatusOllah/gophengine/version"
+	"github.com/MatusOllah/gophengine/pkg/context"
+	"github.com/MatusOllah/gophengine/pkg/version"
 	"github.com/ebitenui/ebitenui"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"

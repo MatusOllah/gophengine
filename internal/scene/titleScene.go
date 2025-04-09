@@ -9,7 +9,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/audio/music"
@@ -19,6 +18,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/i18n"
 	"github.com/MatusOllah/gophengine/internal/scene/title"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )

@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/pkg/context"
 )
 
 type locale struct {

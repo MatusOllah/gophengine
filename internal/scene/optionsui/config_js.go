@@ -8,11 +8,11 @@ import (
 	"log/slog"
 	"syscall/js"
 
-	"github.com/MatusOllah/gophengine/context"
 	"github.com/MatusOllah/gophengine/internal/config"
 	"github.com/MatusOllah/gophengine/internal/dialog"
 	"github.com/MatusOllah/gophengine/internal/gui"
 	"github.com/MatusOllah/gophengine/internal/i18n"
+	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/ebitenui/ebitenui"
 	"github.com/ebitenui/ebitenui/widget"
 )

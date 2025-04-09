@@ -30,10 +30,10 @@ import (
 	"strings"
 
 	"github.com/MatusOllah/gophengine/assets"
-	"github.com/MatusOllah/gophengine/context"
-	"github.com/MatusOllah/gophengine/fnfgame"
 	"github.com/MatusOllah/gophengine/internal/dialog"
-	"github.com/MatusOllah/gophengine/version"
+	"github.com/MatusOllah/gophengine/pkg/context"
+	"github.com/MatusOllah/gophengine/pkg/fnfgame"
+	"github.com/MatusOllah/gophengine/pkg/version"
 	"github.com/MatusOllah/slogcolor"
 	"github.com/MatusOllah/stripansi"
 	"github.com/hajimehoshi/ebiten/v2"
