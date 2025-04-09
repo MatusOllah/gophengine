@@ -1,9 +1,10 @@
+// Package boyfriend implements Boyfriend.
 package boyfriend
 
 import (
 	"log/slog"
 
-	"github.com/MatusOllah/gophengine/internal/character"
+	"github.com/MatusOllah/gophengine/internal/funkin/character"
 )
 
 // Boyfriend represents Boyfriend, the main player character.
