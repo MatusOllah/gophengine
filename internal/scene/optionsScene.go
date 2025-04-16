@@ -25,7 +25,7 @@ var _ engine.Scene = (*OptionsScene)(nil)
 func (s *OptionsScene) Init() error {
 	s.shouldExit = false
 
-	bg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuDesat.png")
+	bg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ui/bg/menuDesat.png")
 	if err != nil {
 		return err
 	}

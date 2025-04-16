@@ -36,7 +36,7 @@ func (s *MainMenuScene) Init() error {
 	s.bgOffsetY = 0
 	s.shouldExit = false
 
-	bgImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuBG.png")
+	bgImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ui/bg/menuBG.png")
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func (s *MainMenuScene) Init() error {
 	bg.Img = bgImg
 	s.bg = bg
 
-	magentaImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/menuBGMagenta.png")
+	magentaImg, _, err := ebitenutil.NewImageFromFileSystem(s.ctx.AssetsFS, "images/ui/bg/menuBGMagenta.png")
 	if err != nil {
 		return err
 	}
@@ -54,28 +54,28 @@ func (s *MainMenuScene) Init() error {
 	s.magenta = magenta
 
 	storyModeSprite := engine.NewSprite(0, 0) // Y coordinate handled by mainMenuItemGroup
-	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/anim.hcl", "story mode")
+	storyModeSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/mainmenu/ui/anim.hcl", "story mode")
 	if err != nil {
 		return err
 	}
 	storyModeSprite.Position.X = (engine.GameWidth - storyModeSprite.AnimController.GetAnim("idle").Frames()[0].Bounds().Dx()) / 2
 
 	freeplaySprite := engine.NewSprite(0, 0) // Y coordinate handled by mainMenuItemGroup
-	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/anim.hcl", "freeplay")
+	freeplaySprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/mainmenu/ui/anim.hcl", "freeplay")
 	if err != nil {
 		return err
 	}
 	freeplaySprite.Position.X = (engine.GameWidth - freeplaySprite.AnimController.GetAnim("idle").Frames()[0].Bounds().Dx()) / 2
 
 	donateSprite := engine.NewSprite(0, 0) // Y coordinate handled by mainMenuItemGroup
-	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/anim.hcl", "donate")
+	donateSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/mainmenu/ui/anim.hcl", "donate")
 	if err != nil {
 		return err
 	}
 	donateSprite.Position.X = (engine.GameWidth - donateSprite.AnimController.GetAnim("idle").Frames()[0].Bounds().Dx()) / 2
 
 	optionsSprite := engine.NewSprite(0, 0) // Y coordinate handled by mainMenuItemGroup
-	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/FNF_main_menu_assets/anim.hcl", "options")
+	optionsSprite.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/mainmenu/ui/anim.hcl", "options")
 	if err != nil {
 		return err
 	}

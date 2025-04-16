@@ -21,7 +21,7 @@ func NewMenuItem(ctx *context.Context, x, y int, weekNum int, week *funkin.Week)
 	item := &MenuItem{TargetY: float64(weekNum), Sprite: engine.NewSprite(x, y)}
 
 	var err error
-	item.Sprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/campaign_menu_UI_assets/anim.hcl", week.ID)
+	item.Sprite.AnimController, err = animhcl.LoadAnimsFromFS(ctx.AssetsFS, "images/storymenu/ui/anim.hcl", week.ID)
 	if err != nil {
 		return nil, err
 	}
