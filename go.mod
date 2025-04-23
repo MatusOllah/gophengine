@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/BurntSushi/toml v1.4.0
 	github.com/MatusOllah/goreg v1.0.0
-	github.com/MatusOllah/slogcolor v1.5.0
+	github.com/MatusOllah/slogcolor v1.6.0
 	github.com/MatusOllah/stripansi v1.1.0
 	github.com/ebitenui/ebitenui v0.6.0
 	github.com/gopxl/beep/v2 v2.1.0
