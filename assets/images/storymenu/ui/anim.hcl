@@ -51,3 +51,50 @@ controller "week6" {
 		frame_duration = DUR_24FPS
 	}
 }
+
+controller "left_arrow" {
+	default_anim = "idle"
+
+	animation "idle" {
+		frames = fromPrefix(PATH, "arrow left")
+		frame_duration = DUR_24FPS
+	}
+
+	animation "press" {
+		frames = fromPrefix(PATH, "arrow push left")
+		frame_duration = DUR_24FPS
+	}
+}
+
+controller "difficulty" {
+	default_anim = "normal"
+
+	animation "easy" {
+		frames = fromPrefix(PATH, "EASY")
+		frame_duration = DUR_24FPS
+	}
+
+	animation "normal" {
+		frames = fromPrefix(PATH, "NORMAL")
+		frame_duration = DUR_24FPS
+	}
+
+	animation "hard" {
+		frames = fromPrefix(PATH, "HARD")
+		frame_duration = DUR_24FPS
+	}
+}
+
+controller "right_arrow" {
+	default_anim = "idle"
+
+	animation "idle" {
+		frames = fromPrefix(PATH, "arrow right")
+		frame_duration = DUR_24FPS
+	}
+
+	animation "press" {
+		frames = fromPrefix(PATH, "arrow push right")
+		frame_duration = DUR_24FPS
+	}
+}

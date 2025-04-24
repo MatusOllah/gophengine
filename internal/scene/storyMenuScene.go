@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"strings"
 
+	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
@@ -27,6 +28,9 @@ type StoryMenuScene struct {
 	yellowBG     *ebiten.Image
 	blackBar     *ebiten.Image
 	grpWeekText  *engine.Group[*storymenu.MenuItem]
+	leftArrow    *engine.Sprite
+	difficulty   *engine.Sprite
+	rightArrow   *engine.Sprite
 }
 
 var _ engine.Scene = (*StoryMenuScene)(nil)
@@ -75,6 +79,24 @@ func (s *StoryMenuScene) Init() (err error) {
 		item.Sprite.Position.X = (engine.GameWidth - item.Bounds.Dx()) / 2 // centers image on x axis
 		s.grpWeekText.Add(item)
 		i++
+	}
+
+	s.leftArrow = engine.NewSprite(s.grpWeekText.Get(0).Sprite.Position.X+s.grpWeekText.Get(0).Bounds.Dx()+10, s.grpWeekText.Get(0).Sprite.Position.Y+10)
+	s.leftArrow.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/storymenu/ui/anim.hcl", "left_arrow")
+	if err != nil {
+		return err
+	}
+
+	s.difficulty = engine.NewSprite(s.leftArrow.Position.X+130, s.leftArrow.Position.Y)
+	s.difficulty.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/storymenu/ui/anim.hcl", "difficulty")
+	if err != nil {
+		return err
+	}
+
+	s.rightArrow = engine.NewSprite(0, 0) //TODO: <= this
+	s.rightArrow.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/storymenu/ui/anim.hcl", "right_arrow")
+	if err != nil {
+		return err
 	}
 
 	return nil
