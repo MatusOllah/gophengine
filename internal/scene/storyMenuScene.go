@@ -2,6 +2,7 @@ package scene
 
 import (
 	"fmt"
+	"image"
 	"image/color"
 	"log/slog"
 	"strings"
@@ -10,6 +11,7 @@ import (
 	"github.com/MatusOllah/gophengine/internal/audio"
 	"github.com/MatusOllah/gophengine/internal/controls"
 	"github.com/MatusOllah/gophengine/internal/engine"
+	"github.com/MatusOllah/gophengine/internal/funkin"
 	"github.com/MatusOllah/gophengine/internal/scene/storymenu"
 	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -21,6 +23,7 @@ type StoryMenuScene struct {
 	scoreTextFace    *text.GoTextFace
 	txtWeekTitleFace *text.GoTextFace
 	curWeek          int
+	curDifficulty    funkin.Difficulty
 	txtTracklistFace *text.GoTextFace
 	//TODO: menu characters
 	movedBack    bool
@@ -30,6 +33,7 @@ type StoryMenuScene struct {
 	grpWeekText  *engine.Group[*storymenu.MenuItem]
 	leftArrow    *engine.Sprite
 	difficulty   *engine.Sprite
+	diffOffset   image.Point
 	rightArrow   *engine.Sprite
 }
 
@@ -112,7 +116,7 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	s.grpWeekText.Draw(screen)
 
 	s.leftArrow.AnimController.Draw(screen, s.leftArrow.Position)
-	s.difficulty.AnimController.Draw(screen, s.difficulty.Position)
+	s.difficulty.AnimController.Draw(screen, s.difficulty.Position.Add(s.diffOffset))
 	s.rightArrow.AnimController.Draw(screen, s.rightArrow.Position)
 
 	screen.DrawImage(s.yellowBG, nil)
@@ -157,6 +161,26 @@ func (s *StoryMenuScene) Update() error {
 					return err
 				}
 			}
+
+			if s.ctx.InputHandler.ActionIsPressed(controls.ActionLeft) {
+				s.leftArrow.AnimController.Play("press")
+			} else {
+				s.leftArrow.AnimController.Play("idle")
+			}
+
+			if s.ctx.InputHandler.ActionIsPressed(controls.ActionRight) {
+				s.rightArrow.AnimController.Play("press")
+			} else {
+				s.rightArrow.AnimController.Play("idle")
+			}
+
+			if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionLeft) {
+				s.changeDifficulty(-1)
+			}
+
+			if s.ctx.InputHandler.ActionIsJustPressed(controls.ActionRight) {
+				s.changeDifficulty(1)
+			}
 		}
 	}
 
@@ -169,6 +193,35 @@ func (s *StoryMenuScene) Update() error {
 	}
 
 	return nil
+}
+
+func (s *StoryMenuScene) changeDifficulty(delta int) {
+	s.curDifficulty += funkin.Difficulty(delta)
+
+	if s.curDifficulty < funkin.DifficultyEasy {
+		s.curDifficulty = funkin.DifficultyHard
+	}
+	if s.curDifficulty > funkin.DifficultyHard {
+		s.curDifficulty = funkin.DifficultyEasy
+	}
+
+	s.diffOffset = image.Pt(0, 0)
+
+	switch s.curDifficulty {
+	case funkin.DifficultyEasy:
+		s.difficulty.AnimController.Play("easy")
+		s.diffOffset.X = 50
+	case funkin.DifficultyNormal:
+		s.difficulty.AnimController.Play("normal")
+		s.diffOffset.X = 0
+	case funkin.DifficultyHard:
+		s.difficulty.AnimController.Play("hard")
+		s.diffOffset.X = 50
+	}
+
+	// TODO: get scores
+
+	slog.Debug("changed difficulty", "curDifficulty", s.curDifficulty)
 }
 
 func (s *StoryMenuScene) changeWeek(delta int) error {
