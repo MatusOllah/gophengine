@@ -87,13 +87,13 @@ func (s *StoryMenuScene) Init() (err error) {
 		return err
 	}
 
-	s.difficulty = engine.NewSprite(s.leftArrow.Position.X+130, s.leftArrow.Position.Y)
+	s.difficulty = engine.NewSprite(s.leftArrow.Position.X+60, s.leftArrow.Position.Y)
 	s.difficulty.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/storymenu/ui/anim.hcl", "difficulty")
 	if err != nil {
 		return err
 	}
 
-	s.rightArrow = engine.NewSprite(0, 0) //TODO: <= this
+	s.rightArrow = engine.NewSprite(s.difficulty.Position.X+320, s.leftArrow.Position.Y)
 	s.rightArrow.AnimController, err = animhcl.LoadAnimsFromFS(s.ctx.AssetsFS, "images/storymenu/ui/anim.hcl", "right_arrow")
 	if err != nil {
 		return err
@@ -110,6 +110,11 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
 
 	s.grpWeekText.Draw(screen)
+
+	s.leftArrow.AnimController.Draw(screen, s.leftArrow.Position)
+	s.difficulty.AnimController.Draw(screen, s.difficulty.Position)
+	s.rightArrow.AnimController.Draw(screen, s.rightArrow.Position)
+
 	screen.DrawImage(s.yellowBG, nil)
 	screen.DrawImage(s.blackBar, nil)
 
@@ -135,6 +140,10 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 
 func (s *StoryMenuScene) Update() error {
 	s.grpWeekText.Update()
+
+	s.leftArrow.AnimController.Update()
+	s.difficulty.AnimController.Update()
+	s.rightArrow.AnimController.Update()
 
 	if !s.movedBack {
 		if !s.selectedWeek {
