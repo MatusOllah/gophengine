@@ -130,6 +130,9 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	{
 		week, _ := s.ctx.Weeks.GetIndex(s.curWeek)
 		txt := strings.ToUpper(week.Name)
+		if week.Explicit {
+			txt += " [E]"
+		}
 
 		width, _ := text.Measure(txt, s.txtWeekTitleFace, 0)
 
