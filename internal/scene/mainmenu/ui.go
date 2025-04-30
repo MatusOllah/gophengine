@@ -126,7 +126,7 @@ func MakeUI(ctx *context.Context, shouldExit *bool) (*ebitenui.UI, error) {
 			Disabled:     eui_image.NewNineSliceColor(color.Transparent),
 		}),
 
-		widget.ButtonOpts.Graphic(exitImg),
+		widget.ButtonOpts.Graphic(&widget.GraphicImage{Idle: exitImg, Disabled: exitImg, Pressed: exitImg, Hover: exitImg}),
 
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("clicked exit button, spawning exit dialog")

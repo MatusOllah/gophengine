@@ -145,9 +145,9 @@ func NewUIResources(fsys fs.FS) (*UIResources, error) {
 		},
 		SeparatorImage: eui_image.NewNineSliceColor(color.NRGBA{R: 0x3E, G: 0x3E, B: 0x3E, A: 0xFF}),
 		CheckboxGraphic: &widget.CheckboxGraphicImage{
-			Unchecked: &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
-			Checked:   &widget.ButtonImageImage{Idle: checkImg},
-			Greyed:    &widget.ButtonImageImage{Idle: ebiten.NewImage(32, 32)},
+			Unchecked: &widget.GraphicImage{Idle: ebiten.NewImage(32, 32)},
+			Checked:   &widget.GraphicImage{Idle: checkImg},
+			Greyed:    &widget.GraphicImage{Idle: ebiten.NewImage(32, 32)},
 		},
 		CheckboxButtonImage: &widget.ButtonImage{
 			Idle:    eui_image.NewNineSliceColor(color.NRGBA{R: 100, G: 100, B: 100, A: 0xFF}),
