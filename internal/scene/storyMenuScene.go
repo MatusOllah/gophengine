@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/color"
 	"log/slog"
+	"math"
 	"strings"
 
 	"github.com/MatusOllah/gophengine/internal/anim/animhcl"
@@ -16,6 +17,7 @@ import (
 	"github.com/MatusOllah/gophengine/pkg/context"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
+	"github.com/quasilyte/gmath"
 )
 
 type StoryMenuScene struct {
@@ -26,15 +28,17 @@ type StoryMenuScene struct {
 	curDifficulty    funkin.Difficulty
 	txtTracklistFace *text.GoTextFace
 	//TODO: menu characters
-	movedBack    bool
-	selectedWeek bool
-	yellowBG     *ebiten.Image
-	blackBar     *ebiten.Image
-	grpWeekText  *engine.Group[*storymenu.MenuItem]
-	leftArrow    *engine.Sprite
-	difficulty   *engine.Sprite
-	diffOffset   image.Point
-	rightArrow   *engine.Sprite
+	movedBack     bool
+	selectedWeek  bool
+	yellowBG      *ebiten.Image
+	blackBar      *ebiten.Image
+	grpWeekText   *engine.Group[*storymenu.MenuItem]
+	leftArrow     *engine.Sprite
+	difficulty    *engine.Sprite
+	diffOffset    image.Point
+	rightArrow    *engine.Sprite
+	intendedScore int
+	lerpScore     int
 }
 
 var _ engine.Scene = (*StoryMenuScene)(nil)
@@ -103,6 +107,8 @@ func (s *StoryMenuScene) Init() (err error) {
 		return err
 	}
 
+	s.fetchScore()
+
 	return nil
 }
 
@@ -125,7 +131,7 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 	{
 		op := &text.DrawOptions{}
 		op.GeoM.Translate(10, 10)
-		text.Draw(screen, "SCORE: 49324858", s.scoreTextFace, op)
+		text.Draw(screen, fmt.Sprintf("SCORE: %d", s.lerpScore), s.scoreTextFace, op)
 	}
 	{
 		week, _ := s.ctx.Weeks.GetIndex(s.curWeek)
@@ -151,6 +157,8 @@ func (s *StoryMenuScene) Update() error {
 	s.leftArrow.AnimController.Update()
 	s.difficulty.AnimController.Update()
 	s.rightArrow.AnimController.Update()
+
+	s.lerpScore = int(math.Floor(gmath.Lerp(float64(s.lerpScore), float64(s.intendedScore+1), 0.5)))
 
 	if !s.movedBack {
 		if !s.selectedWeek {
@@ -222,9 +230,9 @@ func (s *StoryMenuScene) changeDifficulty(delta int) {
 		s.diffOffset.X = 50
 	}
 
-	// TODO: get scores
+	s.fetchScore()
 
-	slog.Debug("changed difficulty", "curDifficulty", s.curDifficulty)
+	slog.Info("changed difficulty", "curDifficulty", s.curDifficulty)
 }
 
 func (s *StoryMenuScene) changeWeek(delta int) error {
@@ -237,7 +245,7 @@ func (s *StoryMenuScene) changeWeek(delta int) error {
 		s.curWeek = s.ctx.Weeks.Len() - 1
 	}
 
-	slog.Info("selected week", "i", s.curWeek)
+	slog.Info("selected week", "i", s.curWeek, "id", s.ctx.Weeks.MustGetIndex(s.curWeek).ID)
 
 	if err := audio.PlaySoundFromFS(s.ctx.AssetsFS, "sounds/scrollMenu.ogg", 0, s.ctx.AudioMixer.SFX); err != nil {
 		return err
@@ -253,5 +261,12 @@ func (s *StoryMenuScene) changeWeek(delta int) error {
 }
 
 func (s *StoryMenuScene) updateText() {
+	s.fetchScore()
 	//TODO: update track list and characters
+}
+
+func (s *StoryMenuScene) fetchScore() {
+	slog.Info("fetching intended score", "curWeek", s.ctx.Weeks.MustGetIndex(s.curWeek).ID)
+	s.intendedScore = s.ctx.ProgressConfig.GetWithFallback(s.ctx.Weeks.MustGetIndex(s.curWeek).ID+"-"+s.curDifficulty.String()+".score", 0).(int)
+	slog.Info("got score", "intendedScore", s.intendedScore)
 }
