@@ -25,15 +25,6 @@ controller "week2" {
 	}
 }
 
-controller "week3" {
-	default_anim = "select"
-
-	animation "select" {
-		frames = fromPrefix(PATH, "Week 3 press")
-		frame_duration = DUR_24FPS
-	}
-}
-
 controller "week4" {
 	default_anim = "select"
 
