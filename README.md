@@ -2,11 +2,15 @@
     <img src="docs/images/gophengine_logo.svg" alt="GophEngine logo">
 </p>
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![CI (Go)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
+
 **English 🇺🇸** | **[Slovenčina 🇸🇰](docs/README.sk.md)**
 
-**Status:** In development
-
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![CI (Go)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
+**Status:** On Hold / Archived
+> **As of May 2025**, GophEngine is officially on hold.  
+> Due to increasing discomfort with the direction of the FNF community and official content, I’ve decided to step back from FNF-related work to focus on my other projects.
+> You’re welcome to fork or explore the code, but please note this repo is not under active development.
+> *I still❤️ Boyfriend - he’s why I fell in love with this game in the first place!*
 
 **GophEngine** (short for "Gopher Engine") is a Go port of **Friday Night Funkin'** (a popular FOSS rhythm game) with improvements, bringing new features, performance enhancements, and a cleaner experience. Built from the ground up in **Go and Ebitengine**, GophEngine aims to provide an easy-to-use modding framework and foster a supportive community for FNF fans.
 

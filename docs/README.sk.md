@@ -2,11 +2,15 @@
     <img src="images/gophengine_logo.svg" alt="GophEngine logo">
 </p>
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![CI (Go)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
+
 **[English 🇺🇸](../README.md)** | **Slovenčina 🇸🇰**
 
-**Stav:** Vo vývoji
-
-[![Go Reference](https://pkg.go.dev/badge/github.com/MatusOllah/gophengine.svg)](https://pkg.go.dev/github.com/MatusOllah/gophengine) [![Go Report Card](https://goreportcard.com/badge/github.com/MatusOllah/gophengine)](https://goreportcard.com/report/github.com/MatusOllah/gophengine) [![CI (Go)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml/badge.svg)](https://github.com/MatusOllah/gophengine/actions/workflows/ci.yml) [![GitHub license](https://img.shields.io/github/license/MatusOllah/gophengine)](LICENSE) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![Made in Slovakia](https://raw.githubusercontent.com/pedromxavier/flag-badges/refs/heads/main/badges/SK.svg)](https://www.youtube.com/watch?v=UqXJ0ktrmh0)
+**Stav:** Pozastavený / Archivovaný
+> **Od mája 2025** je vývoj GophEngine oficiálne pozastavený.
+> Vzhľadom na narastajúce znechutenie zo smerovania FNF komunity a oficiálneho obsahu som sa rozhodol ukončiť prácu na FNF projektoch a venovať sa iným veciam.
+> Repozitár ostáva verejný — kód si môžete pozrieť alebo forknúť, no už nie je aktívne udržiavaný.
+> *Stále ❤️ Boyfrienda – práve vďaka nemu som si túto hru zamiloval!*
 
 **GophEngine** (skrátene pre "Gopher Engine") je Go implementácia hry **Friday Night Funkin'** (populárnej FOSS hudobnej hry) s vylepšeniami, ktoré prinášajú nové funkcie, lepší výkon a čistejší zážitok. GophEngine je vytvorený od základov v **Go a Ebitengine** s cieľom poskytnúť ľahko použiteľný framework na modifikáciu a podporovať komunitu fanúšikov FNF.
 
