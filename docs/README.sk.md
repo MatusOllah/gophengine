@@ -11,8 +11,11 @@
 **GophEngine** (skrátene pre "Gopher Engine") je Go implementácia hry **Friday Night Funkin'** (populárnej FOSS hudobnej hry) s vylepšeniami, ktoré prinášajú nové funkcie, lepší výkon a čistejší zážitok. GophEngine je vytvorený od základov v **Go a Ebitengine** s cieľom poskytnúť ľahko použiteľný framework na modifikáciu a podporovať komunitu fanúšikov FNF.
 
 > [!NOTE]
-> Toto nie je originálna hra. Ide o fanúšikovskú prerobenú verziu pôvodnej hry, ktorá nie je nijako spojená alebo schválená tímom Funkin' Crew alebo Newgrounds.
+> Toto nie je originálna hra. Ide o **fanúšikovskú prerobenú verziu** pôvodnej hry, ktorá **nie je nijako spojená alebo schválená spoločnosťou Funkin' Crew Inc. alebo platformou Newgrounds**.
 > Predstavte si GophEngine vo vzťahu k FNF tak, ako je Black Mesa k Half-Life - fanúšikovský remake a vylepšenie, vybudované od základu.
+>
+> Tento projekt je určený **iba na osobné a vzdelávacie účely**.
+> Niektoré časti pôvodnej hry boli **zámerne odstránené alebo upravené**, aby viac zodpovedali inkluzívnejšiemu a priateľskejšiemu zážitku (napr. Týždeň 3, Týždeň 5, Týždeň 7, Weekend 1, skladby Lemon Demona).
 
 ## Prečo?
 

@@ -11,8 +11,11 @@
 **GophEngine** (short for "Gopher Engine") is a Go port of **Friday Night Funkin'** (a popular FOSS rhythm game) with improvements, bringing new features, performance enhancements, and a cleaner experience. Built from the ground up in **Go and Ebitengine**, GophEngine aims to provide an easy-to-use modding framework and foster a supportive community for FNF fans.
 
 > [!NOTE]
-> This is not the vanilla game. This is a fan-made remake of the original game and is not affiliated with or endorsed by the Funkin' Crew or Newgrounds.
+> This is not the vanilla game. This is a **fan-made remake** of the original game and is **not affiliated with or endorsed by Funkin' Crew Inc. or Newgrounds**.
 > Think of GophEngine as to FNF what Black Mesa is to Half-Life - a fan-made remake and improvement, built from the ground up.
+>
+> This project is intended for **personal and educational use only**.
+> Several parts of the original game have been **intentionally removed or modified** to align with a more inclusive and family-friendly experience (e.g. Week 3, Week 5, Week 7, Weekend 1, Lemon Demon tracks).
 
 ## Why?
 
@@ -71,7 +74,7 @@ Licensed under **Apache License 2.0** (see [LICENSE](LICENSE))
 
 ### Credits
 
-* **The Funkin' Crew** - Original game and assets (see [LICENSE-FNF](LICENSE-FNF) and [LICENSE-ASSETS](LICENSE-ASSETS))
+* **Funkin' Crew Inc.** - Original game and assets (see [LICENSE-FNF](LICENSE-FNF) and [LICENSE-ASSETS](LICENSE-ASSETS))
 * **Hajime Hoshi** - Ebitengine
 * [The Ebitengine logo](https://ebitengine.org/images/logo.png) by Hajime Hoshi is licensed under [the Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
 * The Go Gopher mascot was created by Renee French and is licensed under the [Creative Commons 4.0 Attribution License](https://creativecommons.org/licenses/by/4.0/).
