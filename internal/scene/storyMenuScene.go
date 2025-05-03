@@ -26,7 +26,7 @@ type StoryMenuScene struct {
 	txtWeekTitleFace *text.GoTextFace
 	curWeek          int
 	curDifficulty    funkin.Difficulty
-	txtTracklistFace *text.GoTextFace
+	//txtTracklistFace *text.GoTextFace
 	//TODO: menu characters
 	movedBack     bool
 	selectedWeek  bool
@@ -152,7 +152,9 @@ func (s *StoryMenuScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *StoryMenuScene) Update() error {
-	s.grpWeekText.Update()
+	if err := s.grpWeekText.Update(); err != nil {
+		return err
+	}
 
 	s.leftArrow.AnimController.Update()
 	s.difficulty.AnimController.Update()

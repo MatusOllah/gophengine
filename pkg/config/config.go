@@ -64,7 +64,9 @@ func Create(path string, loadDefaults bool) (*Config, error) {
 	if runtime.GOARCH == "wasm" {
 		cfg.file = nil
 	} else {
-		os.Mkdir(filepath.Dir(path), os.ModePerm)
+		if err := os.Mkdir(filepath.Dir(path), os.ModePerm); err != nil {
+			return nil, fmt.Errorf("failed to create directory: %w", err)
+		}
 
 		file, err := os.Create(path)
 		if err != nil {

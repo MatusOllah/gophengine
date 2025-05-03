@@ -98,7 +98,9 @@ func newAboutPage(ctx *context.Context, ui *ebitenui.UI) *page {
 		}),
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
 			slog.Info("clicked GitHub button, opening link")
-			browser.OpenURL("https://github.com/MatusOllah/gophengine")
+			if err := browser.OpenURL("https://github.com/MatusOllah/gophengine"); err != nil {
+				panic(err)
+			}
 		}),
 		widget.ButtonOpts.WidgetOpts(
 			widget.WidgetOpts.ToolTip(widget.NewTextToolTip(

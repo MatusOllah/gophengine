@@ -51,13 +51,11 @@ func parseDurations(durations any, frameCount int) []time.Duration {
 	result := make([]time.Duration, frameCount)
 	switch val := durations.(type) {
 	case time.Duration:
-		for i := 0; i < frameCount; i++ {
+		for i := range frameCount {
 			result[i] = val
 		}
 	case []time.Duration:
-		for i := range val {
-			result[i] = val[i]
-		}
+		copy(result, val)
 	case []any:
 		for i := range val {
 			result[i] = parseDurationValue(val[i])
@@ -77,7 +75,7 @@ func parseDurations(durations any, frameCount int) []time.Duration {
 			}
 		}
 	case any:
-		for i := 0; i < frameCount; i++ {
+		for i := range frameCount {
 			result[i] = parseDurationValue(val)
 		}
 	default:

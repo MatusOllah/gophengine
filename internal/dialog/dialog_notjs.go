@@ -5,9 +5,13 @@ package dialog
 import "github.com/ncruces/zenity"
 
 func Error(msg string) {
-	zenity.Error(msg, zenity.Title("GophEngine error"))
+	if err := zenity.Error(msg, zenity.Title("GophEngine error")); err != nil {
+		panic(err)
+	}
 }
 
 func Warning(msg string) {
-	zenity.Warning(msg, zenity.Title("GophEngine warning"))
+	if err := zenity.Warning(msg, zenity.Title("GophEngine warning")); err != nil {
+		panic(err)
+	}
 }

@@ -47,7 +47,9 @@ func (g *MainMenuItemGroup) Draw(screen *ebiten.Image) {
 func (g *MainMenuItemGroup) Update() error {
 	g.items[g.curSelected].Sprite.AnimController.Play("selected")
 
-	g.group.Update()
+	if err := g.group.Update(); err != nil {
+		return err
+	}
 
 	if err := g.flicker.Update(); err != nil {
 		return err
